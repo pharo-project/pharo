@@ -19,7 +19,7 @@ ReYourselfNotUsedRule class >> uniqueIdentifierName [
 { #category : 'enumerating' }
 ReYourselfNotUsedRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^ false ].
-	aNode selector = #yourself ifFalse: [ ^ false ].
+	(aNode selector sameContents: #yourself) ifFalse: [ ^ false ].
 	^ aNode isUsedAsReturnValue not
 ]
 

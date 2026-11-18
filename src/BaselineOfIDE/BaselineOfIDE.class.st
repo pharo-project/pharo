@@ -28,10 +28,10 @@ Class {
 	#name : 'BaselineOfIDE',
 	#superclass : 'BaselineOf',
 	#instVars : [
-		'repository'
+		#repository
 	],
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfIDE',
 	#package : 'BaselineOfIDE'

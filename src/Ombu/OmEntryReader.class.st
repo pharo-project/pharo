@@ -5,8 +5,8 @@ Class {
 	#name : 'OmEntryReader',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'store'
+		#stream,
+		#store
 	],
 	#category : 'Ombu-Persistence',
 	#package : 'Ombu',

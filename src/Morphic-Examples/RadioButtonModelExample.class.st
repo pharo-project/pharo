@@ -5,7 +5,7 @@ Class {
 	#name : 'RadioButtonModelExample',
 	#superclass : 'Model',
 	#instVars : [
-		'option'
+		#option
 	],
 	#category : 'Morphic-Examples-Widgets',
 	#package : 'Morphic-Examples',

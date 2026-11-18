@@ -2,11 +2,11 @@ Class {
 	#name : 'ReflectivityTest',
 	#superclass : 'ReflectivityTestCase',
 	#instVars : [
-		'count',
-		'tag',
-		'link',
-		'link2',
-		'cache'
+		#count,
+		#tag,
+		#link,
+		#link2,
+		#cache
 	],
 	#category : 'Reflectivity-Tests-Base',
 	#package : 'Reflectivity-Tests',

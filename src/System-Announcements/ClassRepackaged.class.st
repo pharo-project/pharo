@@ -5,9 +5,9 @@ Class {
 	#name : 'ClassRepackaged',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'classRepackaged',
-		'oldTag',
-		'newTag'
+		#classRepackaged,
+		#oldTag,
+		#newTag
 	],
 	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',

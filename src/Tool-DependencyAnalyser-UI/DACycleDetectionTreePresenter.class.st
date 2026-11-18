@@ -5,11 +5,11 @@ Class {
 	#name : 'DACycleDetectionTreePresenter',
 	#superclass : 'DAPackageTreePresenter',
 	#instVars : [
-		'analysis',
-		'cycles',
-		'cyclesLabel',
-		'filter',
-		'buttonSort'
+		#analysis,
+		#cycles,
+		#cyclesLabel,
+		#filter,
+		#buttonSort
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',

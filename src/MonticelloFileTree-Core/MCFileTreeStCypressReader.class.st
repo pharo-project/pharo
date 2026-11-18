@@ -58,7 +58,7 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 		addClassDefinitionFrom: classPropertiesDict
 		comment: classComment withInternalLineEndings.
 	self
-		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
+		addMethodDefinitionsForClass: (classPropertiesDict at: #'name')
 		methodProperties: methodPropertiesDict
 		in: entries
 ]
@@ -67,22 +67,22 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment: classComment [
 
 	| definition |
-	definition := (MCClassDefinition named: (classPropertiesDict at: 'name'))
-		              superclassName: (classPropertiesDict at: 'super');
+	definition := (MCClassDefinition named: (classPropertiesDict at: #'name'))
+		              superclassName: (classPropertiesDict at: #'super');
 		              packageName: self packageNameFromPackageDirectory;
 		              comment: classComment;
 		              yourself.
 
 	classPropertiesDict
-		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
-		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
-		at: 'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
-		at: 'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
-		at: 'classvars' ifPresent: [ :classVars | definition classVarNames: classVars ];
-		at: 'pools' ifPresent: [ :pools | definition poolDictionaryNames: pools ];
-		at: 'classinstvars' ifPresent: [ :classInstVars | definition classInstVarNames: classInstVars ];
-		at: 'type' ifPresent: [ :type | definition type: type ];
-		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+		at: #'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
+		at: #'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: #'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
+		at: #'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
+		at: #'classvars' ifPresent: [ :classVars | definition classVarNames: classVars ];
+		at: #'pools' ifPresent: [ :pools | definition poolDictionaryNames: pools ];
+		at: #'classinstvars' ifPresent: [ :classInstVars | definition classInstVarNames: classInstVars ];
+		at: #'type' ifPresent: [ :type | definition type: type ];
+		at: #'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
 
 	definitions add: definition
 ]
@@ -105,7 +105,7 @@ MCFileTreeStCypressReader >> addExtensionClassAndMethodDefinitionsFromEntry: cla
 				readStreamDo:
 					[ :fileStream | "Issue 33: https://github.com/dalehenrich/filetree/issues/33" methodPropertiesDict := STON fromStream: fileStream ] ].
 	self
-		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
+		addMethodDefinitionsForClass: (classPropertiesDict at: #'name')
 		methodProperties: methodPropertiesDict
 		in: entries
 		extensionMethod: true
@@ -185,7 +185,7 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 		addTraitDefinitionFrom: classPropertiesDict
 		comment: classComment withInternalLineEndings.
 	self
-		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
+		addMethodDefinitionsForClass: (classPropertiesDict at: #'name')
 		methodProperties: methodPropertiesDict
 		in: entries
 ]
@@ -194,17 +194,17 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment: traitComment [
 
 	| definition |
-	definition := (MCTraitDefinition named: (traitPropertiesDict at: 'name'))
+	definition := (MCTraitDefinition named: (traitPropertiesDict at: #'name'))
 		              packageName: self packageNameFromPackageDirectory;
 		              comment: traitComment;
 		              yourself.
 
 	traitPropertiesDict
-		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
-		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
-		at: 'classtraitcomposition' ifPresent: [ :classTraitComposition | definition classTraitComposition: classTraitComposition ];
-		at: 'instvars' ifPresent: [ :ivars | definition instVarNames: ivars ];
-		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+		at: #'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
+		at: #'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: #'classtraitcomposition' ifPresent: [ :classTraitComposition | definition classTraitComposition: classTraitComposition ];
+		at: #'instvars' ifPresent: [ :ivars | definition instVarNames: ivars ];
+		at: #'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
 
 	definitions add: definition
 ]

@@ -5,7 +5,7 @@ Class {
 	#name : 'GeneralScrollBarMorph',
 	#superclass : 'ScrollBarMorph',
 	#instVars : [
-		'showState'
+		#showState
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

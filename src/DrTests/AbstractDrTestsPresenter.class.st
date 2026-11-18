@@ -5,10 +5,10 @@ Class {
 	#name : 'AbstractDrTestsPresenter',
 	#superclass : 'StPresenter',
 	#instVars : [
-		'pluginResult',
-		'testsConfiguration',
-		'currentPlugin',
-		'switchButton'
+		#pluginResult,
+		#testsConfiguration,
+		#currentPlugin,
+		#switchButton
 	],
 	#category : 'DrTests-Spec',
 	#package : 'DrTests',

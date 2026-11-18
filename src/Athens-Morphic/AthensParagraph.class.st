@@ -5,13 +5,13 @@ Class {
 	#name : 'AthensParagraph',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'textStyle',
-		'containerRect',
-		'lines',
-		'positionWhenComposed',
-		'selectionStart',
-		'selectionStop'
+		#text,
+		#textStyle,
+		#containerRect,
+		#lines,
+		#positionWhenComposed,
+		#selectionStart,
+		#selectionStop
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

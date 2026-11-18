@@ -5,10 +5,10 @@ Class {
 	#name : 'FLSortedCollectionSerializationTest',
 	#superclass : 'FLSerializationTest',
 	#instVars : [
-		'instanceVariableForTesting'
+		#instanceVariableForTesting
 	],
 	#classVars : [
-		'ClassVariableForTesting'
+		#ClassVariableForTesting
 	],
 	#category : 'Fuel-Core-Tests-Base',
 	#package : 'Fuel-Core-Tests',

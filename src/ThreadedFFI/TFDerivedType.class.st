@@ -5,10 +5,10 @@ Class {
 	#name : 'TFDerivedType',
 	#superclass : 'Object',
 	#classVars : [
-		'BOOLEAN',
-		'BOOLEAN32',
-		'OOP',
-		'STRING'
+		#BOOLEAN,
+		#BOOLEAN32,
+		#OOP,
+		#STRING
 	],
 	#category : 'ThreadedFFI-Types',
 	#package : 'ThreadedFFI',

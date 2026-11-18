@@ -6,7 +6,7 @@ Class {
 	#name : 'CoSession',
 	#superclass : 'Object',
 	#instVars : [
-		'vocabularyCache'
+		#vocabularyCache
 	],
 	#category : 'HeuristicCompletion-Model-SessionHeuristic',
 	#package : 'HeuristicCompletion-Model',

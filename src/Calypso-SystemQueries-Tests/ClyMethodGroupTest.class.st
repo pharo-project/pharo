@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyMethodGroupTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'group'
+		#group
 	],
 	#category : 'Calypso-SystemQueries-Tests-Domain',
 	#package : 'Calypso-SystemQueries-Tests',

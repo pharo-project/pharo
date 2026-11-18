@@ -7,10 +7,10 @@ Class {
 	#name : 'HMAC',
 	#superclass : 'Object',
 	#instVars : [
-		'hash',
-		'key',
-		'ipad',
-		'epad'
+		#hash,
+		#key,
+		#ipad,
+		#epad
 	],
 	#category : 'System-Hashing-Core',
 	#package : 'System-Hashing',

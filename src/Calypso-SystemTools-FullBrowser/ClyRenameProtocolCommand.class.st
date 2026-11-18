@@ -13,8 +13,8 @@ Class {
 	#name : 'ClyRenameProtocolCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'methodGroup',
-		'newName'
+		#methodGroup,
+		#newName
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',

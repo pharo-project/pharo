@@ -5,9 +5,9 @@ Class {
 	#name : 'CollectionValueHolderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'empty',
-		'withItems',
-		'fired'
+		#empty,
+		#withItems,
+		#fired
 	],
 	#category : 'NewValueHolder-Tests',
 	#package : 'NewValueHolder-Tests'

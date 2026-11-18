@@ -5,9 +5,9 @@ Class {
 	#name : 'MockMessageSend',
 	#superclass : 'Object',
 	#instVars : [
-		'selector',
-		'arguments',
-		'behavior'
+		#selector,
+		#arguments,
+		#behavior
 	],
 	#category : 'SUnit-MockObjects-Core',
 	#package : 'SUnit-MockObjects',

@@ -5,8 +5,8 @@ Class {
 	#name : 'ClippingCanvas',
 	#superclass : 'PluggableCanvas',
 	#instVars : [
-		'canvas',
-		'clipRect'
+		#canvas,
+		#clipRect
 	],
 	#category : 'Graphics-Canvas-Canvases',
 	#package : 'Graphics-Canvas',

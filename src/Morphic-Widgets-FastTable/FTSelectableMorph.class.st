@@ -10,8 +10,8 @@ Class {
 	#name : 'FTSelectableMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'selectionColor',
-		'colorBeforeOver'
+		#selectionColor,
+		#colorBeforeOver
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',

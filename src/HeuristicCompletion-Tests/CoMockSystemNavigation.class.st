@@ -5,8 +5,8 @@ Class {
 	#name : 'CoMockSystemNavigation',
 	#superclass : 'Object',
 	#instVars : [
-		'globals',
-		'selectors'
+		#globals,
+		#selectors
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

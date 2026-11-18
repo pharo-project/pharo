@@ -5,10 +5,10 @@ Class {
 	#name : 'RubShoutStylerDecorator',
 	#superclass : 'RubParagraphDecorator',
 	#instVars : [
-		'styler',
-		'text',
-		'replaceStart',
-		'replaceStop'
+		#styler,
+		#text,
+		#replaceStart,
+		#replaceStop
 	],
 	#category : 'Rubric-Styling',
 	#package : 'Rubric-Styling'

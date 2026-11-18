@@ -10,11 +10,11 @@ Class {
 	#name : 'AthensDemoMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'surface',
-		'current',
-		'frame',
-		'pharoLogo',
-		'esugBallon'
+		#surface,
+		#current,
+		#frame,
+		#pharoLogo,
+		#esugBallon
 	],
 	#category : 'Athens-Examples-Morphic',
 	#package : 'Athens-Examples',

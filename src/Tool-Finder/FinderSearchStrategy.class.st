@@ -7,7 +7,7 @@ Class {
 	#name : 'FinderSearchStrategy',
 	#superclass : 'Object',
 	#instVars : [
-		'finder'
+		#finder
 	],
 	#category : 'Tool-Finder-Base',
 	#package : 'Tool-Finder',

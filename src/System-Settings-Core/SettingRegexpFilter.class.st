@@ -12,7 +12,7 @@ Class {
 	#name : 'SettingRegexpFilter',
 	#superclass : 'SettingFilter',
 	#instVars : [
-		'regexp'
+		#regexp
 	],
 	#category : 'System-Settings-Core-Filter',
 	#package : 'System-Settings-Core',

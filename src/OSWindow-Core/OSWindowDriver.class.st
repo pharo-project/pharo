@@ -15,9 +15,9 @@ Class {
 	#name : 'OSWindowDriver',
 	#superclass : 'Object',
 	#classVars : [
-		'Current',
-		'DriverClass',
-		'Session'
+		#Current,
+		#DriverClass,
+		#Session
 	],
 	#category : 'OSWindow-Core-Utilities',
 	#package : 'OSWindow-Core',

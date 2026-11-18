@@ -5,9 +5,9 @@ Class {
 	#name : 'AthensPathSegmentConverter',
 	#superclass : 'Object',
 	#instVars : [
-		'dest',
-		'endPoint',
-		'contourStartPt'
+		#dest,
+		#endPoint,
+		#contourStartPt
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

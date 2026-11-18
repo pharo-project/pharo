@@ -17,9 +17,9 @@ STONTestUser2 class >> stonName [
 { #category : 'ston-core' }
 STONTestUser2 >> fromSton: stonReader [
 	stonReader parseMapDo: [ :key :value |
-		key = #username ifTrue: [ username := value ].
-		key = #password ifTrue: [ password := value ].
-		key = #enabled ifTrue: [ enabled := value ] ]
+		(key sameContents: #username) ifTrue: [ username := value ].
+		(key sameContents: #password) ifTrue: [ password := value ].
+		(key sameContents: #enabled) ifTrue: [ enabled := value ] ]
 ]
 
 { #category : 'ston-core' }

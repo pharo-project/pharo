@@ -65,11 +65,11 @@ Class {
 	#name : 'ProfStef',
 	#superclass : 'Model',
 	#instVars : [
-		'lessonView',
-		'player'
+		#lessonView,
+		#player
 	],
 	#classVars : [
-		'Instance'
+		#Instance
 	],
 	#category : 'ProfStef-Core',
 	#package : 'ProfStef-Core'

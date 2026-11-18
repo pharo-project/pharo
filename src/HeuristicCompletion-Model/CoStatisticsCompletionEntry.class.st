@@ -9,10 +9,10 @@ Class {
 	#name : 'CoStatisticsCompletionEntry',
 	#superclass : 'Object',
 	#instVars : [
-		'necEntry',
-		'index',
-		'heuristic',
-		'statistics'
+		#necEntry,
+		#index,
+		#heuristic,
+		#statistics
 	],
 	#category : 'HeuristicCompletion-Model-Statistics',
 	#package : 'HeuristicCompletion-Model',

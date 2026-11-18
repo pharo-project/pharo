@@ -2,7 +2,7 @@ Class {
 	#name : 'OCASTTranslatorMappingForFullBlockClosuresTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'compiler'
+		#compiler
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',

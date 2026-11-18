@@ -5,7 +5,7 @@ Class {
 	#name : 'Month',
 	#superclass : 'Timespan',
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'

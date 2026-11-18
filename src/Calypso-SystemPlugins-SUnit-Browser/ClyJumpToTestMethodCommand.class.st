@@ -20,9 +20,9 @@ Class {
 	#traits : 'TClyGenerateTestClass',
 	#classTraits : 'TClyGenerateTestClass classTrait',
 	#instVars : [
-		'testMethodToBrowse',
-		'browser',
-		'systemEnvironment'
+		#testMethodToBrowse,
+		#browser,
+		#systemEnvironment
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',

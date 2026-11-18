@@ -27,7 +27,7 @@ Class {
 	#name : 'ClySystemEnvironmentPlugin',
 	#superclass : 'ClyEnvironmentPlugin',
 	#classVars : [
-		'SlowPluginsAreDisabled'
+		#SlowPluginsAreDisabled
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

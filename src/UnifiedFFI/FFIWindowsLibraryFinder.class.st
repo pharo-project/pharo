@@ -20,5 +20,5 @@ FFIWindowsLibraryFinder >> basePaths [
 { #category : 'accessing' }
 FFIWindowsLibraryFinder >> knownPaths [
 
-	^ (OSEnvironment current at: 'PATH' ifAbsent: [ '' ]) substrings: ';'
+	^ (OSEnvironment current at: #'PATH' ifAbsent: [ '' ]) substrings: ';'
 ]

@@ -6,8 +6,8 @@ Class {
 	#name : 'ReRemoveInstanceVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
 	#instVars : [
-		'applicabilityPreconditions',
-		'breakingChangePreconditions'
+		#applicabilityPreconditions,
+		#breakingChangePreconditions
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

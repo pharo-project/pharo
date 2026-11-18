@@ -9,10 +9,10 @@ Class {
 	#name : 'Beacon',
 	#superclass : 'Object',
 	#instVars : [
-		'announcer'
+		#announcer
 	],
 	#classVars : [
-		'Instance'
+		#Instance
 	],
 	#category : 'Beacon-Core-Beacon',
 	#package : 'Beacon-Core',

@@ -5,11 +5,11 @@ Class {
 	#name : 'PharoChangesCondenser',
 	#superclass : 'Object',
 	#instVars : [
-		'newChangesFile',
-		'stream',
-		'job',
-		'remoteStringMap',
-		'sourceStreams'
+		#newChangesFile,
+		#stream,
+		#job,
+		#remoteStringMap,
+		#sourceStreams
 	],
 	#category : 'System-SourcesCondenser',
 	#package : 'System-SourcesCondenser'

@@ -5,16 +5,16 @@ Class {
 	#name : 'TextContainer',
 	#superclass : 'Object',
 	#instVars : [
-		'textMorph',
-		'shadowForm',
-		'vertProfile',
-		'minWidth',
-		'rectangleCache',
-		'fillsOwner',
-		'avoidsOcclusions'
+		#textMorph,
+		#shadowForm,
+		#vertProfile,
+		#minWidth,
+		#rectangleCache,
+		#fillsOwner,
+		#avoidsOcclusions
 	],
 	#classVars : [
-		'OuterMargin'
+		#OuterMargin
 	],
 	#category : 'Morphic-Base-Text Support',
 	#package : 'Morphic-Base',

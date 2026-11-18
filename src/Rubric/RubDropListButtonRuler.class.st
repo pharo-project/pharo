@@ -5,7 +5,7 @@ Class {
 	#name : 'RubDropListButtonRuler',
 	#superclass : 'RubScrolledTextSideRuler',
 	#instVars : [
-		'downArrowBtn'
+		#downArrowBtn
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

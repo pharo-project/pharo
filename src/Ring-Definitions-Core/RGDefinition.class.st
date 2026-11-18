@@ -6,8 +6,8 @@ Class {
 	#name : 'RGDefinition',
 	#superclass : 'Object',
 	#instVars : [
-		'annotations',
-		'name'
+		#annotations,
+		#name
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

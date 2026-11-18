@@ -5,7 +5,7 @@ Class {
 	#name : 'InteractiveResolver',
 	#superclass : 'FileSystemResolver',
 	#instVars : [
-		'cache'
+		#cache
 	],
 	#category : 'FileSystem-Core-Base-Resolver',
 	#package : 'FileSystem-Core',

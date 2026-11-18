@@ -5,11 +5,11 @@ Class {
 	#name : 'RubSmalltalkEditor',
 	#superclass : 'RubTextEditor',
 	#instVars : [
-		'notificationStrategy',
-		'completionEngine'
+		#notificationStrategy,
+		#completionEngine
 	],
 	#classVars : [
-		'CompletionEngineClass'
+		#CompletionEngineClass
 	],
 	#category : 'Rubric-Editing-Code',
 	#package : 'Rubric',

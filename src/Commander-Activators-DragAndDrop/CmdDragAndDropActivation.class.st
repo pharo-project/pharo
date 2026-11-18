@@ -35,7 +35,7 @@ Class {
 	#name : 'CmdDragAndDropActivation',
 	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
-		'activeDropContext'
+		#activeDropContext
 	],
 	#category : 'Commander-Activators-DragAndDrop',
 	#package : 'Commander-Activators-DragAndDrop'

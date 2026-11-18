@@ -225,8 +225,8 @@ Class {
 	#name : 'Metacello',
 	#superclass : 'Object',
 	#instVars : [
-		'statements',
-		'scriptExecutorClass'
+		#statements,
+		#scriptExecutorClass
 	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'

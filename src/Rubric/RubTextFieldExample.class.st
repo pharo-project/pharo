@@ -16,8 +16,8 @@ Class {
 	#name : 'RubTextFieldExample',
 	#superclass : 'Object',
 	#instVars : [
-		'string',
-		'announcer'
+		#string,
+		#announcer
 	],
 	#category : 'Rubric-Editing-Widgets-Examples',
 	#package : 'Rubric',

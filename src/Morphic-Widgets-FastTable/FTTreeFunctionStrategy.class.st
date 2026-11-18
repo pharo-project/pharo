@@ -36,8 +36,8 @@ Class {
 	#name : 'FTTreeFunctionStrategy',
 	#superclass : 'Object',
 	#instVars : [
-		'dataSource',
-		'pattern'
+		#dataSource,
+		#pattern
 	],
 	#category : 'Morphic-Widgets-FastTable-Tree',
 	#package : 'Morphic-Widgets-FastTable',

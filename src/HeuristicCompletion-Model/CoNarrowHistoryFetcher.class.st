@@ -6,10 +6,10 @@ Class {
 	#name : 'CoNarrowHistoryFetcher',
 	#superclass : 'CoFetcherDecorator',
 	#instVars : [
-		'currentResults',
-		'history',
-		'currentKey',
-		'currentFinished'
+		#currentResults,
+		#history,
+		#currentKey,
+		#currentFinished
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

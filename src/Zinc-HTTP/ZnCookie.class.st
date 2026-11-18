@@ -12,7 +12,7 @@ Class {
 	#name : 'ZnCookie',
 	#superclass : 'Object',
 	#instVars : [
-		'attributes'
+		#attributes
 	],
 	#category : 'Zinc-HTTP-Support',
 	#package : 'Zinc-HTTP',
@@ -56,22 +56,22 @@ ZnCookie >> defaultDomain: aDomain [
 
 { #category : 'accessing' }
 ZnCookie >> domain [
-	^ attributes at: 'domain' ifAbsent: [ nil ]
+	^ attributes at: #'domain' ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }
 ZnCookie >> domain: aDomain [
-	attributes at: 'domain' put: aDomain
+	attributes at: #'domain' put: aDomain
 ]
 
 { #category : 'accessing' }
 ZnCookie >> expires [
-	^ attributes at: 'expires' ifAbsent: [ nil ]
+	^ attributes at: #'expires' ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }
 ZnCookie >> expires: anExpiration [
-	attributes at: 'expires' put: anExpiration
+	attributes at: #'expires' put: anExpiration
 ]
 
 { #category : 'accessing' }
@@ -126,12 +126,12 @@ ZnCookie >> hash [
 ZnCookie >> httponly [
 	"This is not an RFC cookie attribute, but a supplement found in MS Internet Explorer and supported in PHP.
 	 See http://msdn.microsoft.com/en-us/library/ms533046.aspx"
-	^ attributes at: 'httponly' ifAbsent: [ false ]
+	^ attributes at: #'httponly' ifAbsent: [ false ]
 ]
 
 { #category : 'accessing' }
 ZnCookie >> httponly: aBoolean [
-	attributes at: 'httponly' put: aBoolean
+	attributes at: #'httponly' put: aBoolean
 ]
 
 { #category : 'initialization' }
@@ -164,24 +164,24 @@ ZnCookie >> isInPath: urlObject [
 
 { #category : 'accessing' }
 ZnCookie >> maxage [
-	^ attributes at: 'max-age' ifAbsent: [ nil ]
+	^ attributes at: #'max-age' ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }
 ZnCookie >> maxage: numberOfSeconds [
 	"To be able to use this to validate expiration, a time of creation has to be recorded, so right now, this is not really usable."
 
-	^ attributes at: 'max-age' put: numberOfSeconds asString
+	^ attributes at: #'max-age' put: numberOfSeconds asString
 ]
 
 { #category : 'accessing' }
 ZnCookie >> name [
-	^ attributes at: 'name'
+	^ attributes at: #'name'
 ]
 
 { #category : 'accessing' }
 ZnCookie >> name: aName [
-	attributes at: 'name' put: aName
+	attributes at: #'name' put: aName
 ]
 
 { #category : 'converting' }
@@ -192,12 +192,12 @@ ZnCookie >> nameValueString [
 
 { #category : 'accessing' }
 ZnCookie >> path [
-	^ attributes at: 'path' ifAbsent: [ '/' ]
+	^ attributes at: #'path' ifAbsent: [ '/' ]
 ]
 
 { #category : 'accessing' }
 ZnCookie >> path: aPath [
-	attributes at: 'path' put: aPath
+	attributes at: #'path' put: aPath
 ]
 
 { #category : 'printing' }
@@ -221,22 +221,22 @@ ZnCookie >> readAttribute: aToken [
 
 { #category : 'accessing' }
 ZnCookie >> secure [
-	^ attributes at: 'secure' ifAbsent: [ false ]
+	^ attributes at: #'secure' ifAbsent: [ false ]
 ]
 
 { #category : 'accessing' }
 ZnCookie >> secure: aBoolean [
-	attributes at: 'secure' put: aBoolean
+	attributes at: #'secure' put: aBoolean
 ]
 
 { #category : 'accessing' }
 ZnCookie >> value [
-	^ attributes at: 'value' ifAbsent: [ nil ]
+	^ attributes at: #'value' ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }
 ZnCookie >> value: aValue [
-	attributes at: 'value' put: aValue
+	attributes at: #'value' put: aValue
 ]
 
 { #category : 'printing' }

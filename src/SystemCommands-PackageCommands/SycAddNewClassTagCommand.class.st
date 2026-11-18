@@ -12,8 +12,8 @@ Class {
 	#name : 'SycAddNewClassTagCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'package',
-		'tagName'
+		#package,
+		#tagName
 	],
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'

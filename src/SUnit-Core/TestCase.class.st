@@ -82,16 +82,16 @@ Class {
 	#name : 'TestCase',
 	#superclass : 'TestAsserter',
 	#instVars : [
-		'testSelector',
-		'expectedFails'
+		#testSelector,
+		#expectedFails
 	],
 	#classVars : [
-		'Announcers',
-		'DefaultTimeLimit',
-		'HistoryAnnouncer'
+		#Announcers,
+		#DefaultTimeLimit,
+		#HistoryAnnouncer
 	],
 	#classInstVars : [
-		'history'
+		#history
 	],
 	#category : 'SUnit-Core-Kernel',
 	#package : 'SUnit-Core',
@@ -743,7 +743,7 @@ TestCase >> nameForReport [
 { #category : 'CI support' }
 TestCase >> onPharoCITestingEnvironment [
 
-	^ Smalltalk os environment at: 'PHARO_CI_TESTING_ENVIRONMENT' ifPresent: [ true ] ifAbsent: [ false ]
+	^ Smalltalk os environment at: #'PHARO_CI_TESTING_ENVIRONMENT' ifPresent: [ true ] ifAbsent: [ false ]
 ]
 
 { #category : 'running' }

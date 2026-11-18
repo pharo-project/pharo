@@ -8,13 +8,13 @@ Class {
 	#name : 'LoadableProject',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'repository',
-		'version',
-		'group',
-		'baselineName',
-		'description',
-		'summary'
+		#name,
+		#repository,
+		#version,
+		#group,
+		#baselineName,
+		#description,
+		#summary
 	],
 	#category : 'ExternalProjectLoader',
 	#package : 'ExternalProjectLoader'

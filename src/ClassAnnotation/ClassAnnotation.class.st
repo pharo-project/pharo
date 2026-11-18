@@ -187,13 +187,13 @@ Class {
 	#name : 'ClassAnnotation',
 	#superclass : 'Object',
 	#instVars : [
-		'annotatedClass',
-		'declarationSelector',
-		'priority',
-		'activeContext'
+		#annotatedClass,
+		#declarationSelector,
+		#priority,
+		#activeContext
 	],
 	#classInstVars : [
-		'redefinedInstances'
+		#redefinedInstances
 	],
 	#category : 'ClassAnnotation',
 	#package : 'ClassAnnotation'

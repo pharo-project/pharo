@@ -2,7 +2,7 @@ Class {
 	#name : 'ReNewNegationCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'condition'
+		#condition
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

@@ -6,7 +6,7 @@ Class {
 	#superclass : 'ArrayedCollection',
 	#type : 'words',
 	#classVars : [
-		'LastSaveOrder'
+		#LastSaveOrder
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

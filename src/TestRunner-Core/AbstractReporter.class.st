@@ -5,8 +5,8 @@ Class {
 	#name : 'AbstractReporter',
 	#superclass : 'Object',
 	#instVars : [
-		'suiteExecutionDuration',
-		'currentCaseDuration'
+		#suiteExecutionDuration,
+		#currentCaseDuration
 	],
 	#category : 'TestRunner-Core-Reporters',
 	#package : 'TestRunner-Core',

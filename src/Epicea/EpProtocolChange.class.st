@@ -5,8 +5,8 @@ Class {
 	#name : 'EpProtocolChange',
 	#superclass : 'EpBehaviorChange',
 	#instVars : [
-		'behavior',
-		'protocol'
+		#behavior,
+		#protocol
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

@@ -5,8 +5,8 @@ Class {
 	#name : 'AlphaInfiniteForm',
 	#superclass : 'InfiniteForm',
 	#instVars : [
-		'origin',
-		'extent'
+		#origin,
+		#extent
 	],
 	#category : 'Graphics-Display Objects-Forms',
 	#package : 'Graphics-Display Objects',

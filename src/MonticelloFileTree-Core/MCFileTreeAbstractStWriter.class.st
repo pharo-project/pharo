@@ -5,10 +5,10 @@ Class {
 	#name : 'MCFileTreeAbstractStWriter',
 	#superclass : 'MCWriter',
 	#instVars : [
-		'stWriter',
-		'initializers',
-		'orderedClassNames',
-		'orderedTraitNames'
+		#stWriter,
+		#initializers,
+		#orderedClassNames,
+		#orderedTraitNames
 	],
 	#category : 'MonticelloFileTree-Core',
 	#package : 'MonticelloFileTree-Core'

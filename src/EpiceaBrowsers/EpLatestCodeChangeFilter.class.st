@@ -5,7 +5,7 @@ Class {
 	#name : 'EpLatestCodeChangeFilter',
 	#superclass : 'EpFilter',
 	#instVars : [
-		'logBrowserModel'
+		#logBrowserModel
 	],
 	#category : 'EpiceaBrowsers-Filters',
 	#package : 'EpiceaBrowsers',

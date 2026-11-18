@@ -15,8 +15,8 @@ Class {
 	#name : 'LinearGradientPaint',
 	#superclass : 'GradientPaint',
 	#instVars : [
-		'start',
-		'stop'
+		#start,
+		#stop
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

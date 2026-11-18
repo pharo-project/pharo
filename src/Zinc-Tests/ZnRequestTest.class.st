@@ -18,13 +18,13 @@ ZnRequestTest >> testBasicAuthenticate [
 	| request |
 	request := ZnRequest new.
 	request setBasicAuthenticationUsername: 'user' password: 'secret'.
-	self assert: (request headers at: 'Authorization') equals: 'Basic dXNlcjpzZWNyZXQ='.
+	self assert: (request headers at: #'Authorization') equals: 'Basic dXNlcjpzZWNyZXQ='.
 	self assert: request basicAuthentication asArray equals: #('user' 'secret').
 	request setBasicAuthenticationUsername: 'user' password: ''.
-	self assert: (request headers at: 'Authorization') equals: 'Basic dXNlcjo='.
+	self assert: (request headers at: #'Authorization') equals: 'Basic dXNlcjo='.
 	self assert: request basicAuthentication asArray equals: #('user' '').
 	request setBasicAuthenticationUsername: 'user' password: ':colons:'.
-	self assert: (request headers at: 'Authorization') equals: 'Basic dXNlcjo6Y29sb25zOg=='.
+	self assert: (request headers at: #'Authorization') equals: 'Basic dXNlcjo6Y29sb25zOg=='.
 	self assert: request basicAuthentication asArray equals: #('user' ':colons:')
 ]
 
@@ -94,7 +94,7 @@ ZnRequestTest >> testReading [
 	request := ZnRequest readFrom: input readStream.
 	self assert: request method equals: #GET.
 	self assert: request hasHeaders.
-	self assert: (request headers at: 'Host') equals: 'foo.com'.
+	self assert: (request headers at: #'Host') equals: 'foo.com'.
 	self assert: request hasEntity not
 ]
 

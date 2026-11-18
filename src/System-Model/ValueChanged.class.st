@@ -5,8 +5,8 @@ Class {
 	#name : 'ValueChanged',
 	#superclass : 'Announcement',
 	#instVars : [
-		'newValue',
-		'oldValue'
+		#newValue,
+		#oldValue
 	],
 	#category : 'System-Model-Announcements',
 	#package : 'System-Model',

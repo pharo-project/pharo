@@ -144,8 +144,8 @@ ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndian [
 		input := ByteArray readHexFrom: spec first.
 		integer := (ZnBufferedReadStream on: input readStream)
 			nextIntegerOfSize: input
-			size signed: spec third = #s
-			bigEndian: spec fourth = #be.
+			size signed: (spec third sameContents: #s)
+			bigEndian: (spec fourth sameContents: #be).
 		self assert: integer equals: spec second ]
 ]
 
@@ -158,8 +158,8 @@ ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndianPut [
 			ZnBufferedWriteStream on: out do: [ :bout |
 				bout
 					nextIntegerOfSize: input size
-					signed: spec third = #s
-					bigEndian: spec fourth = #be
+					signed: (spec third sameContents: #s)
+					bigEndian: (spec fourth sameContents: #be)
 					put: spec second ] ].
 		self assert: output equals: input ]
 ]

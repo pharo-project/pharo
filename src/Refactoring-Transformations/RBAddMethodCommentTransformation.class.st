@@ -14,7 +14,7 @@ Class {
 	#name : 'RBAddMethodCommentTransformation',
 	#superclass : 'RBMethodTransformation',
 	#instVars : [
-		'comment'
+		#comment
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

@@ -7,13 +7,13 @@ Class {
 	#name : 'FinderUI',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'finder',
-		'forceSearch',
-		'searchingTextArea',
-		'sourceTextArea',
-		'useRegExCheckbox',
-		'searchedTextList',
-		'sourceTextModel'
+		#finder,
+		#forceSearch,
+		#searchingTextArea,
+		#sourceTextArea,
+		#useRegExCheckbox,
+		#searchedTextList,
+		#sourceTextModel
 	],
 	#category : 'Tool-Finder-UI',
 	#package : 'Tool-Finder-UI'

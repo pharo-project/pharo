@@ -16,15 +16,15 @@ Class {
 	#name : 'NECMenuMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'selected',
-		'firstVisible',
-		'titleStringMorph',
-		'context',
-		'pageHeight',
-		'detailMorph',
-		'detailPosition',
-		'engine',
-		'isDetailMorphVisible'
+		#selected,
+		#firstVisible,
+		#titleStringMorph,
+		#context,
+		#pageHeight,
+		#detailMorph,
+		#detailPosition,
+		#engine,
+		#isDetailMorphVisible
 	],
 	#category : 'NECompletion-Morphic',
 	#package : 'NECompletion-Morphic'

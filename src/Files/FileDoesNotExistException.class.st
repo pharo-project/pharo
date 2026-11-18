@@ -17,7 +17,7 @@ Class {
 	#name : 'FileDoesNotExistException',
 	#superclass : 'FileException',
 	#instVars : [
-		'readOnly'
+		#readOnly
 	],
 	#category : 'Files-Core',
 	#package : 'Files',

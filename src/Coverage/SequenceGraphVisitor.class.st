@@ -7,9 +7,9 @@ Class {
 	#name : 'SequenceGraphVisitor',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'edges',
-		'currentNode',
-		'collector'
+		#edges,
+		#currentNode,
+		#collector
 	],
 	#category : 'Coverage-Base',
 	#package : 'Coverage',

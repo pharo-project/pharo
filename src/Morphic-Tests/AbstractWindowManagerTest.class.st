@@ -2,7 +2,7 @@ Class {
 	#name : 'AbstractWindowManagerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'manager'
+		#manager
 	],
 	#category : 'Morphic-Tests',
 	#package : 'Morphic-Tests'

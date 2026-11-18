@@ -2,7 +2,7 @@ Class {
 	#name : 'RenrakuGlobalBanningTest',
 	#superclass : 'ReCodeBasedTestCase',
 	#instVars : [
-		'oldRulesSettings'
+		#oldRulesSettings
 	],
 	#category : 'Renraku-Tests',
 	#package : 'Renraku-Tests'

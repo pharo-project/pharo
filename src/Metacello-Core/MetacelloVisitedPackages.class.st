@@ -2,9 +2,9 @@ Class {
 	#name : 'MetacelloVisitedPackages',
 	#superclass : 'Object',
 	#instVars : [
-		'groups',
-		'packages',
-		'projects'
+		#groups,
+		#packages,
+		#projects
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',

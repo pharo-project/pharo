@@ -5,7 +5,7 @@ Class {
 	#name : 'ZipStore',
 	#superclass : 'MemoryStore',
 	#instVars : [
-		'reference'
+		#reference
 	],
 	#category : 'FileSystem-Zip-Base',
 	#package : 'FileSystem-Zip',

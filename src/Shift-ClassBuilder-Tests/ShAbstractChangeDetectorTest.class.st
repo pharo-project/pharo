@@ -2,10 +2,10 @@ Class {
 	#name : 'ShAbstractChangeDetectorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'newBuilder',
-		'originClass',
-		'usedTrait',
-		'superClass'
+		#newBuilder,
+		#originClass,
+		#usedTrait,
+		#superClass
 	],
 	#category : 'Shift-ClassBuilder-Tests-Changes',
 	#package : 'Shift-ClassBuilder-Tests',

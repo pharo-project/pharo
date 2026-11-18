@@ -18,7 +18,7 @@ RBSpecialCharacterToken >> isSpecial [
 
 { #category : 'testing' }
 RBSpecialCharacterToken >> isSpecial: aValue [
-	^self value = aValue
+	^self value sameContents: aValue
 ]
 
 { #category : 'private' }

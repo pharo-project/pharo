@@ -5,13 +5,13 @@ Class {
 	#name : 'TextHighlightByBounds',
 	#superclass : 'Object',
 	#instVars : [
-		'color',
-		'lineRange',
-		'bounds',
-		'borderWidth',
-		'borderColor',
-		'borderSides',
-		'fillWidth'
+		#color,
+		#lineRange,
+		#bounds,
+		#borderWidth,
+		#borderColor,
+		#borderSides,
+		#fillWidth
 	],
 	#category : 'Polymorph-Widgets-Utilities',
 	#package : 'Polymorph-Widgets',

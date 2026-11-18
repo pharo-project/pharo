@@ -2,8 +2,8 @@ Class {
 	#name : 'SHRBTextStylerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'styler',
-		'oldSetting'
+		#styler,
+		#oldSetting
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',

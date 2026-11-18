@@ -5,11 +5,11 @@ Class {
 	#name : 'OmDeferrer',
 	#superclass : 'Object',
 	#instVars : [
-		'process',
-		'lastSchedule',
-		'duration',
-		'selector',
-		'object'
+		#process,
+		#lastSchedule,
+		#duration,
+		#selector,
+		#object
 	],
 	#category : 'Ombu-Common',
 	#package : 'Ombu',

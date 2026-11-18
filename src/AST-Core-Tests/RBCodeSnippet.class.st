@@ -23,23 +23,23 @@ Class {
 	#name : 'RBCodeSnippet',
 	#superclass : 'Object',
 	#instVars : [
-		'source',
-		'isScripting',
-		'isParseFaulty',
-		'isFaulty',
-		'isFaultyMinusUndeclared',
-		'notices',
-		'value',
-		'hasValue',
-		'formattedCode',
-		'skippedTests',
-		'raise',
-		'messageNotUnderstood',
-		'numberOfCritiques',
-		'group',
-		'default',
-		'nodePositions',
-		'styledPattern'
+		#source,
+		#isScripting,
+		#isParseFaulty,
+		#isFaulty,
+		#isFaultyMinusUndeclared,
+		#notices,
+		#value,
+		#hasValue,
+		#formattedCode,
+		#skippedTests,
+		#raise,
+		#messageNotUnderstood,
+		#numberOfCritiques,
+		#group,
+		#default,
+		#nodePositions,
+		#styledPattern
 	],
 	#category : 'AST-Core-Tests-Snippets',
 	#package : 'AST-Core-Tests',
@@ -2949,7 +2949,7 @@ RBCodeSnippet >> hasNotice: aNotice [
 		aNotice node start = each first
 		& (aNotice node stop = each second)
 		& (aNotice position = each third)
-		& (aNotice messageText = each fourth) ]
+		& (aNotice messageText sameContents: each fourth) ]
 ]
 
 { #category : 'testing' }
@@ -3150,7 +3150,7 @@ RBCodeSnippet >> searchDefinition [
 		| parent |
 		(node isLiteralNode and: [
 			 parent := node parent.
-			 node value = self source and: [
+			 (node value sameContents: self source) and: [
 				 parent isMessage and: [ parent selector = #source: ] ] ])
 			ifTrue: [
 				parent isCascaded ifTrue: [ parent := parent parent ].

@@ -5,8 +5,8 @@ Class {
 	#name : 'KMUntypeableSingleKeyCombination',
 	#superclass : 'KMSingleKeyCombination',
 	#instVars : [
-		'symbol',
-		'name'
+		#symbol,
+		#name
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'

@@ -2,11 +2,11 @@ Class {
 	#name : 'SDL2TuioObjectStateMachine',
 	#superclass : 'Object',
 	#instVars : [
-		'color',
-		'position',
-		'angle',
-		'objectId',
-		'objectNumber'
+		#color,
+		#position,
+		#angle,
+		#objectId,
+		#objectNumber
 	],
 	#category : 'OSWindow-SDL2-Examples-Touch',
 	#package : 'OSWindow-SDL2-Examples',

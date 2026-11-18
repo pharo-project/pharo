@@ -21,13 +21,13 @@ Class {
 	#name : 'DockingBarMorph',
 	#superclass : 'AlignmentMorph',
 	#instVars : [
-		'originalColor',
-		'gradientRamp',
-		'fillsOwner',
-		'avoidVisibleBordersAtEdge',
-		'autoGradient',
-		'selectedItem',
-		'activeSubMenu'
+		#originalColor,
+		#gradientRamp,
+		#fillsOwner,
+		#avoidVisibleBordersAtEdge,
+		#autoGradient,
+		#selectedItem,
+		#activeSubMenu
 	],
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'

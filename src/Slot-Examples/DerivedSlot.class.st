@@ -5,7 +5,7 @@ Class {
 	#name : 'DerivedSlot',
 	#superclass : 'Slot',
 	#instVars : [
-		'baseSlot'
+		#baseSlot
 	],
 	#category : 'Slot-Examples-Base',
 	#package : 'Slot-Examples',

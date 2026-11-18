@@ -5,8 +5,8 @@ Class {
 	#name : 'EpTestLogBuilder',
 	#superclass : 'TestResource',
 	#instVars : [
-		'log',
-		'directory'
+		#log,
+		#directory
 	],
 	#category : 'Epicea-Tests-Resources',
 	#package : 'Epicea-Tests',

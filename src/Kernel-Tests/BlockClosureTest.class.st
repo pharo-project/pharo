@@ -5,8 +5,8 @@ Class {
 	#name : 'BlockClosureTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aBlock',
-		'contextOfaBlock'
+		#aBlock,
+		#contextOfaBlock
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',
@@ -397,7 +397,7 @@ BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
 		assert:
 			([ ProvideAnswerNotification signal: 'Your favorite color?' ]
 				 valueSupplyingAnswer: #( 'Your favorite color?'
-				    'blue' ))
+				    blue ))
 		equals: 'blue'
 ]
 

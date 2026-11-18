@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyReturningScopeBasisExampleQuery',
 	#superclass : 'ClyTypedQuery',
 	#instVars : [
-		'extraParameter'
+		#extraParameter
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

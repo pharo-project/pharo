@@ -2,7 +2,7 @@ Class {
 	#name : 'PackageAnnouncementsTest',
 	#superclass : 'PackageTestCase',
 	#instVars : [
-		'numberOfAnnouncements'
+		#numberOfAnnouncements
 	],
 	#category : 'Kernel-CodeModel-Tests-Packages',
 	#package : 'Kernel-CodeModel-Tests',

@@ -7,7 +7,7 @@ Class {
 	#traits : 'TSequenceableTruncatedToSize + (TCreationWithTest - {#testWithAll})',
 	#classTraits : 'TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
 	#instVars : [
-		'collectionWith5Elements'
+		#collectionWith5Elements
 	],
 	#category : 'Collections-Support-Tests',
 	#package : 'Collections-Support-Tests'

@@ -34,7 +34,7 @@ Class {
 	#name : 'FTDataSource',
 	#superclass : 'Object',
 	#instVars : [
-		'table'
+		#table
 	],
 	#category : 'Morphic-Widgets-FastTable-DataSource',
 	#package : 'Morphic-Widgets-FastTable',

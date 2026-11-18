@@ -5,9 +5,9 @@ Class {
 	#name : 'BreakpointTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'previousBreakpoints',
-		'cls',
-		'oldSystemAnnouncer'
+		#previousBreakpoints,
+		#cls,
+		#oldSystemAnnouncer
 	],
 	#category : 'Reflectivity-Tools-Tests',
 	#package : 'Reflectivity-Tools-Tests'

@@ -79,7 +79,7 @@ Class {
 	#name : 'RGElementDefinition',
 	#superclass : 'RGDefinition',
 	#instVars : [
-		'parent'
+		#parent
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

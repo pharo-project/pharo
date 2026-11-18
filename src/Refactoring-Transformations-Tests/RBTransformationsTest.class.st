@@ -399,7 +399,7 @@ RBTransformationsTest >> testRenameTemporaryTransform [
 		equals: 2.
 	self assert:
 		((class parseTreeForSelector: #foo) temporaries anySatisfy: [ :e |
-			 e name = #temp2 ])
+			 e name sameContents: #temp2 ])
 ]
 
 { #category : 'tests' }

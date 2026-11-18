@@ -5,11 +5,11 @@ Class {
 	#name : 'CoMockClass',
 	#superclass : 'Object',
 	#instVars : [
-		'instanceVariables',
-		'classVariables',
-		'superclass',
-		'methodDictionary',
-		'sharedPools'
+		#instanceVariables,
+		#classVariables,
+		#superclass,
+		#methodDictionary,
+		#sharedPools
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SessionManagerUnregistrationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'sessionManager'
+		#sessionManager
 	],
 	#category : 'System-SessionManager-Tests',
 	#package : 'System-SessionManager-Tests'

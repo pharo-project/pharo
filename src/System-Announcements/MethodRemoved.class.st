@@ -7,7 +7,7 @@ Class {
 	#name : 'MethodRemoved',
 	#superclass : 'MethodAnnouncement',
 	#instVars : [
-		'methodOrigin'
+		#methodOrigin
 	],
 	#category : 'System-Announcements-System-Methods',
 	#package : 'System-Announcements',

@@ -8,17 +8,17 @@ Class {
 	#name : 'AlphaImageMorph',
 	#superclass : 'ImageMorph',
 	#instVars : [
-		'alpha',
-		'cachedFormSet',
-		'layout',
-		'scale',
-		'enabled',
-		'autoSize',
-		'getImageSelector',
-		'model'
+		#alpha,
+		#cachedFormSet,
+		#layout,
+		#scale,
+		#enabled,
+		#autoSize,
+		#getImageSelector,
+		#model
 	],
 	#classVars : [
-		'DefaultImage'
+		#DefaultImage
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

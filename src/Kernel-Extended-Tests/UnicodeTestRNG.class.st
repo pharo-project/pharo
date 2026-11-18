@@ -5,7 +5,7 @@ Class {
 	#name : 'UnicodeTestRNG',
 	#superclass : 'TestResource',
 	#instVars : [
-		'generator'
+		#generator
 	],
 	#category : 'Kernel-Extended-Tests-Charset',
 	#package : 'Kernel-Extended-Tests',

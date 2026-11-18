@@ -5,11 +5,11 @@ Class {
 	#name : 'FTVector',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_X',
-		'OFFSET_Y'
+		#OFFSET_X,
+		#OFFSET_Y
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

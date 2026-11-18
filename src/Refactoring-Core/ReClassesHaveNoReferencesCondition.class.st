@@ -8,8 +8,8 @@ Class {
 	#name : 'ReClassesHaveNoReferencesCondition',
 	#superclass : 'ReClassesCondition',
 	#instVars : [
-		'model',
-		'referencingClassesDictionary'
+		#model,
+		#referencingClassesDictionary
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

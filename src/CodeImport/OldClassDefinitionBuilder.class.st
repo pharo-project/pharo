@@ -6,7 +6,7 @@ Class {
 	#name : 'OldClassDefinitionBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'ast'
+		#ast
 	],
 	#category : 'CodeImport-Chunks',
 	#package : 'CodeImport',

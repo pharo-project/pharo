@@ -18,7 +18,7 @@ Class {
 	#name : 'FileSystem',
 	#superclass : 'Object',
 	#instVars : [
-		'store'
+		#store
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',

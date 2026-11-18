@@ -102,34 +102,34 @@ Class {
 	#name : 'CharacterScanner',
 	#superclass : 'Object',
 	#instVars : [
-		'destX',
-		'lastIndex',
-		'destY',
-		'stopConditions',
-		'text',
-		'textStyle',
-		'alignment',
-		'leftMargin',
-		'rightMargin',
-		'font',
-		'line',
-		'runStopIndex',
-		'spaceCount',
-		'spaceWidth',
-		'emphasisCode',
-		'kern',
-		'indentationLevel',
-		'pendingKernX'
+		#destX,
+		#lastIndex,
+		#destY,
+		#stopConditions,
+		#text,
+		#textStyle,
+		#alignment,
+		#leftMargin,
+		#rightMargin,
+		#font,
+		#line,
+		#runStopIndex,
+		#spaceCount,
+		#spaceWidth,
+		#emphasisCode,
+		#kern,
+		#indentationLevel,
+		#pendingKernX
 	],
 	#classVars : [
-		'ColumnBreakStopConditions',
-		'CompositionStopConditions',
-		'DefaultStopConditions',
-		'MeasuringStopConditions',
-		'PaddedSpaceCondition'
+		#ColumnBreakStopConditions,
+		#CompositionStopConditions,
+		#DefaultStopConditions,
+		#MeasuringStopConditions,
+		#PaddedSpaceCondition
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Text-Scanning',
 	#package : 'Text-Scanning'

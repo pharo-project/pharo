@@ -2,14 +2,14 @@ Class {
 	#name : 'FinalizationRegistryTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'finalizationRegistry',
-		'finalizationCount',
-		'finalizerThatCounts',
-		'waitSemaphore',
-		'finalizedObject',
-		'finalizerThatRaisesError',
-		'finalizer',
-		'failed'
+		#finalizationRegistry,
+		#finalizationCount,
+		#finalizerThatCounts,
+		#waitSemaphore,
+		#finalizedObject,
+		#finalizerThatRaisesError,
+		#finalizer,
+		#failed
 	],
 	#category : 'System-Finalization-Tests',
 	#package : 'System-Finalization-Tests'

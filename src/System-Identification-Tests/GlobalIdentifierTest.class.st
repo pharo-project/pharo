@@ -5,8 +5,8 @@ Class {
 	#name : 'GlobalIdentifierTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'identifier',
-		'preferences'
+		#identifier,
+		#preferences
 	],
 	#category : 'System-Identification-Tests',
 	#package : 'System-Identification-Tests'

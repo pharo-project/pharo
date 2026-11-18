@@ -5,7 +5,7 @@ Class {
 	#name : 'EpSessionEvent',
 	#superclass : 'EpEvent',
 	#instVars : [
-		'imageName'
+		#imageName
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

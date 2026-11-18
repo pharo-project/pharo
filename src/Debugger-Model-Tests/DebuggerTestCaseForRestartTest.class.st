@@ -2,7 +2,7 @@ Class {
 	#name : 'DebuggerTestCaseForRestartTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'testedValue'
+		#testedValue
 	],
 	#category : 'Debugger-Model-Tests-Core',
 	#package : 'Debugger-Model-Tests',

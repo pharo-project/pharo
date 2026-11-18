@@ -5,10 +5,10 @@ Class {
 	#name : 'FLFullGeneralMapper',
 	#superclass : 'FLLightGeneralMapper',
 	#instVars : [
-		'internalMethods',
-		'internalBehaviors',
-		'environment',
-		'globals'
+		#internalMethods,
+		#internalBehaviors,
+		#environment,
+		#globals
 	],
 	#category : 'Fuel-Core-Mappers',
 	#package : 'Fuel-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'RGMetaclassDefinition',
 	#superclass : 'RGClassDescriptionDefinition',
 	#instVars : [
-		'baseClass'
+		#baseClass
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

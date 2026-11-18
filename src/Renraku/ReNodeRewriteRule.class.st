@@ -19,7 +19,7 @@ Class {
 	#name : 'ReNodeRewriteRule',
 	#superclass : 'RePatternCodeRule',
 	#instVars : [
-		'matches'
+		#matches
 	],
 	#category : 'Renraku-Rules-Rewrite',
 	#package : 'Renraku',
@@ -35,7 +35,7 @@ ReNodeRewriteRule class >> isAbstract [
 { #category : 'testing' }
 ReNodeRewriteRule class >> isVisible [
 
-	^ self name ~=  #ReNodeRewriteRule
+	^ (self name sameContents: #ReNodeRewriteRule) not
 ]
 
 { #category : 'adding' }

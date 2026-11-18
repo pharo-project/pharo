@@ -2,8 +2,8 @@ Class {
 	#name : 'MetacelloSpecBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'currentLoadDirective',
-		'root'
+		#currentLoadDirective,
+		#root
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',

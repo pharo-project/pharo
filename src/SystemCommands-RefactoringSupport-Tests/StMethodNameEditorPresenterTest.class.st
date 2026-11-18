@@ -2,7 +2,7 @@ Class {
 	#name : 'StMethodNameEditorPresenterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'methodNameEditor'
+		#methodNameEditor
 	],
 	#category : 'SystemCommands-RefactoringSupport-Tests',
 	#package : 'SystemCommands-RefactoringSupport-Tests'

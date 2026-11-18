@@ -2,7 +2,7 @@ Class {
 	#name : 'OCASTDoubleBlockTranslatorTest',
 	#superclass : 'OCASTSingleBlockTranslatorTest',
 	#instVars : [
-		'extractBlock2InTemp'
+		#extractBlock2InTemp
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',

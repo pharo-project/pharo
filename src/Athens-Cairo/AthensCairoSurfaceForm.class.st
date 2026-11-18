@@ -7,7 +7,7 @@ Class {
 	#name : 'AthensCairoSurfaceForm',
 	#superclass : 'Form',
 	#instVars : [
-		'surface'
+		#surface
 	],
 	#category : 'Athens-Cairo-Surface',
 	#package : 'Athens-Cairo',

@@ -179,15 +179,15 @@ Class {
 	#name : 'SettingBrowser',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'viewedPackages',
-		'roots',
-		'status',
-		'searchedText',
-		'treeHolder'
+		#viewedPackages,
+		#roots,
+		#status,
+		#searchedText,
+		#treeHolder
 	],
 	#classInstVars : [
-		'searchedTextList',
-		'regexpSearch'
+		#searchedTextList,
+		#regexpSearch
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'

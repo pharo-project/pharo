@@ -25,9 +25,9 @@ Class {
 	#name : 'RBAddMethodRefactoring',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
-		'transformation',
-		'source',
-		'protocol'
+		#transformation,
+		#source,
+		#protocol
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

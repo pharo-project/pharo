@@ -29,7 +29,7 @@ Class {
 	#name : 'StdioStream',
 	#superclass : 'AbstractBinaryFileStream',
 	#instVars : [
-		'peekBuffer'
+		#peekBuffer
 	],
 	#category : 'Files-Streams',
 	#package : 'Files',

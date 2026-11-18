@@ -10,9 +10,9 @@ Class {
 	#name : 'CDNode',
 	#superclass : 'Object',
 	#instVars : [
-		'parent',
-		'originalNode',
-		'children'
+		#parent,
+		#originalNode,
+		#children
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

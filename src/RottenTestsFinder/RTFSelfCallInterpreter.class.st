@@ -10,11 +10,11 @@ Class {
 	#name : 'RTFSelfCallInterpreter',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'selfClass',
-		'selfSentMethods',
-		'considerClassesThat',
-		'callStack',
-		'rootSelfCall'
+		#selfClass,
+		#selfSentMethods,
+		#considerClassesThat,
+		#callStack,
+		#rootSelfCall
 	],
 	#category : 'RottenTestsFinder-SelfInterpreter',
 	#package : 'RottenTestsFinder',

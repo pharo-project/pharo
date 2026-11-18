@@ -5,7 +5,7 @@ Class {
 	#name : 'TKTTestExceptionHandler',
 	#superclass : 'TKTExceptionHandler',
 	#instVars : [
-		'error'
+		#error
 	],
 	#category : 'TaskIt-Tests-Kernel',
 	#package : 'TaskIt-Tests',

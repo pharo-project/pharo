@@ -5,9 +5,9 @@ Class {
 	#name : 'DebuggerModelTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'session',
-		'process',
-		'context'
+		#session,
+		#process,
+		#context
 	],
 	#category : 'Debugger-Model-Tests-Model',
 	#package : 'Debugger-Model-Tests',

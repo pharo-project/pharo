@@ -5,7 +5,7 @@ Class {
 	#name : 'TKTFutureExecution',
 	#superclass : 'TKTTaskExecution',
 	#instVars : [
-		'future'
+		#future
 	],
 	#category : 'TaskIt-Futures',
 	#package : 'TaskIt',

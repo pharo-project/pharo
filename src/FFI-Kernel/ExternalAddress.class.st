@@ -6,7 +6,7 @@ Class {
 	#superclass : 'ByteArray',
 	#type : 'bytes',
 	#classInstVars : [
-		'wordSize'
+		#wordSize
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'

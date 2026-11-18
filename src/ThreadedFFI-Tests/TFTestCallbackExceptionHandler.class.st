@@ -6,8 +6,8 @@ Class {
 	#name : 'TFTestCallbackExceptionHandler',
 	#superclass : 'Object',
 	#instVars : [
-		'lastException',
-		'available'
+		#lastException,
+		#available
 	],
 	#category : 'ThreadedFFI-Tests',
 	#package : 'ThreadedFFI-Tests'

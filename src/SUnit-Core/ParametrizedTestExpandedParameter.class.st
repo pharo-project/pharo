@@ -7,8 +7,8 @@ Class {
 	#name : 'ParametrizedTestExpandedParameter',
 	#superclass : 'Object',
 	#instVars : [
-		'selector',
-		'valuable'
+		#selector,
+		#valuable
 	],
 	#category : 'SUnit-Core-Parametrized',
 	#package : 'SUnit-Core',

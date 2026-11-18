@@ -5,10 +5,10 @@ Class {
 	#name : 'SDL2SpecialCharacterMapping',
 	#superclass : 'Object',
 	#classVars : [
-		'Mapping'
+		#Mapping
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

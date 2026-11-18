@@ -5,13 +5,13 @@ Class {
 	#name : 'ChunkFileFormatParser',
 	#superclass : 'Object',
 	#instVars : [
-		'readStream',
-		'parsedDeclarations',
-		'classSelector',
-		'classTraitSelector',
-		'commentStampSelector',
-		'methodsForSelector',
-		'reorganizeSelector'
+		#readStream,
+		#parsedDeclarations,
+		#classSelector,
+		#classTraitSelector,
+		#commentStampSelector,
+		#methodsForSelector,
+		#reorganizeSelector
 	],
 	#category : 'CodeImport-Utilities',
 	#package : 'CodeImport',

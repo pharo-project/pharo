@@ -2,8 +2,8 @@ Class {
 	#name : 'OCSpecialSelectorTest',
 	#superclass : 'OCASTTranslatorTest',
 	#instVars : [
-		'optimisationsActive',
-		'replacedMethods'
+		#optimisationsActive,
+		#replacedMethods
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',

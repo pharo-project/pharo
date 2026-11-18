@@ -5,7 +5,7 @@ Class {
 	#name : 'PointArrayTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'pointArray'
+		#pointArray
 	],
 	#category : 'FormCanvas-Tests',
 	#package : 'FormCanvas-Tests'

@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensDisplayScanner',
 	#superclass : 'DisplayScanner',
 	#instVars : [
-		'canvas'
+		#canvas
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

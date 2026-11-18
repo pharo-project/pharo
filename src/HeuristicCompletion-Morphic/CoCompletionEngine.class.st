@@ -8,7 +8,7 @@ Class {
 	#name : 'CoCompletionEngine',
 	#superclass : 'CompletionEngine',
 	#instVars : [
-		'completionBuilder'
+		#completionBuilder
 	],
 	#category : 'HeuristicCompletion-Morphic-Core',
 	#package : 'HeuristicCompletion-Morphic',

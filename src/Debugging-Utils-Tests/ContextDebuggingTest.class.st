@@ -2,7 +2,7 @@ Class {
 	#name : 'ContextDebuggingTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'instVar'
+		#instVar
 	],
 	#category : 'Debugging-Utils-Tests',
 	#package : 'Debugging-Utils-Tests'

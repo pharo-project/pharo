@@ -7,11 +7,11 @@ Class {
 	#name : 'Text',
 	#superclass : 'ArrayedCollection',
 	#instVars : [
-		'string',
-		'runs'
+		#string,
+		#runs
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Text-Core-Base',
 	#package : 'Text-Core',

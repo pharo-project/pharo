@@ -35,11 +35,11 @@ Class {
 	#name : 'ClassAnnotationRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'annotations',
-		'annotatedClasses'
+		#annotations,
+		#annotatedClasses
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : 'ClassAnnotation',
 	#package : 'ClassAnnotation'

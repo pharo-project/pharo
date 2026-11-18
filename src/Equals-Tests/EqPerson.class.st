@@ -9,8 +9,8 @@ Class {
 	#traits : 'TEquality',
 	#classTraits : 'TEquality classTrait',
 	#instVars : [
-		'name',
-		'age'
+		#name,
+		#age
 	],
 	#category : 'Equals-Tests',
 	#package : 'Equals-Tests'

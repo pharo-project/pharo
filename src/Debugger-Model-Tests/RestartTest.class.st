@@ -33,7 +33,7 @@ RestartTest >> testRestartTestShouldKeepTestGreen [
 				on: TestFailure do: [ failed := true ] ]
 					ensure: [ finished signal ] ].
 
-	[session interruptedContext selector = #testPushingValuesOnActivation]
+	[session interruptedContext selector sameContents: #testPushingValuesOnActivation]
 		whileFalse: [ session stepInto ].
 	session restart: session interruptedContext.
 	session resume.

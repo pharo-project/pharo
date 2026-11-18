@@ -8,7 +8,7 @@ Class {
 	#name : 'SHA1Test',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'hash'
+		#hash
 	],
 	#category : 'System-Hashing-Tests-SHA1',
 	#package : 'System-Hashing-Tests',

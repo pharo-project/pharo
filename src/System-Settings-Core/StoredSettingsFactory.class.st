@@ -19,8 +19,8 @@ Class {
 	#name : 'StoredSettingsFactory',
 	#superclass : 'Object',
 	#instVars : [
-		'storedSetting',
-		'storedSettings'
+		#storedSetting,
+		#storedSettings
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings-Builder',
 	#package : 'System-Settings-Core',

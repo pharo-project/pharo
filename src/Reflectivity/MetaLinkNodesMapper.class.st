@@ -7,8 +7,8 @@ Class {
 	#name : 'MetaLinkNodesMapper',
 	#superclass : 'Object',
 	#instVars : [
-		'nodesForObjects',
-		'objectsForNodes'
+		#nodesForObjects,
+		#objectsForNodes
 	],
 	#category : 'Reflectivity-Installer',
 	#package : 'Reflectivity',

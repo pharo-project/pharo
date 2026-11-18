@@ -2,7 +2,7 @@ Class {
 	#name : 'AbstractReporterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'reporter'
+		#reporter
 	],
 	#category : 'TestRunner-Tests-Reporters',
 	#package : 'TestRunner-Tests',

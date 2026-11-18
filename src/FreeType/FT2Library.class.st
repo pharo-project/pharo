@@ -6,10 +6,10 @@ Class {
 	#name : 'FT2Library',
 	#superclass : 'FT2Handle',
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Base',
 	#package : 'FreeType',

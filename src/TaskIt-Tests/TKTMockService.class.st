@@ -5,9 +5,9 @@ Class {
 	#name : 'TKTMockService',
 	#superclass : 'TKTService',
 	#instVars : [
-		'isStarted',
-		'isShutDown',
-		'hasRun'
+		#isStarted,
+		#isShutDown,
+		#hasRun
 	],
 	#category : 'TaskIt-Tests-Services',
 	#package : 'TaskIt-Tests',

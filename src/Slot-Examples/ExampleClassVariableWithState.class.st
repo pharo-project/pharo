@@ -7,7 +7,7 @@ Class {
 	#name : 'ExampleClassVariableWithState',
 	#superclass : 'ClassVariable',
 	#instVars : [
-		'state'
+		#state
 	],
 	#category : 'Slot-Examples-ClassVariables',
 	#package : 'Slot-Examples',

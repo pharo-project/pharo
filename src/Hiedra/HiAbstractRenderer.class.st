@@ -6,8 +6,8 @@ Class {
 	#name : 'HiAbstractRenderer',
 	#superclass : 'Object',
 	#instVars : [
-		'ruler',
-		'rowsInterval'
+		#ruler,
+		#rowsInterval
 	],
 	#category : 'Hiedra-UI',
 	#package : 'Hiedra',

@@ -11,9 +11,9 @@ Class {
 	#name : 'HEPragma',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'method',
-		'arguments',
-		'keyword'
+		#method,
+		#arguments,
+		#keyword
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

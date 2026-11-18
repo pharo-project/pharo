@@ -61,7 +61,7 @@ Class {
 	#name : 'ConfigurationOf',
 	#superclass : 'Object',
 	#instVars : [
-		'project'
+		#project
 	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'

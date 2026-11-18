@@ -7,7 +7,7 @@ Class {
 	#traits : 'EpTEventVisitor',
 	#classTraits : 'EpTEventVisitor classTrait',
 	#instVars : [
-		'referencesMap'
+		#referencesMap
 	],
 	#category : 'EpiceaBrowsers-Exporter',
 	#package : 'EpiceaBrowsers',

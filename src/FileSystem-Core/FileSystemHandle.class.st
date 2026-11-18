@@ -5,8 +5,8 @@ Class {
 	#name : 'FileSystemHandle',
 	#superclass : 'Object',
 	#instVars : [
-		'reference',
-		'writable'
+		#reference,
+		#writable
 	],
 	#category : 'FileSystem-Core-Kernel',
 	#package : 'FileSystem-Core',

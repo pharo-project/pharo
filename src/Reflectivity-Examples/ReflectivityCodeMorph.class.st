@@ -5,8 +5,8 @@ Class {
 	#name : 'ReflectivityCodeMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'textModel',
-		'compiledMethod'
+		#textModel,
+		#compiledMethod
 	],
 	#category : 'Reflectivity-Examples',
 	#package : 'Reflectivity-Examples'

@@ -36,8 +36,8 @@ Class {
 	#name : 'ConfigurationCommandLineHandler',
 	#superclass : 'CommandLineHandler',
 	#instVars : [
-		'repositoryURL',
-		'configurationName'
+		#repositoryURL,
+		#configurationName
 	],
 	#category : 'Deprecated12',
 	#package : 'Deprecated12'

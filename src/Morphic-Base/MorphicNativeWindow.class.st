@@ -21,11 +21,11 @@ Class {
 	#traits : 'TShowInTaskbar',
 	#classTraits : 'TShowInTaskbar classTrait',
 	#instVars : [
-		'window',
-		'backend',
-		'manager',
-		'osWindow',
-		'attributes'
+		#window,
+		#backend,
+		#manager,
+		#osWindow,
+		#attributes
 	],
 	#category : 'Morphic-Base',
 	#package : 'Morphic-Base'

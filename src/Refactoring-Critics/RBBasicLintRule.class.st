@@ -6,7 +6,7 @@ Class {
 	#name : 'RBBasicLintRule',
 	#superclass : 'RBLintRule',
 	#instVars : [
-		'result'
+		#result
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'

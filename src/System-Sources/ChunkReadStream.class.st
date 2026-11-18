@@ -9,7 +9,7 @@ Class {
 	#name : 'ChunkReadStream',
 	#superclass : 'DecoratorStream',
 	#instVars : [
-		'nextChar'
+		#nextChar
 	],
 	#category : 'System-Sources-Utilities',
 	#package : 'System-Sources',

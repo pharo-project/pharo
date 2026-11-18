@@ -13,9 +13,9 @@ Class {
 	#name : 'CairoGlyph',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_INDEX',
-		'OFFSET_X',
-		'OFFSET_Y'
+		#OFFSET_INDEX,
+		#OFFSET_X,
+		#OFFSET_Y
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

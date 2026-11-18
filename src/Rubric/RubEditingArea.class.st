@@ -5,8 +5,8 @@ Class {
 	#name : 'RubEditingArea',
 	#superclass : 'RubAbstractTextArea',
 	#instVars : [
-		'wrapped',
-		'editorClass'
+		#wrapped,
+		#editorClass
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

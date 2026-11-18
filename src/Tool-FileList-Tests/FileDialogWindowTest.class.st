@@ -5,7 +5,7 @@ Class {
 	#name : 'FileDialogWindowTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'memFs'
+		#memFs
 	],
 	#category : 'Tool-FileList-Tests',
 	#package : 'Tool-FileList-Tests'

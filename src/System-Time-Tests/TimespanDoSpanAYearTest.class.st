@@ -9,9 +9,9 @@ Class {
 	#name : 'TimespanDoSpanAYearTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aTimespan',
-		'aDuration',
-		'aDate'
+		#aTimespan,
+		#aDuration,
+		#aDate
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

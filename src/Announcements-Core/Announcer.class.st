@@ -15,10 +15,10 @@ Class {
 	#name : 'Announcer',
 	#superclass : 'Object',
 	#instVars : [
-		'registry',
-		'preventedAnnouncements',
-		'storedAnnouncements',
-		'suspendedCount'
+		#registry,
+		#preventedAnnouncements,
+		#storedAnnouncements,
+		#suspendedCount
 	],
 	#category : 'Announcements-Core-Base',
 	#package : 'Announcements-Core',

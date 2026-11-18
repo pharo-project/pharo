@@ -2,7 +2,7 @@ Class {
 	#name : 'CmCommandTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'command'
+		#command
 	],
 	#category : 'Commander2-Tests',
 	#package : 'Commander2-Tests'

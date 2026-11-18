@@ -36,11 +36,11 @@ Class {
 	#name : 'AbstractBinaryFileStream',
 	#superclass : 'Stream',
 	#instVars : [
-		'file',
-		'handle',
-		'forWrite',
-		'semaphore',
-		'semaphoreIndex'
+		#file,
+		#handle,
+		#forWrite,
+		#semaphore,
+		#semaphoreIndex
 	],
 	#category : 'Files-Streams',
 	#package : 'Files',

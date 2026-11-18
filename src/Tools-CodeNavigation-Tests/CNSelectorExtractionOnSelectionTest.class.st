@@ -2,7 +2,7 @@ Class {
 	#name : 'CNSelectorExtractionOnSelectionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'sourceCode'
+		#sourceCode
 	],
 	#category : 'Tools-CodeNavigation-Tests',
 	#package : 'Tools-CodeNavigation-Tests'

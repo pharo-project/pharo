@@ -39,9 +39,9 @@ Class {
 	#name : 'CmdCommandActivator',
 	#superclass : 'Object',
 	#instVars : [
-		'command',
-		'context',
-		'activationStrategy'
+		#command,
+		#context,
+		#activationStrategy
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

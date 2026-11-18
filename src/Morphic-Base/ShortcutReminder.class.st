@@ -8,16 +8,16 @@ Class {
 	#name : 'ShortcutReminder',
 	#superclass : 'Object',
 	#instVars : [
-		'limit',
-		'size',
-		'position',
-		'countDict',
-		'backgroundColor',
-		'textColor'
+		#limit,
+		#size,
+		#position,
+		#countDict,
+		#backgroundColor,
+		#textColor
 	],
 	#classVars : [
-		'DefaultReminder',
-		'Enabled'
+		#DefaultReminder,
+		#Enabled
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',

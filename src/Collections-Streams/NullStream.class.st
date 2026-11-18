@@ -6,9 +6,9 @@ Class {
 	#name : 'NullStream',
 	#superclass : 'Stream',
 	#instVars : [
-		'binary',
-		'position',
-		'lastElement'
+		#binary,
+		#position,
+		#lastElement
 	],
 	#category : 'Collections-Streams-Base',
 	#package : 'Collections-Streams',

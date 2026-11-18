@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensWrapMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'surface',
-		'session'
+		#surface,
+		#session
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

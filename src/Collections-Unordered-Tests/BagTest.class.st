@@ -7,18 +7,18 @@ Class {
 	#traits : 'TAddTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TSetArithmetic + TConvertTest + TAsStringCommaAndDelimiterTest + TRemoveForMultiplenessTest + TPrintTest + TConvertAsSortedTest + TConvertAsSetForMultiplinessTest + TConcatenationTest + TStructuralEqualityTest + (TCreationWithTest - {#testOfSize}) + TOccurrencesForMultiplinessTest',
 	#classTraits : 'TAddTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TConvertTest classTrait + TAsStringCommaAndDelimiterTest classTrait + TRemoveForMultiplenessTest classTrait + TPrintTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TConcatenationTest classTrait + TStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
-		'empty',
-		'nonEmpty',
-		'collectResult',
-		'emptyButAllocatedWith20',
-		'collectionWithElement',
-		'collectionIn',
-		'collectionNotIn',
-		'collectionOfString',
-		'elementNotIn',
-		'collectionWithCharacters',
-		'otherCollectionWithoutEqualElements',
-		'collectionWithoutNilMoreThan5'
+		#empty,
+		#nonEmpty,
+		#collectResult,
+		#emptyButAllocatedWith20,
+		#collectionWithElement,
+		#collectionIn,
+		#collectionNotIn,
+		#collectionOfString,
+		#elementNotIn,
+		#collectionWithCharacters,
+		#otherCollectionWithoutEqualElements,
+		#collectionWithoutNilMoreThan5
 	],
 	#category : 'Collections-Unordered-Tests-Bags',
 	#package : 'Collections-Unordered-Tests',
@@ -370,7 +370,7 @@ BagTest >> testAsDictionary [
 	aDictonary := aBag asDictionary.
 	self assert: aDictonary size equals: 2.
 	self assert: (aBag as: Dictionary) equals: aDictonary.
-	self assert: (aDictonary at: 'a') equals: 4.
+	self assert: (aDictonary at: #'a') equals: 4.
 	self assert: aBag asDictionary equals: aBag valuesAndCounts.
 	self deny: aBag asDictionary identicalTo: aBag valuesAndCounts
 ]

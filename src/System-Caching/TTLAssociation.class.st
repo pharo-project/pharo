@@ -10,7 +10,7 @@ Class {
 	#name : 'TTLAssociation',
 	#superclass : 'Association',
 	#instVars : [
-		'timestamp'
+		#timestamp
 	],
 	#category : 'System-Caching',
 	#package : 'System-Caching'

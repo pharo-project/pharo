@@ -5,7 +5,7 @@ Class {
 	#name : 'AbstractFileReference',
 	#superclass : 'Object',
 	#instVars : [
-		'path'
+		#path
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SHRBTextFlagAttribute',
 	#superclass : 'TextAttribute',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',

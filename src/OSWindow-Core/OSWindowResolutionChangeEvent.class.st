@@ -5,10 +5,10 @@ Class {
 	#name : 'OSWindowResolutionChangeEvent',
 	#superclass : 'OSWindowEvent',
 	#instVars : [
-		'screenScaleFactor',
-		'horizontalDPI',
-		'verticalDPI',
-		'diagonalDPI'
+		#screenScaleFactor,
+		#horizontalDPI,
+		#verticalDPI,
+		#diagonalDPI
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

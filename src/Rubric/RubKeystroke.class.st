@@ -5,7 +5,7 @@ Class {
 	#name : 'RubKeystroke',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'event'
+		#event
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

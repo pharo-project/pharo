@@ -7,10 +7,10 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'context',
-		'absolute',
-		'endPoint',
-		'lastControlPoint'
+		#context,
+		#absolute,
+		#endPoint,
+		#lastControlPoint
 	],
 	#category : 'Athens-Cairo-Paths',
 	#package : 'Athens-Cairo',

@@ -5,8 +5,8 @@ Class {
 	#name : 'CDTraitAliasNode',
 	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
-		'aliases',
-		'aliasName'
+		#aliases,
+		#aliasName
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

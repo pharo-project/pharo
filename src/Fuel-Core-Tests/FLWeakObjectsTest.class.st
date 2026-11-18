@@ -42,7 +42,7 @@ FLWeakObjectsTest >> testWeakAndNoStrongReferenceFromGraph [
 	self assert: (materializedGraph at: 3) second isNil.
 	
 	self deny: (self serializationOf: graph includes: 11).
-	self deny: (self serializationOf: graph includes: 'something').
+	self deny: (self serializationOf: graph includes: #something).
 ]
 
 { #category : 'tests' }

@@ -2,7 +2,7 @@ Class {
 	#name : 'TKTParameterizedServiceTest',
 	#superclass : 'TKTTestCase',
 	#instVars : [
-		'service'
+		#service
 	],
 	#category : 'TaskIt-Tests-Services',
 	#package : 'TaskIt-Tests',

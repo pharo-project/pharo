@@ -6,12 +6,12 @@ Class {
 	#name : 'TaskListMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'tasks',
-		'taskList',
-		'preview'
+		#tasks,
+		#taskList,
+		#preview
 	],
 	#classVars : [
-		'KeepOpen'
+		#KeepOpen
 	],
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'

@@ -6,7 +6,7 @@ Class {
 	#name : 'ReHierarchyDefinesMethod',
 	#superclass : 'ReClassCondition',
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

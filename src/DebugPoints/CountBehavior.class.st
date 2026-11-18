@@ -7,7 +7,7 @@ Class {
 	#name : 'CountBehavior',
 	#superclass : 'DebugPointSideEffectBehavior',
 	#instVars : [
-		'count'
+		#count
 	],
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',

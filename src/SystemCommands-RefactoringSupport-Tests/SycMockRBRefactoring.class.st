@@ -5,7 +5,7 @@ Class {
 	#name : 'SycMockRBRefactoring',
 	#superclass : 'Object',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'SystemCommands-RefactoringSupport-Tests',
 	#package : 'SystemCommands-RefactoringSupport-Tests'

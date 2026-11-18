@@ -2,7 +2,7 @@ Class {
 	#name : 'ReflectiveMethodTest',
 	#superclass : 'ReflectivityTestCase',
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : 'Reflectivity-Tests-Base',
 	#package : 'Reflectivity-Tests',

@@ -26,7 +26,7 @@ CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [
 	parent := aRBArrayNode parent.
 	parent isMessage ifTrue: [
 		argumentName := parent keywords at: (parent arguments indexOf: aRBArrayNode).
-		(argumentName = #uses:) | (argumentName = #traits:) ifTrue: [
+		(argumentName sameContents: #uses:) | (argumentName sameContents: #traits:) ifTrue: [
 			aRBArrayNode statements
 				ifEmpty: [
 					^CDTraitCompositionSequenceNode new
@@ -81,7 +81,7 @@ CDTraitCompositionBuilder >> visitMessageNode: aRBMessageNode [
 
 	| node receiver argument |
 
-	aRBMessageNode selector = #classTrait
+	(aRBMessageNode selector sameContents: #classTrait)
 		ifTrue: [
 			^ CDClassTraitNode new
 				originalNode: aRBMessageNode;

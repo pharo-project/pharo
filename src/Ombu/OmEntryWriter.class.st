@@ -5,7 +5,7 @@ Class {
 	#name : 'OmEntryWriter',
 	#superclass : 'Object',
 	#instVars : [
-		'store'
+		#store
 	],
 	#category : 'Ombu-Persistence',
 	#package : 'Ombu',

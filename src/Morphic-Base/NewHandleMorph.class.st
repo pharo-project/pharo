@@ -5,8 +5,8 @@ Class {
 	#name : 'NewHandleMorph',
 	#superclass : 'HandleMorph',
 	#instVars : [
-		'hand',
-		'waitingForClickInside'
+		#hand,
+		#waitingForClickInside
 	],
 	#category : 'Morphic-Base-Widgets',
 	#package : 'Morphic-Base',

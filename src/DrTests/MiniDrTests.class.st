@@ -5,8 +5,8 @@ Class {
 	#name : 'MiniDrTests',
 	#superclass : 'AbstractDrTestsPresenter',
 	#instVars : [
-		'startButton',
-		'pluginPresenter'
+		#startButton,
+		#pluginPresenter
 	],
 	#category : 'DrTests-Spec',
 	#package : 'DrTests',

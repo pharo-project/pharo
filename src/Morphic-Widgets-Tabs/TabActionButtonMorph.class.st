@@ -7,7 +7,7 @@ Class {
 	#name : 'TabActionButtonMorph',
 	#superclass : 'MultistateButtonMorph',
 	#instVars : [
-		'icon'
+		#icon
 	],
 	#category : 'Morphic-Widgets-Tabs-Support',
 	#package : 'Morphic-Widgets-Tabs',

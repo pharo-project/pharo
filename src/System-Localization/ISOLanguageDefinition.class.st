@@ -7,16 +7,16 @@ Class {
 	#name : 'ISOLanguageDefinition',
 	#superclass : 'Object',
 	#instVars : [
-		'iso3',
-		'iso2',
-		'iso3Alternate',
-		'language'
+		#iso3,
+		#iso2,
+		#iso3Alternate,
+		#language
 	],
 	#classVars : [
-		'ISO2Countries',
-		'ISO2Table',
-		'ISO3Countries',
-		'ISO3Table'
+		#ISO2Countries,
+		#ISO2Table,
+		#ISO3Countries,
+		#ISO3Table
 	],
 	#category : 'System-Localization-Utilities',
 	#package : 'System-Localization',

@@ -15,13 +15,13 @@ Class {
 	#name : 'PBVersionInfo',
 	#superclass : 'Object',
 	#instVars : [
-		'repository',
-		'commitHash',
-		'buildNumber',
-		'major',
-		'minor',
-		'patch',
-		'suffix'
+		#repository,
+		#commitHash,
+		#buildNumber,
+		#major,
+		#minor,
+		#patch,
+		#suffix
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'

@@ -14,7 +14,7 @@ MCMergeBrowser >> methodListMenu: aMenu [
 	selection
 		ifNotNil: [
 			aMenu addList: #(
-				('Install'	 installSelection)
+				(Install	 installSelection)
 				('Diff'	diffSelection)
 				('Revert'	 revertSelection)
 				-)].

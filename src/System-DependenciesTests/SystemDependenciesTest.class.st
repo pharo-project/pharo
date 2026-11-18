@@ -63,7 +63,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
-	     #'AI-Algorithms-Graph' 'DebugPoints' 'Microdown' 'Microdown-RichTextComposer'
+	     #'AI-Algorithms-Graph' DebugPoints Microdown 'Microdown-RichTextComposer'
 	     #'NewTools-Scopes' #'NewTools-Scopes-Editor' )
 ]
 
@@ -148,7 +148,7 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	| allMembers allPackagesInBaseline packages groups |
 
 	allMembers := aBaseline version groups
-		detect: [ :g | g name = aGroupName ]
+		detect: [ :g | g name sameContents: aGroupName ]
 		ifNone: [ ^#() ].
 	allPackagesInBaseline := aBaseline version packages collect: [:each | each name].
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].

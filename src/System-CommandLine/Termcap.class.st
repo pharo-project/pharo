@@ -6,7 +6,7 @@ Class {
 	#name : 'Termcap',
 	#superclass : 'Object',
 	#instVars : [
-		'cache'
+		#cache
 	],
 	#category : 'System-CommandLine-Utilities',
 	#package : 'System-CommandLine',

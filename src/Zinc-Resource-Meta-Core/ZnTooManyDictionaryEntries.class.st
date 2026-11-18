@@ -9,7 +9,7 @@ Class {
 	#name : 'ZnTooManyDictionaryEntries',
 	#superclass : 'Error',
 	#instVars : [
-		'limit'
+		#limit
 	],
 	#category : 'Zinc-Resource-Meta-Core',
 	#package : 'Zinc-Resource-Meta-Core'

@@ -8,9 +8,9 @@ Class {
 	#name : 'CompiledMethodTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'x',
-		'y',
-		'class'
+		#x,
+		#y,
+		#class
 	],
 	#category : 'Kernel-Extended-Tests-Methods',
 	#package : 'Kernel-Extended-Tests',

@@ -9,7 +9,7 @@ Class {
 	#name : 'AbstractInitializedClassVariable',
 	#superclass : 'ClassVariable',
 	#instVars : [
-		'default'
+		#default
 	],
 	#category : 'VariablesLibrary-ClassVariables',
 	#package : 'VariablesLibrary',

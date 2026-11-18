@@ -7,11 +7,11 @@ Class {
 	#name : 'FLDepthAndObjectLimitingAnalysis',
 	#superclass : 'FLAnalysis',
 	#instVars : [
-		'depthLimit',
-		'depth',
-		'objectCounter',
-		'objectLimit',
-		'previousStackSize'
+		#depthLimit,
+		#depth,
+		#objectCounter,
+		#objectLimit,
+		#previousStackSize
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

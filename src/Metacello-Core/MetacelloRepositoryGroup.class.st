@@ -2,7 +2,7 @@ Class {
 	#name : 'MetacelloRepositoryGroup',
 	#superclass : 'Object',
 	#instVars : [
-		'repositories'
+		#repositories
 	],
 	#category : 'Metacello-Core-Gofer',
 	#package : 'Metacello-Core',

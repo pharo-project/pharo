@@ -10,8 +10,8 @@ Class {
 	#name : 'BeautifulComments',
 	#superclass : 'Object',
 	#classVars : [
-		'CaptureErrors',
-		'Rendering'
+		#CaptureErrors,
+		#Rendering
 	],
 	#category : 'BeautifulComments-Core',
 	#package : 'BeautifulComments',

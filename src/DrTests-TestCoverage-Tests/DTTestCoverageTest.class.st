@@ -2,9 +2,9 @@ Class {
 	#name : 'DTTestCoverageTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'plugin',
-		'package',
-		'pluginConfiguration'
+		#plugin,
+		#package,
+		#pluginConfiguration
 	],
 	#category : 'DrTests-TestCoverage-Tests',
 	#package : 'DrTests-TestCoverage-Tests'

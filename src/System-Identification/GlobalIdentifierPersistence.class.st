@@ -29,9 +29,9 @@ Class {
 	#name : 'GlobalIdentifierPersistence',
 	#superclass : 'Object',
 	#instVars : [
-		'preferences',
-		'previousPersistence',
-		'checker'
+		#preferences,
+		#previousPersistence,
+		#checker
 	],
 	#category : 'System-Identification',
 	#package : 'System-Identification'

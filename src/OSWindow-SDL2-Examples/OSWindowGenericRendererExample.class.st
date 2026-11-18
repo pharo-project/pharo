@@ -5,8 +5,8 @@ Class {
 	#name : 'OSWindowGenericRendererExample',
 	#superclass : 'Object',
 	#instVars : [
-		'renderer',
-		'window'
+		#renderer,
+		#window
 	],
 	#category : 'OSWindow-SDL2-Examples-Examples',
 	#package : 'OSWindow-SDL2-Examples',

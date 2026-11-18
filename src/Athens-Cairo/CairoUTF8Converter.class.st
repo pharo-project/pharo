@@ -5,9 +5,9 @@ Class {
 	#name : 'CairoUTF8Converter',
 	#superclass : 'Object',
 	#instVars : [
-		'buffer',
-		'encoder',
-		'bs'
+		#buffer,
+		#encoder,
+		#bs
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

@@ -12,7 +12,7 @@ Class {
 	#name : 'ExternalData',
 	#superclass : 'ExternalStructure',
 	#instVars : [
-		'type'
+		#type
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'

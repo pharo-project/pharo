@@ -37,9 +37,9 @@ Class {
 	#superclass : 'Object',
 	#type : 'variable',
 	#instVars : [
-		'outerContext',
-		'compiledBlock',
-		'numArgs'
+		#outerContext,
+		#compiledBlock,
+		#numArgs
 	],
 	#category : 'Kernel-CodeModel-Methods',
 	#package : 'Kernel-CodeModel',
@@ -522,7 +522,7 @@ BlockClosure >> onDNU: selector do: handleBlock [
 	"Catch MessageNotUnderstood exceptions but only those of the given selector (DNU stands for doesNotUnderstand:)"
 
 	^ self on: MessageNotUnderstood do: [:exception |
-		exception message selector = selector
+		(exception message selector sameContents: selector)
 			ifTrue: [handleBlock cull: exception]
 			ifFalse: [exception pass]
 	  ]

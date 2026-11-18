@@ -7,11 +7,11 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'clusterCount',
-		'clusters',
-		'decoder',
-		'header',
-		'stopBlock'
+		#clusterCount,
+		#clusters,
+		#decoder,
+		#header,
+		#stopBlock
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

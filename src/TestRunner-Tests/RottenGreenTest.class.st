@@ -2,7 +2,7 @@ Class {
 	#name : 'RottenGreenTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'runner'
+		#runner
 	],
 	#category : 'TestRunner-Tests-Utilities-Test',
 	#package : 'TestRunner-Tests',

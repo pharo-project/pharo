@@ -5,8 +5,8 @@ Class {
 	#name : 'CompositeTransform',
 	#superclass : 'DisplayTransform',
 	#instVars : [
-		'globalTransform',
-		'localTransform'
+		#globalTransform,
+		#localTransform
 	],
 	#category : 'Graphics-Transformations',
 	#package : 'Graphics-Transformations'

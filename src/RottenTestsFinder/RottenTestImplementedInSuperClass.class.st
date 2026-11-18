@@ -7,7 +7,7 @@ Class {
 	#name : 'RottenTestImplementedInSuperClass',
 	#superclass : 'RottenTest',
 	#instVars : [
-		'subclassesInWhichTestIsRotten'
+		#subclassesInWhichTestIsRotten
 	],
 	#category : 'RottenTestsFinder-Results',
 	#package : 'RottenTestsFinder',

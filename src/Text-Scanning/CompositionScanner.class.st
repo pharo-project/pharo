@@ -50,15 +50,15 @@ Class {
 	#name : 'CompositionScanner',
 	#superclass : 'CharacterScanner',
 	#instVars : [
-		'spaceX',
-		'spaceIndex',
-		'lineHeight',
-		'baseline',
-		'lineHeightAtSpace',
-		'baselineAtSpace',
-		'lastBreakIsNotASpace',
-		'nextIndexAfterLineBreak',
-		'wantsColumnBreaks'
+		#spaceX,
+		#spaceIndex,
+		#lineHeight,
+		#baseline,
+		#lineHeightAtSpace,
+		#baselineAtSpace,
+		#lastBreakIsNotASpace,
+		#nextIndexAfterLineBreak,
+		#wantsColumnBreaks
 	],
 	#category : 'Text-Scanning',
 	#package : 'Text-Scanning'

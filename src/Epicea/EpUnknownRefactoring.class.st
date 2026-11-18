@@ -5,7 +5,7 @@ Class {
 	#name : 'EpUnknownRefactoring',
 	#superclass : 'EpRefactoring',
 	#instVars : [
-		'printString'
+		#printString
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

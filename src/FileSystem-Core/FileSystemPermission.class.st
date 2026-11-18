@@ -5,7 +5,7 @@ Class {
 	#name : 'FileSystemPermission',
 	#superclass : 'Object',
 	#instVars : [
-		'posixPermission'
+		#posixPermission
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',

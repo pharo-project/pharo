@@ -16,7 +16,7 @@ Class {
 	#name : 'LiteralVariable',
 	#superclass : 'Variable',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'Kernel-CodeModel-Variables',
 	#package : 'Kernel-CodeModel',
@@ -41,7 +41,7 @@ LiteralVariable class >> key: newKey value: newValue [
 { #category : 'comparing' }
 LiteralVariable >> = anAssociation [
 
-	^ super = anAssociation and: [value = anAssociation value]
+	^ super = anAssociation and: [value sameContents: anAssociation value]
 ]
 
 { #category : 'visiting' }

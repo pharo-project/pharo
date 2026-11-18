@@ -10,7 +10,7 @@ Class {
 	#name : 'ClyUnknownScope',
 	#superclass : 'ClyScope',
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : 'Calypso-NavigationModel-Model',
 	#package : 'Calypso-NavigationModel',

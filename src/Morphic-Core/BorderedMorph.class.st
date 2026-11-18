@@ -16,8 +16,8 @@ Class {
 	#name : 'BorderedMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'borderWidth',
-		'borderColor'
+		#borderWidth,
+		#borderColor
 	],
 	#category : 'Morphic-Core-Kernel',
 	#package : 'Morphic-Core',

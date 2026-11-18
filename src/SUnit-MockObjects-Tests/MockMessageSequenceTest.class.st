@@ -2,7 +2,7 @@ Class {
 	#name : 'MockMessageSequenceTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'mock'
+		#mock
 	],
 	#category : 'SUnit-MockObjects-Tests',
 	#package : 'SUnit-MockObjects-Tests'

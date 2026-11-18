@@ -2,7 +2,7 @@ Class {
 	#name : 'CoASTSessionResultSetBuilder',
 	#superclass : 'CoASTHeuristicsResultSetBuilder',
 	#instVars : [
-		'session'
+		#session
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

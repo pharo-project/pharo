@@ -5,8 +5,8 @@ Class {
 	#name : 'EpBehaviorCopy',
 	#superclass : 'EpEvent',
 	#instVars : [
-		'definition',
-		'newName'
+		#definition,
+		#newName
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

@@ -5,8 +5,8 @@ Class {
 	#name : 'RectangleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'emptyRectangle',
-		'rectangle1'
+		#emptyRectangle,
+		#rectangle1
 	],
 	#category : 'Graphics-Tests-Primitives',
 	#package : 'Graphics-Tests',

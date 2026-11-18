@@ -7,7 +7,7 @@ Class {
 	#name : 'MorphTreeNodeModel',
 	#superclass : 'ListItemWrapper',
 	#instVars : [
-		'parentNode'
+		#parentNode
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

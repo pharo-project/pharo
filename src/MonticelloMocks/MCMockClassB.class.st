@@ -5,16 +5,16 @@ Class {
 	#name : 'MCMockClassB',
 	#superclass : 'MCMock',
 	#instVars : [
-		'ivarb'
+		#ivarb
 	],
 	#classVars : [
-		'CVar'
+		#CVar
 	],
 	#pools : [
-		'MCMockAPoolDictionary'
+		#MCMockAPoolDictionary
 	],
 	#classInstVars : [
-		'ciVar'
+		#ciVar
 	],
 	#category : 'MonticelloMocks',
 	#package : 'MonticelloMocks'

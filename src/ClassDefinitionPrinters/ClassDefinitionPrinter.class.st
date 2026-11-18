@@ -56,10 +56,10 @@ Class {
 	#name : 'ClassDefinitionPrinter',
 	#superclass : 'Object',
 	#instVars : [
-		'forClass'
+		#forClass
 	],
 	#classVars : [
-		'DisplayEmptySlots'
+		#DisplayEmptySlots
 	],
 	#category : 'ClassDefinitionPrinters',
 	#package : 'ClassDefinitionPrinters'

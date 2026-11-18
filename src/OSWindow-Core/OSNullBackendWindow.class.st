@@ -5,8 +5,8 @@ Class {
 	#name : 'OSNullBackendWindow',
 	#superclass : 'OSBackendWindow',
 	#instVars : [
-		'attributes',
-		'isTextInputActive'
+		#attributes,
+		#isTextInputActive
 	],
 	#category : 'OSWindow-Core-Utilities',
 	#package : 'OSWindow-Core',

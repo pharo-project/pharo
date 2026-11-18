@@ -2,11 +2,11 @@ Class {
 	#name : 'RBSharedPoolTest',
 	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
-		'rbNamespace',
-		'objectClass',
-		'messageNodeClass',
-		'userOf',
-		'defineOf'
+		#rbNamespace,
+		#objectClass,
+		#messageNodeClass,
+		#userOf,
+		#defineOf
 	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'

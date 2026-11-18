@@ -5,7 +5,7 @@ Class {
 	#name : 'EpEntryAdded',
 	#superclass : 'Announcement',
 	#instVars : [
-		'entry'
+		#entry
 	],
 	#category : 'Epicea-Announcements',
 	#package : 'Epicea',

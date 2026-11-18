@@ -9,8 +9,8 @@ Class {
 	#name : 'ZnEntityWriter',
 	#superclass : 'Object',
 	#instVars : [
-		'headers',
-		'stream'
+		#headers,
+		#stream
 	],
 	#category : 'Zinc-HTTP-Streaming',
 	#package : 'Zinc-HTTP',
@@ -37,14 +37,14 @@ ZnEntityWriter >> headers: znHeaders [
 { #category : 'testing' }
 ZnEntityWriter >> isChunked [
 	| transferEncoding |
-	transferEncoding := self headers at: 'Transfer-Encoding' ifAbsent: [ ^ false ].
+	transferEncoding := self headers at: #'Transfer-Encoding' ifAbsent: [ ^ false ].
 	^ transferEncoding = 'chunked' or: [ transferEncoding beginsWith: 'chunked' ]
 ]
 
 { #category : 'testing' }
 ZnEntityWriter >> isGzipped [
 	| contentEncoding |
-	contentEncoding := self headers at: 'Content-Encoding' ifAbsent: [ ^ false ].
+	contentEncoding := self headers at: #'Content-Encoding' ifAbsent: [ ^ false ].
 	^ contentEncoding = 'gzip'
 ]
 

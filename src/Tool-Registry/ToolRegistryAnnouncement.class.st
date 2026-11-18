@@ -5,8 +5,8 @@ Class {
 	#name : 'ToolRegistryAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'tool',
-		'name'
+		#tool,
+		#name
 	],
 	#category : 'Tool-Registry',
 	#package : 'Tool-Registry'

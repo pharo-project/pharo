@@ -5,7 +5,7 @@ Class {
 	#name : 'UnlimitedInstanceVariableSlot',
 	#superclass : 'DerivedSlot',
 	#instVars : [
-		'offset'
+		#offset
 	],
 	#category : 'Slot-Examples-Base',
 	#package : 'Slot-Examples',
@@ -19,7 +19,7 @@ UnlimitedInstanceVariableSlot >> addAdditionalSlotsTo: slots [
 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
 
 	slots
-		detect: [ :slot | slot name = #_ivarArrayBaseSlot ]
+		detect: [ :slot | slot name sameContents: #_ivarArrayBaseSlot ]
 		ifFound: [ :slot | baseSlot := slot. self growBaseSlot ]
 		ifNone: [ slots add: (baseSlot := #_ivarArrayBaseSlot => BaseSlot default: (Array new: 1)) ]
 ]

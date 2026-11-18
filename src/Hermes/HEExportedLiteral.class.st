@@ -28,7 +28,7 @@ Class {
 	#name : 'HEExportedLiteral',
 	#superclass : 'HEAbstractExported',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

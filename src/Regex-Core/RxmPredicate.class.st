@@ -10,7 +10,7 @@ Class {
 	#name : 'RxmPredicate',
 	#superclass : 'RxmLink',
 	#instVars : [
-		'predicate'
+		#predicate
 	],
 	#category : 'Regex-Core-Links',
 	#package : 'Regex-Core',

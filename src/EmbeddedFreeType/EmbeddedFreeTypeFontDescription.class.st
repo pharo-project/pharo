@@ -35,7 +35,7 @@ EmbeddedFreeTypeFontDescription class >> installFontsIn: provider [
 
 { #category : 'testing' }
 EmbeddedFreeTypeFontDescription class >> isAbstract [
-	^self name = #EmbeddedFreeTypeFontDescription
+	^self name sameContents: #EmbeddedFreeTypeFontDescription
 ]
 
 { #category : 'accessing' }

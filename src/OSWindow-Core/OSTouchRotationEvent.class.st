@@ -5,7 +5,7 @@ Class {
 	#name : 'OSTouchRotationEvent',
 	#superclass : 'OSTouchComplexEvent',
 	#instVars : [
-		'dTheta'
+		#dTheta
 	],
 	#category : 'OSWindow-Core-Events-Touch',
 	#package : 'OSWindow-Core',

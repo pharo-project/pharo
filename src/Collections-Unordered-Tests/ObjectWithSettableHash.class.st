@@ -5,7 +5,7 @@ Class {
 	#name : 'ObjectWithSettableHash',
 	#superclass : 'Object',
 	#instVars : [
-		'hash'
+		#hash
 	],
 	#category : 'Collections-Unordered-Tests-Dictionaries',
 	#package : 'Collections-Unordered-Tests',

@@ -7,7 +7,7 @@ Class {
 	#name : 'CollapsedMorph',
 	#superclass : 'SystemWindow',
 	#instVars : [
-		'uncollapsedMorph'
+		#uncollapsedMorph
 	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',

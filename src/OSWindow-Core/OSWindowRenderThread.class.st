@@ -5,18 +5,18 @@ Class {
 	#name : 'OSWindowRenderThread',
 	#superclass : 'Object',
 	#instVars : [
-		'renderThreadQueue',
-		'operationAvailableSemaphore',
-		'registeredWindows',
-		'registeredWindowsMutex',
-		'activeRenderThreadProcessMutex',
-		'hasAnimatedWindowsInThisPeriod'
+		#renderThreadQueue,
+		#operationAvailableSemaphore,
+		#registeredWindows,
+		#registeredWindowsMutex,
+		#activeRenderThreadProcessMutex,
+		#hasAnimatedWindowsInThisPeriod
 	],
 	#classVars : [
-		'ActiveRenderThreadProcess',
-		'RenderSession',
-		'RenderThreadProcess',
-		'UniqueInstance'
+		#ActiveRenderThreadProcess,
+		#RenderSession,
+		#RenderThreadProcess,
+		#UniqueInstance
 	],
 	#category : 'OSWindow-Core-Extras',
 	#package : 'OSWindow-Core',

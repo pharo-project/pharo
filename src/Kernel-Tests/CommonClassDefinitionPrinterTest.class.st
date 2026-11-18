@@ -6,7 +6,7 @@ Class {
 	#name : 'CommonClassDefinitionPrinterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'slotDisplay'
+		#slotDisplay
 	],
 	#category : 'Kernel-Tests-Fluid',
 	#package : 'Kernel-Tests',

@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyLongExampleQuery',
 	#superclass : 'ClyReturningScopeBasisExampleQuery',
 	#instVars : [
-		'executionSemaphore'
+		#executionSemaphore
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

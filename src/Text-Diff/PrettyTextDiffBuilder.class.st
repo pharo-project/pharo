@@ -12,7 +12,7 @@ Class {
 	#name : 'PrettyTextDiffBuilder',
 	#superclass : 'TextDiffBuilder',
 	#instVars : [
-		'sourceClass'
+		#sourceClass
 	],
 	#category : 'Text-Diff-Building',
 	#package : 'Text-Diff',

@@ -18,10 +18,10 @@ Class {
 	#name : 'ClyCriticEnvironmentPlugin',
 	#superclass : 'ClySystemEnvironmentPlugin',
 	#instVars : [
-		'providesMethodGroup'
+		#providesMethodGroup
 	],
 	#classInstVars : [
-		'providesMethodGroupByDefault'
+		#providesMethodGroupByDefault
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Queries',
 	#package : 'Calypso-SystemPlugins-Critic-Queries'

@@ -16,7 +16,7 @@ Class {
 	#name : 'ClyClassComment',
 	#superclass : 'Object',
 	#instVars : [
-		'definingClass'
+		#definingClass
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

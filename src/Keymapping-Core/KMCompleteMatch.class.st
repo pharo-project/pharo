@@ -5,8 +5,8 @@ Class {
 	#name : 'KMCompleteMatch',
 	#superclass : 'Announcement',
 	#instVars : [
-		'event',
-		'source'
+		#event,
+		#source
 	],
 	#category : 'Keymapping-Core-Announcements',
 	#package : 'Keymapping-Core',

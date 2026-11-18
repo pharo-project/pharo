@@ -11,8 +11,8 @@ Class {
 	#name : 'OSWindowWorldMorph',
 	#superclass : 'WorldMorph',
 	#instVars : [
-		'closeCallback',
-		'isResizeable'
+		#closeCallback,
+		#isResizeable
 	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',

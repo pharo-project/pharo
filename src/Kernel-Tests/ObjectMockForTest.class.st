@@ -5,7 +5,7 @@ Class {
 	#name : 'ObjectMockForTest',
 	#superclass : 'Object',
 	#instVars : [
-		'variable'
+		#variable
 	],
 	#category : 'Kernel-Tests-Objects',
 	#package : 'Kernel-Tests',

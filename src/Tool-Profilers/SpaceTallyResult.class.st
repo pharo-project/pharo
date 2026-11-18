@@ -22,7 +22,7 @@ Class {
 	#name : 'SpaceTallyResult',
 	#superclass : 'Object',
 	#instVars : [
-		'items'
+		#items
 	],
 	#category : 'Tool-Profilers-Space',
 	#package : 'Tool-Profilers',

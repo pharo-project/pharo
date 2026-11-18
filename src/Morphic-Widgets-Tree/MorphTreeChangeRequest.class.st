@@ -5,8 +5,8 @@ Class {
 	#name : 'MorphTreeChangeRequest',
 	#superclass : 'MorphTreeAnnounce',
 	#instVars : [
-		'action',
-		'arguments'
+		#action,
+		#arguments
 	],
 	#category : 'Morphic-Widgets-Tree-Announcements',
 	#package : 'Morphic-Widgets-Tree',

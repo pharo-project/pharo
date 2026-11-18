@@ -5,9 +5,9 @@ Class {
 	#name : 'ParagraphSelectionBlock',
 	#superclass : 'Object',
 	#instVars : [
-		'first',
-		'last',
-		'color'
+		#first,
+		#last,
+		#color
 	],
 	#category : 'Morphic-Base-Text Support',
 	#package : 'Morphic-Base',

@@ -11,7 +11,7 @@ Class {
 	#name : 'AthensPathSegment',
 	#superclass : 'Object',
 	#instVars : [
-		'next'
+		#next
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

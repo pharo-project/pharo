@@ -7,14 +7,14 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'text',
-		'fontFamily',
-		'fontSlant',
-		'fontWeight',
-		'fontSize'
+		#text,
+		#fontFamily,
+		#fontSlant,
+		#fontWeight,
+		#fontSize
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

@@ -9,9 +9,9 @@ Class {
 	#name : 'MorphicEvent',
 	#superclass : 'Object',
 	#instVars : [
-		'timeStamp',
-		'source',
-		'windowIndex'
+		#timeStamp,
+		#source,
+		#windowIndex
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

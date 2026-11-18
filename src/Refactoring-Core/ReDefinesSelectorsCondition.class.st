@@ -2,8 +2,8 @@ Class {
 	#name : 'ReDefinesSelectorsCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
-		'class',
-		'selectors'
+		#class,
+		#selectors
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

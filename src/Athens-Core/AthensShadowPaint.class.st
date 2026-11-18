@@ -35,10 +35,10 @@ Class {
 	#name : 'AthensShadowPaint',
 	#superclass : 'AthensPaint',
 	#instVars : [
-		'color',
-		'width',
-		'blur',
-		'offset'
+		#color,
+		#width,
+		#blur,
+		#offset
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

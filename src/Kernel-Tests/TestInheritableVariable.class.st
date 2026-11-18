@@ -6,7 +6,7 @@ Class {
 	#name : 'TestInheritableVariable',
 	#superclass : 'ProcessLocalVariable',
 	#classInstVars : [
-		'enabled'
+		#enabled
 	],
 	#category : 'Kernel-Tests-Processes',
 	#package : 'Kernel-Tests',

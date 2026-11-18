@@ -20,7 +20,7 @@ Class {
 	#name : 'RxmLink',
 	#superclass : 'Object',
 	#instVars : [
-		'next'
+		#next
 	],
 	#category : 'Regex-Core-Links',
 	#package : 'Regex-Core',

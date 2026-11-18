@@ -2,8 +2,8 @@ Class {
 	#name : 'MetacelloSpec',
 	#superclass : 'Object',
 	#instVars : [
-		'project',
-		'mutable'
+		#project,
+		#mutable
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',

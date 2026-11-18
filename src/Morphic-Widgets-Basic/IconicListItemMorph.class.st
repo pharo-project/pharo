@@ -15,9 +15,9 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'icon',
-		'morph',
-		'originalObject'
+		#icon,
+		#morph,
+		#originalObject
 	],
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets-Basic'

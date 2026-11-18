@@ -18,7 +18,7 @@ Class {
 	#name : 'SpaceTally',
 	#superclass : 'Object',
 	#instVars : [
-		'results'
+		#results
 	],
 	#category : 'Tool-Profilers-Space',
 	#package : 'Tool-Profilers',

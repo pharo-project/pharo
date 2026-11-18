@@ -2,11 +2,11 @@ Class {
 	#name : 'MetacelloRepositorySpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
-		'description',
-		'username',
-		'password',
-		'type',
-		'resolvedReference'
+		#description,
+		#username,
+		#password,
+		#type,
+		#resolvedReference
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',

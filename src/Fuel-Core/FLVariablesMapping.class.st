@@ -11,11 +11,11 @@ Class {
 	#name : 'FLVariablesMapping',
 	#superclass : 'Object',
 	#instVars : [
-		'mapping',
-		'theClass',
-		'notIgnoredVariables',
-		'references',
-		'possibleTraitVariables'
+		#mapping,
+		#theClass,
+		#notIgnoredVariables,
+		#references,
+		#possibleTraitVariables
 	],
 	#category : 'Fuel-Core-Clusters',
 	#package : 'Fuel-Core',

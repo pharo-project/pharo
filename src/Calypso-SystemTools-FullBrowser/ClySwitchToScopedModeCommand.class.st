@@ -2,7 +2,7 @@ Class {
 	#name : 'ClySwitchToScopedModeCommand',
 	#superclass : 'ClyBrowserCommand',
 	#instVars : [
-		'packages'
+		#packages
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Packages',
 	#package : 'Calypso-SystemTools-FullBrowser',

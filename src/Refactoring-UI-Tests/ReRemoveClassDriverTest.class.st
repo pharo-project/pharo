@@ -54,7 +54,7 @@ ReRemoveClassDriverTest >> testGoodPathRemovingNonEmptyLeaf [
 	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.
 	driver := ReRemoveClassDriver new 
 		scopes: { pack }
-		classes: { self class environment at: 'MyClassNonEmptyLeafUnused' asSymbol}.
+		classes: { self class environment at: #'MyClassNonEmptyLeafUnused' asSymbol}.
 	self setUpDriver: driver.
 	driver runRefactoring.
 	"It is not empty so we ask if the user really wants to lose something"

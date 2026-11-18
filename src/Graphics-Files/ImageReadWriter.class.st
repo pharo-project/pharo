@@ -29,7 +29,7 @@ Class {
 	#name : 'ImageReadWriter',
 	#superclass : 'Object',
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : 'Graphics-Files',
 	#package : 'Graphics-Files'

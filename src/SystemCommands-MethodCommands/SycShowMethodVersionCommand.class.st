@@ -12,7 +12,7 @@ Class {
 	#name : 'SycShowMethodVersionCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'method'
+		#method
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'

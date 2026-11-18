@@ -8,7 +8,7 @@ Class {
 	#name : 'ZnServerLogEvent',
 	#superclass : 'ZnLogEvent',
 	#instVars : [
-		'serverId'
+		#serverId
 	],
 	#category : 'Zinc-HTTP-Logging',
 	#package : 'Zinc-HTTP',

@@ -6,14 +6,14 @@ Class {
 	#name : 'TFCallbackQueue',
 	#superclass : 'Object',
 	#instVars : [
-		'semaphore',
-		'callbacksByAddress',
-		'pendingQueue',
-		'callbackProcess',
-		'mutex'
+		#semaphore,
+		#callbacksByAddress,
+		#pendingQueue,
+		#callbackProcess,
+		#mutex
 	],
 	#classVars : [
-		'UniqueInstance'
+		#UniqueInstance
 	],
 	#category : 'ThreadedFFI-Callbacks',
 	#package : 'ThreadedFFI',

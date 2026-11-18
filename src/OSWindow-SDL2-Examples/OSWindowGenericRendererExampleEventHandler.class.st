@@ -5,7 +5,7 @@ Class {
 	#name : 'OSWindowGenericRendererExampleEventHandler',
 	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
-		'example'
+		#example
 	],
 	#category : 'OSWindow-SDL2-Examples-Examples',
 	#package : 'OSWindow-SDL2-Examples',

@@ -5,8 +5,8 @@ Class {
 	#name : 'Stopwatch',
 	#superclass : 'Object',
 	#instVars : [
-		'timespans',
-		'state'
+		#timespans,
+		#state
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'
@@ -47,13 +47,13 @@ Stopwatch >> end [
 { #category : 'testing' }
 Stopwatch >> isActive [
 
-	^ self state = #active
+	^ self state sameContents: #active
 ]
 
 { #category : 'testing' }
 Stopwatch >> isSuspended [
 
-	^ self state = #suspended
+	^ self state sameContents: #suspended
 ]
 
 { #category : 'printing' }

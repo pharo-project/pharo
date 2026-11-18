@@ -18,8 +18,8 @@ Class {
 	#name : 'VirtualMachine',
 	#superclass : 'Object',
 	#classVars : [
-		'LastStats',
-		'WordSize'
+		#LastStats,
+		#WordSize
 	],
 	#category : 'System-Support-VM',
 	#package : 'System-Support',

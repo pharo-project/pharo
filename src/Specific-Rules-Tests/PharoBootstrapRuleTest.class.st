@@ -2,7 +2,7 @@ Class {
 	#name : 'PharoBootstrapRuleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'checkerBackup'
+		#checkerBackup
 	],
 	#category : 'Specific-Rules-Tests',
 	#package : 'Specific-Rules-Tests'

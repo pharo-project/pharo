@@ -9,11 +9,11 @@ Class {
 	#name : 'TabManagerMorph',
 	#superclass : 'PanelMorph',
 	#instVars : [
-		'toolbar',
-		'container',
-		'contentsWrapper',
-		'processes',
-		'model'
+		#toolbar,
+		#container,
+		#contentsWrapper,
+		#processes,
+		#model
 	],
 	#category : 'Morphic-Widgets-Tabs-Morphs',
 	#package : 'Morphic-Widgets-Tabs',

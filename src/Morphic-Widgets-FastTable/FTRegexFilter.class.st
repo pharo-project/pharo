@@ -10,7 +10,7 @@ Class {
 	#name : 'FTRegexFilter',
 	#superclass : 'FTFilter',
 	#instVars : [
-		'regex'
+		#regex
 	],
 	#category : 'Morphic-Widgets-FastTable-Functions',
 	#package : 'Morphic-Widgets-FastTable',

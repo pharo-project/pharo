@@ -7,7 +7,7 @@ TheManifestBuilder class >> ofPackageNamed: aPackageName [
 	self deprecated: 'Call #ofPackage: instead because the only senders of this method is in NewTools and has the package directly.'.
 	builder := self new.
 	self allManifestClasses
-		detect: [ :each | each package name = aPackageName ]
+		detect: [ :each | each package name sameContents: aPackageName ]
 		ifFound: [ :manifestClass | builder manifestClass: manifestClass ]
 		ifNone: [ builder createManifestNamed: aPackageName ].
 	^ builder

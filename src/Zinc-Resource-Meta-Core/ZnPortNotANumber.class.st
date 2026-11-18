@@ -7,7 +7,7 @@ Class {
 	#name : 'ZnPortNotANumber',
 	#superclass : 'Error',
 	#instVars : [
-		'port'
+		#port
 	],
 	#category : 'Zinc-Resource-Meta-Core',
 	#package : 'Zinc-Resource-Meta-Core'

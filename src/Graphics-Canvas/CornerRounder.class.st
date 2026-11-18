@@ -14,14 +14,14 @@ Class {
 	#name : 'CornerRounder',
 	#superclass : 'Object',
 	#instVars : [
-		'cornerMasks',
-		'cornerOverlays',
-		'underBits'
+		#cornerMasks,
+		#cornerOverlays,
+		#underBits
 	],
 	#classVars : [
-		'CR0',
-		'CR1',
-		'CR2'
+		#CR0,
+		#CR1,
+		#CR2
 	],
 	#category : 'Graphics-Canvas-Canvases',
 	#package : 'Graphics-Canvas',

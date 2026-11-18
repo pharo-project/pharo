@@ -2,13 +2,13 @@ Class {
 	#name : 'RubTextSegmentMorph',
 	#superclass : 'RubSegmentMorph',
 	#instVars : [
-		'textArea',
-		'firstIndex',
-		'lastIndex',
-		'iconFormSet',
-		'iconBlock',
-		'label',
-		'changeable'
+		#textArea,
+		#firstIndex,
+		#lastIndex,
+		#iconFormSet,
+		#iconBlock,
+		#label,
+		#changeable
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

@@ -11,11 +11,11 @@ Class {
 	#name : 'TestSuite',
 	#superclass : 'Object',
 	#instVars : [
-		'tests',
-		'resources',
-		'name',
-		'announcer',
-		'randomGenerator'
+		#tests,
+		#resources,
+		#name,
+		#announcer,
+		#randomGenerator
 	],
 	#category : 'SUnit-Core-Kernel',
 	#package : 'SUnit-Core',

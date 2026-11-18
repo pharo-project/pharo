@@ -5,10 +5,10 @@ Class {
 	#name : 'AthensBalloonImagePaint',
 	#superclass : 'AthensPaint',
 	#instVars : [
-		'form',
-		'origin',
-		'direction',
-		'tileFlag'
+		#form,
+		#origin,
+		#direction,
+		#tileFlag
 	],
 	#category : 'Athens-Balloon-Paint',
 	#package : 'Athens-Balloon',

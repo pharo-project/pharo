@@ -7,7 +7,7 @@ Class {
 	#name : 'DrTestsPlugin',
 	#superclass : 'Object',
 	#instVars : [
-		'announcer'
+		#announcer
 	],
 	#category : 'DrTests-Model',
 	#package : 'DrTests',

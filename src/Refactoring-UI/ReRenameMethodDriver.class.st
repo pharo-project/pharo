@@ -5,11 +5,11 @@ Class {
 	#name : 'ReRenameMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'class',
-		'originalMessage',
-		'newMessage',
-		'shouldEscape',
-		'methodNameEditorPresenterClass'
+		#class,
+		#originalMessage,
+		#newMessage,
+		#shouldEscape,
+		#methodNameEditorPresenterClass
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

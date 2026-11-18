@@ -7,13 +7,13 @@ Class {
 	#traits : 'TRubWithWrapPolicy + (TRubWithLineNumber - {#fontToUse})',
 	#classTraits : 'TRubWithWrapPolicy classTrait + TRubWithLineNumber classTrait',
 	#instVars : [
-		'lineAnnotation',
-		'row',
-		'wrappingPolicyMorph',
-		'editingModeMorph',
-		'tabWidthMorph',
-		'columnDisplayMorph',
-		'lineNumbersDisplayMorph'
+		#lineAnnotation,
+		#row,
+		#wrappingPolicyMorph,
+		#editingModeMorph,
+		#tabWidthMorph,
+		#columnDisplayMorph,
+		#lineNumbersDisplayMorph
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

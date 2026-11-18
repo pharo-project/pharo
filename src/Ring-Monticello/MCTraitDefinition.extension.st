@@ -11,7 +11,7 @@ MCTraitDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		classTraitDef baseTrait: def.
 		def traitComposition: (self traitCompositionFrom: self traitComposition parent: def).
 "		classTraitDef traitComposition: (self traitCompositionFrom: self classTraitComposition parent: classTraitDef)".
-		((self superclassName = #nil) or: [ self superclassName isNil "for traits"])
+		((self superclassName sameContents: #nil) or: [ self superclassName isNil "for traits"])
 			ifTrue: [ def superclass: def ]
 			ifFalse: [ def superclass: (anRGEnvironment ensureClassNamed: superclassName ) ].
 		def category: self category.

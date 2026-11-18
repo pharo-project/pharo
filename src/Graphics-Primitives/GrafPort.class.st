@@ -5,11 +5,11 @@ Class {
 	#name : 'GrafPort',
 	#superclass : 'BitBlt',
 	#instVars : [
-		'alpha',
-		'fillPattern',
-		'lastFont',
-		'lastFontForegroundColor',
-		'lastFontBackgroundColor'
+		#alpha,
+		#fillPattern,
+		#lastFont,
+		#lastFontForegroundColor,
+		#lastFontBackgroundColor
 	],
 	#category : 'Graphics-Primitives-BitBlt',
 	#package : 'Graphics-Primitives',

@@ -89,7 +89,7 @@ BaselineOf class >> deepPackagesOfGroupNamed: aName [
 			specListProjectDo: [ :each | stream nextPut: each ] 
 			packageDo: [ :each | ] 
 			groupDo: [  :each | ] ].
-	group := allGroups detect: [ :eachGroup | eachGroup name = aName ].
+	group := allGroups detect: [ :eachGroup | eachGroup name sameContents: aName ].
 	^ (group includes
 		collect: [ :each | 
 			(allGroups anySatisfy: [ :eachGroup | eachGroup name = each ])
@@ -111,7 +111,7 @@ BaselineOf class >> isProject [
 { #category : 'accessing' }
 BaselineOf class >> packagesOfGroupNamed: aName [
 
-	^ (self version groups detect: [ :g | g name = aName ]) includes
+	^ (self version groups detect: [ :g | g name sameContents: aName ]) includes
 ]
 
 { #category : 'accessing' }

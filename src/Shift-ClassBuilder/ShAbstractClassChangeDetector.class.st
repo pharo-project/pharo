@@ -13,11 +13,11 @@ Class {
 	#name : 'ShAbstractClassChangeDetector',
 	#superclass : 'ShAbstractChangeDetector',
 	#instVars : [
-		'oldValue',
-		'newValue',
-		'builderAccessor',
-		'classAccessor',
-		'comparer'
+		#oldValue,
+		#newValue,
+		#builderAccessor,
+		#classAccessor,
+		#comparer
 	],
 	#category : 'Shift-ClassBuilder-Changes',
 	#package : 'Shift-ClassBuilder',

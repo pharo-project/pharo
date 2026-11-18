@@ -5,7 +5,7 @@ Class {
 	#name : 'FreeTypeExternalMemory',
 	#superclass : 'FT2Handle',
 	#instVars : [
-		'bytes'
+		#bytes
 	],
 	#category : 'FreeType-Base',
 	#package : 'FreeType',

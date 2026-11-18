@@ -9,9 +9,9 @@ Class {
 	#name : 'ZnRequestLine',
 	#superclass : 'Object',
 	#instVars : [
-		'method',
-		'uri',
-		'version'
+		#method,
+		#uri,
+		#version
 	],
 	#category : 'Zinc-HTTP-Core',
 	#package : 'Zinc-HTTP',
@@ -150,7 +150,7 @@ ZnRequestLine >> writeOn: stream [
 			self uri hasSecureScheme
 				ifTrue: [
 					"See also ZnClient>>#setupTLSTo:"
-					method = #CONNECT
+					(method sameContents: #CONNECT)
 						ifTrue: [ writeStream nextPutAll: uri authorityWithPort ]
 						ifFalse: [ self uri printPathQueryFragmentOn: writeStream ] ]
 				ifFalse: [ self uri printOn: writeStream ] ]

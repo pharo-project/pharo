@@ -5,8 +5,8 @@ Class {
 	#name : 'HiUniformColorStrategy',
 	#superclass : 'HiAbstractColorStrategy',
 	#instVars : [
-		'linkColor',
-		'nodeColor'
+		#linkColor,
+		#nodeColor
 	],
 	#category : 'Hiedra-UI',
 	#package : 'Hiedra',

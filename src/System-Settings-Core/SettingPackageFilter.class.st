@@ -11,7 +11,7 @@ Class {
 	#name : 'SettingPackageFilter',
 	#superclass : 'SettingFilter',
 	#instVars : [
-		'packages'
+		#packages
 	],
 	#category : 'System-Settings-Core-Filter',
 	#package : 'System-Settings-Core',

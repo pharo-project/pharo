@@ -13,7 +13,7 @@ Class {
 	#name : 'SycMessageCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'messages'
+		#messages
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

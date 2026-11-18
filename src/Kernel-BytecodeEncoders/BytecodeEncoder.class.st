@@ -5,8 +5,8 @@ Class {
 	#name : 'BytecodeEncoder',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'position'
+		#stream,
+		#position
 	],
 	#category : 'Kernel-BytecodeEncoders',
 	#package : 'Kernel-BytecodeEncoders'

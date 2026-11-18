@@ -5,7 +5,7 @@ Class {
 	#name : 'ReExceptionStrategyBaseTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'currentStrategy'
+		#currentStrategy
 	],
 	#category : 'Renraku-Tests',
 	#package : 'Renraku-Tests'

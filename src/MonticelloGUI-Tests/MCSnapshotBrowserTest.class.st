@@ -2,8 +2,8 @@ Class {
 	#name : 'MCSnapshotBrowserTest',
 	#superclass : 'MCTestCase',
 	#instVars : [
-		'model',
-		'morph'
+		#model,
+		#morph
 	],
 	#category : 'MonticelloGUI-Tests',
 	#package : 'MonticelloGUI-Tests'

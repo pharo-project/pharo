@@ -5,8 +5,8 @@ Class {
 	#name : 'RBNotice',
 	#superclass : 'Object',
 	#instVars : [
-		'messageText',
-		'node'
+		#messageText,
+		#node
 	],
 	#category : 'AST-Core-Notice',
 	#package : 'AST-Core',

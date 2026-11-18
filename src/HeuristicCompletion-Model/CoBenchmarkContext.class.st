@@ -7,8 +7,8 @@ Class {
 	#name : 'CoBenchmarkContext',
 	#superclass : 'Object',
 	#instVars : [
-		'callsite',
-		'position'
+		#callsite,
+		#position
 	],
 	#category : 'HeuristicCompletion-Model-Benchmarks',
 	#package : 'HeuristicCompletion-Model',

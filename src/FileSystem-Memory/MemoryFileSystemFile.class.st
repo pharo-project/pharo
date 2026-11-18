@@ -5,9 +5,9 @@ Class {
 	#name : 'MemoryFileSystemFile',
 	#superclass : 'MemoryFileSystemEntry',
 	#instVars : [
-		'bytes',
-		'size',
-		'closed'
+		#bytes,
+		#size,
+		#closed
 	],
 	#category : 'FileSystem-Memory-Base',
 	#package : 'FileSystem-Memory',

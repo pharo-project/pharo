@@ -10,7 +10,7 @@ Class {
 	#name : 'SycPackageCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'packages'
+		#packages
 	],
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'

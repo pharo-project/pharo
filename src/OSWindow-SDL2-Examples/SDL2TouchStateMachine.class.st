@@ -5,10 +5,10 @@ Class {
 	#name : 'SDL2TouchStateMachine',
 	#superclass : 'Object',
 	#instVars : [
-		'first',
-		'finish',
-		'move',
-		'color'
+		#first,
+		#finish,
+		#move,
+		#color
 	],
 	#category : 'OSWindow-SDL2-Examples-Touch',
 	#package : 'OSWindow-SDL2-Examples',

@@ -5,12 +5,12 @@ Class {
 	#name : 'FreeTypeCacheEntry',
 	#superclass : 'Link',
 	#instVars : [
-		'font',
-		'charCode',
-		'type',
-		'scale',
-		'object',
-		'previousLink'
+		#font,
+		#charCode,
+		#type,
+		#scale,
+		#object,
+		#previousLink
 	],
 	#category : 'FreeType-Cache',
 	#package : 'FreeType',

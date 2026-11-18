@@ -8,8 +8,8 @@ Class {
 	#name : 'RxmLookahaed',
 	#superclass : 'RxmLink',
 	#instVars : [
-		'lookahead',
-		'positive'
+		#lookahead,
+		#positive
 	],
 	#category : 'Regex-Core-Links',
 	#package : 'Regex-Core',

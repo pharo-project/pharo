@@ -2,7 +2,7 @@ Class {
 	#name : 'MetacelloVersionLoadDirective',
 	#superclass : 'MetacelloDirective',
 	#instVars : [
-		'loadDirectives'
+		#loadDirectives
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',

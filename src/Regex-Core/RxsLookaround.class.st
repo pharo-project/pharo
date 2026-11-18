@@ -7,8 +7,8 @@ Class {
 	#name : 'RxsLookaround',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'piece',
-		'positive'
+		#piece,
+		#positive
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

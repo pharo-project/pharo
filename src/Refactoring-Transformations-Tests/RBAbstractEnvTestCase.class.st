@@ -2,8 +2,8 @@ Class {
 	#name : 'RBAbstractEnvTestCase',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'testingEnvironment',
-		'model'
+		#testingEnvironment,
+		#model
 	],
 	#category : 'Refactoring-Transformations-Tests-Parametrized',
 	#package : 'Refactoring-Transformations-Tests',
@@ -119,7 +119,7 @@ RBAbstractEnvTestCase >> rbModelForExtractMethodTest [
 	self
 		addMethodsToModelClasses: #( #( #MyClassA #( #( 'bar
 				^ self' #tests ) #( 'name
-				^ ''SomeString''' #tests ) #( 'methodWithArg: anArg
+				^ SomeString' #tests ) #( 'methodWithArg: anArg
 				^ anArg not' #tests ) #( 'methodWithArg: anArg1 andArg: anArg2
 				^ (anArg1 > anArg2) not' #tests ) #( 'problemCount
 				^ 435' #tests ) #( 'string: aString stream: aStream

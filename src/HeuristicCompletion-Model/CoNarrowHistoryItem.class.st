@@ -6,9 +6,9 @@ Class {
 	#name : 'CoNarrowHistoryItem',
 	#superclass : 'Object',
 	#instVars : [
-		'fetcher',
-		'results',
-		'hasFinished'
+		#fetcher,
+		#results,
+		#hasFinished
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

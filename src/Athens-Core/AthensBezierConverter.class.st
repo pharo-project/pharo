@@ -7,13 +7,13 @@ Class {
 	#name : 'AthensBezierConverter',
 	#superclass : 'AthensPathConverter',
 	#instVars : [
-		'distanceTolerance',
-		'angleTolerance'
+		#distanceTolerance,
+		#angleTolerance
 	],
 	#classVars : [
-		'CollinearityEps',
-		'CurveAngleTolerance',
-		'DistanceEps'
+		#CollinearityEps,
+		#CurveAngleTolerance,
+		#DistanceEps
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

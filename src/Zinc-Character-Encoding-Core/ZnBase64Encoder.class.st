@@ -33,17 +33,17 @@ Class {
 	#name : 'ZnBase64Encoder',
 	#superclass : 'Object',
 	#instVars : [
-		'alphabet',
-		'inverse',
-		'lineLength',
-		'lineEnd',
-		'whitespace',
-		'padding',
-		'strict'
+		#alphabet,
+		#inverse,
+		#lineLength,
+		#lineEnd,
+		#whitespace,
+		#padding,
+		#strict
 	],
 	#classVars : [
-		'DefaultAlphabet',
-		'DefaultInverse'
+		#DefaultAlphabet,
+		#DefaultInverse
 	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'
@@ -270,10 +270,10 @@ ZnBase64Encoder >> isWhitespaceCharacter: character [
 	whitespace
 		ifNil: [ "No whitespace allowed"
 			^ false ].
-	whitespace = #separator
+	(whitespace sameContents: #separator)
 		ifTrue: [ "Only separators are considered whitespace"
 			^ character isSeparator ].
-	whitespace = #any
+	(whitespace sameContents: #any)
 		ifTrue: [ "All non-legal (non-alphabet) characters are considered whitespace"
 			^ (self isLegalCharacter: character) not ].
 	^ false

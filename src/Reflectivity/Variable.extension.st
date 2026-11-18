@@ -9,9 +9,9 @@ Variable >> accessingNodes [
 
 { #category : '*Reflectivity' }
 Variable >> accessingNodesFor: option [
-	option = #write
+	(option sameContents: #write)
 		ifTrue: [ ^ self assignmentNodes ].
-	option = #read
+	(option sameContents: #read)
 		ifTrue: [ ^ self  readNodes ].
 	"else we return all accessing nodes"
 	^ self accessingNodes

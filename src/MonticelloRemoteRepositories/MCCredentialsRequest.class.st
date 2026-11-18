@@ -6,9 +6,9 @@ Class {
 	#name : 'MCCredentialsRequest',
 	#superclass : 'Notification',
 	#instVars : [
-		'username',
-		'password',
-		'url'
+		#username,
+		#password,
+		#url
 	],
 	#category : 'MonticelloRemoteRepositories',
 	#package : 'MonticelloRemoteRepositories'

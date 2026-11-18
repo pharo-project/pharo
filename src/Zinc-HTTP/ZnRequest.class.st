@@ -10,7 +10,7 @@ Class {
 	#name : 'ZnRequest',
 	#superclass : 'ZnMessage',
 	#instVars : [
-		'requestLine'
+		#requestLine
 	],
 	#category : 'Zinc-HTTP-Core',
 	#package : 'Zinc-HTTP',
@@ -96,7 +96,7 @@ ZnRequest >> acceptsEncodingGzip [
 
 { #category : 'accessing' }
 ZnRequest >> authorization [
-	^ self headers at: 'Authorization'
+	^ self headers at: #'Authorization'
 ]
 
 { #category : 'accessing' }
@@ -115,7 +115,7 @@ ZnRequest >> basicAuthentication [
 { #category : 'accessing' }
 ZnRequest >> cookies [
 	| value cookies |
-	value := self headers at: 'Cookie' ifAbsent: [ ^ #() ].
+	value := self headers at: #'Cookie' ifAbsent: [ ^ #() ].
 	cookies := value isString
 		ifTrue: [ value findTokens: #($;) ]
 		ifFalse: [ value ].
@@ -130,7 +130,7 @@ ZnRequest >> hash [
 { #category : 'accessing' }
 ZnRequest >> host [
 	| host scheme |
-	host := self headers at: 'Host' ifAbsent: [ ^ nil ].
+	host := self headers at: #'Host' ifAbsent: [ ^ nil ].
 	scheme :=ZnCurrentServer value ifNil: [ #http ] ifNotNil: [ :server | server scheme ].
 	^ ZnUrl fromString: host defaultScheme: scheme
 ]
@@ -221,17 +221,17 @@ ZnRequest >> session [
 
 { #category : 'accessing' }
 ZnRequest >> setAccept: object [
-	self headers at: 'Accept' put: object asString
+	self headers at: #'Accept' put: object asString
 ]
 
 { #category : 'accessing' }
 ZnRequest >> setAcceptEncodingGzip [
-	self headers at: 'Accept-Encoding' put: 'gzip'
+	self headers at: #'Accept-Encoding' put: 'gzip'
 ]
 
 { #category : 'accessing' }
 ZnRequest >> setAuthorization: authorization [
-	self headers at: 'Authorization'  put: authorization
+	self headers at: #'Authorization'  put: authorization
 ]
 
 { #category : 'accessing' }
@@ -253,12 +253,12 @@ ZnRequest >> setBearerAuthentication: token [
 
 { #category : 'accessing' }
 ZnRequest >> setCookie: cookie [
-	self headers at: 'Cookie' put: cookie
+	self headers at: #'Cookie' put: cookie
 ]
 
 { #category : 'accessing' }
 ZnRequest >> setIfModifiedSince: reference [
-	self headers at: 'If-Modified-Since' put: (ZnUtils httpDate: reference)
+	self headers at: #'If-Modified-Since' put: (ZnUtils httpDate: reference)
 ]
 
 { #category : 'accessing' }

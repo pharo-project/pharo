@@ -21,7 +21,7 @@ Class {
 	#name : 'ChainedSortFunction',
 	#superclass : 'ComposedSortFunction',
 	#instVars : [
-		'nextFunction'
+		#nextFunction
 	],
 	#category : 'SortFunctions-Core',
 	#package : 'SortFunctions-Core'

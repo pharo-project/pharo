@@ -12,7 +12,7 @@ Class {
 	#name : 'SHA256Test',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'hash'
+		#hash
 	],
 	#category : 'System-Hashing-Tests-SHA256',
 	#package : 'System-Hashing-Tests',

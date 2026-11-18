@@ -5,24 +5,24 @@ Class {
 	#name : 'NECTestClass',
 	#superclass : 'NECTestSuperClass',
 	#instVars : [
-		'typeSuggestingParameter',
-		'messageSend',
-		'messageSend2',
-		'typeSuggestingParameter2',
-		'complexInit',
-		'complexInit2',
-		'constantInteger',
-		'constantSymbol',
-		'constantArray',
-		'constantBoolean',
-		'constantString',
-		'constantNil',
-		'globalVarKeyword',
-		'globalVarKeyword2',
-		'constantLargeInteger'
+		#typeSuggestingParameter,
+		#messageSend,
+		#messageSend2,
+		#typeSuggestingParameter2,
+		#complexInit,
+		#complexInit2,
+		#constantInteger,
+		#constantSymbol,
+		#constantArray,
+		#constantBoolean,
+		#constantString,
+		#constantNil,
+		#globalVarKeyword,
+		#globalVarKeyword2,
+		#constantLargeInteger
 	],
 	#classVars : [
-		'ClassVar'
+		#ClassVar
 	],
 	#category : 'NECompletion-Tests',
 	#package : 'NECompletion-Tests'

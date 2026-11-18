@@ -47,13 +47,13 @@ Class {
 	#name : 'Package',
 	#superclass : 'Object',
 	#instVars : [
-		'extensionSelectors',
-		'name',
-		'organizer',
-		'tags'
+		#extensionSelectors,
+		#name,
+		#organizer,
+		#tags
 	],
 	#classVars : [
-		'Properties'
+		#Properties
 	],
 	#category : 'Kernel-CodeModel-Packages',
 	#package : 'Kernel-CodeModel',
@@ -345,13 +345,13 @@ Package >> includesClass: aClass [
 Package >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ self definedClasses anySatisfy: [ :class | class name = aSymbol ]
+	^ self definedClasses anySatisfy: [ :class | class name sameContents: aSymbol ]
 ]
 
 { #category : 'testing' }
 Package >> includesClassTagNamed: aString [
 
-	^ self tags anySatisfy: [ :each | each name = aString ]
+	^ self tags anySatisfy: [ :each | each name sameContents: aString ]
 ]
 
 { #category : 'testing' }
@@ -735,14 +735,14 @@ Package >> selectorsForClass: aClass [
 { #category : 'tags' }
 Package >> tagNamed: aSymbol [
 
-	^ self tags detect: [ :each | each name = aSymbol ]
+	^ self tags detect: [ :each | each name sameContents: aSymbol ]
 ]
 
 { #category : 'tags' }
 Package >> tagNamed: aSymbol ifAbsent: aBlock [
 
 	^ self tags
-		  detect: [ :each | each name = aSymbol ]
+		  detect: [ :each | each name sameContents: aSymbol ]
 		  ifNone: aBlock
 ]
 
@@ -750,7 +750,7 @@ Package >> tagNamed: aSymbol ifAbsent: aBlock [
 Package >> tagNamed: aSymbol ifPresent: aBlock [
 
 	^ self tags
-		  detect: [ :each | each name = aSymbol ]
+		  detect: [ :each | each name sameContents: aSymbol ]
 		  ifFound: [ :tag | aBlock cull: tag ]
 		  ifNone: [ nil ]
 ]

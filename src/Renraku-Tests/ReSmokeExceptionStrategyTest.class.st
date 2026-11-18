@@ -2,7 +2,7 @@ Class {
 	#name : 'ReSmokeExceptionStrategyTest',
 	#superclass : 'ReExceptionStrategyBaseTest',
 	#instVars : [
-		'brokenRule'
+		#brokenRule
 	],
 	#category : 'Renraku-Tests',
 	#package : 'Renraku-Tests'

@@ -6,8 +6,8 @@ Class {
 	#name : 'AtomicQueueItem',
 	#superclass : 'Object',
 	#instVars : [
-		'next',
-		'object'
+		#next,
+		#object
 	],
 	#category : 'Collections-Atomic-Elements',
 	#package : 'Collections-Atomic',

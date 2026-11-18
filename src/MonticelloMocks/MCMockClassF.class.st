@@ -7,7 +7,7 @@ Class {
 	#name : 'MCMockClassF',
 	#superclass : 'Object',
 	#classVars : [
-		'Foo'
+		#Foo
 	],
 	#category : 'MonticelloMocks',
 	#package : 'MonticelloMocks'

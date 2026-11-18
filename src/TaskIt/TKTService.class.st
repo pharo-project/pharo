@@ -64,12 +64,12 @@ Class {
 	#name : 'TKTService',
 	#superclass : 'Object',
 	#instVars : [
-		'worker',
-		'stopRequested',
-		'stopCallbacks',
-		'stepDelay',
-		'recursiveTask',
-		'currentDelay'
+		#worker,
+		#stopRequested,
+		#stopCallbacks,
+		#stepDelay,
+		#recursiveTask,
+		#currentDelay
 	],
 	#category : 'TaskIt-Services',
 	#package : 'TaskIt',

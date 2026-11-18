@@ -17,7 +17,7 @@ Class {
 	#name : 'RBMoveInstanceVariableToClassTransformation',
 	#superclass : 'RBCompositeVariableTransformation',
 	#instVars : [
-		'oldClass'
+		#oldClass
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

@@ -11,8 +11,8 @@ Class {
 	#name : 'ClyMoveMethodsToGroupCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'methodGroup',
-		'targetClass'
+		#methodGroup,
+		#targetClass
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Methods',
 	#package : 'Calypso-SystemTools-FullBrowser',

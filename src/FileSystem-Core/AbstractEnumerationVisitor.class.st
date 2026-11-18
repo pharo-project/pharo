@@ -5,8 +5,8 @@ Class {
 	#name : 'AbstractEnumerationVisitor',
 	#superclass : 'FileSystemVisitor',
 	#instVars : [
-		'out',
-		'block'
+		#out,
+		#block
 	],
 	#category : 'FileSystem-Core-Base-Visitors',
 	#package : 'FileSystem-Core',

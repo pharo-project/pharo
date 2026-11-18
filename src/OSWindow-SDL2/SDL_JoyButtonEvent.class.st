@@ -5,13 +5,13 @@ Class {
 	#name : 'SDL_JoyButtonEvent',
 	#superclass : 'SDL2MappedEvent',
 	#classVars : [
-		'OFFSET_BUTTON',
-		'OFFSET_PADDING1',
-		'OFFSET_PADDING2',
-		'OFFSET_STATE',
-		'OFFSET_TIMESTAMP',
-		'OFFSET_TYPE',
-		'OFFSET_WHICH'
+		#OFFSET_BUTTON,
+		#OFFSET_PADDING1,
+		#OFFSET_PADDING2,
+		#OFFSET_STATE,
+		#OFFSET_TIMESTAMP,
+		#OFFSET_TYPE,
+		#OFFSET_WHICH
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

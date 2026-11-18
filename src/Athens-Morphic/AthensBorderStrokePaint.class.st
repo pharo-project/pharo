@@ -6,9 +6,9 @@ Class {
 	#name : 'AthensBorderStrokePaint',
 	#superclass : 'AthensPaint',
 	#instVars : [
-		'topLeftPaint',
-		'bottomRightPaint',
-		'width'
+		#topLeftPaint,
+		#bottomRightPaint,
+		#width
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

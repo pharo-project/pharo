@@ -5,7 +5,7 @@ Class {
 	#name : 'ValueRemoved',
 	#superclass : 'Announcement',
 	#instVars : [
-		'oldValue'
+		#oldValue
 	],
 	#category : 'NewValueHolder-Core-Announcements',
 	#package : 'NewValueHolder-Core',

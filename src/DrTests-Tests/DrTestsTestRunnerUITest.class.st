@@ -5,7 +5,7 @@ Class {
 	#name : 'DrTestsTestRunnerUITest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'drTest'
+		#drTest
 	],
 	#category : 'DrTests-Tests',
 	#package : 'DrTests-Tests'

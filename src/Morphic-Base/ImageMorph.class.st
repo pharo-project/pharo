@@ -21,10 +21,10 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'formSet'
+		#formSet
 	],
 	#classVars : [
-		'DefaultForm'
+		#DefaultForm
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

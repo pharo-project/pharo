@@ -6,10 +6,10 @@ Class {
 	#name : 'AthensFlakeDemo',
 	#superclass : 'Morph',
 	#instVars : [
-		'surface',
-		'circle',
-		'frame',
-		'spike'
+		#surface,
+		#circle,
+		#frame,
+		#spike
 	],
 	#category : 'Athens-Examples-Morphic',
 	#package : 'Athens-Examples',

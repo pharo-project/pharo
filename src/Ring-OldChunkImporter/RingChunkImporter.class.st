@@ -9,8 +9,8 @@ Class {
 	#name : 'RingChunkImporter',
 	#superclass : 'Object',
 	#instVars : [
-		'package',
-		'doIts'
+		#package,
+		#doIts
 	],
 	#category : 'Ring-OldChunkImporter-Base',
 	#package : 'Ring-OldChunkImporter',

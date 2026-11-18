@@ -5,8 +5,8 @@ Class {
 	#name : 'OrderedDictionaryTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'nonIdentityOrderedAssociations',
-		'identityOrderedAssociations'
+		#nonIdentityOrderedAssociations,
+		#identityOrderedAssociations
 	],
 	#category : 'Collections-Sequenceable-Tests-Ordered',
 	#package : 'Collections-Sequenceable-Tests',
@@ -1150,7 +1150,7 @@ OrderedDictionaryTest >> testKeysAndValuesRemove [
 			unremovedAssociations := (self orderedAssociationsAllButFirst: i) asOrderedCollection.
 			dictionary
 				keysAndValuesRemove: [ :key :value |
-					(self isTestingIdentityDictionary ifTrue: [ key == removedAssociation key ] ifFalse: [ key = removedAssociation key ])
+					(self isTestingIdentityDictionary ifTrue: [ key == removedAssociation key ] ifFalse: [ key sameContents: removedAssociation key ])
 						ifTrue: [ self assert: value equals: removedAssociation value.
 							true ]
 						ifFalse: [ | unremovedAssociation |

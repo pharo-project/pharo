@@ -5,10 +5,10 @@ Class {
 	#name : 'SpaceTallyItem',
 	#superclass : 'Object',
 	#instVars : [
-		'analyzedClassName',
-		'codeSize',
-		'instanceCount',
-		'spaceForInstances'
+		#analyzedClassName,
+		#codeSize,
+		#instanceCount,
+		#spaceForInstances
 	],
 	#category : 'Tool-Profilers-Space',
 	#package : 'Tool-Profilers',

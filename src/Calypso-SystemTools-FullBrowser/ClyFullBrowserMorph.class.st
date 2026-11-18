@@ -29,16 +29,16 @@ Class {
 	#name : 'ClyFullBrowserMorph',
 	#superclass : 'ClyBrowserMorph',
 	#instVars : [
-		'packageView',
-		'classView',
-		'methodGroupView',
-		'methodView',
-		'metaLevelScope',
-		'methodGroupQuery'
+		#packageView,
+		#classView,
+		#methodGroupView,
+		#methodView,
+		#metaLevelScope,
+		#methodGroupQuery
 	],
 	#classVars : [
-		'DefaultPackageFilter',
-		'ShouldDisplayProjectView'
+		#DefaultPackageFilter,
+		#ShouldDisplayProjectView
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-UI',
 	#package : 'Calypso-SystemTools-FullBrowser',

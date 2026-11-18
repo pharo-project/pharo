@@ -5,10 +5,10 @@ Class {
 	#name : 'DateAndTimeDosEpochTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aDateAndTime',
-		'aDuration',
-		'aTimeZone',
-		'localTimeZoneToRestore'
+		#aDateAndTime,
+		#aDuration,
+		#aTimeZone,
+		#localTimeZoneToRestore
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

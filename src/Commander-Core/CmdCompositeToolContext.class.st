@@ -11,7 +11,7 @@ Class {
 	#name : 'CmdCompositeToolContext',
 	#superclass : 'CmdToolContext',
 	#instVars : [
-		'existingContexts'
+		#existingContexts
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

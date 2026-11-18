@@ -4,7 +4,7 @@ I am used to implement instance specific subscription on announcements.
 
 To create me send message #where to announcement class with condition block:
 
-	Announcement where: [ :ann | ann param = #expected ]
+	Announcement where: [ :ann | ann param sameContents: #expected ]
 
 I can be used directly in announcer subscription API in place of announcement class:
 
@@ -22,8 +22,8 @@ Class {
 	#name : 'AnnouncementDeliveryCondition',
 	#superclass : 'Object',
 	#instVars : [
-		'announcementClass',
-		'conditionBlock'
+		#announcementClass,
+		#conditionBlock
 	],
 	#category : 'Announcements-Core-Conditions',
 	#package : 'Announcements-Core',

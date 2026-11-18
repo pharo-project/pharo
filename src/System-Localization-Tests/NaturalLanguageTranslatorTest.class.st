@@ -5,7 +5,7 @@ Class {
 	#name : 'NaturalLanguageTranslatorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'previousRegistered'
+		#previousRegistered
 	],
 	#category : 'System-Localization-Tests-Translations',
 	#package : 'System-Localization-Tests',

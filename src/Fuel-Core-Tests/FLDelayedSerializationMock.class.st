@@ -7,7 +7,7 @@ Class {
 	#name : 'FLDelayedSerializationMock',
 	#superclass : 'FLSerialization',
 	#instVars : [
-		'duration'
+		#duration
 	],
 	#category : 'Fuel-Core-Tests-Support-Mocks',
 	#package : 'Fuel-Core-Tests',

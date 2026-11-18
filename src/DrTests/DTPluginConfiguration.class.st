@@ -5,9 +5,9 @@ Class {
 	#name : 'DTPluginConfiguration',
 	#superclass : 'Object',
 	#instVars : [
-		'items',
-		'packagesSelected',
-		'testSuite'
+		#items,
+		#packagesSelected,
+		#testSuite
 	],
 	#category : 'DrTests-Model',
 	#package : 'DrTests',

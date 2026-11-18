@@ -11,10 +11,10 @@ Class {
 	#name : 'TKTWorkerProcess',
 	#superclass : 'TKTAbstractExecutor',
 	#instVars : [
-		'taskQueue',
-		'name',
-		'process',
-		'currentTaskExecution'
+		#taskQueue,
+		#name,
+		#process,
+		#currentTaskExecution
 	],
 	#category : 'TaskIt-Worker',
 	#package : 'TaskIt',

@@ -2,11 +2,11 @@ Class {
 	#name : 'MCWorkingCopyManagementTest',
 	#superclass : 'MCTestCase',
 	#instVars : [
-		'package2',
-		'package1',
-		'mcPackage1',
-		'mcPackage2',
-		'classToRemove'
+		#package2,
+		#package1,
+		#mcPackage1,
+		#mcPackage2,
+		#classToRemove
 	],
 	#category : 'Monticello-Tests-Base',
 	#package : 'Monticello-Tests',

@@ -11,10 +11,10 @@ Class {
 	#name : 'TraitedMetaclass',
 	#superclass : 'Metaclass',
 	#instVars : [
-		'localMethods',
-		'composition',
-		'baseLocalMethods',
-		'baseComposition'
+		#localMethods,
+		#composition,
+		#baseLocalMethods,
+		#baseComposition
 	],
 	#category : 'Traits-Base',
 	#package : 'Traits',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SmalllintManifestCheckerTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'checker'
+		#checker
 	],
 	#category : 'Manifest-Tests-Base',
 	#package : 'Manifest-Tests',

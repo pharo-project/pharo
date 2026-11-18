@@ -9,9 +9,9 @@ Class {
 	#name : 'DelayBenchmark',
 	#superclass : 'Object',
 	#classVars : [
-		'EnterCount',
-		'ExitCount',
-		'Running'
+		#EnterCount,
+		#ExitCount,
+		#Running
 	],
 	#category : 'Kernel-Tests-Delays',
 	#package : 'Kernel-Tests',

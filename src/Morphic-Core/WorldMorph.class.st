@@ -8,14 +8,14 @@ Class {
 	#name : 'WorldMorph',
 	#superclass : 'PasteUpMorph',
 	#classVars : [
-		'AllowDropFiles',
-		'CursorOwnerWorld',
-		'ExtraWorldList',
-		'ExtraWorldListMutex',
-		'LastScreenModeSelected'
+		#AllowDropFiles,
+		#CursorOwnerWorld,
+		#ExtraWorldList,
+		#ExtraWorldListMutex,
+		#LastScreenModeSelected
 	],
 	#classInstVars : [
-		'displayScaleFactor'
+		#displayScaleFactor
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',

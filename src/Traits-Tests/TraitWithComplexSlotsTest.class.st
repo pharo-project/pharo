@@ -5,7 +5,7 @@ Class {
 	#name : 'TraitWithComplexSlotsTest',
 	#superclass : 'TraitAbstractTest',
 	#instVars : [
-		'slotClass'
+		#slotClass
 	],
 	#category : 'Traits-Tests',
 	#package : 'Traits-Tests'

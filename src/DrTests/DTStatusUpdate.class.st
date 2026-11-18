@@ -6,7 +6,7 @@ Class {
 	#name : 'DTStatusUpdate',
 	#superclass : 'Announcement',
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : 'DrTests-Announcements',
 	#package : 'DrTests',

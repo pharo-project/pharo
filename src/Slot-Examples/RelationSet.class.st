@@ -5,9 +5,9 @@ Class {
 	#name : 'RelationSet',
 	#superclass : 'Collection',
 	#instVars : [
-		'owner',
-		'slot',
-		'set'
+		#owner,
+		#slot,
+		#set
 	],
 	#category : 'Slot-Examples-Associations',
 	#package : 'Slot-Examples',

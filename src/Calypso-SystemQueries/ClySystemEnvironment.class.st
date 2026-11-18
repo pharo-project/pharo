@@ -25,14 +25,14 @@ Class {
 	#name : 'ClySystemEnvironment',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'globals',
-		'changesAnnouncer',
-		'packageOrganizer',
-		'projectManager'
+		#name,
+		#globals,
+		#changesAnnouncer,
+		#packageOrganizer,
+		#projectManager
 	],
 	#classInstVars : [
-		'currentImage'
+		#currentImage
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

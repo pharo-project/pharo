@@ -29,7 +29,7 @@ Class {
 	#name : 'GradientPaint',
 	#superclass : 'AthensAbstractPaint',
 	#instVars : [
-		'colorRamp'
+		#colorRamp
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

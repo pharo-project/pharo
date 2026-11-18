@@ -7,8 +7,8 @@ Class {
 	#name : 'ZnCredential',
 	#superclass : 'Object',
 	#instVars : [
-		'domain',
-		'realm'
+		#domain,
+		#realm
 	],
 	#category : 'Zinc-HTTP-Support',
 	#package : 'Zinc-HTTP',
@@ -84,5 +84,5 @@ ZnCredential >> realm: anObject [
 
 { #category : 'accessing' }
 ZnCredential >> setAuthorizationHeader: headers for: urlObject method: method [
-	headers at: 'Authorization' put: self authToken
+	headers at: #'Authorization' put: self authToken
 ]

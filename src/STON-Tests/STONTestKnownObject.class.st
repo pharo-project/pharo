@@ -17,11 +17,11 @@ Class {
 	#name : 'STONTestKnownObject',
 	#superclass : 'Object',
 	#instVars : [
-		'id',
-		'description'
+		#id,
+		#description
 	],
 	#classVars : [
-		'KnownObjects'
+		#KnownObjects
 	],
 	#category : 'STON-Tests-Support',
 	#package : 'STON-Tests',

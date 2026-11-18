@@ -5,14 +5,14 @@ Class {
 	#name : 'ProportionalSplitterMorph',
 	#superclass : 'AbstractResizerMorph',
 	#instVars : [
-		'leftOrTop',
-		'rightOrBottom',
-		'splitsTopAndBottom',
-		'oldColor',
-		'traceMorph'
+		#leftOrTop,
+		#rightOrBottom,
+		#splitsTopAndBottom,
+		#oldColor,
+		#traceMorph
 	],
 	#classVars : [
-		'ShowHandles'
+		#ShowHandles
 	],
 	#category : 'Morphic-Widgets-Windows-Resizing',
 	#package : 'Morphic-Widgets-Windows',

@@ -12,9 +12,9 @@ Class {
 	#name : 'AthensDemoPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'backButton',
-		'forwardButton',
-		'demo'
+		#backButton,
+		#forwardButton,
+		#demo
 	],
 	#category : 'Athens-Examples-Spec',
 	#package : 'Athens-Examples',

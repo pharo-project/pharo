@@ -11,13 +11,13 @@ Class {
 	#name : 'ClapContext',
 	#superclass : 'ClapExpression',
 	#instVars : [
-		'arguments',
-		'obeyingExits',
-		'stdio',
-		'match',
-		'leftovers',
-		'session',
-		'exitException'
+		#arguments,
+		#obeyingExits,
+		#stdio,
+		#match,
+		#leftovers,
+		#session,
+		#exitException
 	],
 	#category : 'Clap-Core-Activation',
 	#package : 'Clap-Core',

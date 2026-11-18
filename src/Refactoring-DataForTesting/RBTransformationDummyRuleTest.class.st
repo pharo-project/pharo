@@ -2,12 +2,12 @@ Class {
 	#name : 'RBTransformationDummyRuleTest',
 	#superclass : 'RBFooDummyLintRuleTest',
 	#instVars : [
-		'rewriteRule',
-		'builder',
-		'class'
+		#rewriteRule,
+		#builder,
+		#class
 	],
 	#classVars : [
-		'RecursiveSelfRule'
+		#RecursiveSelfRule
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',

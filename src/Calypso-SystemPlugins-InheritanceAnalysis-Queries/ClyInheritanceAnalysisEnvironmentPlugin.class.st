@@ -31,9 +31,9 @@ Class {
 	#name : 'ClyInheritanceAnalysisEnvironmentPlugin',
 	#superclass : 'ClySystemEnvironmentPlugin',
 	#instVars : [
-		'cacheGuard',
-		'allImplementorsCache',
-		'littleHierarchyMaxSize'
+		#cacheGuard,
+		#allImplementorsCache,
+		#littleHierarchyMaxSize
 	],
 	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
 	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'

@@ -5,8 +5,8 @@ Class {
 	#name : 'ReProperMethodProtocolRuleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'testClass',
-		'compileTarget'
+		#testClass,
+		#compileTarget
 	],
 	#category : 'Renraku-Tests-Rules',
 	#package : 'Renraku-Tests',

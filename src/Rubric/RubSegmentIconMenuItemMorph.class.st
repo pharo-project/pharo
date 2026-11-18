@@ -2,7 +2,7 @@ Class {
 	#name : 'RubSegmentIconMenuItemMorph',
 	#superclass : 'ToggleMenuItemMorph',
 	#instVars : [
-		'segment'
+		#segment
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

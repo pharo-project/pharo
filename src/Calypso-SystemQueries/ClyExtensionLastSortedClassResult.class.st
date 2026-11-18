@@ -32,7 +32,7 @@ Class {
 	#name : 'ClyExtensionLastSortedClassResult',
 	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
-		'baseQueryResult'
+		#baseQueryResult
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

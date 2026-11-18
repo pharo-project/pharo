@@ -48,10 +48,10 @@ Class {
 	#name : 'MockObject',
 	#superclass : 'MockBasicObject',
 	#instVars : [
-		'failed'
+		#failed
 	],
 	#classInstVars : [
-		'any'
+		#any
 	],
 	#category : 'SUnit-MockObjects-Core',
 	#package : 'SUnit-MockObjects',

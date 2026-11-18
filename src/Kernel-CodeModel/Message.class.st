@@ -12,9 +12,9 @@ Class {
 	#name : 'Message',
 	#superclass : 'Object',
 	#instVars : [
-		'selector',
-		'arguments',
-		'lookupClass'
+		#selector,
+		#arguments,
+		#lookupClass
 	],
 	#category : 'Kernel-CodeModel-Methods',
 	#package : 'Kernel-CodeModel',

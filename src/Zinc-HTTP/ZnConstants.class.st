@@ -7,7 +7,7 @@ Class {
 	#name : 'ZnConstants',
 	#superclass : 'Object',
 	#classVars : [
-		'HTTPStatusCodes'
+		#HTTPStatusCodes
 	],
 	#category : 'Zinc-HTTP-Support',
 	#package : 'Zinc-HTTP',
@@ -108,14 +108,14 @@ ZnConstants class >> officialHTTPStatusCodesSpec [
 
 	^ #(
 		"1xx: Informational - Request received, continuing process"
-		100 'Continue'
+		100 Continue
 		101 'Switching Protocols'
-		102 'Processing'
+		102 Processing
 		103 'Early Hints'
 		"2xx: Success - The action was successfully received, understood, and accepted"
-		200 'OK'
-		201 'Created'
-		202 'Accepted'
+		200 OK
+		201 Created
+		202 Accepted
 		203 'Non-Authoritative Information'
 		204 'No Content'
 		205 'Reset Content'
@@ -126,7 +126,7 @@ ZnConstants class >> officialHTTPStatusCodesSpec [
 		"3xx: Redirection - Further action must be taken in order to complete the request"
 		300 'Multiple Choices'
 		301 'Moved Permanently'
-		302 'Found'
+		302 Found
 		303 'See Other'
 		304 'Not Modified'
 		305 'Use Proxy'
@@ -134,16 +134,16 @@ ZnConstants class >> officialHTTPStatusCodesSpec [
 		308 'Permanent Redirect'
 		"4xx: Client Error - The request contains bad syntax or cannot be fulfilled"
 		400 'Bad Request'
-		401 'Unauthorized'
+		401 Unauthorized
 		402 'Payment Required'
-		403 'Forbidden'
+		403 Forbidden
 		404 'Not Found'
 		405 'Method Not Allowed'
 		406 'Not Acceptable'
 		407 'Proxy Authentication Required'
 		408 'Request Timeout'
-		409 'Conflict'
-		410 'Gone'
+		409 Conflict
+		410 Gone
 		411 'Length Required'
 		412 'Precondition Failed'
 		413 'Payload Too Large'
@@ -154,7 +154,7 @@ ZnConstants class >> officialHTTPStatusCodesSpec [
 		418 'I am a teapot' "https://tools.ietf.org/html/draft-nottingham-thanks-larry-00"
 		421 'Misdirected Request'
 		422 'Unprocessable Entity'
-		423 'Locked'
+		423 Locked
 		424 'Failed Dependency'
 		426 'Upgrade Required'
 		428 'Precondition Required'

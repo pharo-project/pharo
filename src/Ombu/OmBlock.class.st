@@ -5,11 +5,11 @@ Class {
 	#name : 'OmBlock',
 	#superclass : 'Object',
 	#instVars : [
-		'firstEntryReference',
-		'positions',
-		'store',
-		'startPosition',
-		'endPosition'
+		#firstEntryReference,
+		#positions,
+		#store,
+		#startPosition,
+		#endPosition
 	],
 	#category : 'Ombu-Stores',
 	#package : 'Ombu',

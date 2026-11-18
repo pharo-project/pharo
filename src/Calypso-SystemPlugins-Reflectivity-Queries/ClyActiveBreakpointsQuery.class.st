@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyActiveBreakpointsQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'excludesHaltsForTesting'
+		#excludesHaltsForTesting
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Breakpoints',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Queries',

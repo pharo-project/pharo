@@ -5,7 +5,7 @@ Class {
 	#name : 'OSWindowAthensExampleEventHandler',
 	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
-		'athensExample'
+		#athensExample
 	],
 	#category : 'OSWindow-SDL2-Examples-Examples',
 	#package : 'OSWindow-SDL2-Examples',

@@ -5,8 +5,8 @@ Class {
 	#name : 'RecursionStopperTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'fork',
-		'value'
+		#fork,
+		#value
 	],
 	#category : 'Kernel-Tests-Processes',
 	#package : 'Kernel-Tests',

@@ -7,16 +7,16 @@ Class {
 	#name : 'RPackageSet',
 	#superclass : 'Object',
 	#instVars : [
-		'packageName',
-		'packages',
-		'classes',
-		'definedClasses',
-		'extensionMethods',
-		'methods'
+		#packageName,
+		#packages,
+		#classes,
+		#definedClasses,
+		#extensionMethods,
+		#methods
 	],
 	#classInstVars : [
-		'cacheActive',
-		'cachePackages'
+		#cacheActive,
+		#cachePackages
 	],
 	#category : 'Kernel-CodeModel-Packages',
 	#package : 'Kernel-CodeModel',

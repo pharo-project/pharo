@@ -8,14 +8,14 @@ Class {
 	#name : 'AsyncFile',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'writeable',
-		'semaphore',
-		'fileHandle'
+		#name,
+		#writeable,
+		#semaphore,
+		#fileHandle
 	],
 	#classVars : [
-		'Busy',
-		'ErrorCode'
+		#Busy,
+		#ErrorCode
 	],
 	#category : 'Files-Core',
 	#package : 'Files',

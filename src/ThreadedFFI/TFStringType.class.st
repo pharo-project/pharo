@@ -8,7 +8,7 @@ Class {
 	#name : 'TFStringType',
 	#superclass : 'TFDerivedType',
 	#classVars : [
-		'AllocatedStrings'
+		#AllocatedStrings
 	],
 	#category : 'ThreadedFFI-Types',
 	#package : 'ThreadedFFI',

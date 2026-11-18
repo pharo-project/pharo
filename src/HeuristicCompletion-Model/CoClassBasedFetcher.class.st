@@ -11,8 +11,8 @@ Class {
 	#name : 'CoClassBasedFetcher',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'completionClass',
-		'astNode'
+		#completionClass,
+		#astNode
 	],
 	#category : 'HeuristicCompletion-Model-Fetchers',
 	#package : 'HeuristicCompletion-Model',

@@ -2,7 +2,7 @@ Class {
 	#name : 'CoResultSetTest',
 	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
-		'completion'
+		#completion
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

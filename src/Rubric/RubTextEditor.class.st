@@ -5,8 +5,8 @@ Class {
 	#name : 'RubTextEditor',
 	#superclass : 'Object',
 	#instVars : [
-		'defaultKeymappingIndex',
-		'textArea'
+		#defaultKeymappingIndex,
+		#textArea
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',
@@ -1914,7 +1914,7 @@ RubTextEditor >> previousWord: position stopOnUpperCase: stopOnUpperCase [
 	index = initialPosition ifTrue: [ index := index - 1 ].
 
 	"Stop if we are in a lowercase->uppercase transition"
-	groupAtStart = #upper ifTrue: [
+	(groupAtStart sameContents: #upper) ifTrue: [
 		stopOnUpperCase
 			ifFalse: [ groupAtStart := #lower ]
 			ifTrue: [
@@ -1927,14 +1927,14 @@ RubTextEditor >> previousWord: position stopOnUpperCase: stopOnUpperCase [
 	(string at: index - 1) = Character cr ifTrue: [ ^ index ].
 
 	currentGroup := self characterGroupAt: index - 1 in: string.
-	(stopOnUpperCase not and: [ currentGroup = #upper ]) ifTrue: [
+	(stopOnUpperCase not and: [ currentGroup sameContents: #upper ]) ifTrue: [
 		currentGroup := #lower ].
 
 	currentGroup = groupAtStart ] whileTrue: [ index := index - 1 ].
 
 	"Moving to the left from lower to upper, we want to stop left of the upper"
 	(stopOnUpperCase and: [
-		 groupAtStart = #lower and: [ currentGroup = #upper ] ]) ifTrue: [
+		 (groupAtStart sameContents: #lower) and: [ currentGroup sameContents: #upper ] ]) ifTrue: [
 		index := index - 1 ].
 
 	^ index

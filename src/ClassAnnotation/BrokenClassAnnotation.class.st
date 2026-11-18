@@ -23,7 +23,7 @@ Class {
 	#name : 'BrokenClassAnnotation',
 	#superclass : 'ClassAnnotation',
 	#instVars : [
-		'errorString'
+		#errorString
 	],
 	#category : 'ClassAnnotation',
 	#package : 'ClassAnnotation'

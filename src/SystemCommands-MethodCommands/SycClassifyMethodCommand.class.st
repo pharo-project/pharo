@@ -10,7 +10,7 @@ Class {
 	#name : 'SycClassifyMethodCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'

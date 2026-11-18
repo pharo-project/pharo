@@ -12,18 +12,18 @@ Class {
 	#name : 'TextLine',
 	#superclass : 'Object',
 	#instVars : [
-		'left',
-		'right',
-		'top',
-		'bottom',
-		'firstIndex',
-		'lastIndex',
-		'internalSpaces',
-		'paddingWidth',
-		'baseline'
+		#left,
+		#right,
+		#top,
+		#bottom,
+		#firstIndex,
+		#lastIndex,
+		#internalSpaces,
+		#paddingWidth,
+		#baseline
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Morphic-Base-Text Support',
 	#package : 'Morphic-Base',

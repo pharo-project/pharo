@@ -7,8 +7,8 @@ Class {
 	#traits : 'TIterateTest',
 	#classTraits : 'TIterateTest classTrait',
 	#instVars : [
-		'weakSetWith3Elements',
-		'empty'
+		#weakSetWith3Elements,
+		#empty
 	],
 	#category : 'Collections-Weak-Tests-Base',
 	#package : 'Collections-Weak-Tests',

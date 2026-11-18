@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensArcSegment',
 	#superclass : 'AthensPathSegment',
 	#instVars : [
-		'endPoint',
-		'angle'
+		#endPoint,
+		#angle
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

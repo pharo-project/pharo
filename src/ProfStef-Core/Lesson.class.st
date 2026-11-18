@@ -7,8 +7,8 @@ Class {
 	#name : 'Lesson',
 	#superclass : 'Object',
 	#instVars : [
-		'title',
-		'lesson'
+		#title,
+		#lesson
 	],
 	#category : 'ProfStef-Core',
 	#package : 'ProfStef-Core'

@@ -7,10 +7,10 @@ Class {
 	#name : 'ClyMetaLinkInstallationPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'sourceNode',
-		'toolBar',
-		'isForMetaLinkInstallation',
-		'metalinkListPresenter'
+		#sourceNode,
+		#toolBar,
+		#isForMetaLinkInstallation,
+		#metalinkListPresenter
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',

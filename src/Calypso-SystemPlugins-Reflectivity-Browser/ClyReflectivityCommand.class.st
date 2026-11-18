@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyReflectivityCommand',
 	#superclass : 'ClyDebuggingCommand',
 	#classVars : [
-		'ShowReflectivityCommands'
+		#ShowReflectivityCommands
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',

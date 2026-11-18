@@ -7,9 +7,9 @@ Class {
 	#name : 'OSMouseEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'position',
-		'delta',
-		'modifiers'
+		#position,
+		#delta,
+		#modifiers
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

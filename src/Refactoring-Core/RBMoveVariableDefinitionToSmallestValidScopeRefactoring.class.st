@@ -7,12 +7,12 @@ Class {
 	#name : 'RBMoveVariableDefinitionToSmallestValidScopeRefactoring',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
-		'selector',
-		'interval',
-		'name',
-		'parseTree',
-		'blockNodes',
-		'definingNode'
+		#selector,
+		#interval,
+		#name,
+		#parseTree,
+		#blockNodes,
+		#definingNode
 	],
 	#category : 'Refactoring-Core-Refactorings-Unused',
 	#package : 'Refactoring-Core',

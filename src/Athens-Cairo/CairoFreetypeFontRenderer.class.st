@@ -12,16 +12,16 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'font',
-		'utfConverter',
-		'canvas',
-		'advance',
-		'originalFont',
-		'fontExtents',
-		'glyphExtents'
+		#font,
+		#utfConverter,
+		#canvas,
+		#advance,
+		#originalFont,
+		#fontExtents,
+		#glyphExtents
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

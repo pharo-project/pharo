@@ -11,8 +11,8 @@ Class {
 	#name : 'SycRenamePackageCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'package',
-		'newName'
+		#package,
+		#newName
 	],
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'

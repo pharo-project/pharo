@@ -2,19 +2,19 @@ Class {
 	#name : 'DAPackageRelationGraphTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'packageCollectionAbstract',
-		'packageCollectionsSequenceable',
-		'packageKernel',
-		'packageRegexCore',
-		'packageStrings',
-		'aPackageRelationGraph',
-		'packagePackageDependencies',
-		'packageA',
-		'packageB',
-		'packageC',
-		'packageD',
-		'packageMorphicBase',
-		'packageTextCore'
+		#packageCollectionAbstract,
+		#packageCollectionsSequenceable,
+		#packageKernel,
+		#packageRegexCore,
+		#packageStrings,
+		#aPackageRelationGraph,
+		#packagePackageDependencies,
+		#packageA,
+		#packageB,
+		#packageC,
+		#packageD,
+		#packageMorphicBase,
+		#packageTextCore
 	],
 	#category : 'Tool-DependencyAnalyser-Tests-Packages',
 	#package : 'Tool-DependencyAnalyser-Tests',
@@ -276,9 +276,9 @@ DAPackageRelationGraphTest >> testSeenPackages [
 { #category : 'tests' }
 DAPackageRelationGraphTest >> testSeenPackagesName [
 	aPackageRelationGraph addPackage: packageKernel.
-	self deny: (aPackageRelationGraph seenPackagesName includes: 'Kernel').
+	self deny: (aPackageRelationGraph seenPackagesName includes: #Kernel).
 	aPackageRelationGraph computeStaticDependencies.
-	self assert: (aPackageRelationGraph seenPackagesName includes: 'Kernel')
+	self assert: (aPackageRelationGraph seenPackagesName includes: #Kernel)
 ]
 
 { #category : 'tests' }

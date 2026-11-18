@@ -5,9 +5,9 @@ Class {
 	#name : 'HiSpecExamplePresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'hiedraColumnController',
-		'table',
-		'actionBar'
+		#hiedraColumnController,
+		#table,
+		#actionBar
 	],
 	#category : 'Hiedra-Examples-Spec2',
 	#package : 'Hiedra-Examples',

@@ -15,7 +15,7 @@ Class {
 	#name : 'ComputedSlot',
 	#superclass : 'Slot',
 	#instVars : [
-		'block'
+		#block
 	],
 	#category : 'VariablesLibrary-Slots',
 	#package : 'VariablesLibrary',

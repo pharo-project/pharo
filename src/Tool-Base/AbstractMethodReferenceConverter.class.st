@@ -5,7 +5,7 @@ Class {
 	#name : 'AbstractMethodReferenceConverter',
 	#superclass : 'AbstractMethodConverter',
 	#instVars : [
-		'referencesList'
+		#referencesList
 	],
 	#category : 'Tool-Base-Converter',
 	#package : 'Tool-Base',
@@ -32,7 +32,7 @@ AbstractMethodReferenceConverter >> priorVersionOfAMethod: aMethodReference [
 
 	tempList := referencesList select:[:each |
 		(each className = aMethodReference className) &
-		(each name = aMethodReference name)].
+		(each name sameContents: aMethodReference name)].
 	^ tempList detect: [:each | (self versionOfAMethod: each) = ((self versionOfAMethod: aMethodReference) -1)] ifNone: [aMethodReference]
 ]
 
@@ -48,7 +48,7 @@ AbstractMethodReferenceConverter >> versionOfAMethod: aMethodReference [
 
 	tempList := referencesList select: [:each |
 		(each className = aMethodReference className) &
-		(each name = aMethodReference name)].
+		(each name sameContents: aMethodReference name)].
 	tempList := tempList sort: [:m1 :m2 | m1 timeStamp < m2 timeStamp].
 	^ tempList identityIndexOf: aMethodReference ifAbsent: [0]
 ]

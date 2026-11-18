@@ -2,7 +2,7 @@ Class {
 	#name : 'TaPrecedenceComposition',
 	#superclass : 'TaSequence',
 	#instVars : [
-		'preferedTrait'
+		#preferedTrait
 	],
 	#category : 'Traits-Compositions',
 	#package : 'Traits',

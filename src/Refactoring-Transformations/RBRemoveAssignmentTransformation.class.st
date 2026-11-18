@@ -21,8 +21,8 @@ Class {
 	#name : 'RBRemoveAssignmentTransformation',
 	#superclass : 'RBMethodTransformation',
 	#instVars : [
-		'variableName',
-		'value'
+		#variableName,
+		#value
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

@@ -5,8 +5,8 @@ Class {
 	#name : 'LocaleID',
 	#superclass : 'Object',
 	#instVars : [
-		'isoLanguage',
-		'isoCountry'
+		#isoLanguage,
+		#isoCountry
 	],
 	#category : 'System-Localization-Locales',
 	#package : 'System-Localization',

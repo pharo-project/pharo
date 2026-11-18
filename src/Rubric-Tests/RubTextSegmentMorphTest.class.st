@@ -2,8 +2,8 @@ Class {
 	#name : 'RubTextSegmentMorphTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'editor',
-		'textArea'
+		#editor,
+		#textArea
 	],
 	#category : 'Rubric-Tests-Editing-Core',
 	#package : 'Rubric-Tests',

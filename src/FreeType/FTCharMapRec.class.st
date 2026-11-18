@@ -5,13 +5,13 @@ Class {
 	#name : 'FTCharMapRec',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_ENCODING',
-		'OFFSET_ENCODING_ID',
-		'OFFSET_FACE',
-		'OFFSET_PLATFORM_ID'
+		#OFFSET_ENCODING,
+		#OFFSET_ENCODING_ID,
+		#OFFSET_FACE,
+		#OFFSET_PLATFORM_ID
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

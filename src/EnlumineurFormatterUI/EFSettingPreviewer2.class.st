@@ -86,23 +86,23 @@ Class {
 	#name : #EFSettingPreviewer2,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'settingsTree',
-		'chooseMethodUI',
-		'methodDropList',
-		'settingsDropList',
-		'saveMethodButton',
-		'removeMethodButton',
-		'removeSettingButton',
-		'saveSettingButton',
-		'methodProvider',
-		'formaterPrettyPrinter',
-		'isSettingModification',
-		'formatedTextPresenter',
-		'notFormatedTextPresenter'
+		#settingsTree,
+		#chooseMethodUI,
+		#methodDropList,
+		#settingsDropList,
+		#saveMethodButton,
+		#removeMethodButton,
+		#removeSettingButton,
+		#saveSettingButton,
+		#methodProvider,
+		#formaterPrettyPrinter,
+		#isSettingModification,
+		#formatedTextPresenter,
+		#notFormatedTextPresenter
 	],
 	#classVars : [
-		'FormaterPrettyPrinter',
-		'MethodProvider'
+		#FormaterPrettyPrinter,
+		#MethodProvider
 	],
 	#category : #EnlumineurFormatterUI
 }

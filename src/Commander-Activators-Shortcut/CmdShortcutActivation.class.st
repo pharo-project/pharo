@@ -27,7 +27,7 @@ Class {
 	#name : 'CmdShortcutActivation',
 	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
-		'keyCombination'
+		#keyCombination
 	],
 	#category : 'Commander-Activators-Shortcut',
 	#package : 'Commander-Activators-Shortcut'

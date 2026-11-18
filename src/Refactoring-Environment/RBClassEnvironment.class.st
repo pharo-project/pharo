@@ -12,8 +12,8 @@ Class {
 	#name : 'RBClassEnvironment',
 	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
-		'classes',
-		'metaClasses'
+		#classes,
+		#metaClasses
 	],
 	#category : 'Refactoring-Environment',
 	#package : 'Refactoring-Environment'

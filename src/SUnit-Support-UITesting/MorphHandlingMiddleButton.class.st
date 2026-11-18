@@ -5,8 +5,8 @@ Class {
 	#name : 'MorphHandlingMiddleButton',
 	#superclass : 'Morph',
 	#instVars : [
-		'receivedBlueButtonUp',
-		'receivedBlueButtonDown'
+		#receivedBlueButtonUp,
+		#receivedBlueButtonDown
 	],
 	#category : 'SUnit-Support-UITesting-Morphic',
 	#package : 'SUnit-Support-UITesting',

@@ -2,7 +2,7 @@ Class {
 	#name : 'TEqualityTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'classFactory'
+		#classFactory
 	],
 	#category : 'Equals-Tests',
 	#package : 'Equals-Tests'

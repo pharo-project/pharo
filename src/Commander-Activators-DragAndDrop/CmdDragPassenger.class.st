@@ -13,8 +13,8 @@ Class {
 	#name : 'CmdDragPassenger',
 	#superclass : 'Object',
 	#instVars : [
-		'dragContext',
-		'dropActivators'
+		#dragContext,
+		#dropActivators
 	],
 	#category : 'Commander-Activators-DragAndDrop',
 	#package : 'Commander-Activators-DragAndDrop'

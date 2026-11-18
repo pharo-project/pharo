@@ -2,8 +2,8 @@ Class {
 	#name : 'RBAndCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'left',
-		'right'
+		#left,
+		#right
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

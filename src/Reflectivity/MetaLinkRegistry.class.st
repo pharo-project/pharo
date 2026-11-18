@@ -32,10 +32,10 @@ Class {
 	#name : 'MetaLinkRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'links',
-		'permalinks',
-		'permanentTargets',
-		'slotSources'
+		#links,
+		#permalinks,
+		#permanentTargets,
+		#slotSources
 	],
 	#category : 'Reflectivity-Installer',
 	#package : 'Reflectivity',

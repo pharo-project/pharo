@@ -5,15 +5,15 @@ Class {
 	#name : 'MailAddressTokenizer',
 	#superclass : 'Stream',
 	#instVars : [
-		'cachedToken',
-		'text',
-		'pos'
+		#cachedToken,
+		#text,
+		#pos
 	],
 	#classVars : [
-		'CSNonAtom',
-		'CSNonSeparators',
-		'CSParens',
-		'CSSpecials'
+		#CSNonAtom,
+		#CSNonSeparators,
+		#CSParens,
+		#CSSpecials
 	],
 	#category : 'Network-Mail',
 	#package : 'Network-Mail'

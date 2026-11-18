@@ -14,8 +14,8 @@ Class {
 	#name : 'ShAbstractChange',
 	#superclass : 'Object',
 	#instVars : [
-		'builder',
-		'oldClass'
+		#builder,
+		#oldClass
 	],
 	#category : 'Shift-ClassBuilder-Changes',
 	#package : 'Shift-ClassBuilder',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SycRefactoringPreviewTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'sycRefactoringPreview'
+		#sycRefactoringPreview
 	],
 	#category : 'SystemCommands-RefactoringSupport-Tests',
 	#package : 'SystemCommands-RefactoringSupport-Tests'

@@ -9,7 +9,7 @@ Class {
 	#name : 'ErrorHandlerSessionHandler',
 	#superclass : 'AbstractSessionHandler',
 	#classVars : [
-		'UniqueInstance'
+		#UniqueInstance
 	],
 	#category : 'System-SessionManager-Handlers',
 	#package : 'System-SessionManager',

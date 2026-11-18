@@ -10,7 +10,7 @@ Class {
 	#name : 'CommandLineArguments',
 	#superclass : 'Object',
 	#instVars : [
-		'arguments'
+		#arguments
 	],
 	#category : 'System-BasicCommandLineHandler-Utilities',
 	#package : 'System-BasicCommandLineHandler',

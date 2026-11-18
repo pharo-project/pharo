@@ -5,12 +5,12 @@ Class {
 	#name : 'MCFileTreeRepository',
 	#superclass : 'MCDirectoryRepository',
 	#instVars : [
-		'readonly',
-		'repositoryProperties'
+		#readonly,
+		#repositoryProperties
 	],
 	#classInstVars : [
-		'defaultPackageExtension',
-		'defaultPropertyFileExtension'
+		#defaultPackageExtension,
+		#defaultPropertyFileExtension
 	],
 	#category : 'MonticelloFileTree-Core',
 	#package : 'MonticelloFileTree-Core'
@@ -111,7 +111,7 @@ MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 			aZnUrl pathSegments copyWithFirst: aZnUrl host ]
 		ifNil: [ aZnUrl pathSegments].
 
-	(path ifNotEmpty: [ path first = #'.' or: [ path first = #'..' ] ])
+	(path ifNotEmpty: [ (path first sameContents: #'.') or: [ path first sameContents: #'..' ] ])
 		ifTrue: [ ^ (RelativePath withAll: path) asFileReference ].
 
 	^ (AbsolutePath withAll: path) asFileReference 
@@ -176,8 +176,8 @@ MCFileTreeRepository >> canReadFileNamed: aString [
 { #category : 'accessing' }
 MCFileTreeRepository >> defaultRepositoryProperties [
   ^ Dictionary new
-    at: 'packageExtension' put: self class defaultPackageExtension;
-    at: 'propertyFileExtension' put: self propertyFileExtension;
+    at: #'packageExtension' put: self class defaultPackageExtension;
+    at: #'propertyFileExtension' put: self propertyFileExtension;
     yourself
 ]
 
@@ -224,7 +224,7 @@ MCFileTreeRepository >> goferVersionFrom: aVersionReference [
     ((self readableFileNames collect: [ :fileName | self fileDirectoryOn: fileName ])
         select: [ :packageDirectory | self fileUtils directoryExists: packageDirectory ])
         collect: [ :packageDirectory | 
-            (self versionInfoForPackageDirectory: packageDirectory) name = aVersionReference name
+            ((self versionInfoForPackageDirectory: packageDirectory) name sameContents: aVersionReference name)
                 ifTrue: [ ^ self loadVersionFromFileNamed: (self fileUtils directoryName: packageDirectory) ] ].
     ^ nil
 ]
@@ -264,7 +264,7 @@ MCFileTreeRepository >> packageDescriptionsFromReadableFileNames [
 { #category : 'private' }
 MCFileTreeRepository >> packageExtension [
   ^ self repositoryProperties
-    at: 'packageExtension'
+    at: #'packageExtension'
     ifAbsent: [ self class defaultPackageExtension ]
 ]
 
@@ -276,7 +276,7 @@ MCFileTreeRepository >> parseName: aString extension: extension [
 { #category : 'private' }
 MCFileTreeRepository >> propertyFileExtension [
   ^ self repositoryProperties
-    at: 'propertyFileExtension'
+    at: #'propertyFileExtension'
     ifAbsent: [ self class defaultPropertyFileExtension ]
 ]
 
@@ -284,7 +284,7 @@ MCFileTreeRepository >> propertyFileExtension [
 MCFileTreeRepository >> propertyFileExtension: propertyFileExtension [
   self class validatePropertyFileExtension: propertyFileExtension.
   self repositoryProperties
-    at: 'propertyFileExtension'
+    at: #'propertyFileExtension'
     put: propertyFileExtension.
   self writeRepositoryProperties
 ]
@@ -333,7 +333,7 @@ MCFileTreeRepository >> versionFrom: aVersionReferenceString [
     (self readableFileNames collect: [ :fileName | self fileDirectoryOn: fileName ])
         select: [ :packageDirectory | self fileUtils directoryExists: packageDirectory ]
         thenCollect: [ :packageDirectory | 
-            (self versionInfoForPackageDirectory: packageDirectory) name = aVersionReferenceString
+            ((self versionInfoForPackageDirectory: packageDirectory) name sameContents: aVersionReferenceString)
                 ifTrue: [ ^ self loadVersionFromFileNamed: (self fileUtils directoryName: packageDirectory) ] ].
     ^ nil
 ]

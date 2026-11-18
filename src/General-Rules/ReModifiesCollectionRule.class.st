@@ -27,8 +27,8 @@ ReModifiesCollectionRule class >> uniqueIdentifierName [
 { #category : 'initialization' }
 ReModifiesCollectionRule >> afterCheck: aNode mappings: mappingDict [
 	^ self
-		modifiesCollection: (mappingDict at: '`@collection')
-		inAnyStatement: (mappingDict at: '`@.Statements')
+		modifiesCollection: (mappingDict at: #'`@collection')
+		inAnyStatement: (mappingDict at: #'`@.Statements')
 ]
 
 { #category : 'accessing' }

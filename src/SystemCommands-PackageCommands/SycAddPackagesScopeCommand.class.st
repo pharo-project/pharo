@@ -5,7 +5,7 @@ Class {
 	#name : 'SycAddPackagesScopeCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'packages'
+		#packages
 	],
 	#category : 'SystemCommands-PackageCommands-Scope',
 	#package : 'SystemCommands-PackageCommands',

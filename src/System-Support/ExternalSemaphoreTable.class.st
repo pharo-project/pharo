@@ -15,8 +15,8 @@ Class {
 	#name : 'ExternalSemaphoreTable',
 	#superclass : 'Object',
 	#classVars : [
-		'ProtectAdd',
-		'ProtectRemove'
+		#ProtectAdd,
+		#ProtectRemove
 	],
 	#category : 'System-Support-Utilities',
 	#package : 'System-Support',

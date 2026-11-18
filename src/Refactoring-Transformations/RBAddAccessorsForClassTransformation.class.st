@@ -14,7 +14,7 @@ Class {
 	#name : 'RBAddAccessorsForClassTransformation',
 	#superclass : 'RBCompositeTransformation',
 	#instVars : [
-		'className'
+		#className
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

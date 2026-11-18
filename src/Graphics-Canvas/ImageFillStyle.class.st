@@ -5,9 +5,9 @@ Class {
 	#name : 'ImageFillStyle',
 	#superclass : 'OrientedFillStyle',
 	#instVars : [
-		'formSet',
-		'extent',
-		'offset'
+		#formSet,
+		#extent,
+		#offset
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

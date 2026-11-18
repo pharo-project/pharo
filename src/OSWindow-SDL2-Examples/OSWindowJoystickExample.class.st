@@ -8,11 +8,11 @@ Class {
 	#name : 'OSWindowJoystickExample',
 	#superclass : 'OSWindowGenericRendererExample',
 	#instVars : [
-		'characterPosition',
-		'characterVelocity',
-		'lastSimulationTime',
-		'currentTime',
-		'bullets'
+		#characterPosition,
+		#characterVelocity,
+		#lastSimulationTime,
+		#currentTime,
+		#bullets
 	],
 	#category : 'OSWindow-SDL2-Examples-Joystick',
 	#package : 'OSWindow-SDL2-Examples',

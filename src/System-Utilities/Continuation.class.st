@@ -18,7 +18,7 @@ Class {
 	#name : 'Continuation',
 	#superclass : 'Object',
 	#instVars : [
-		'values'
+		#values
 	],
 	#category : 'System-Utilities',
 	#package : 'System-Utilities'

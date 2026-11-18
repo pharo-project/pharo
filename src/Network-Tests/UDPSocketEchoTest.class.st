@@ -96,7 +96,7 @@ UDPSocketEchoTest >> withUDPEchoServer: block [
 			result := self receiveUDPDataFrom: socket.
 			"echo what we received to where it came from"
 			socket sendUDPData: result first toHost: result second port: result third.
-			result first asLowercase = #quit ifTrue: [ loop := false ] ] ]
+			(result first asLowercase sameContents: #quit) ifTrue: [ loop := false ] ] ]
 				ensure: [ socket closeAndDestroy ] ]
 					forkAt: Processor userBackgroundPriority named: 'UDP echo server'.
 	^ block cull: process

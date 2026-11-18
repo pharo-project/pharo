@@ -5,10 +5,10 @@ Class {
 	#name : 'OSTouchSwipeDetector',
 	#superclass : 'OSTouchOneDirectionGestureDetector',
 	#instVars : [
-		'minDistToBorder'
+		#minDistToBorder
 	],
 	#classVars : [
-		'MinDistToBorder'
+		#MinDistToBorder
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

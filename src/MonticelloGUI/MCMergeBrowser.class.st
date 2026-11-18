@@ -5,9 +5,9 @@ Class {
 	#name : 'MCMergeBrowser',
 	#superclass : 'MCCodeTool',
 	#instVars : [
-		'conflicts',
-		'merger',
-		'selection'
+		#conflicts,
+		#merger,
+		#selection
 	],
 	#category : 'MonticelloGUI-Tools',
 	#package : 'MonticelloGUI',

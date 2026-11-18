@@ -5,8 +5,8 @@ Class {
 	#name : 'FLLargeIdentityDictionary',
 	#superclass : 'FLLargeIdentityHashedCollection',
 	#instVars : [
-		'keys',
-		'values'
+		#keys,
+		#values
 	],
 	#category : 'Fuel-Core-Collections',
 	#package : 'Fuel-Core',

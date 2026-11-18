@@ -5,7 +5,7 @@ Class {
 	#name : 'RubVerticalScrolled',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'scrollValue'
+		#scrollValue
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

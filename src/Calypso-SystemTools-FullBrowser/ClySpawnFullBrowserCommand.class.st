@@ -14,7 +14,7 @@ Class {
 	#name : 'ClySpawnFullBrowserCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-FullBrowser',

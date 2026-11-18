@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL_Point',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_X',
-		'OFFSET_Y'
+		#OFFSET_X,
+		#OFFSET_Y
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

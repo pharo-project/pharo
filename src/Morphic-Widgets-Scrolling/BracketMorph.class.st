@@ -5,7 +5,7 @@ Class {
 	#name : 'BracketMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'orientation'
+		#orientation
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

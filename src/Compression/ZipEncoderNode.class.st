@@ -16,14 +16,14 @@ Class {
 	#name : 'ZipEncoderNode',
 	#superclass : 'Object',
 	#instVars : [
-		'value',
-		'frequency',
-		'height',
-		'bitLength',
-		'code',
-		'parent',
-		'left',
-		'right'
+		#value,
+		#frequency,
+		#height,
+		#bitLength,
+		#code,
+		#parent,
+		#left,
+		#right
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

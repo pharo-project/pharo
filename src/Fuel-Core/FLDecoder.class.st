@@ -7,14 +7,14 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'stream',
-		'objects',
-		'isBigEndian',
-		'indexStream',
-		'objectsWriteStream',
-		'globalEnvironment',
-		'migrationsBySource',
-		'migrationsByTarget'
+		#stream,
+		#objects,
+		#isBigEndian,
+		#indexStream,
+		#objectsWriteStream,
+		#globalEnvironment,
+		#migrationsBySource,
+		#migrationsByTarget
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

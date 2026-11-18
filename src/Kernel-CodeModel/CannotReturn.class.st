@@ -6,7 +6,7 @@ Class {
 	#name : 'CannotReturn',
 	#superclass : 'Error',
 	#instVars : [
-		'result'
+		#result
 	],
 	#category : 'Kernel-CodeModel-Exceptions',
 	#package : 'Kernel-CodeModel',

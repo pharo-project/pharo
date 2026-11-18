@@ -20,7 +20,7 @@ Class {
 	#name : 'RGTraitCompositionVisitor',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'traitComposition'
+		#traitComposition
 	],
 	#category : 'Ring-Core-Parsing',
 	#package : 'Ring-Core',
@@ -105,7 +105,7 @@ RGTraitCompositionVisitor >> visitMessageNode: aMessageNode [
 		^ rec -> args first
 		].
 
-	(aMessageNode selector = #classTrait) ifTrue: [
+	(aMessageNode selector sameContents: #classTrait) ifTrue: [
 		"for associations in aliases"
 		rec classTrait makeResolved.
 		rec classTrait name: rec name, ' classTrait'.

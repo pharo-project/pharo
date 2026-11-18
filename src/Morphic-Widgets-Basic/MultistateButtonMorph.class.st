@@ -10,12 +10,12 @@ Class {
 	#name : 'MultistateButtonMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'enabled',
-		'active',
-		'over',
-		'down',
-		'stateMap',
-		'upAction'
+		#enabled,
+		#active,
+		#over,
+		#down,
+		#stateMap,
+		#upAction
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

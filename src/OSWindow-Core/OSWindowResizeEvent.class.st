@@ -5,8 +5,8 @@ Class {
 	#name : 'OSWindowResizeEvent',
 	#superclass : 'OSWindowEvent',
 	#instVars : [
-		'width',
-		'height'
+		#width,
+		#height
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

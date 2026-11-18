@@ -178,7 +178,7 @@ ClassAnnotationTest >> testGettingRedefiningInstance [
 { #category : 'tests' }
 ClassAnnotationTest >> testGettingSingleAnnotationUsingSelector [
 	| expected actual |
-	expected := ClassWithThreeAnnotations classAnnotations detect: [ :each | each declarationSelector = #annotationExample2 ].
+	expected := ClassWithThreeAnnotations classAnnotations detect: [ :each | each declarationSelector sameContents: #annotationExample2 ].
 	actual := ClassWithThreeAnnotations classAnnotationAt: #annotationExample2.
 
 	self assert: actual identicalTo: expected

@@ -186,11 +186,11 @@ WaitfreeQueueTest >> testZombieMiddle [
 	items second object: queue dummy.
 	items last object: #real2.
 
-	real := queue nextOrNilSuchThat: [ :v | v = #real1 ].
+	real := queue nextOrNilSuchThat: [ :v | v sameContents: #real1 ].
 	self assert: real equals: #real1.
 	self assert: queue size equals: 1.
 	self assert: queue itemCount equals: 2.
-	real := queue nextOrNilSuchThat: [ :v | v = #real2 ].
+	real := queue nextOrNilSuchThat: [ :v | v sameContents: #real2 ].
 	self assert: real equals: #real2.
 	self assert: queue size equals: 0.
 	self assert: queue itemCount equals: 1.

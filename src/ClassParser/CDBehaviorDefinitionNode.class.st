@@ -5,11 +5,11 @@ Class {
 	#name : 'CDBehaviorDefinitionNode',
 	#superclass : 'CDNode',
 	#instVars : [
-		'classNameNode',
-		'slotNodes',
-		'traitDefinition',
-		'className',
-		'layoutClass'
+		#classNameNode,
+		#slotNodes,
+		#traitDefinition,
+		#className,
+		#layoutClass
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

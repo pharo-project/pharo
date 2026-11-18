@@ -5,10 +5,10 @@ Class {
 	#name : 'PragmaMenuAndShortcutRegistration',
 	#superclass : 'Object',
 	#instVars : [
-		'items',
-		'currentRoot',
-		'platform',
-		'model'
+		#items,
+		#currentRoot,
+		#platform,
+		#model
 	],
 	#category : 'MenuRegistration-Core',
 	#package : 'MenuRegistration',

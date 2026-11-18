@@ -29,10 +29,10 @@ Class {
 	#name : 'StdioStreamTestResource',
 	#superclass : 'TestResource',
 	#instVars : [
-		'fileReference',
-		'contents',
-		'fileStream',
-		'stdioStream'
+		#fileReference,
+		#contents,
+		#fileStream,
+		#stdioStream
 	],
 	#category : 'Files-Tests-Streams',
 	#package : 'Files-Tests',

@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensCompositePaint',
 	#superclass : 'AthensPaint',
 	#instVars : [
-		'paints'
+		#paints
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

@@ -8,9 +8,9 @@ Class {
 	#name : 'RBExtractToTemporaryTransformation',
 	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
-		'sourceInterval',
-		'newVariableName',
-		'parseTree'
+		#sourceInterval,
+		#newVariableName,
+		#parseTree
 	],
 	#category : 'Refactoring-Transformations-Model-Migrated',
 	#package : 'Refactoring-Transformations',

@@ -6,7 +6,7 @@ Class {
 	#name : 'TFPointerToStructType',
 	#superclass : 'TFDerivedType',
 	#instVars : [
-		'targetClass'
+		#targetClass
 	],
 	#category : 'ThreadedFFI-Types',
 	#package : 'ThreadedFFI',

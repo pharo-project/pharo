@@ -5,7 +5,7 @@ Class {
 	#name : 'EpMonticelloVersionsLoad',
 	#superclass : 'EpEvent',
 	#instVars : [
-		'versionNames'
+		#versionNames
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

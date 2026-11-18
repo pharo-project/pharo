@@ -5,10 +5,10 @@ Class {
 	#name : 'FreeTypeFace',
 	#superclass : 'FT2Face',
 	#instVars : [
-		'filename',
-		'index',
-		'fileContentsExternalMemory',
-		'hasKerning'
+		#filename,
+		#index,
+		#fileContentsExternalMemory,
+		#hasKerning
 	],
 	#category : 'FreeType-Fonts',
 	#package : 'FreeType',

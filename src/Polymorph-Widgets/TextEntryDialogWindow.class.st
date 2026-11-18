@@ -5,7 +5,7 @@ Class {
 	#name : 'TextEntryDialogWindow',
 	#superclass : 'TextEditorDialogWindow',
 	#classVars : [
-		'MinimumWidth'
+		#MinimumWidth
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

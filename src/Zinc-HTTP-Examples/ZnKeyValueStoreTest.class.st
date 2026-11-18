@@ -5,8 +5,8 @@ Class {
 	#name : 'ZnKeyValueStoreTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'client',
-		'server'
+		#client,
+		#server
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'

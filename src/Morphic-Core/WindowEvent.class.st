@@ -5,8 +5,8 @@ Class {
 	#name : 'WindowEvent',
 	#superclass : 'MorphicEvent',
 	#instVars : [
-		'action',
-		'rectangle'
+		#action,
+		#rectangle
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

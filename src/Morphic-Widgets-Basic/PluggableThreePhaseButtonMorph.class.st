@@ -7,10 +7,10 @@ Class {
 	#name : 'PluggableThreePhaseButtonMorph',
 	#superclass : 'ThreePhaseButtonMorph',
 	#instVars : [
-		'offImageSelector',
-		'onImageSelector',
-		'pressedImageSelector',
-		'stateSelector'
+		#offImageSelector,
+		#onImageSelector,
+		#pressedImageSelector,
+		#stateSelector
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

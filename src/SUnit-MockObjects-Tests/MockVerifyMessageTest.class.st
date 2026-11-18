@@ -2,7 +2,7 @@ Class {
 	#name : 'MockVerifyMessageTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'mock'
+		#mock
 	],
 	#category : 'SUnit-MockObjects-Tests',
 	#package : 'SUnit-MockObjects-Tests'

@@ -17,11 +17,11 @@ Class {
 	#name : 'ZnNewLineWriterStream',
 	#superclass : 'WriteStream',
 	#instVars : [
-		'stream',
-		'cr',
-		'lf',
-		'previous',
-		'lineEnding'
+		#stream,
+		#cr,
+		#lf,
+		#previous,
+		#lineEnding
 	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'

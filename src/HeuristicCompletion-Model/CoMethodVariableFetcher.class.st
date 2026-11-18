@@ -8,7 +8,7 @@ Class {
 	#name : 'CoMethodVariableFetcher',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'completionASTNode'
+		#completionASTNode
 	],
 	#category : 'HeuristicCompletion-Model-Fetchers',
 	#package : 'HeuristicCompletion-Model',

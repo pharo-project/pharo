@@ -14,7 +14,7 @@ Class {
 	#name : 'BaselineOfMorphicCore',
 	#superclass : 'BaselineOf',
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfMorphicCore',
 	#package : 'BaselineOfMorphicCore'

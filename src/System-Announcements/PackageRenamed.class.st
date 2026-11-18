@@ -5,8 +5,8 @@ Class {
 	#name : 'PackageRenamed',
 	#superclass : 'PackageAnnouncement',
 	#instVars : [
-		'oldName',
-		'newName'
+		#oldName,
+		#newName
 	],
 	#category : 'System-Announcements-System-Packages',
 	#package : 'System-Announcements',

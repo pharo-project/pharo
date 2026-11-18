@@ -7,8 +7,8 @@ Class {
 	#name : 'RBAddClassChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'builder',
-		'definedClass'
+		#builder,
+		#definedClass
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
 	#package : 'Refactoring-Changes',

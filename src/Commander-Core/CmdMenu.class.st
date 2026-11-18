@@ -21,8 +21,8 @@ Class {
 	#name : 'CmdMenu',
 	#superclass : 'Object',
 	#instVars : [
-		'rootGroup',
-		'activationStrategyClass'
+		#rootGroup,
+		#activationStrategyClass
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

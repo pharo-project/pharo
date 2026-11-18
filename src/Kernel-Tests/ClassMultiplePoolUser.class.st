@@ -5,8 +5,8 @@ Class {
 	#name : 'ClassMultiplePoolUser',
 	#superclass : 'Object',
 	#pools : [
-		'PoolDefiner',
-		'PoolDefiner2'
+		#PoolDefiner,
+		#PoolDefiner2
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

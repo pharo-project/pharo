@@ -2,7 +2,7 @@ Class {
 	#name : 'ClassHierarchyPrinterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'printer'
+		#printer
 	],
 	#category : 'Kernel-ExtraUtils-ForPharo',
 	#package : 'Kernel-ExtraUtils',

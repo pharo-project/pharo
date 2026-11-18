@@ -17,8 +17,8 @@ Class {
 	#name : 'SDL_MouseWheelDirection',
 	#superclass : 'FFIEnumeration',
 	#classVars : [
-		'SDL_MOUSEWHEEL_FLIPPED',
-		'SDL_MOUSEWHEEL_NORMAL'
+		#SDL_MOUSEWHEEL_FLIPPED,
+		#SDL_MOUSEWHEEL_NORMAL
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

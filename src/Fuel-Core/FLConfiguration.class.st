@@ -9,10 +9,10 @@ Class {
 	#name : 'FLConfiguration',
 	#superclass : 'Object',
 	#instVars : [
-		'map'
+		#map
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : 'Fuel-Core-Public',
 	#package : 'Fuel-Core',

@@ -92,16 +92,16 @@ Class {
 	#name : 'String',
 	#superclass : 'ArrayedCollection',
 	#classVars : [
-		'AsciiOrder',
-		'CSLineEnders',
-		'CSNonSeparators',
-		'CSSeparators',
-		'CaseInsensitiveOrder',
-		'CaseSensitiveOrder',
-		'LowercasingTable',
-		'Tokenish',
-		'TypeTable',
-		'UppercasingTable'
+		#AsciiOrder,
+		#CSLineEnders,
+		#CSNonSeparators,
+		#CSSeparators,
+		#CaseInsensitiveOrder,
+		#CaseSensitiveOrder,
+		#LowercasingTable,
+		#Tokenish,
+		#TypeTable,
+		#UppercasingTable
 	],
 	#category : 'Collections-Strings-Base',
 	#package : 'Collections-Strings',
@@ -507,6 +507,7 @@ String >> = aString [
 
 	" 'def' = 'abc' >>> false"
 
+	(Symbol strictComparison and: [ aString isSymbol ]) ifTrue: [ ^ false ].
 	(aString isString and: [ self size = aString size ]) ifFalse: [ ^ false ].
 	^ (self compare: self with: aString) = 0
 ]
@@ -1008,7 +1009,7 @@ String >> copyReplaceAll: oldSubstring with: newSubstring [
 	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
 	"('ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk') >>> 'zk cd zk ef zk'"
     | idx |
-    self = oldSubstring ifTrue: [ ^ newSubstring copy ].
+    (self sameContents: oldSubstring) ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
     idx := 1.
     ^ self species new: self size streamContents: [ :stream | | foundIdx |
@@ -2193,7 +2194,7 @@ String >> linesDo: aBlock [
 { #category : 'comparing' }
 String >> literalEqual: other [
 
-	^ self class == other class and: [self = other]
+	^ self class == other class and: [self sameContents: other]
 ]
 
 { #category : 'comparing' }
@@ -2376,6 +2377,11 @@ String >> sameAs: aString [
 	"Answer whether the receiver sorts equal to aString. The
 	collation sequence is ascii with case differences ignored."
 	^(self compare: aString caseSensitive: false) = 2
+]
+
+{ #category : #comparing }
+String >> sameContents: aSymborOrString [
+	^ self = aSymborOrString asString
 ]
 
 { #category : 'accessing' }

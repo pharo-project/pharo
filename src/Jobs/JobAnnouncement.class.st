@@ -7,7 +7,7 @@ Class {
 	#name : 'JobAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'job'
+		#job
 	],
 	#category : 'Jobs-Announcements',
 	#package : 'Jobs',

@@ -6,7 +6,7 @@ Class {
 	#name : 'RBRemoveMethodChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : 'Refactoring-Changes-Changes-Methods',
 	#package : 'Refactoring-Changes',

@@ -160,13 +160,13 @@ Class {
 	#name : 'MenuRegistration',
 	#superclass : 'Object',
 	#instVars : [
-		'parentName',
-		'itemList',
-		'order',
-		'spec',
-		'owner',
-		'isGroup',
-		'precondition'
+		#parentName,
+		#itemList,
+		#order,
+		#spec,
+		#owner,
+		#isGroup,
+		#precondition
 	],
 	#category : 'MenuRegistration-Core',
 	#package : 'MenuRegistration',
@@ -339,7 +339,7 @@ MenuRegistration >> itemNamed: aName [
 	"Return the MenuRegistration named aName or nil if none is found"
 
 	| result |
-	self name = aName ifTrue: [ ^ self ].
+	(self name sameContents: aName) ifTrue: [ ^ self ].
 	result := self itemList
 		ifNotNil: [ :l |
 			l

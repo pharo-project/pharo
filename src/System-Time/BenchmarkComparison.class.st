@@ -9,8 +9,8 @@ Class {
 	#name : 'BenchmarkComparison',
 	#superclass : 'Object',
 	#instVars : [
-		'referenceResult',
-		'comparisonResult'
+		#referenceResult,
+		#comparisonResult
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'

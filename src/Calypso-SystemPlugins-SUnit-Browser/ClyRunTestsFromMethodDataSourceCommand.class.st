@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyRunTestsFromMethodDataSourceCommand',
 	#superclass : 'ClyTestCommand',
 	#instVars : [
-		'methodDataSource'
+		#methodDataSource
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',

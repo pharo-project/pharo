@@ -5,7 +5,7 @@ Class {
 	#name : 'StartupPreferencesHandler',
 	#superclass : 'Object',
 	#instVars : [
-		'actions'
+		#actions
 	],
 	#category : 'StartupPreferences',
 	#package : 'StartupPreferences'

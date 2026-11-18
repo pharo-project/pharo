@@ -21,9 +21,9 @@ Class {
 	#name : 'FastDraggingFrameMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'target',
-		'startGap',
-		'location'
+		#target,
+		#startGap,
+		#location
 	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',

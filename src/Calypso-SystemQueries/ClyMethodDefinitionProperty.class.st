@@ -16,8 +16,8 @@ Class {
 	#name : 'ClyMethodDefinitionProperty',
 	#superclass : 'ClyItemDefinitionProperty',
 	#instVars : [
-		'isExtension',
-		'protocol'
+		#isExtension,
+		#protocol
 	],
 	#category : 'Calypso-SystemQueries-Properties',
 	#package : 'Calypso-SystemQueries',

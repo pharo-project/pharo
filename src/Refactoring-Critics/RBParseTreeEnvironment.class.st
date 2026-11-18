@@ -2,7 +2,7 @@ Class {
 	#name : 'RBParseTreeEnvironment',
 	#superclass : 'RBSelectorEnvironment',
 	#instVars : [
-		'matcher'
+		#matcher
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'

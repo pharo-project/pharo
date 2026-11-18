@@ -6,8 +6,8 @@ Class {
 	#name : 'TFInnerTestStruct',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_A',
-		'OFFSET_B'
+		#OFFSET_A,
+		#OFFSET_B
 	],
 	#category : 'ThreadedFFI-Tests-Test-Structs',
 	#package : 'ThreadedFFI-Tests',

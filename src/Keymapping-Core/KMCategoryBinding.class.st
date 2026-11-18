@@ -5,9 +5,9 @@ Class {
 	#name : 'KMCategoryBinding',
 	#superclass : 'Object',
 	#instVars : [
-		'target',
-		'category',
-		'morph'
+		#target,
+		#category,
+		#morph
 	],
 	#category : 'Keymapping-Core-Categories',
 	#package : 'Keymapping-Core',

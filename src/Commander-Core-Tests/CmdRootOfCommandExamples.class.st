@@ -2,7 +2,7 @@ Class {
 	#name : 'CmdRootOfCommandExamples',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'savedParametersContext'
+		#savedParametersContext
 	],
 	#category : 'Commander-Core-Tests',
 	#package : 'Commander-Core-Tests'

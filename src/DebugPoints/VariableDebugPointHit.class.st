@@ -6,7 +6,7 @@ Class {
 	#name : 'VariableDebugPointHit',
 	#superclass : 'DebugPointHit',
 	#instVars : [
-		'variableValue'
+		#variableValue
 	],
 	#category : 'DebugPoints-Announcements',
 	#package : 'DebugPoints',

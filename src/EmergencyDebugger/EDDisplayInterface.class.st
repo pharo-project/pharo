@@ -5,11 +5,11 @@ Class {
 	#name : 'EDDisplayInterface',
 	#superclass : 'Object',
 	#instVars : [
-		'window',
-		'renderer',
-		'characterReceivedAction',
-		'windowClosedAction',
-		'extent'
+		#window,
+		#renderer,
+		#characterReceivedAction,
+		#windowClosedAction,
+		#extent
 	],
 	#category : 'EmergencyDebugger-View',
 	#package : 'EmergencyDebugger',

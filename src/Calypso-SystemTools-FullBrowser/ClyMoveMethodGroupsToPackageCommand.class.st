@@ -10,7 +10,7 @@ Class {
 	#name : 'ClyMoveMethodGroupsToPackageCommand',
 	#superclass : 'ClyMethodGroupCommand',
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',

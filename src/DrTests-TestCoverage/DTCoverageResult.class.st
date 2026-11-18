@@ -13,7 +13,7 @@ Class {
 	#name : 'DTCoverageResult',
 	#superclass : 'CoverageResult',
 	#instVars : [
-		'partiallyCoveredMethods'
+		#partiallyCoveredMethods
 	],
 	#category : 'DrTests-TestCoverage',
 	#package : 'DrTests-TestCoverage'

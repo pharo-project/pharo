@@ -25,7 +25,7 @@ ReNoUnusedInstanceVariableRule >> check: aClass forCritiquesDo: aCriticBlock [
 	aClass slots
 		reject: [ :slot |
 			slot isReferenced or: [
-				slot definingClass pragmas anySatisfy: [ :pragma | pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: slot name ] ] ] ]
+				slot definingClass pragmas anySatisfy: [ :pragma | (pragma selector sameContents: #ignoreUnusedVariables:) and: [ (pragma argumentAt: 1) includes: slot name ] ] ] ]
 		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot name) ]
 ]
 

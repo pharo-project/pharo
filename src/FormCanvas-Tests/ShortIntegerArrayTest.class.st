@@ -5,7 +5,7 @@ Class {
 	#name : 'ShortIntegerArrayTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'shortIntegerArray'
+		#shortIntegerArray
 	],
 	#category : 'FormCanvas-Tests',
 	#package : 'FormCanvas-Tests'

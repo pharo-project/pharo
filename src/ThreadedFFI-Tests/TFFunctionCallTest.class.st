@@ -2,7 +2,7 @@ Class {
 	#name : 'TFFunctionCallTest',
 	#superclass : 'TFTestCase',
 	#pools : [
-		'TFAbiTypes'
+		#TFAbiTypes
 	],
 	#category : 'ThreadedFFI-Tests',
 	#package : 'ThreadedFFI-Tests'

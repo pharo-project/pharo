@@ -6,14 +6,14 @@ Class {
 	#name : 'SystemProgressItemMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'bar',
-		'labelMorph',
-		'lock',
-		'result',
-		'hasResult',
-		'startValue',
-		'endValue',
-		'lastRefresh'
+		#bar,
+		#labelMorph,
+		#lock,
+		#result,
+		#hasResult,
+		#startValue,
+		#endValue,
+		#lastRefresh
 	],
 	#category : 'Morphic-Base-ProgressBar',
 	#package : 'Morphic-Base',

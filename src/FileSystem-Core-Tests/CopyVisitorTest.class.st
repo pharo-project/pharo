@@ -5,8 +5,8 @@ Class {
 	#name : 'CopyVisitorTest',
 	#superclass : 'FileSystemTreeTest',
 	#instVars : [
-		'source',
-		'dest'
+		#source,
+		#dest
 	],
 	#category : 'FileSystem-Core-Tests-Visitors',
 	#package : 'FileSystem-Core-Tests',

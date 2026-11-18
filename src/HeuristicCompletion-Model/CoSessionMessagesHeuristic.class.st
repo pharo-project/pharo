@@ -5,7 +5,7 @@ Class {
 	#name : 'CoSessionMessagesHeuristic',
 	#superclass : 'CoASTNodeFetcherHeuristic',
 	#instVars : [
-		'session'
+		#session
 	],
 	#category : 'HeuristicCompletion-Model-SessionHeuristic',
 	#package : 'HeuristicCompletion-Model',

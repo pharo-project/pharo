@@ -7,10 +7,10 @@ Class {
 	#name : 'ObjectStringConverter',
 	#superclass : 'Object',
 	#instVars : [
-		'objectClass',
-		'regex',
-		'stringTransformBlock',
-		'objectTransformBlock'
+		#objectClass,
+		#regex,
+		#stringTransformBlock,
+		#objectTransformBlock
 	],
 	#category : 'Polymorph-Widgets-Utilities',
 	#package : 'Polymorph-Widgets',

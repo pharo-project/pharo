@@ -11,7 +11,7 @@ Class {
 	#name : 'ClyRunTestsFromMethodsCommand',
 	#superclass : 'ClyRunTestsFromSelectedItemsCommand',
 	#instVars : [
-		'runTestCases'
+		#runTestCases
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',

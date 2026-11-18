@@ -11,7 +11,7 @@ Class {
 	#name : 'ReMaxOneAssignmentWithReferencesCondition',
 	#superclass : 'ReSubtreeCondition',
 	#instVars : [
-		'assignments'
+		#assignments
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

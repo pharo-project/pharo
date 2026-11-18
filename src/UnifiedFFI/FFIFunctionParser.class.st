@@ -5,9 +5,9 @@ Class {
 	#name : 'FFIFunctionParser',
 	#superclass : 'Object',
 	#instVars : [
-		'requestor',
-		'stream',
-		'fnSpec'
+		#requestor,
+		#stream,
+		#fnSpec
 	],
 	#category : 'UnifiedFFI-Base',
 	#package : 'UnifiedFFI',
@@ -106,7 +106,7 @@ FFIFunctionParser >> parseArgument [
 "
 	"constant conditions"
 	(stream contents size = 1 and: [
-		stream contents first ~= #void ]) ifTrue: [
+		(stream contents first sameContents: #void) not ]) ifTrue: [
 		^ self integerConstantArgument: stream next ].
 	stream peek isArray ifTrue: [
 		^ self parseArgumentCastedType ].
@@ -121,7 +121,7 @@ FFIFunctionParser >> parseArgument [
 			argName := argName.
 			indirectIndex := self parseInt ].
 	"for sole 'void' fake argument "
-	(typeAndPtrArity = #('void' 0) and: [ argName isNil ])
+	((typeAndPtrArity first sameContents: 'void') and: [ typeAndPtrArity second = 0 and: [ argName isNil ]])
 		ifTrue: [ ^ nil ].
 	argument := self
 		argName: argName

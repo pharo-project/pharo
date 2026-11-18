@@ -13,7 +13,7 @@ Class {
 	#name : 'ClyMethodCreationToolMorph',
 	#superclass : 'ClyMethodEditorToolMorph',
 	#instVars : [
-		'methodClass'
+		#methodClass
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

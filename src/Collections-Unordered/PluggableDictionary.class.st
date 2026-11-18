@@ -10,8 +10,8 @@ Class {
 	#name : 'PluggableDictionary',
 	#superclass : 'Dictionary',
 	#instVars : [
-		'hashBlock',
-		'equalBlock'
+		#hashBlock,
+		#equalBlock
 	],
 	#category : 'Collections-Unordered-Dictionaries',
 	#package : 'Collections-Unordered',
@@ -98,12 +98,12 @@ overridden
 	finish := array size.
 	"Search from (hash mod size) to the end."
 	start to: finish do: [:index | ((element := array at: index) == nil or:
-[equalBlock ifNil: [element key = anObject]
+[equalBlock ifNil: [element key sameContents: anObject]
 				ifNotNil: [equalBlock value: element key value: anObject]])
 			ifTrue: [^ index]].
 	"Search from 1 to where we started."
 	1 to: start - 1 do: [:index | ((element := array at: index) == nil or:
-[equalBlock ifNil: [element key = anObject]
+[equalBlock ifNil: [element key sameContents: anObject]
 				ifNotNil: [equalBlock value: element key value: anObject]])
 			ifTrue: [^ index]].
 	^ 0"No match AND no empty slot"

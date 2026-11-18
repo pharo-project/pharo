@@ -6,7 +6,7 @@ Class {
 	#name : 'OSUnknownEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'data'
+		#data
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

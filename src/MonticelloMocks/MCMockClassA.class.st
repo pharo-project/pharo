@@ -5,11 +5,11 @@ Class {
 	#name : 'MCMockClassA',
 	#superclass : 'MCMock',
 	#instVars : [
-		'ivar'
+		#ivar
 	],
 	#classVars : [
-		'CVar',
-		'InitializationOrder'
+		#CVar,
+		#InitializationOrder
 	],
 	#category : 'MonticelloMocks',
 	#package : 'MonticelloMocks'

@@ -5,7 +5,7 @@ Class {
 	#name : 'PaginatedMorphTreeMorph',
 	#superclass : 'MorphTreeMorph',
 	#instVars : [
-		'pager'
+		#pager
 	],
 	#category : 'Morphic-Widgets-Tree-Pagination',
 	#package : 'Morphic-Widgets-Tree',

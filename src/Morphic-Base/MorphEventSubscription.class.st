@@ -5,10 +5,10 @@ Class {
 	#name : 'MorphEventSubscription',
 	#superclass : 'Object',
 	#instVars : [
-		'event',
-		'selector',
-		'recipient',
-		'valueParameter'
+		#event,
+		#selector,
+		#recipient,
+		#valueParameter
 	],
 	#category : 'Morphic-Base-Events',
 	#package : 'Morphic-Base',

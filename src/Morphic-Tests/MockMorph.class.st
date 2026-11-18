@@ -5,8 +5,8 @@ Class {
 	#name : 'MockMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'magicClick',
-		'magicDoubleClick'
+		#magicClick,
+		#magicDoubleClick
 	],
 	#category : 'Morphic-Tests-Event',
 	#package : 'Morphic-Tests',

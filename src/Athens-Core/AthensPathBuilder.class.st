@@ -6,7 +6,7 @@ Class {
 	#name : 'AthensPathBuilder',
 	#superclass : 'Object',
 	#classVars : [
-		'ZeroPoint'
+		#ZeroPoint
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

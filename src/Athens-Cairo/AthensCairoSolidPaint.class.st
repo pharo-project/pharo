@@ -7,12 +7,12 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'r',
-		'g',
-		'b',
-		'a',
-		'origin',
-		'extent'
+		#r,
+		#g,
+		#b,
+		#a,
+		#origin,
+		#extent
 	],
 	#category : 'Athens-Cairo-Paints',
 	#package : 'Athens-Cairo',

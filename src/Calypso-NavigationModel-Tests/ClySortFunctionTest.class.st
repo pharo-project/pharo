@@ -2,7 +2,7 @@ Class {
 	#name : 'ClySortFunctionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'function'
+		#function
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

@@ -22,15 +22,15 @@ Class {
 	#name : 'FreeTypeFontProvider',
 	#superclass : 'AbstractFontProvider',
 	#instVars : [
-		'fileInfos',
-		'fileInfoCache',
-		'tempFileInfos',
-		'families',
-		'tempFamilies',
-		'fontInstallers'
+		#fileInfos,
+		#fileInfoCache,
+		#tempFileInfos,
+		#families,
+		#tempFamilies,
+		#fontInstallers
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : 'FreeType-FontManager',
 	#package : 'FreeType',

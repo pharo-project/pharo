@@ -5,8 +5,8 @@ Class {
 	#name : 'FLIndexStream',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'digits'
+		#stream,
+		#digits
 	],
 	#category : 'Fuel-Core-Streams',
 	#package : 'Fuel-Core',

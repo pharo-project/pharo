@@ -5,7 +5,7 @@ Class {
 	#name : 'FullscreenAnnouncement',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'fullscreen'
+		#fullscreen
 	],
 	#category : 'Graphics-Display Objects-Utilities',
 	#package : 'Graphics-Display Objects',

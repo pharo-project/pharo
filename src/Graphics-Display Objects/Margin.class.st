@@ -16,10 +16,10 @@ Class {
 	#name : 'Margin',
 	#superclass : 'Object',
 	#instVars : [
-		'right',
-		'bottom',
-		'left',
-		'top'
+		#right,
+		#bottom,
+		#left,
+		#top
 	],
 	#category : 'Graphics-Display Objects-Utilities',
 	#package : 'Graphics-Display Objects',

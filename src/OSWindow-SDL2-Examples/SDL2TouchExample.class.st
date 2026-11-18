@@ -6,8 +6,8 @@ Class {
 	#name : 'SDL2TouchExample',
 	#superclass : 'SDL2AthensExample',
 	#instVars : [
-		'circle',
-		'moveToDraw'
+		#circle,
+		#moveToDraw
 	],
 	#category : 'OSWindow-SDL2-Examples-Touch',
 	#package : 'OSWindow-SDL2-Examples',

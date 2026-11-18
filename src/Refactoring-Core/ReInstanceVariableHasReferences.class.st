@@ -2,9 +2,9 @@ Class {
 	#name : 'ReInstanceVariableHasReferences',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'violators',
-		'aClass',
-		'instanceVariable'
+		#violators,
+		#aClass,
+		#instanceVariable
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

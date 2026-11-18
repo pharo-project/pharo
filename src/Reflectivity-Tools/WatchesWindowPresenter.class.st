@@ -6,12 +6,12 @@ Class {
 	#name : 'WatchesWindowPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'numItems',
-		'menu',
-		'list',
-		'inspectIt',
-		'watch',
-		'service'
+		#numItems,
+		#menu,
+		#list,
+		#inspectIt,
+		#watch,
+		#service
 	],
 	#category : 'Reflectivity-Tools-Watches',
 	#package : 'Reflectivity-Tools',

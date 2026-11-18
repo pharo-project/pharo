@@ -38,8 +38,8 @@ Class {
 	#traits : 'TIsEmpty',
 	#classTraits : 'TIsEmpty classTrait',
 	#instVars : [
-		'items',
-		'rootDataSource'
+		#items,
+		#rootDataSource
 	],
 	#category : 'Calypso-Browser-DataSource',
 	#package : 'Calypso-Browser',

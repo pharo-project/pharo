@@ -5,13 +5,13 @@ Class {
 	#name : 'RubCompositionScanner',
 	#superclass : 'RubCharacterScanner',
 	#instVars : [
-		'spaceX',
-		'lineHeight',
-		'baseline',
-		'breakableIndex',
-		'lineHeightAtBreak',
-		'baselineAtBreak',
-		'breakAtSpace'
+		#spaceX,
+		#lineHeight,
+		#baseline,
+		#breakableIndex,
+		#lineHeightAtBreak,
+		#baselineAtBreak,
+		#breakAtSpace
 	],
 	#category : 'Rubric-TextScanning',
 	#package : 'Rubric',

@@ -5,9 +5,9 @@ Class {
 	#name : 'RubEditingMode',
 	#superclass : 'Object',
 	#instVars : [
-		'textArea',
-		'previousEditorClass',
-		'acceptAllowed'
+		#textArea,
+		#previousEditorClass,
+		#acceptAllowed
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

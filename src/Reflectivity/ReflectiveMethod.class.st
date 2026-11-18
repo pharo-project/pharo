@@ -12,9 +12,9 @@ Class {
 	#superclass : 'Object',
 	#type : 'variable',
 	#instVars : [
-		'ast',
-		'compiledMethod',
-		'linkCount'
+		#ast,
+		#compiledMethod,
+		#linkCount
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',

@@ -2,7 +2,7 @@ Class {
 	#name : 'RedTest',
 	#superclass : 'MockTest',
 	#classInstVars : [
-		'ignoreTest'
+		#ignoreTest
 	],
 	#category : 'TestRunner-Tests-Utilities-Test',
 	#package : 'TestRunner-Tests',

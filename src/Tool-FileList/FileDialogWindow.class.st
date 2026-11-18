@@ -5,23 +5,23 @@ Class {
 	#name : 'FileDialogWindow',
 	#superclass : 'DialogWindowMorph',
 	#instVars : [
-		'directoryTreeMorph',
-		'fileListMorph',
-		'directories',
-		'selectedDirectory',
-		'selectedFileIndex',
-		'fileSelectionBlock',
-		'showDirectoriesInFileList',
-		'fileSortBlock',
-		'fileNameText',
-		'defaultExtension',
-		'actionSelector',
-		'answer',
-		'entryCache',
-		'entryCacheDirectory',
-		'previewType',
-		'previewMorph',
-		'preferredFileSystem'
+		#directoryTreeMorph,
+		#fileListMorph,
+		#directories,
+		#selectedDirectory,
+		#selectedFileIndex,
+		#fileSelectionBlock,
+		#showDirectoriesInFileList,
+		#fileSortBlock,
+		#fileNameText,
+		#defaultExtension,
+		#actionSelector,
+		#answer,
+		#entryCache,
+		#entryCacheDirectory,
+		#previewType,
+		#previewMorph,
+		#preferredFileSystem
 	],
 	#category : 'Tool-FileList',
 	#package : 'Tool-FileList'
@@ -715,7 +715,7 @@ FileDialogWindow >> okEnabled [
 			includes: self actionSelector) ifTrue: [^true].
 	((#(saveSelectedFile saveForcedSelectedFile)
 			includes: self actionSelector) and: [self fileNameText notEmpty]) ifTrue: [^true].
-	(self actionSelector = #selectedFileName and: [
+	((self actionSelector sameContents: #selectedFileName) and: [
 		self selectedFileName isNotNil]) ifTrue: [^true].
 	^self selectedFileName isNotNil and: [self selectedFileEntry isDirectory not]
 ]

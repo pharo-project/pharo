@@ -5,10 +5,10 @@ Class {
 	#name : 'TKTTaskExecution',
 	#superclass : 'Object',
 	#instVars : [
-		'runner',
-		'task',
-		'executionProcess',
-		'state'
+		#runner,
+		#task,
+		#executionProcess,
+		#state
 	],
 	#category : 'TaskIt-Kernel',
 	#package : 'TaskIt',

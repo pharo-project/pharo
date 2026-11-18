@@ -2,8 +2,8 @@ Class {
 	#name : 'MetaLinkRegistryTest',
 	#superclass : 'ReflectivityTestCase',
 	#instVars : [
-		'registry',
-		'permalink'
+		#registry,
+		#permalink
 	],
 	#category : 'Reflectivity-Tests-Base',
 	#package : 'Reflectivity-Tests',

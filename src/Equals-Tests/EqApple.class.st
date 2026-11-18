@@ -7,7 +7,7 @@ Class {
 	#name : 'EqApple',
 	#superclass : 'EqFruit',
 	#instVars : [
-		'color'
+		#color
 	],
 	#category : 'Equals-Tests',
 	#package : 'Equals-Tests'

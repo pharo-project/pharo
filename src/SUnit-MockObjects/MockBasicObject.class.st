@@ -5,7 +5,7 @@ Class {
 	#name : 'MockBasicObject',
 	#superclass : 'Object',
 	#instVars : [
-		'messages'
+		#messages
 	],
 	#category : 'SUnit-MockObjects-Core',
 	#package : 'SUnit-MockObjects',

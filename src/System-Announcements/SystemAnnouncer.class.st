@@ -7,7 +7,7 @@ Class {
 	#name : 'SystemAnnouncer',
 	#superclass : 'Announcer',
 	#classInstVars : [
-		'announcer'
+		#announcer
 	],
 	#category : 'System-Announcements-Core',
 	#package : 'System-Announcements',

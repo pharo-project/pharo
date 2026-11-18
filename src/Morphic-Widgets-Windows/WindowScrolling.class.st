@@ -6,7 +6,7 @@ Class {
 	#name : 'WindowScrolling',
 	#superclass : 'WindowAnnouncement',
 	#instVars : [
-		'step'
+		#step
 	],
 	#category : 'Morphic-Widgets-Windows-Announcements',
 	#package : 'Morphic-Widgets-Windows',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SDL_SysWMinfo_WindowsRTInfo',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_WINDOW'
+		#OFFSET_WINDOW
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

@@ -6,8 +6,8 @@ Class {
 	#name : 'IconStyler',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'textModel',
-		'stylerClasses'
+		#textModel,
+		#stylerClasses
 	],
 	#category : 'Reflectivity-Tools-Breakpoints',
 	#package : 'Reflectivity-Tools',

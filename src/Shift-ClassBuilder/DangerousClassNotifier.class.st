@@ -24,7 +24,7 @@ Class {
 	#name : 'DangerousClassNotifier',
 	#superclass : 'Object',
 	#classInstVars : [
-		'enabled'
+		#enabled
 	],
 	#category : 'Shift-ClassBuilder-Builder',
 	#package : 'Shift-ClassBuilder',

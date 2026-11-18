@@ -5,7 +5,7 @@ Class {
 	#name : 'RubTextScrollPane',
 	#superclass : 'GeneralScrollPaneMorph',
 	#instVars : [
-		'drawFocusBorder'
+		#drawFocusBorder
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',
@@ -298,11 +298,11 @@ RubTextScrollPane >> scrollByKeyboard: event [
 	self
 		handleScrollerOffsetChange: [
 			ret := false.
-			event key = KeyboardKey up
+			(event key sameContents: KeyboardKey up)
 				ifTrue: [
 					sb scrollUp: 3.
 					ret := true ].
-			event key = KeyboardKey down
+			(event key sameContents: KeyboardKey down)
 				ifTrue: [
 					sb scrollDown: 3.
 					ret := true ] ].

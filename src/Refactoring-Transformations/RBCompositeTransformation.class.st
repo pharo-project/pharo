@@ -12,8 +12,8 @@ Class {
 	#name : 'RBCompositeTransformation',
 	#superclass : 'RBTransformation',
 	#instVars : [
-		'previousTransformations',
-		'transformations'
+		#previousTransformations,
+		#transformations
 	],
 	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',

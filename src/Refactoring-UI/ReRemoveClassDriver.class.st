@@ -9,10 +9,10 @@ Class {
 	#name : 'ReRemoveClassDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'classes',
-		'haveNoReferences',
-		'noSubclasses',
-		'emptyClasses'
+		#classes,
+		#haveNoReferences,
+		#noSubclasses,
+		#emptyClasses
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

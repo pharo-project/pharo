@@ -25,7 +25,7 @@ BaselineOfKeymapping >> baseline: spec [
 			group: 'spec' with: #('core' 'Keymapping-Tools-Spec');
 			group: 'ui' with: #('core' 'morphic' 'spec');
 			group: 'tests' with: #(
-				'core' 
+				core 
 				'Keymapping-Tests') ]
 ]
 

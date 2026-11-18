@@ -5,10 +5,10 @@ Class {
 	#name : 'Author',
 	#superclass : 'Object',
 	#instVars : [
-		'fullName'
+		#fullName
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'System-Support-Authoring',
 	#package : 'System-Support',

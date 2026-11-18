@@ -2,7 +2,7 @@ Class {
 	#name : 'InstructionStreamTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'operations'
+		#operations
 	],
 	#category : 'Kernel-Extended-Tests-Methods',
 	#package : 'Kernel-Extended-Tests',

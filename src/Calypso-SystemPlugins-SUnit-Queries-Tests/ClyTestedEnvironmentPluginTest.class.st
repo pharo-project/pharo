@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyTestedEnvironmentPluginTest',
 	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
-		'plugin'
+		#plugin
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Queries-Tests',
 	#package : 'Calypso-SystemPlugins-SUnit-Queries-Tests'

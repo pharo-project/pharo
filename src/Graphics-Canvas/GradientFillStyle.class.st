@@ -14,13 +14,13 @@ Class {
 	#name : 'GradientFillStyle',
 	#superclass : 'OrientedFillStyle',
 	#instVars : [
-		'colorRamp',
-		'pixelRamp',
-		'radial',
-		'isTranslucent'
+		#colorRamp,
+		#pixelRamp,
+		#radial,
+		#isTranslucent
 	],
 	#classVars : [
-		'PixelRampCache'
+		#PixelRampCache
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

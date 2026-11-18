@@ -5,7 +5,7 @@ Class {
 	#name : 'FLHookPrimitiveCluster',
 	#superclass : 'FLPrimitiveCluster',
 	#instVars : [
-		'theClass'
+		#theClass
 	],
 	#category : 'Fuel-Core-Clusters',
 	#package : 'Fuel-Core',

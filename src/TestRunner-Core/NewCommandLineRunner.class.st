@@ -12,7 +12,7 @@ Class {
 	#name : 'NewCommandLineRunner',
 	#superclass : 'NewTestRunner',
 	#instVars : [
-		'reporter'
+		#reporter
 	],
 	#category : 'TestRunner-Core-Extensions',
 	#package : 'TestRunner-Core',

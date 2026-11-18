@@ -7,8 +7,8 @@ Class {
 	#name : 'CoMockMethod',
 	#superclass : 'Object',
 	#instVars : [
-		'ast',
-		'methodClass'
+		#ast,
+		#methodClass
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

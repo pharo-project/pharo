@@ -5,8 +5,8 @@ Class {
 	#name : 'WeakKeyDictionaryTest',
 	#superclass : 'DictionaryTest',
 	#instVars : [
-		'keys',
-		'dict'
+		#keys,
+		#dict
 	],
 	#category : 'Collections-Weak-Tests-Dictionaries',
 	#package : 'Collections-Weak-Tests',

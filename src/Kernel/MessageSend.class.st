@@ -12,7 +12,7 @@ Class {
 	#name : 'MessageSend',
 	#superclass : 'Message',
 	#instVars : [
-		'receiver'
+		#receiver
 	],
 	#category : 'Kernel-Messaging',
 	#package : 'Kernel',

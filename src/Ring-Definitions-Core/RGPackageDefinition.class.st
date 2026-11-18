@@ -6,9 +6,9 @@ Class {
 	#name : 'RGPackageDefinition',
 	#superclass : 'RGDefinition',
 	#instVars : [
-		'definedClasses',
-		'definedMethods',
-		'extensionMethods'
+		#definedClasses,
+		#definedMethods,
+		#extensionMethods
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

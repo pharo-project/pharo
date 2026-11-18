@@ -22,7 +22,7 @@ MetacelloRepositoriesSpecTestCase >> testAddA [
 				username: 'DaleHenrichs';
 				password: 'secret';
 				yourself).
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
@@ -41,12 +41,12 @@ MetacelloRepositoriesSpecTestCase >> testAddB [
 				password: 'password';
 				yourself);
 		add: '/opt/gemstone/repository'.
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'dkh'.
 	self assert: repository password equals: 'password'.
-	repository := repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: '/opt/gemstone/repository'.
 	self assert: repository type equals: 'directory'
 ]
@@ -56,10 +56,10 @@ MetacelloRepositoriesSpecTestCase >> testAddC [
 	| repositories repository |
 	repositories := self repositoriesSpec.
 	repositories add: #('http://example.com/repository' '/opt/gemstone/repository').
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
-	repository := repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: '/opt/gemstone/repository'.
 	self assert: repository type equals: 'directory'
 ]
@@ -71,10 +71,10 @@ MetacelloRepositoriesSpecTestCase >> testAddE [
 	repositories
 		repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 		repository: '/opt/gemstone/repository'.
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
-	repository := repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: '/opt/gemstone/repository'.
 	self assert: repository type equals: 'directory'
 ]
@@ -96,7 +96,7 @@ MetacelloRepositoriesSpecTestCase >> testAddF [
 				username: 'DaleHenrichs';
 				password: 'secret';
 				yourself).
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
@@ -142,7 +142,7 @@ MetacelloRepositoriesSpecTestCase >> testMergeA [
 				username: 'DaleHenrichs';
 				password: 'secret';
 				yourself).
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
@@ -161,7 +161,7 @@ MetacelloRepositoriesSpecTestCase >> testMergeB [
 				password: 'password';
 				yourself);
 		merge: 'http://example.com/repository'.
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'dkh'.
@@ -187,7 +187,7 @@ MetacelloRepositoriesSpecTestCase >> testMergeC [
 				description: 'http://example.com/repository';
 				username: 'DaleHenrichs';
 				yourself)}.
-	repository := repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository description equals: 'http://example.com/repository'.
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
@@ -211,7 +211,7 @@ MetacelloRepositoriesSpecTestCase >> testRemoveA [
                 description: 'http://example.com/repository';
                 yourself).
     removed := false.
-    repositories map at: 'http://example.com/repository' ifAbsent: [ removed := true ].
+    repositories map at: #'http://example.com/repository' ifAbsent: [ removed := true ].
     self assert: removed
 ]
 
@@ -232,7 +232,7 @@ MetacelloRepositoriesSpecTestCase >> testRemoveB [
                 description: 'http://example.com/repository';
                 yourself)}.
     removed := false.
-    repositories map at: 'http://example.com/repository' ifAbsent: [ removed := true ].
+    repositories map at: #'http://example.com/repository' ifAbsent: [ removed := true ].
     self assert: removed
 ]
 
@@ -249,7 +249,7 @@ MetacelloRepositoriesSpecTestCase >> testRemoveC [
                 yourself).
     repositories remove: {'http://example.com/repository'}.
     removed := false.
-    repositories map at: 'http://example.com/repository' ifAbsent: [ removed := true ].
+    repositories map at: #'http://example.com/repository' ifAbsent: [ removed := true ].
     self assert: removed
 ]
 
@@ -266,6 +266,6 @@ MetacelloRepositoriesSpecTestCase >> testRemoveD [
                 yourself).
     repositories remove: 'http://example.com/repository'.
     removed := false.
-    repositories map at: 'http://example.com/repository' ifAbsent: [ removed := true ].
+    repositories map at: #'http://example.com/repository' ifAbsent: [ removed := true ].
     self assert: removed
 ]

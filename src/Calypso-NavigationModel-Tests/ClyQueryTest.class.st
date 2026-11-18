@@ -2,9 +2,9 @@ Class {
 	#name : 'ClyQueryTest',
 	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
-		'query',
-		'result',
-		'resultItems'
+		#query,
+		#result,
+		#resultItems
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

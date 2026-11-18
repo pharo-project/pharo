@@ -10,9 +10,9 @@ Class {
 	#name : 'RBLiteralArrayNode',
 	#superclass : 'RBLiteralNode',
 	#instVars : [
-		'isByteArray',
-		'contents',
-		'openerSize'
+		#isByteArray,
+		#contents,
+		#openerSize
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',

@@ -15,9 +15,9 @@ Class {
 	#name : 'SearchMorph',
 	#superclass : 'EditableDropListMorph',
 	#instVars : [
-		'maxSize',
-		'currentCompletionIndex',
-		'updateSelector'
+		#maxSize,
+		#currentCompletionIndex,
+		#updateSelector
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',

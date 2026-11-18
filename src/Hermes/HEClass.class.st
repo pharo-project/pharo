@@ -18,13 +18,13 @@ Class {
 	#name : 'HEClass',
 	#superclass : 'HEMethodContainer',
 	#instVars : [
-		'className',
-		'superclass',
-		'instanceVariables',
-		'classInstancevariables',
-		'classVariables',
-		'sharedPools',
-		'layoutClass'
+		#className,
+		#superclass,
+		#instanceVariables,
+		#classInstancevariables,
+		#classVariables,
+		#sharedPools,
+		#layoutClass
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

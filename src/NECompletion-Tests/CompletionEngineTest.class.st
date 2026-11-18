@@ -5,8 +5,8 @@ Class {
 	#name : 'CompletionEngineTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'controller',
-		'editor'
+		#controller,
+		#editor
 	],
 	#category : 'NECompletion-Tests',
 	#package : 'NECompletion-Tests'

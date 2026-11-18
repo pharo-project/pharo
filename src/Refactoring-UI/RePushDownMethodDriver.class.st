@@ -15,11 +15,11 @@ Class {
 	#name : 'RePushDownMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'methods',
-		'class',
-		'methodSelectionPresenterClass',
-		'subclassesSendSuper',
-		'isAbstract'
+		#methods,
+		#class,
+		#methodSelectionPresenterClass,
+		#subclassesSendSuper,
+		#isAbstract
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

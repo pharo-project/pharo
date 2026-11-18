@@ -26,8 +26,8 @@ Class {
 	#name : 'ZnDefaultServerDelegate',
 	#superclass : 'Object',
 	#instVars : [
-		'prefixMap',
-		'byteArray'
+		#prefixMap,
+		#byteArray
 	],
 	#category : 'Zinc-HTTP-Client-Server',
 	#package : 'Zinc-HTTP',
@@ -272,7 +272,7 @@ ZnDefaultServerDelegate >> handleRequest: request [
 	| prefix |
 
 	prefix := request uri isSlash
-		ifTrue: [ prefixMap at: '/' ifAbsent: [ nil ] ]
+		ifTrue: [ prefixMap at: #'/' ifAbsent: [ nil ] ]
 		ifFalse: [ request uri firstPathSegment ].
 	^ prefixMap
 		at: prefix

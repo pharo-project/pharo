@@ -47,21 +47,21 @@ MCBitbucketRepository >> normalizeTagsData: jsonObject [
 
   | tagDict |
   jsonObject
-    at: 'error'
+    at: #'error'
     ifPresent: [ :errorObject | 
       self
         error:
           'Error accessing tags for bitbucket project: ' , self projectPath printString
-            , ' -> ' , (errorObject at: 'message') printString
+            , ' -> ' , (errorObject at: #'message') printString
             ,
-              ((errorObject at: 'detail')
+              ((errorObject at: #'detail')
                 ifNil: [ '' ]
                 ifNotNil: [ :detail | ' :: ' , detail printString ]) ].
   tagDict := Dictionary new.
   jsonObject
     keysAndValuesDo: [ :tag :tagObject | 
       | sha |
-      sha := tagObject at: 'node'.
+      sha := tagObject at: #'node'.
       tagDict at: tag put: sha ].
   ^ tagDict
 ]

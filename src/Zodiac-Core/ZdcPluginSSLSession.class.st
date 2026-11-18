@@ -13,7 +13,7 @@ Class {
 	#name : 'ZdcPluginSSLSession',
 	#superclass : 'ZdcAbstractSSLSession',
 	#instVars : [
-		'handle'
+		#handle
 	],
 	#category : 'Zodiac-Core',
 	#package : 'Zodiac-Core'

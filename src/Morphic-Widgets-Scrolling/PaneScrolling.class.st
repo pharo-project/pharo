@@ -9,8 +9,8 @@ Class {
 	#name : 'PaneScrolling',
 	#superclass : 'Announcement',
 	#instVars : [
-		'step',
-		'scrollPane'
+		#step,
+		#scrollPane
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

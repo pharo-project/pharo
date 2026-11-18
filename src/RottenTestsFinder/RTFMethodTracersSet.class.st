@@ -7,7 +7,7 @@ Class {
 	#name : 'RTFMethodTracersSet',
 	#superclass : 'Object',
 	#instVars : [
-		'tracers'
+		#tracers
 	],
 	#category : 'RottenTestsFinder-Tracers',
 	#package : 'RottenTestsFinder',

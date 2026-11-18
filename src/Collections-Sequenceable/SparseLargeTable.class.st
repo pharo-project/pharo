@@ -6,10 +6,10 @@ Class {
 	#superclass : 'ArrayedCollection',
 	#type : 'variable',
 	#instVars : [
-		'base',
-		'size',
-		'chunkSize',
-		'defaultValue'
+		#base,
+		#size,
+		#chunkSize,
+		#defaultValue
 	],
 	#category : 'Collections-Sequenceable-Sparse',
 	#package : 'Collections-Sequenceable',

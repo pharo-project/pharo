@@ -5,7 +5,7 @@ Class {
 	#name : 'PNGReadWriterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'fileName'
+		#fileName
 	],
 	#category : 'Graphics-Tests-Files',
 	#package : 'Graphics-Tests',

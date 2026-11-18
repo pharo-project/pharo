@@ -5,7 +5,7 @@ Class {
 	#name : 'MD5Test',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'hash'
+		#hash
 	],
 	#category : 'System-Hashing-Tests-MD5',
 	#package : 'System-Hashing-Tests',

@@ -108,7 +108,7 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 	| spec map string expected |
 	spec := (MetacelloReferenceConfig project version: '1.0-baseline') spec.
 	map := spec packages map.
-	string := self conditionResult: (map at: 'Example-AddOn') printString.
+	string := self conditionResult: (map at: #'Example-AddOn') printString.
 	expected := 'spec 
 	name: ''Example-AddOn'';
 	requires: #(''Example-Core'' ''UI Support'' );
@@ -120,10 +120,10 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 	postLoadDoIt: #''postloadForAddOn''.'.
 	self assert: string equals: expected.
 
-	string := (map at: 'Example-Core') printString.
+	string := (map at: #'Example-Core') printString.
 	self assert: string equals: 'spec name: ''Example-Core'''.
 
-	string := (map at: 'Example-TestsUI') printString.
+	string := (map at: #'Example-TestsUI') printString.
 	self
 		assert: string
 		equals:
@@ -131,7 +131,7 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 	name: ''Example-TestsUI'';
 	requires: #(''Example-UI'' ).'.
 
-	string := (map at: 'UI Support') printString.
+	string := (map at: #'UI Support') printString.
 	self
 		assert: string
 		equals:

@@ -5,8 +5,8 @@ Class {
 	#name : 'KMKeymapBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'shortcutName',
-		'platform'
+		#shortcutName,
+		#platform
 	],
 	#category : 'Keymapping-Pragmas',
 	#package : 'Keymapping-Pragmas'

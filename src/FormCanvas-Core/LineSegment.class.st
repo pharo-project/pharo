@@ -10,8 +10,8 @@ Class {
 	#name : 'LineSegment',
 	#superclass : 'Object',
 	#instVars : [
-		'start',
-		'end'
+		#start,
+		#end
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

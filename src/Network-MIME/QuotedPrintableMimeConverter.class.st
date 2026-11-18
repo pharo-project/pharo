@@ -31,7 +31,7 @@ Class {
 	#name : 'QuotedPrintableMimeConverter',
 	#superclass : 'MimeConverter',
 	#instVars : [
-		'newline'
+		#newline
 	],
 	#category : 'Network-MIME-Converter',
 	#package : 'Network-MIME',

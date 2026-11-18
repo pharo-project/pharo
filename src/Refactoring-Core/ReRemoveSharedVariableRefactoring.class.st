@@ -5,7 +5,7 @@ Class {
 	#name : 'ReRemoveSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
 	#instVars : [
-		'breakingChangePreconditions'
+		#breakingChangePreconditions
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

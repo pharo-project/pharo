@@ -27,11 +27,11 @@ MetacelloMCProjectSpecTestCase >> testMCProjectMergeSpec [
 	self assert: project className equals: 'ConfigurationOfProjectB'.
 	self assert: project projectPackage name equals: project className.
 	self assert: project projectPackage file equals: project className.
-	repository := project repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := project repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := project repositories map at: '/opt/gemstone/repo' ifAbsent: [ self assert: false ].
+	repository := project repositories map at: #'/opt/gemstone/repo' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := project repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := project repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
 	self assert: repository password equals: 'secret'
@@ -52,9 +52,9 @@ MetacelloMCProjectSpecTestCase >> testMCProjectSpec [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project projectPackage name equals: project className.
 	self assert: project projectPackage file equals: project className.
-	repository := project repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := project repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := project repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := project repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'dkh'.
 	self assert: repository password equals: 'password'

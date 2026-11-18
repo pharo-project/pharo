@@ -10,7 +10,7 @@ Class {
 	#name : 'SycMoveMethodsToClassCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'targetClass'
+		#targetClass
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'

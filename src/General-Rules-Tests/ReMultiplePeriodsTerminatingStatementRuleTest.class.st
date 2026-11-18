@@ -42,7 +42,7 @@ ReMultiplePeriodsTerminatingStatementRuleTest >> testRule [
 	critiques := self myCritiques .
 
 	self assert: critiques size equals: 4.
-	self assert: (critiques allButLast allSatisfy: [ :cr | cr sourceAnchor sourceEntity selector = #sampleMethod ]).
+	self assert: (critiques allButLast allSatisfy: [ :cr | cr sourceAnchor sourceEntity selector sameContents: #sampleMethod ]).
 	self assert: (self sourceAtChritique: critiques first) equals: '.  .'.
 	self assert: (self sourceAtChritique: critiques second) equals: '."I put a dot after my comment".'.
 	self assert: (self sourceAtChritique: critiques third) equals: '.',(Character cr asString),'.'.

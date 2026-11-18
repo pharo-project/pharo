@@ -2,12 +2,12 @@ Class {
 	#name : 'CDClassDefinitionNode',
 	#superclass : 'CDBehaviorDefinitionNode',
 	#instVars : [
-		'superclassNameNode',
-		'packageNameNode',
-		'sharedPools',
-		'superclassName',
-		'tag',
-		'sharedVariableNodes'
+		#superclassNameNode,
+		#packageNameNode,
+		#sharedPools,
+		#superclassName,
+		#tag,
+		#sharedVariableNodes
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

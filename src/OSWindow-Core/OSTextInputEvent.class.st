@@ -5,9 +5,9 @@ Class {
 	#name : 'OSTextInputEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'text',
-		'modifiers',
-		'position'
+		#text,
+		#modifiers,
+		#position
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

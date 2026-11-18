@@ -7,7 +7,7 @@ Class {
 	#name : 'CompletionSorter',
 	#superclass : 'Object',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'NECompletion-Sorting',
 	#package : 'NECompletion',

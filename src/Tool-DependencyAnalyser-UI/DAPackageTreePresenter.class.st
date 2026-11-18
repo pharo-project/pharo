@@ -9,9 +9,9 @@ Class {
 	#name : 'DAPackageTreePresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'tree',
-		'buttonRefresh',
-		'browser'
+		#tree,
+		#buttonRefresh,
+		#browser
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',

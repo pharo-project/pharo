@@ -2,8 +2,8 @@ Class {
 	#name : 'ExternalBrowserTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'initialWindows',
-		'file'
+		#initialWindows,
+		#file
 	],
 	#category : 'Tool-ExternalBrowser-Tests-Browsers',
 	#package : 'Tool-ExternalBrowser-Tests',

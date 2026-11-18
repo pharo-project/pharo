@@ -9,9 +9,9 @@ Class {
 	#name : 'RBCompositeRefactoryChange',
 	#superclass : 'RBRefactoryChange',
 	#instVars : [
-		'changes',
-		'newName',
-		'oldName'
+		#changes,
+		#newName,
+		#oldName
 	],
 	#category : 'Refactoring-Changes-Base',
 	#package : 'Refactoring-Changes',

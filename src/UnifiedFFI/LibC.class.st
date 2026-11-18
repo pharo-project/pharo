@@ -7,7 +7,7 @@ Class {
 	#name : 'LibC',
 	#superclass : 'FFILibrary',
 	#pools : [
-		'LibCTypes'
+		#LibCTypes
 	],
 	#category : 'UnifiedFFI-Libraries',
 	#package : 'UnifiedFFI',

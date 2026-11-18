@@ -12,7 +12,7 @@ Class {
 	#name : 'AbstractKeymappingTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'default'
+		#default
 	],
 	#category : 'Keymapping-Tests',
 	#package : 'Keymapping-Tests'
@@ -21,7 +21,7 @@ Class {
 { #category : 'testing' }
 AbstractKeymappingTest class >> isAbstract [
 
-	^self name = #AbstractKeymappingTest
+	^self name sameContents: #AbstractKeymappingTest
 ]
 
 { #category : 'utilities' }

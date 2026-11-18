@@ -46,11 +46,11 @@ Class {
 	#name : 'SignalLogger',
 	#superclass : 'Object',
 	#instVars : [
-		'beacon',
-		'name'
+		#beacon,
+		#name
 	],
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : 'Beacon-Core-Loggers',
 	#package : 'Beacon-Core',
@@ -81,7 +81,7 @@ SignalLogger class >> isAbstract [
 SignalLogger class >> named: aString [
 
 	^ (Beacon loggersOf: self)
-		  detect: [ :each | each name = aString ]
+		  detect: [ :each | each name sameContents: aString ]
 		  ifNone: [ self new name: aString ]
 ]
 

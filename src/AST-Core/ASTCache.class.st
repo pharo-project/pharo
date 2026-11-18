@@ -19,14 +19,14 @@ Class {
 	#name : 'ASTCache',
 	#superclass : 'Object',
 	#instVars : [
-		'weakDictionary',
-		'statistics'
+		#weakDictionary,
+		#statistics
 	],
 	#classVars : [
-		'CacheMissStrategy'
+		#CacheMissStrategy
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : 'AST-Core-Parser',
 	#package : 'AST-Core',

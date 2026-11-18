@@ -5,7 +5,7 @@ Class {
 	#name : 'ExtensionPointsOwningPackageNotification',
 	#superclass : 'SystemNotification',
 	#instVars : [
-		'packageName'
+		#packageName
 	],
 	#category : 'Kernel-Exceptions',
 	#package : 'Kernel',

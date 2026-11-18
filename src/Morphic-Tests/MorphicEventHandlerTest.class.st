@@ -2,7 +2,7 @@ Class {
 	#name : 'MorphicEventHandlerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'morph'
+		#morph
 	],
 	#category : 'Morphic-Tests-Event',
 	#package : 'Morphic-Tests',

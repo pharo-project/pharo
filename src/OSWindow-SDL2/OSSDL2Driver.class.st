@@ -5,18 +5,18 @@ Class {
 	#name : 'OSSDL2Driver',
 	#superclass : 'OSWindowDriver',
 	#instVars : [
-		'inputSemaphore',
-		'globalListeners',
-		'eventFilter'
+		#inputSemaphore,
+		#globalListeners,
+		#eventFilter
 	],
 	#classVars : [
-		'EventLoopProcess',
-		'JoystickMap',
-		'WindowMap',
-		'WindowMapMutex'
+		#EventLoopProcess,
+		#JoystickMap,
+		#WindowMap,
+		#WindowMapMutex
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Base',
 	#package : 'OSWindow-SDL2',

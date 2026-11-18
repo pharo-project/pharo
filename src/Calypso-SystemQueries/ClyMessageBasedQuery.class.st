@@ -19,7 +19,7 @@ Class {
 	#name : 'ClyMessageBasedQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'selectors'
+		#selectors
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

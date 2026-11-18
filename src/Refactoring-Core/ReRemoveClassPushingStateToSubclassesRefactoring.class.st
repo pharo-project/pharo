@@ -18,7 +18,7 @@ Class {
 	#name : 'ReRemoveClassPushingStateToSubclassesRefactoring',
 	#superclass : 'ReRemoveClassRefactoring',
 	#instVars : [
-		'refactorings'
+		#refactorings
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

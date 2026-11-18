@@ -7,7 +7,7 @@ Class {
 	#name : 'FailThenPass',
 	#superclass : 'MockTest',
 	#classInstVars : [
-		'counter'
+		#counter
 	],
 	#category : 'TestRunner-Tests-Utilities-Test',
 	#package : 'TestRunner-Tests',

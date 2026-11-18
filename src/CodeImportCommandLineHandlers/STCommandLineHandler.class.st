@@ -21,7 +21,7 @@ Class {
 	#name : 'STCommandLineHandler',
 	#superclass : 'CommandLineHandler',
 	#instVars : [
-		'sourceFiles'
+		#sourceFiles
 	],
 	#category : 'CodeImportCommandLineHandlers-Base',
 	#package : 'CodeImportCommandLineHandlers',

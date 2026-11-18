@@ -73,7 +73,7 @@ RubLineNumberDisplayer >> drawOn: aCanvas [
 						| lineMark lineBnd ygap |
 						ygap := ((line lineHeight - font height) // 2 - 1) rounded.
 						lineMark := line lineNumber asString.
-						self side = #left
+						(self side sameContents: #left)
 							ifTrue: [
 								| width |
 								width := (self fontToUse widthOfString: lineMark) + self horizontalGapAfter.
@@ -125,7 +125,7 @@ RubLineNumberDisplayer >> drawOnAthensCanvas: aCanvas [
 						| lineMark lineBnd ygap |
 						ygap := ((line lineHeight - font height) // 2 - 1) rounded.
 						lineMark := line lineNumber asString.
-						self side = #left
+						(self side sameContents: #left)
 							ifTrue: [
 								| width |
 								width := (self fontToUse widthOfString: lineMark) + self horizontalGapAfter.
@@ -229,7 +229,7 @@ RubLineNumberDisplayer >> textColor [
 RubLineNumberDisplayer >> verticalSeparatorBounds [
 	| bnds  |
 	bnds := self bounds.
-	^ self side = #left
+	^ (self side sameContents: #left)
 		ifTrue: [ (bnds topRight -  (self verticalSeparatorWidth @ 0)) corner: bnds bottomRight ]
 		ifFalse: [ (bnds topLeft corner: bnds bottomLeft + (self verticalSeparatorWidth @ 0)) ]
 ]

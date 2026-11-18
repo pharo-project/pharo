@@ -21,12 +21,12 @@ Class {
 	#name : 'CompressedBoundaryShape',
 	#superclass : 'Object',
 	#instVars : [
-		'points',
-		'leftFills',
-		'rightFills',
-		'lineWidths',
-		'lineFills',
-		'fillStyles'
+		#points,
+		#leftFills,
+		#rightFills,
+		#lineWidths,
+		#lineFills,
+		#fillStyles
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

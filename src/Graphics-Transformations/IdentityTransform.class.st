@@ -5,7 +5,7 @@ Class {
 	#name : 'IdentityTransform',
 	#superclass : 'DisplayTransform',
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'Graphics-Transformations',
 	#package : 'Graphics-Transformations'

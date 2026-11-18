@@ -5,29 +5,29 @@ Class {
 	#name : 'BalloonEngine',
 	#superclass : 'Object',
 	#instVars : [
-		'workBuffer',
-		'span',
-		'bitBlt',
-		'forms',
-		'clipRect',
-		'destOffset',
-		'externals',
-		'aaLevel',
-		'edgeTransform',
-		'colorTransform',
-		'deferred',
-		'postFlushNeeded'
+		#workBuffer,
+		#span,
+		#bitBlt,
+		#forms,
+		#clipRect,
+		#destOffset,
+		#externals,
+		#aaLevel,
+		#edgeTransform,
+		#colorTransform,
+		#deferred,
+		#postFlushNeeded
 	],
 	#classVars : [
-		'BezierStats',
-		'BufferCache',
-		'CacheProtect',
-		'Counts',
-		'Debug',
-		'Times'
+		#BezierStats,
+		#BufferCache,
+		#CacheProtect,
+		#Counts,
+		#Debug,
+		#Times
 	],
 	#pools : [
-		'BalloonEngineConstants'
+		#BalloonEngineConstants
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

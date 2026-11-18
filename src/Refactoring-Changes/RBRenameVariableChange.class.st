@@ -9,8 +9,8 @@ Class {
 	#name : 'RBRenameVariableChange',
 	#superclass : 'RBCompositeRefactoryChange',
 	#instVars : [
-		'className',
-		'isMeta'
+		#className,
+		#isMeta
 	],
 	#category : 'Refactoring-Changes-Changes-Variables',
 	#package : 'Refactoring-Changes',

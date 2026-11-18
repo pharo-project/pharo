@@ -5,8 +5,8 @@ Class {
 	#name : 'SettingNodeBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'node',
-		'builder'
+		#node,
+		#builder
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'

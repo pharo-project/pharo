@@ -29,8 +29,8 @@ Class {
 	#name : 'FTStrongSelectionChanged',
 	#superclass : 'FTAnnouncement',
 	#instVars : [
-		'event',
-		'selectedIndex'
+		#event,
+		#selectedIndex
 	],
 	#category : 'Morphic-Widgets-FastTable-Announcement',
 	#package : 'Morphic-Widgets-FastTable',

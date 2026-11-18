@@ -2,8 +2,8 @@ Class {
 	#name : 'MetacelloMemberSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
-		'name',
-		'spec'
+		#name,
+		#spec
 	],
 	#category : 'Metacello-Core-Members',
 	#package : 'Metacello-Core',

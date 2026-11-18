@@ -19,7 +19,7 @@ Class {
 	#name : 'RubTextAreaExamples',
 	#superclass : 'Object',
 	#classVars : [
-		'ModelForShout'
+		#ModelForShout
 	],
 	#category : 'Rubric-Editing-Core-Examples',
 	#package : 'Rubric',

@@ -5,9 +5,9 @@ Class {
 	#name : 'AthensCanvasWrapper',
 	#superclass : 'Object',
 	#instVars : [
-		'athensCanvas',
-		'currentClipRect',
-		'origin'
+		#athensCanvas,
+		#currentClipRect,
+		#origin
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

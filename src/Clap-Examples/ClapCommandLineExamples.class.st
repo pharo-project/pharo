@@ -18,7 +18,7 @@ Class {
 	#name : 'ClapCommandLineExamples',
 	#superclass : 'ClapApplication',
 	#instVars : [
-		'outStream'
+		#outStream
 	],
 	#category : 'Clap-Examples',
 	#package : 'Clap-Examples'

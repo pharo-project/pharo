@@ -7,7 +7,7 @@ Class {
 	#name : 'CodeError',
 	#superclass : 'Error',
 	#instVars : [
-		'notice'
+		#notice
 	],
 	#category : 'AST-Core-Exception',
 	#package : 'AST-Core',

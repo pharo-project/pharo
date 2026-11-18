@@ -17,7 +17,7 @@ Class {
 	#name : 'HEBinaryReader',
 	#superclass : 'Object',
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : 'Hermes-CommandLineHandler',
 	#package : 'Hermes',

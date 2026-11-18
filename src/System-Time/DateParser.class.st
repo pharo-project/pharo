@@ -13,7 +13,7 @@ Read a Date from the stream based on the pattern which can include the tokens:
 	\\y, \\m and \\d, and the slash itself with \\\\. Simple example patterns:
 
 		'yyyy-mm-dd'
-		'yyyymmdd'
+		#yyyymmdd
 		'yy.mm.dd'
 		'y-m-d'
 "
@@ -21,15 +21,15 @@ Class {
 	#name : 'DateParser',
 	#superclass : 'Object',
 	#instVars : [
-		'inputStream',
-		'pattern',
-		'patternStream',
-		'char',
-		'year',
-		'month',
-		'day',
-		'invalidPattern',
-		'shouldParseAll'
+		#inputStream,
+		#pattern,
+		#patternStream,
+		#char,
+		#year,
+		#month,
+		#day,
+		#invalidPattern,
+		#shouldParseAll
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'

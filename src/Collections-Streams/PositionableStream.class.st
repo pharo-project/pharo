@@ -5,9 +5,9 @@ Class {
 	#name : 'PositionableStream',
 	#superclass : 'Stream',
 	#instVars : [
-		'collection',
-		'position',
-		'readLimit'
+		#collection,
+		#position,
+		#readLimit
 	],
 	#category : 'Collections-Streams-Base',
 	#package : 'Collections-Streams',

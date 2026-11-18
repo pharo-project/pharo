@@ -5,7 +5,7 @@ Class {
 	#name : 'NECSelectorEntry',
 	#superclass : 'NECSymbolEntry',
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',

@@ -6,9 +6,9 @@ Class {
 	#name : 'CircleMorph',
 	#superclass : 'EllipseMorph',
 	#instVars : [
-		'referencePosition',
-		'originalCenter',
-		'originalAngle'
+		#referencePosition,
+		#originalCenter,
+		#originalAngle
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

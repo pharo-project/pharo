@@ -9,10 +9,10 @@ Class {
 	#name : 'AnimatedImageFrame',
 	#superclass : 'Object',
 	#instVars : [
-		'form',
-		'delay',
-		'disposal',
-		'offset'
+		#form,
+		#delay,
+		#disposal,
+		#offset
 	],
 	#category : 'Images-Animated',
 	#package : 'Images-Animated'

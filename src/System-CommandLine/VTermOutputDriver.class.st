@@ -18,12 +18,12 @@ Class {
 	#name : 'VTermOutputDriver',
 	#superclass : 'Object',
 	#instVars : [
-		'termcap',
-		'outStream',
-		'currentBackground',
-		'currentColor',
-		'light',
-		'blink'
+		#termcap,
+		#outStream,
+		#currentBackground,
+		#currentColor,
+		#light,
+		#blink
 	],
 	#category : 'System-CommandLine-VTerm-Driver',
 	#package : 'System-CommandLine',

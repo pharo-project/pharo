@@ -17,11 +17,11 @@ Class {
 	#name : 'LayoutCell',
 	#superclass : 'Object',
 	#instVars : [
-		'target',
-		'cellSize',
-		'extraSpace',
-		'flags',
-		'nextCell'
+		#target,
+		#cellSize,
+		#extraSpace,
+		#flags,
+		#nextCell
 	],
 	#category : 'Morphic-Base-Layouts',
 	#package : 'Morphic-Base',

@@ -6,10 +6,10 @@ Class {
 	#name : 'OSTouchActionPointerEvent',
 	#superclass : 'OSTouchActionEvent',
 	#instVars : [
-		'position',
-		'delta',
-		'pressure',
-		'fingerId'
+		#position,
+		#delta,
+		#pressure,
+		#fingerId
 	],
 	#category : 'OSWindow-Core-Events-Touch',
 	#package : 'OSWindow-Core',

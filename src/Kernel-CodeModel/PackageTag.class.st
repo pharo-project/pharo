@@ -6,9 +6,9 @@ Class {
 	#name : 'PackageTag',
 	#superclass : 'Object',
 	#instVars : [
-		'package',
-		'name',
-		'classes'
+		#package,
+		#name,
+		#classes
 	],
 	#category : 'Kernel-CodeModel-Packages',
 	#package : 'Kernel-CodeModel',

@@ -17,7 +17,7 @@ Class {
 	#name : 'FTStateBasedColumnSortingStrategy',
 	#superclass : 'FTAbstractColumnSortingStrategy',
 	#instVars : [
-		'state'
+		#state
 	],
 	#category : 'Morphic-Widgets-FastTable-Sorting',
 	#package : 'Morphic-Widgets-FastTable',

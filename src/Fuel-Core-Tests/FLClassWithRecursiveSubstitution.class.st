@@ -5,7 +5,7 @@ Class {
 	#name : 'FLClassWithRecursiveSubstitution',
 	#superclass : 'Object',
 	#instVars : [
-		'index'
+		#index
 	],
 	#category : 'Fuel-Core-Tests-Support-Mocks',
 	#package : 'Fuel-Core-Tests',

@@ -7,8 +7,8 @@ Class {
 	#name : 'DAReverseTreePresenter',
 	#superclass : 'DAPackageTreePresenter',
 	#instVars : [
-		'relationGraph',
-		'packageLabel'
+		#relationGraph,
+		#packageLabel
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',

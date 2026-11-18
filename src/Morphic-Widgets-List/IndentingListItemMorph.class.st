@@ -24,13 +24,13 @@ Class {
 	#name : 'IndentingListItemMorph',
 	#superclass : 'StringMorph',
 	#instVars : [
-		'indentLevel',
-		'isExpanded',
-		'complexContents',
-		'firstChild',
-		'container',
-		'nextSibling',
-		'icon'
+		#indentLevel,
+		#isExpanded,
+		#complexContents,
+		#firstChild,
+		#container,
+		#nextSibling,
+		#icon
 	],
 	#category : 'Morphic-Widgets-List',
 	#package : 'Morphic-Widgets-List'

@@ -9,7 +9,7 @@ Class {
 	#name : 'ReRenameSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
 	#instVars : [
-		'newName'
+		#newName
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

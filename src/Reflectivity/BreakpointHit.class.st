@@ -10,7 +10,7 @@ Class {
 	#name : 'BreakpointHit',
 	#superclass : 'BreakpointAnnouncement',
 	#instVars : [
-		'valueOrNil'
+		#valueOrNil
 	],
 	#category : 'Reflectivity-Breakpoints',
 	#package : 'Reflectivity',

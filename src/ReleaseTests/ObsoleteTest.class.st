@@ -5,7 +5,7 @@ Class {
 	#name : 'ObsoleteTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'classFactory'
+		#classFactory
 	],
 	#category : 'ReleaseTests-CleanCode',
 	#package : 'ReleaseTests',

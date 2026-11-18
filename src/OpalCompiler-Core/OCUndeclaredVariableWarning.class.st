@@ -5,7 +5,7 @@ Class {
 	#name : 'OCUndeclaredVariableWarning',
 	#superclass : 'Notification',
 	#instVars : [
-		'notice'
+		#notice
 	],
 	#category : 'OpalCompiler-Core-Exceptions',
 	#package : 'OpalCompiler-Core',

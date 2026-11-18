@@ -5,7 +5,7 @@ Class {
 	#name : 'RFTempRead',
 	#superclass : 'RFVariableRead',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

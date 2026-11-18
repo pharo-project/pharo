@@ -6,7 +6,7 @@ Class {
 	#name : 'MonthTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'month'
+		#month
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

@@ -2,7 +2,7 @@ Class {
 	#name : 'OCClosureCompilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'currentCompiler'
+		#currentCompiler
 	],
 	#category : 'OpalCompiler-Tests-FromOld',
 	#package : 'OpalCompiler-Tests',

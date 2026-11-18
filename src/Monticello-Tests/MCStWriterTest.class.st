@@ -2,8 +2,8 @@ Class {
 	#name : 'MCStWriterTest',
 	#superclass : 'MCTestCase',
 	#instVars : [
-		'stream',
-		'writer'
+		#stream,
+		#writer
 	],
 	#category : 'Monticello-Tests-IO',
 	#package : 'Monticello-Tests',
@@ -104,7 +104,7 @@ methodWithBangs
 ''''MCRevisionInfo packageName: ''''MonticelloCompatibilityTest''''!!!!
 MCOrganizationDeclaration categories: 
   #(
-  ''''MonticelloMocks'''')!!!!
+  MonticelloMocks)!!!!
 
 MCClassDeclaration
   name: #MCMockClassD
@@ -129,7 +129,7 @@ MCStWriterTest >> methodWithBangs [
 ''MCRevisionInfo packageName: ''MonticelloCompatibilityTest''!!
 MCOrganizationDeclaration categories: 
   #(
-  ''MonticelloMocks'')!!
+  MonticelloMocks)!!
 
 MCClassDeclaration
   name: #MCMockClassD

@@ -5,8 +5,8 @@ Class {
 	#name : 'MailAddressToken',
 	#superclass : 'Object',
 	#instVars : [
-		'type',
-		'text'
+		#type,
+		#text
 	],
 	#category : 'Network-Mail',
 	#package : 'Network-Mail'

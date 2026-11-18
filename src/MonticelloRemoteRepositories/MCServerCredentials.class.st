@@ -6,8 +6,8 @@ Class {
 	#name : 'MCServerCredentials',
 	#superclass : 'Object',
 	#instVars : [
-		'username',
-		'password'
+		#username,
+		#password
 	],
 	#category : 'MonticelloRemoteRepositories',
 	#package : 'MonticelloRemoteRepositories'

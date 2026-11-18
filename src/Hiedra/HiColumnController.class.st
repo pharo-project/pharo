@@ -9,11 +9,11 @@ Class {
 	#name : 'HiColumnController',
 	#superclass : 'Object',
 	#instVars : [
-		'renderer',
-		'formByPageIndex',
-		'pageSize',
-		'cellMorphByRowIndex',
-		'session'
+		#renderer,
+		#formByPageIndex,
+		#pageSize,
+		#cellMorphByRowIndex,
+		#session
 	],
 	#category : 'Hiedra-UI',
 	#package : 'Hiedra',

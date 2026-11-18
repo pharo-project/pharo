@@ -5,7 +5,7 @@ Class {
 	#name : 'RubReturnEntered',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'accepted'
+		#accepted
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

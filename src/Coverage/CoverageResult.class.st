@@ -10,9 +10,9 @@ Class {
 	#name : 'CoverageResult',
 	#superclass : 'Object',
 	#instVars : [
-		'collector',
-		'methods',
-		'nodes'
+		#collector,
+		#methods,
+		#nodes
 	],
 	#category : 'Coverage-Base',
 	#package : 'Coverage',

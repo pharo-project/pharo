@@ -5,7 +5,7 @@ Class {
 	#name : 'SingleTreeTest',
 	#superclass : 'FileSystemTreeTest',
 	#instVars : [
-		'filesystem'
+		#filesystem
 	],
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',
@@ -14,7 +14,7 @@ Class {
 
 { #category : 'testing' }
 SingleTreeTest class >> isAbstract [
-	^ self name = #SingleTreeTest
+	^ self name sameContents: #SingleTreeTest
 ]
 
 { #category : 'running' }

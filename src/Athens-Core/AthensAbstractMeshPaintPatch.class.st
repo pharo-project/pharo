@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensAbstractMeshPaintPatch',
 	#superclass : 'Object',
 	#instVars : [
-		'controlPoints',
-		'colors'
+		#controlPoints,
+		#colors
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

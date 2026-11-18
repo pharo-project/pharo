@@ -5,7 +5,7 @@ Class {
 	#name : 'BaselineOfPharo',
 	#superclass : 'BaselineOf',
 	#classVars : [
-		'ExternalProjects'
+		#ExternalProjects
 	],
 	#category : 'BaselineOfPharo-Base',
 	#package : 'BaselineOfPharo',
@@ -41,7 +41,7 @@ BaselineOfPharo class >> documentBrowserRepository [
 BaselineOfPharo class >> externalProjectNamed: aName [
 
 	^ self externalProjects 
-		detect: [ :each | each name = aName ]
+		detect: [ :each | each name sameContents: aName ]
 ]
 
 { #category : 'accessing' }

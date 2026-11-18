@@ -5,7 +5,7 @@ Class {
 	#name : 'ClapNamedMatch',
 	#superclass : 'ClapCompositeMatch',
 	#instVars : [
-		'keyword'
+		#keyword
 	],
 	#category : 'Clap-Core-Activation',
 	#package : 'Clap-Core',

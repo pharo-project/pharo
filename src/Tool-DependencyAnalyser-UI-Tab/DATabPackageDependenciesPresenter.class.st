@@ -5,10 +5,10 @@ Class {
 	#name : 'DATabPackageDependenciesPresenter',
 	#superclass : 'SpPresenterWithModel',
 	#instVars : [
-		'packageList',
-		'dependencyList',
-		'browser',
-		'openButton'
+		#packageList,
+		#dependencyList,
+		#browser,
+		#openButton
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Tab',
 	#package : 'Tool-DependencyAnalyser-UI-Tab'

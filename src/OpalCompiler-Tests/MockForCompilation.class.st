@@ -5,7 +5,7 @@ Class {
 	#name : 'MockForCompilation',
 	#superclass : 'Object',
 	#instVars : [
-		'var1'
+		#var1
 	],
 	#category : 'OpalCompiler-Tests-FromOld',
 	#package : 'OpalCompiler-Tests',

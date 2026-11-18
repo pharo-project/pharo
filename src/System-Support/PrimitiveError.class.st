@@ -23,8 +23,8 @@ Class {
 	#name : 'PrimitiveError',
 	#superclass : 'Object',
 	#instVars : [
-		'errorName',
-		'errorCode'
+		#errorName,
+		#errorCode
 	],
 	#category : 'System-Support-VM',
 	#package : 'System-Support',

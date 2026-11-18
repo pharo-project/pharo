@@ -13,7 +13,7 @@ Class {
 	#name : 'ClyFullBrowserContext',
 	#superclass : 'ClySystemBrowserContext',
 	#instVars : [
-		'metaLevelScope'
+		#metaLevelScope
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Contexts',
 	#package : 'Calypso-SystemTools-FullBrowser',

@@ -2,7 +2,7 @@ Class {
 	#name : 'ReMethodsCondition',
 	#superclass : 'ReReifiedCondition',
 	#instVars : [
-		'violators'
+		#violators
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

@@ -8,7 +8,7 @@ Class {
 	#name : 'TaRenamedSlotWrapper',
 	#superclass : 'Slot',
 	#instVars : [
-		'originalSlot'
+		#originalSlot
 	],
 	#category : 'Traits-Compositions',
 	#package : 'Traits',

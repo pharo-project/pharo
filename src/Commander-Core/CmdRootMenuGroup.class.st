@@ -5,7 +5,7 @@ Class {
 	#name : 'CmdRootMenuGroup',
 	#superclass : 'CmdMenuGroup',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

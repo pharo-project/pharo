@@ -11,13 +11,13 @@ Class {
 	#name : 'RubSegmentMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'vertices',
-		'filledForm',
-		'smoothCurve',
-		'curveState',
-		'borderForm',
-		'borderColor',
-		'borderWidth'
+		#vertices,
+		#filledForm,
+		#smoothCurve,
+		#curveState,
+		#borderForm,
+		#borderColor,
+		#borderWidth
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

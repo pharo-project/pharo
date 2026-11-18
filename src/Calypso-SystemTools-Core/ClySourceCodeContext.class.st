@@ -30,7 +30,7 @@ Class {
 	#name : 'ClySourceCodeContext',
 	#superclass : 'ClyTextEditorContext',
 	#instVars : [
-		'selectedSourceNode'
+		#selectedSourceNode
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

@@ -2,9 +2,9 @@ Class {
 	#name : 'RBCompositeVariableTransformation',
 	#superclass : 'RBCompositeTransformation',
 	#instVars : [
-		'variableName',
-		'isClassVariable',
-		'className'
+		#variableName,
+		#isClassVariable,
+		#className
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

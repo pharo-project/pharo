@@ -2,9 +2,9 @@ Class {
 	#name : 'StAbstractSelectionPresenter',
 	#superclass : 'StItemsSelectionPresenter',
 	#instVars : [
-		'dropList',
-		'dropLabel',
-		'acceptBlock'
+		#dropList,
+		#dropLabel,
+		#acceptBlock
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',

@@ -10,11 +10,11 @@ Class {
 	#name : 'RubPluggableTextFieldMorph',
 	#superclass : 'RubTextFieldMorph',
 	#instVars : [
-		'default',
-		'getEnabledSelector',
-		'converter',
-		'crAction',
-		'changedAction'
+		#default,
+		#getEnabledSelector,
+		#converter,
+		#crAction,
+		#changedAction
 	],
 	#category : 'Rubric-Compatibility-toBeDeprecated',
 	#package : 'Rubric',

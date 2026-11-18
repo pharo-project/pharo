@@ -2,7 +2,7 @@ Class {
 	#name : 'RBSubclassOfClassToRename',
 	#superclass : 'RBClassToRename',
 	#instVars : [
-		'rewriteRule1'
+		#rewriteRule1
 	],
 	#category : 'Refactoring-DataForTesting-MiniHierarchy',
 	#package : 'Refactoring-DataForTesting',

@@ -5,7 +5,7 @@ Class {
 	#name : 'RFGlobalWrite',
 	#superclass : 'RFVariableWrite',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

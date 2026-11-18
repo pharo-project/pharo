@@ -5,11 +5,11 @@ Class {
 	#name : 'AthensTigerWindow',
 	#superclass : 'StandardWindow',
 	#instVars : [
-		'surface',
-		'scale',
-		'frames',
-		'example',
-		'rotation'
+		#surface,
+		#scale,
+		#frames,
+		#example,
+		#rotation
 	],
 	#category : 'Athens-Examples-Morphic',
 	#package : 'Athens-Examples',

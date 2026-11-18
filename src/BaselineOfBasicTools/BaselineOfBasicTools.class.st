@@ -23,7 +23,7 @@ Class {
 	#name : 'BaselineOfBasicTools',
 	#superclass : 'BaselineOf',
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfBasicTools',
 	#package : 'BaselineOfBasicTools'

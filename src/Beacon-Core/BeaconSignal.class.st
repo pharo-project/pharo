@@ -21,9 +21,9 @@ Class {
 	#name : 'BeaconSignal',
 	#superclass : 'Announcement',
 	#instVars : [
-		'timestamp',
-		'processId',
-		'properties'
+		#timestamp,
+		#processId,
+		#properties
 	],
 	#category : 'Beacon-Core-Signals',
 	#package : 'Beacon-Core',

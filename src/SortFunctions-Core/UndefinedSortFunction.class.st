@@ -9,7 +9,7 @@ Class {
 	#name : 'UndefinedSortFunction',
 	#superclass : 'ComposedSortFunction',
 	#instVars : [
-		'direction'
+		#direction
 	],
 	#category : 'SortFunctions-Core',
 	#package : 'SortFunctions-Core'

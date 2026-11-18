@@ -11,11 +11,11 @@ Class {
 	#superclass : 'Object',
 	#type : 'variable',
 	#instVars : [
-		'method',
-		'selector'
+		#method,
+		#selector
 	],
 	#classVars : [
-		'PropertiesToPersist'
+		#PropertiesToPersist
 	],
 	#category : 'Kernel-CodeModel-Methods',
 	#package : 'Kernel-CodeModel',

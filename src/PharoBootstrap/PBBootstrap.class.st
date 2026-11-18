@@ -2,14 +2,14 @@ Class {
 	#name : 'PBBootstrap',
 	#superclass : 'Object',
 	#instVars : [
-		'architecture',
-		'imageReference',
-		'buildNumber',
-		'originRepository',
-		'ringEnvironment',
-		'versionInfo',
-		'repositoryLocation',
-		'logger'
+		#architecture,
+		#imageReference,
+		#buildNumber,
+		#originRepository,
+		#ringEnvironment,
+		#versionInfo,
+		#repositoryLocation,
+		#logger
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'
@@ -76,7 +76,7 @@ PBBootstrap class >> new [
 PBBootstrap class >> repositoryLocation [
 	"Returns the location of the repository that we want to bootstrap, which is usually the working directory. Can be overridden if BOOTSTRAP_REPOSITORY is specified"
 	^ (Smalltalk os environment
-		at: 'BOOTSTRAP_REPOSITORY'
+		at: #'BOOTSTRAP_REPOSITORY'
 		ifAbsent: [ '.' ]) asFileReference
 ]
 
@@ -113,7 +113,7 @@ PBBootstrap >> bootstrap [
 { #category : 'accessing' }
 PBBootstrap >> bootstrapCacheDirectory [
 
-	^ (Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
+	^ (Smalltalk os environment at: #'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
 ]
 
 { #category : 'accessing' }
@@ -150,16 +150,24 @@ PBBootstrap >> ensureBaselineOfPharoBootstrap [
 
 { #category : 'preparation' }
 PBBootstrap >> exportAllPackagesIntoMcz [
-
-	self mczCache directory ensureDeleteAll; ensureCreateDirectory.
-	self packagesToExportAsMCZ do: [ :packageName |
-		self exportIntoMcz: packageName ].
+	logger
+		execute: [
+			logger log: '[-] ensureDeleteAll; ensureCreateDirectory'.
+			self mczCache directory ensureDeleteAll; ensureCreateDirectory.
+			self packagesToExportAsMCZ do: [ :packageName |
+				self exportIntoMcz: packageName ].
+		]
+		logged: 'Bootstrap process -->> exportAllPackagesIntoMcz'
 ]
 
 { #category : 'preparation' }
 PBBootstrap >> exportIntoMcz: aPackageName [
-
-	self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
+	logger
+		execute: [
+			logger log: '-->>', aPackageName.
+			self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
+		]
+		logged: 'BoostrapProcess -->> exportAllPackagesIntoMcz'
 ]
 
 { #category : 'preparation' }
@@ -325,7 +333,7 @@ PBBootstrap >> monticelloNetworkPackageNames [
 		 'Network-MIME'
 		 'Network-Protocols'
 
-		 'MonticelloRemoteRepositories'
+		 MonticelloRemoteRepositories
 
 		 'Zinc-HTTP'
 		 'Zodiac-Core')
@@ -356,15 +364,23 @@ PBBootstrap >> packagesToExportAsMCZ [
 
 { #category : 'preparation' }
 PBBootstrap >> prepareBootstrap [
-	
-	self
-		exportKernelProtocols;
-		exportAllPackagesIntoMcz;
-		exportMonticelloInStFile;
-		
-		prepareEnvironmentForHermes;
-		generateHermesFiles;
-		prepareEnvironmentForExport.
+	logger
+		execute: [
+			logger log: '[-] exportKernelProtocols'.
+			self exportKernelProtocols.
+			logger log: '[-] exportAllPackagesIntoMcz'.
+			self exportAllPackagesIntoMcz.
+			logger log: '[-] exportMonticelloInStFile'.
+			self exportMonticelloInStFile.
+				
+			logger log: '[-] prepareEnvironmentForHermes'.
+			self prepareEnvironmentForHermes.
+			logger log: '[-] generateHermesFiles'.
+			self generateHermesFiles.
+			logger log: '[-] prepareEnvironmentForExport'.
+			self prepareEnvironmentForExport.
+		]
+		logged: 'Bootstrap process -->> prepareBootstrap'
 ]
 
 { #category : 'preparation' }

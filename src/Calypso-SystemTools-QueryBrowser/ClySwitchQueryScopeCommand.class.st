@@ -12,7 +12,7 @@ Class {
 	#name : 'ClySwitchQueryScopeCommand',
 	#superclass : 'ClySwitchBrowserModeCommand',
 	#instVars : [
-		'queryScope'
+		#queryScope
 	],
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Controlling',
 	#package : 'Calypso-SystemTools-QueryBrowser',

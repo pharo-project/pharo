@@ -9,8 +9,8 @@ Class {
 	#name : 'MCPackage',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'environment'
+		#name,
+		#environment
 	],
 	#category : 'Monticello-Base',
 	#package : 'Monticello',
@@ -65,7 +65,7 @@ MCPackage >> isDirty [
 
 { #category : 'accessing' }
 MCPackage >> name [
-	^ name
+	^ name asSymbol
 ]
 
 { #category : 'accessing' }

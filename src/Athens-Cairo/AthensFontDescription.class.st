@@ -14,9 +14,9 @@ Class {
 	#name : 'AthensFontDescription',
 	#superclass : 'Object',
 	#instVars : [
-		'family',
-		'options',
-		'size'
+		#family,
+		#options,
+		#size
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

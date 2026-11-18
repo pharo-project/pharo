@@ -12,7 +12,7 @@ Class {
 	#name : 'SycMoveMethodsToPackageCommand',
 	#superclass : 'SycMethodRepackagingCommand',
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'

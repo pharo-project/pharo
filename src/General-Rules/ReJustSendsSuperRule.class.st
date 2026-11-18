@@ -5,7 +5,7 @@ Class {
 	#name : 'ReJustSendsSuperRule',
 	#superclass : 'ReAbstractRule',
 	#instVars : [
-		'matcher'
+		#matcher
 	],
 	#category : 'General-Rules-Migrated',
 	#package : 'General-Rules',

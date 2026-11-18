@@ -6,7 +6,7 @@ Class {
 	#name : 'ReCompositeRefactoring',
 	#superclass : 'RBRefactoring',
 	#instVars : [
-		'refactorings'
+		#refactorings
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

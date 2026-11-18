@@ -46,9 +46,9 @@ LowLevelReflectiveAPITest >> testWhichMethodsAccessSubclassState [
 	self assert: (accessingSelectors includes: #accessing2InSub).
 	self assert: (accessingSelectors includes: #writing).
 		
-	self assert: (accessingMethods select: [ :each | each selector = #accessing2InSub ]) first methodClass equals: MySubAccessingSuperclassState.
-	self assert: (accessingMethods select: [ :each | each selector = #accessing ]) first methodClass equals: MySubAccessingSuperclassState.
-	self assert: (accessingMethods select: [ :each | each selector = #writing ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector sameContents: #accessing2InSub ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector sameContents: #accessing ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector sameContents: #writing ]) first methodClass equals: MySubAccessingSuperclassState.
 ]
 
 { #category : 'tests' }
@@ -65,8 +65,8 @@ LowLevelReflectiveAPITest >> testWhichMethodsReadSubclassState [
 	self assert: (accessingSelectors includes: #accessing).
 	self assert: (accessingSelectors includes: #accessing2InSub).
 	
-	self assert: (accessingMethods select: [ :each | each selector =  #accessing2InSub ]) first methodClass equals: MySubAccessingSuperclassState.
-	self assert: (accessingMethods select: [ :each | each selector =  #accessing ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector sameContents: #accessing2InSub ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector sameContents: #accessing ]) first methodClass equals: MySubAccessingSuperclassState.
 	
 	
 ]

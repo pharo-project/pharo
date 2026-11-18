@@ -25,12 +25,12 @@ Class {
 	#name : 'CairoFontExtents',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_ASCENT',
-		'OFFSET_DESCENT',
-		'OFFSET_HEIGHT',
-		'OFFSET_MAX_X_ADVANCE',
-		'OFFSET_MAX_Y_ADVANCE',
-		'OFFSET_WIDTH'
+		#OFFSET_ASCENT,
+		#OFFSET_DESCENT,
+		#OFFSET_HEIGHT,
+		#OFFSET_MAX_X_ADVANCE,
+		#OFFSET_MAX_Y_ADVANCE,
+		#OFFSET_WIDTH
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

@@ -11,9 +11,9 @@ Class {
 	#name : 'TabExample',
 	#superclass : 'Model',
 	#instVars : [
-		'manager',
-		'listModel',
-		'window'
+		#manager,
+		#listModel,
+		#window
 	],
 	#category : 'Morphic-Examples-Tabs',
 	#package : 'Morphic-Examples',

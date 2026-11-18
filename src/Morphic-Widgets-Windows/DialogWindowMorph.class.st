@@ -7,7 +7,7 @@ Class {
 	#name : 'DialogWindowMorph',
 	#superclass : 'StandardWindow',
 	#instVars : [
-		'cancelled'
+		#cancelled
 	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',
@@ -232,10 +232,10 @@ DialogWindowMorph >> keyDown: evt [
 	"Check for return and escape keys."
 
 	super keyDown: evt.
-	(self defaultButton isNotNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
+	(self defaultButton isNotNil and: [(evt key sameContents: KeyboardKey enter) or: [evt key sameContents: KeyboardKey keypadEnter]])
 		ifTrue: [self returnPressed. ^true].
 
-	evt key = KeyboardKey escape ifTrue: [self escapePressed. ^true].
+	(evt key sameContents: KeyboardKey escape) ifTrue: [self escapePressed. ^true].
 	^false
 ]
 

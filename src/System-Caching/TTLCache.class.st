@@ -24,7 +24,7 @@ Class {
 	#name : 'TTLCache',
 	#superclass : 'LRUCache',
 	#instVars : [
-		'timeToLive'
+		#timeToLive
 	],
 	#category : 'System-Caching',
 	#package : 'System-Caching'

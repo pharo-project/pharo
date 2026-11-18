@@ -18,7 +18,7 @@ Class {
 	#name : 'ClyStringPattern',
 	#superclass : 'Object',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'Calypso-NavigationModel-Model',
 	#package : 'Calypso-NavigationModel',
@@ -39,7 +39,7 @@ ClyStringPattern >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ value = anObject value
+	^ value sameContents: anObject value
 ]
 
 { #category : 'comparing' }

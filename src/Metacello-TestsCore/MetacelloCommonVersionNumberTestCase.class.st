@@ -10,7 +10,7 @@ MetacelloCommonVersionNumberTestCase class >> isAbstract [
     "Override to true if a TestCase subclass is Abstract and should not have
 	TestCase instances built from it"
 
-    ^ self name = #'MetacelloCommonVersionNumberTestCase'
+    ^ self name sameContents: #'MetacelloCommonVersionNumberTestCase'
 ]
 
 { #category : 'private' }

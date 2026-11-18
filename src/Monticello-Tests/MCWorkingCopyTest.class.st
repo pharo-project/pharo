@@ -2,10 +2,10 @@ Class {
 	#name : 'MCWorkingCopyTest',
 	#superclass : 'MCTestCase',
 	#instVars : [
-		'workingCopy',
-		'repositoryGroup',
-		'versions',
-		'versions2'
+		#workingCopy,
+		#repositoryGroup,
+		#versions,
+		#versions2
 	],
 	#category : 'Monticello-Tests-Base',
 	#package : 'Monticello-Tests',

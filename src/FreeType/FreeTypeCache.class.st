@@ -5,17 +5,17 @@ Class {
 	#name : 'FreeTypeCache',
 	#superclass : 'Object',
 	#instVars : [
-		'mutex',
-		'maximumSize',
-		'used',
-		'fontTable',
-		'fifo'
+		#mutex,
+		#maximumSize,
+		#used,
+		#fontTable,
+		#fifo
 	],
 	#pools : [
-		'FreeTypeCacheConstants'
+		#FreeTypeCacheConstants
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : 'FreeType-Cache',
 	#package : 'FreeType',

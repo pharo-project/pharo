@@ -5,9 +5,9 @@ Class {
 	#name : 'HiWheelColorStrategy',
 	#superclass : 'HiAbstractColorStrategy',
 	#instVars : [
-		'branchMapping',
-		'colorByBranch',
-		'colorWheel'
+		#branchMapping,
+		#colorByBranch,
+		#colorWheel
 	],
 	#category : 'Hiedra-UI',
 	#package : 'Hiedra',

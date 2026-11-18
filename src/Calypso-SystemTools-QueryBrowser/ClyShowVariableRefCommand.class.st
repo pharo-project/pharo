@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyShowVariableRefCommand',
 	#superclass : 'SycVariableCommand',
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',

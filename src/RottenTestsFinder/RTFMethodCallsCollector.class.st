@@ -7,7 +7,7 @@ Class {
 	#name : 'RTFMethodCallsCollector',
 	#superclass : 'RTFSelfCallVisitor',
 	#instVars : [
-		'compiledMethods'
+		#compiledMethods
 	],
 	#category : 'RottenTestsFinder-SelfInterpreter',
 	#package : 'RottenTestsFinder',

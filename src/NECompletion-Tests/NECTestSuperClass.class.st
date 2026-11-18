@@ -5,10 +5,10 @@ Class {
 	#name : 'NECTestSuperClass',
 	#superclass : 'Object',
 	#instVars : [
-		'superInstVar'
+		#superInstVar
 	],
 	#classVars : [
-		'SuperClassVar'
+		#SuperClassVar
 	],
 	#category : 'NECompletion-Tests',
 	#package : 'NECompletion-Tests'

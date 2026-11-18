@@ -5,8 +5,8 @@ Class {
 	#name : 'MimeConverter',
 	#superclass : 'Object',
 	#instVars : [
-		'dataStream',
-		'mimeStream'
+		#dataStream,
+		#mimeStream
 	],
 	#category : 'Network-MIME-Converter',
 	#package : 'Network-MIME',

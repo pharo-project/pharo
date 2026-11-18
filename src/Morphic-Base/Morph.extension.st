@@ -116,7 +116,7 @@ Morph >> borderColor: aColorOrSymbolOrNil [
 		ifTrue: [^ self].
 
 	aColorOrSymbolOrNil isColor
-		ifTrue: [style style = #none "default border?"
+		ifTrue: [(style style sameContents: #none) "default border?"
 				ifTrue: [self borderStyle: (SimpleBorderStyle width: 0 color: aColorOrSymbolOrNil)]
 				ifFalse: [style baseColor: aColorOrSymbolOrNil.
 					self changed].
@@ -142,7 +142,7 @@ Morph >> borderWidth: aNumber [
 	style := self borderStyle.
 	style width = aNumber ifTrue: [ ^self ].
 
-	style style = #none
+	(style style sameContents: #none)
 		ifTrue: [ self borderStyle: (SimpleBorderStyle width: aNumber color: Color transparent) ]
 		ifFalse: [ style width: aNumber. self changed ]
 ]
@@ -307,7 +307,7 @@ Morph >> handleKeystrokeWithKeymappings: aKeystrokeEvent [
 { #category : '*Morphic-Base-keymapping' }
 Morph >> hasKeymapCategoryNamed: aString [
 
-	^ self kmDispatcher targets anySatisfy: [ :e | e category name = aString ]
+	^ self kmDispatcher targets anySatisfy: [ :e | e category name sameContents: aString ]
 ]
 
 { #category : '*Morphic-Base-keymapping' }

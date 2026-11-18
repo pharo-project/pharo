@@ -2,11 +2,11 @@ Class {
 	#name : 'EDTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'ed',
-		'session',
-		'debugAPI',
-		'mockDisplayAPI',
-		'currentDebuggingAPI'
+		#ed,
+		#session,
+		#debugAPI,
+		#mockDisplayAPI,
+		#currentDebuggingAPI
 	],
 	#category : 'EmergencyDebugger-Tests',
 	#package : 'EmergencyDebugger-Tests'

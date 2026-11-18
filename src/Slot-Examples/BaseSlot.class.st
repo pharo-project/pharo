@@ -7,7 +7,7 @@ Class {
 	#name : 'BaseSlot',
 	#superclass : 'InstanceVariableSlot',
 	#instVars : [
-		'default'
+		#default
 	],
 	#category : 'Slot-Examples-Base',
 	#package : 'Slot-Examples',

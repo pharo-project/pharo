@@ -8,9 +8,9 @@ Class {
 	#name : 'ClassRenamed',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'classRenamed',
-		'newName',
-		'oldName'
+		#classRenamed,
+		#newName,
+		#oldName
 	],
 	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',

@@ -5,8 +5,8 @@ Class {
 	#name : 'FreeTypeEmbeddedFileInfo',
 	#superclass : 'AbstractFreeTypeFileInfo',
 	#instVars : [
-		'fileContents',
-		'baseName'
+		#fileContents,
+		#baseName
 	],
 	#category : 'EmbeddedFreeType-Installation',
 	#package : 'EmbeddedFreeType',

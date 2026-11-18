@@ -10,9 +10,9 @@ Class {
 	#name : 'TabAction',
 	#superclass : 'Object',
 	#instVars : [
-		'action',
-		'icon',
-		'label'
+		#action,
+		#icon,
+		#label
 	],
 	#category : 'Morphic-Widgets-Tabs-Base',
 	#package : 'Morphic-Widgets-Tabs',

@@ -5,7 +5,7 @@ Class {
 	#name : 'TabPanelBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'tabSelector'
+		#tabSelector
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

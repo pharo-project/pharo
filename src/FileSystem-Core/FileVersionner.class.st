@@ -17,7 +17,7 @@ Class {
 	#name : 'FileVersionner',
 	#superclass : 'Object',
 	#instVars : [
-		'fileReference'
+		#fileReference
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',

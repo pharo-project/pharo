@@ -6,8 +6,8 @@ Class {
 	#name : 'TestSessionHandler',
 	#superclass : 'AbstractSessionHandler',
 	#instVars : [
-		'startupHandler',
-		'shutdownHandler'
+		#startupHandler,
+		#shutdownHandler
 	],
 	#category : 'System-SessionManager-Tests',
 	#package : 'System-SessionManager-Tests'

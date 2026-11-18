@@ -8,7 +8,7 @@ Class {
 	#name : 'Base64MimeConverterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : 'Network-Tests-Kernel',
 	#package : 'Network-Tests',

@@ -5,12 +5,12 @@ Class {
 	#name : 'MCMczReader',
 	#superclass : 'MCVersionReader',
 	#instVars : [
-		'zip',
-		'infoCache',
-		'filename'
+		#zip,
+		#infoCache,
+		#filename
 	],
 	#classVars : [
-		'ReadingOldExport'
+		#ReadingOldExport
 	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',

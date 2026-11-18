@@ -18,20 +18,20 @@ Class {
 	#name : 'MenuItemMorph',
 	#superclass : 'StringMorph',
 	#instVars : [
-		'isEnabled',
-		'subMenu',
-		'isSelected',
-		'target',
-		'selector',
-		'arguments',
-		'iconFormSet',
-		'keyText'
+		#isEnabled,
+		#subMenu,
+		#isSelected,
+		#target,
+		#selector,
+		#arguments,
+		#iconFormSet,
+		#keyText
 	],
 	#classVars : [
-		'BottomArrowFormSet',
-		'LeftArrowFormSet',
-		'SubMenuMarkerFormSet',
-		'UpArrowFormSet'
+		#BottomArrowFormSet,
+		#LeftArrowFormSet,
+		#SubMenuMarkerFormSet,
+		#UpArrowFormSet
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',

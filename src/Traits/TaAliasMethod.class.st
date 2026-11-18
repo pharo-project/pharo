@@ -7,7 +7,7 @@ Class {
 	#name : 'TaAliasMethod',
 	#superclass : 'TaSingleComposition',
 	#instVars : [
-		'aliases'
+		#aliases
 	],
 	#category : 'Traits-Compositions',
 	#package : 'Traits',
@@ -138,7 +138,7 @@ TaAliasMethod >> originSelectorOf: aSelector [
 
 { #category : 'querying' }
 TaAliasMethod >> reverseAlias: aSelector [
-	^ (inner reverseAlias: aSelector) , (aliases associations select: [ :a | a value = aSelector ] thenCollect: #key)
+	^ (inner reverseAlias: aSelector) , (aliases associations select: [ :a | a value sameContents: aSelector ] thenCollect: #key)
 ]
 
 { #category : 'accessing' }

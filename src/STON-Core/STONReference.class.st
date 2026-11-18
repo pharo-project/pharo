@@ -6,7 +6,7 @@ Class {
 	#name : 'STONReference',
 	#superclass : 'Object',
 	#instVars : [
-		'index'
+		#index
 	],
 	#category : 'STON-Core-Reader',
 	#package : 'STON-Core',

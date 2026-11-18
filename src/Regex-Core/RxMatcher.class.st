@@ -25,17 +25,17 @@ Class {
 	#name : 'RxMatcher',
 	#superclass : 'Object',
 	#instVars : [
-		'matcher',
-		'ignoreCase',
-		'startOptimizer',
-		'stream',
-		'markerPositions',
-		'markerCount',
-		'lastResult'
+		#matcher,
+		#ignoreCase,
+		#startOptimizer,
+		#stream,
+		#markerPositions,
+		#markerCount,
+		#lastResult
 	],
 	#classVars : [
-		'Cr',
-		'Lf'
+		#Cr,
+		#Lf
 	],
 	#category : 'Regex-Core-Base',
 	#package : 'Regex-Core',

@@ -17,12 +17,12 @@ Class {
 	#name : 'RBParser',
 	#superclass : 'Object',
 	#instVars : [
-		'scanner',
-		'currentToken',
-		'nextToken',
-		'source',
-		'comments',
-		'pragmas'
+		#scanner,
+		#currentToken,
+		#nextToken,
+		#source,
+		#comments,
+		#pragmas
 	],
 	#category : 'AST-Core-Parser',
 	#package : 'AST-Core',
@@ -994,14 +994,14 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 				| contents |
 				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
 				"If the parsing failed because it did not match anything, there was nothing before the unexpected closer"
-				contents := startOfStatementToken = currentToken ifTrue: [ #() ] ifFalse: [ { node } ].
+				contents := (startOfStatementToken sameContents: currentToken) ifTrue: [ #() ] ifFalse: [ { node } ].
 				node := (RBUnfinishedStatementErrorNode from: err contents: contents)
 					valueAfter: currentToken value asString;
 					stop: currentToken stop.
 				self step ].
 
 	"If the parsing failed because it did not match anything, consume the current token and continue parsing."
-	startOfStatementToken = currentToken ifTrue: [
+	(startOfStatementToken sameContents: currentToken) ifTrue: [
 		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
 		"Solution to recover. Consume the token to create the statement."
 		node := RBParseErrorNode new

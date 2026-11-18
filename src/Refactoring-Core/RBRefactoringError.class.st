@@ -5,7 +5,7 @@ Class {
 	#name : 'RBRefactoringError',
 	#superclass : 'Error',
 	#instVars : [
-		'failedPreconditions'
+		#failedPreconditions
 	],
 	#category : 'Refactoring-Core-Support',
 	#package : 'Refactoring-Core',

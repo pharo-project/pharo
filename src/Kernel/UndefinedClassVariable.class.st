@@ -7,8 +7,8 @@ Class {
 	#name : 'UndefinedClassVariable',
 	#superclass : 'LiteralVariable',
 	#instVars : [
-		'ast',
-		'classIsRebuild'
+		#ast,
+		#classIsRebuild
 	],
 	#category : 'Kernel-Variables',
 	#package : 'Kernel',

@@ -2,7 +2,7 @@ Class {
 	#name : 'DAClassToDependencyNode',
 	#superclass : 'DAClassNode',
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Nodes',
 	#package : 'Tool-DependencyAnalyser-UI',

@@ -20,7 +20,7 @@ Class {
 	#name : 'CoHeuristicBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'heuristics'
+		#heuristics
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

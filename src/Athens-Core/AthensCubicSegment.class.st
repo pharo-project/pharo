@@ -5,9 +5,9 @@ Class {
 	#name : 'AthensCubicSegment',
 	#superclass : 'AthensPathSegment',
 	#instVars : [
-		'via1',
-		'via2',
-		'to'
+		#via1,
+		#via2,
+		#to
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

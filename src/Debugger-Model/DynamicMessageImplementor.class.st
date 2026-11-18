@@ -5,10 +5,10 @@ Class {
 	#name : 'DynamicMessageImplementor',
 	#superclass : 'Object',
 	#instVars : [
-		'message',
-		'class',
-		'argumentNames',
-		'stream'
+		#message,
+		#class,
+		#argumentNames,
+		#stream
 	],
 	#category : 'Debugger-Model-Utilities',
 	#package : 'Debugger-Model',

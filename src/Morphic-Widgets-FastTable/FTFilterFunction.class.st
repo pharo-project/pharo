@@ -14,10 +14,10 @@ Class {
 	#name : 'FTFilterFunction',
 	#superclass : 'FTFieldFunction',
 	#instVars : [
-		'initialDataSource',
-		'pattern',
-		'isEditingSemaphore',
-		'filterClass'
+		#initialDataSource,
+		#pattern,
+		#isEditingSemaphore,
+		#filterClass
 	],
 	#category : 'Morphic-Widgets-FastTable-Functions',
 	#package : 'Morphic-Widgets-FastTable',

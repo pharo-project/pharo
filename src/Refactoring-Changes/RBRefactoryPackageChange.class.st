@@ -5,7 +5,7 @@ Class {
 	#name : 'RBRefactoryPackageChange',
 	#superclass : 'RBRefactoryChange',
 	#instVars : [
-		'browserEnvironment'
+		#browserEnvironment
 	],
 	#category : 'Refactoring-Changes-Changes-Packages',
 	#package : 'Refactoring-Changes',

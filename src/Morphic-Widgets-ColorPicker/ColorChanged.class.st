@@ -13,7 +13,7 @@ Class {
 	#name : 'ColorChanged',
 	#superclass : 'Announcement',
 	#instVars : [
-		'newColor'
+		#newColor
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'

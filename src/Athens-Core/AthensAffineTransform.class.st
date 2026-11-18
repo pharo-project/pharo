@@ -8,12 +8,12 @@ Class {
 	#name : 'AthensAffineTransform',
 	#superclass : 'AthensTransform',
 	#instVars : [
-		'sx',
-		'shx',
-		'x',
-		'shy',
-		'sy',
-		'y'
+		#sx,
+		#shx,
+		#x,
+		#shy,
+		#sy,
+		#y
 	],
 	#category : 'Athens-Core-Matrices',
 	#package : 'Athens-Core',

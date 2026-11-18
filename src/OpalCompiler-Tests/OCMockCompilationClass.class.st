@@ -7,7 +7,7 @@ Class {
 	#name : 'OCMockCompilationClass',
 	#superclass : 'Object',
 	#instVars : [
-		'collection'
+		#collection
 	],
 	#category : 'OpalCompiler-Tests-Misc',
 	#package : 'OpalCompiler-Tests',

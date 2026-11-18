@@ -5,8 +5,8 @@ Class {
 	#name : 'PharoTutorialNavigationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'prof',
-		'mockView'
+		#prof,
+		#mockView
 	],
 	#category : 'ProfStef-Tests-Tests',
 	#package : 'ProfStef-Tests',

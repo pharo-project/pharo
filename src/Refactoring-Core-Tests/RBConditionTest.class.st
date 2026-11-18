@@ -2,10 +2,10 @@ Class {
 	#name : 'RBConditionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'rbNamespace',
-		'objectClass',
-		'messageNodeClass',
-		'newClass'
+		#rbNamespace,
+		#objectClass,
+		#messageNodeClass,
+		#newClass
 	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'

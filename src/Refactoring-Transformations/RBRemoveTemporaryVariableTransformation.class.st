@@ -20,7 +20,7 @@ Class {
 	#name : 'RBRemoveTemporaryVariableTransformation',
 	#superclass : 'RBMethodTransformation',
 	#instVars : [
-		'variableName'
+		#variableName
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

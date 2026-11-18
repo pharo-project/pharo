@@ -10,7 +10,7 @@ Class {
 	#name : 'ClyFormatAsReadSwitchMorph',
 	#superclass : 'ClyTextMorphToolMorph',
 	#instVars : [
-		'checkbox'
+		#checkbox
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

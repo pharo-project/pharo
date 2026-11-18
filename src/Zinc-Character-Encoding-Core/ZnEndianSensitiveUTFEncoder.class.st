@@ -8,7 +8,7 @@ Class {
 	#name : 'ZnEndianSensitiveUTFEncoder',
 	#superclass : 'ZnUTFEncoder',
 	#instVars : [
-		'endianness'
+		#endianness
 	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'
@@ -65,12 +65,12 @@ ZnEndianSensitiveUTFEncoder >> initialize [
 
 { #category : 'testing' }
 ZnEndianSensitiveUTFEncoder >> isBigEndian [
-	^ endianness = #big
+	^ endianness sameContents: #big
 ]
 
 { #category : 'testing' }
 ZnEndianSensitiveUTFEncoder >> isLittleEndian [
-	^ endianness = #little
+	^ endianness sameContents: #little
 ]
 
 { #category : 'printing' }

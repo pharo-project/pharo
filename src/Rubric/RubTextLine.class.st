@@ -5,21 +5,21 @@ Class {
 	#name : 'RubTextLine',
 	#superclass : 'Object',
 	#instVars : [
-		'left',
-		'right',
-		'top',
-		'bottom',
-		'firstIndex',
-		'lastIndex',
-		'internalSpaces',
-		'paddingWidth',
-		'baseline',
-		'actualWidth',
-		'lineNumber',
-		'stopCondition'
+		#left,
+		#right,
+		#top,
+		#bottom,
+		#firstIndex,
+		#lastIndex,
+		#internalSpaces,
+		#paddingWidth,
+		#baseline,
+		#actualWidth,
+		#lineNumber,
+		#stopCondition
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

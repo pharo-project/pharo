@@ -7,10 +7,10 @@ Class {
 	#traits : 'TEnableOnHaloMenu',
 	#classTraits : 'TEnableOnHaloMenu classTrait',
 	#instVars : [
-		'repressedFormSet',
-		'enabled',
-		'isRadioButton',
-		'formSets'
+		#repressedFormSet,
+		#enabled,
+		#isRadioButton,
+		#formSets
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SystemResolver',
 	#superclass : 'FileSystemResolver',
 	#classVars : [
-		'UserLocalDirectory'
+		#UserLocalDirectory
 	],
 	#category : 'FileSystem-Core-Base-Resolver',
 	#package : 'FileSystem-Core',

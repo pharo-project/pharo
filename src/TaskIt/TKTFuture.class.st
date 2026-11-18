@@ -148,11 +148,11 @@ Class {
 	#name : 'TKTFuture',
 	#superclass : 'Object',
 	#instVars : [
-		'result',
-		'valueSemaphore',
-		'resultCallbacks',
-		'exceptionCallbacks',
-		'runner'
+		#result,
+		#valueSemaphore,
+		#resultCallbacks,
+		#exceptionCallbacks,
+		#runner
 	],
 	#category : 'TaskIt-Futures',
 	#package : 'TaskIt',

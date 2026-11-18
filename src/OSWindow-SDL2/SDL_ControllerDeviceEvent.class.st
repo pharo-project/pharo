@@ -5,9 +5,9 @@ Class {
 	#name : 'SDL_ControllerDeviceEvent',
 	#superclass : 'SDL2MappedEvent',
 	#classVars : [
-		'OFFSET_TIMESTAMP',
-		'OFFSET_TYPE',
-		'OFFSET_WHICH'
+		#OFFSET_TIMESTAMP,
+		#OFFSET_TYPE,
+		#OFFSET_WHICH
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

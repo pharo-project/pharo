@@ -23,10 +23,10 @@ Class {
 	#name : 'RBInsertNewClassTransformation',
 	#superclass : 'RBClassTransformation',
 	#instVars : [
-		'superclass',
-		'subclasses',
-		'packageName',
-		'tagName'
+		#superclass,
+		#subclasses,
+		#packageName,
+		#tagName
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

@@ -6,7 +6,7 @@ Class {
 	#name : 'MockFinalizerAction',
 	#superclass : 'Object',
 	#instVars : [
-		'finalizationAction'
+		#finalizationAction
 	],
 	#category : 'System-Finalization-Tests',
 	#package : 'System-Finalization-Tests'

@@ -28,9 +28,9 @@ Class {
 	#name : 'ClyMethodVisibilityLevel',
 	#superclass : 'Object',
 	#instVars : [
-		'visibleClassScope',
-		'extraClassScope',
-		'isActive'
+		#visibleClassScope,
+		#extraClassScope,
+		#isActive
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

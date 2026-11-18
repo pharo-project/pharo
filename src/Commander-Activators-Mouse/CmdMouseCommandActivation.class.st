@@ -49,8 +49,8 @@ Class {
 	#name : 'CmdMouseCommandActivation',
 	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
-		'whichButton',
-		'keyboardModifier'
+		#whichButton,
+		#keyboardModifier
 	],
 	#category : 'Commander-Activators-Mouse',
 	#package : 'Commander-Activators-Mouse'

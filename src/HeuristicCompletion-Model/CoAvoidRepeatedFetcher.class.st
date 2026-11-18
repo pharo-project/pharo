@@ -12,7 +12,7 @@ Class {
 	#name : 'CoAvoidRepeatedFetcher',
 	#superclass : 'CoFetcherDecorator',
 	#instVars : [
-		'elements'
+		#elements
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

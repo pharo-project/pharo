@@ -5,7 +5,7 @@ Class {
 	#name : 'RFBlockOperation',
 	#superclass : 'Object',
 	#instVars : [
-		'block'
+		#block
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

@@ -20,9 +20,9 @@ Class {
 	#name : 'DelaySchedulerBackgroundWorkerMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'work',
-		'stringMorph',
-		'morphDeleted'
+		#work,
+		#stringMorph,
+		#morphDeleted
 	],
 	#category : 'Morphic-Tests-Processes',
 	#package : 'Morphic-Tests',

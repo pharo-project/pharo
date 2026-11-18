@@ -2,13 +2,13 @@ Class {
 	#name : 'RubCharacterBlockScanner',
 	#superclass : 'RubCharacterScanner',
 	#instVars : [
-		'characterPoint',
-		'characterIndex',
-		'lastCharacter',
-		'lastCharacterExtent',
-		'lastSpaceOrTabExtent',
-		'nextLeftMargin',
-		'specialWidth'
+		#characterPoint,
+		#characterIndex,
+		#lastCharacter,
+		#lastCharacterExtent,
+		#lastSpaceOrTabExtent,
+		#nextLeftMargin,
+		#specialWidth
 	],
 	#category : 'Rubric-TextScanning',
 	#package : 'Rubric',

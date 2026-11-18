@@ -5,9 +5,9 @@ Class {
 	#name : 'StChangesBrowserPresenter',
 	#superclass : 'SpPresenterWithModel',
 	#instVars : [
-		'changesTree',
-		'selectedItems',
-		'diffView'
+		#changesTree,
+		#selectedItems,
+		#diffView
 	],
 	#category : 'NautilusRefactoring-Utilities',
 	#package : 'NautilusRefactoring',

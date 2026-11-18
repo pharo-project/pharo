@@ -2,7 +2,7 @@ Class {
 	#name : 'DebugSessionContextsTest',
 	#superclass : 'DebuggerTest',
 	#instVars : [
-		'debuggedThisContext'
+		#debuggedThisContext
 	],
 	#category : 'Debugger-Model-Tests-Core',
 	#package : 'Debugger-Model-Tests',

@@ -6,9 +6,9 @@ Class {
 	#name : 'MemoryFileSystemEntry',
 	#superclass : 'Object',
 	#instVars : [
-		'creationTime',
-		'modificationTime',
-		'basename'
+		#creationTime,
+		#modificationTime,
+		#basename
 	],
 	#category : 'FileSystem-Memory-Base',
 	#package : 'FileSystem-Memory',

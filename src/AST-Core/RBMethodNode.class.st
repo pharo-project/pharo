@@ -21,17 +21,17 @@ Class {
 	#name : 'RBMethodNode',
 	#superclass : 'RBProgramNode',
 	#instVars : [
-		'scope',
-		'selector',
-		'keywordsPositions',
-		'body',
-		'source',
-		'arguments',
-		'pragmas',
-		'replacements',
-		'nodeReplacements',
-		'compilationContext',
-		'bcToASTCache'
+		#scope,
+		#selector,
+		#keywordsPositions,
+		#body,
+		#source,
+		#arguments,
+		#pragmas,
+		#replacements,
+		#nodeReplacements,
+		#compilationContext,
+		#bcToASTCache
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -281,16 +281,16 @@ RBMethodNode >> copyInContext: aDictionary [
 		selector: self selector;
 		arguments: (self arguments collect: [ :each | each copyInContext: aDictionary ]);
 		pragmas: (self pragmas isEmpty
-			ifTrue: [ aDictionary at: '-pragmas-' ifAbsent: [ #() ] ]
+			ifTrue: [ aDictionary at: #'-pragmas-' ifAbsent: [ #() ] ]
 			ifFalse: [ self copyList: self pragmas inContext: aDictionary ]);
 		body: (self body copyInContext: aDictionary);
-		source: (aDictionary at: '-source-' ifAbsentPut: [ self source ]);
+		source: (aDictionary at: #'-source-' ifAbsentPut: [ self source ]);
 		yourself
 ]
 
 { #category : 'testing' }
 RBMethodNode >> defines: aName [
-	^ (arguments anySatisfy: [ :each | each name = aName ])
+	^ (arguments anySatisfy: [ :each | each name sameContents: aName ])
 		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
 ]
 
@@ -337,7 +337,7 @@ RBMethodNode >> firstPrecodeComment [
 
 { #category : 'testing' }
 RBMethodNode >> hasArgumentNamed: aString [
-	^ self arguments anySatisfy: [ :argument| argument name = aString ]
+	^ self arguments anySatisfy: [ :argument| argument name sameContents: aString ]
 ]
 
 { #category : 'testing' }
@@ -365,7 +365,7 @@ RBMethodNode >> hasTemporaries [
 
 { #category : 'testing' }
 RBMethodNode >> hasTemporaryNamed: aString [
-	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
+	^ self temporaries anySatisfy: [ :temp| temp name sameContents: aString ]
 ]
 
 { #category : 'comparing' }
@@ -457,7 +457,7 @@ RBMethodNode >> mappingFor: oldNode [
 { #category : 'matching' }
 RBMethodNode >> match: aNode inContext: aDictionary [
 	self class = aNode class ifFalse: [ ^ false ].
-	aDictionary at: '-source-' put: aNode source.
+	aDictionary at: #'-source-' put: aNode source.
 	self selector = aNode selector ifFalse: [ ^ false ].
 	^ (self matchList: arguments against: aNode arguments inContext: aDictionary)
 		and: [ (self matchPragmas: self pragmas against: aNode pragmas inContext: aDictionary)
@@ -467,7 +467,7 @@ RBMethodNode >> match: aNode inContext: aDictionary [
 { #category : 'matching' }
 RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictionary [
 	matchNodes isEmpty ifTrue: [
-		aDictionary at: '-pragmas-' put: pragmaNodes.
+		aDictionary at: #'-pragmas-' put: pragmaNodes.
 		^ true ].
 	^ matchNodes allSatisfy: [ :matchNode |
 		pragmaNodes anySatisfy: [ :pragmaNode |

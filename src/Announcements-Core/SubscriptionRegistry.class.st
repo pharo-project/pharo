@@ -9,8 +9,8 @@ Class {
 	#name : 'SubscriptionRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'subscriptions',
-		'monitor'
+		#subscriptions,
+		#monitor
 	],
 	#category : 'Announcements-Core-Subscription',
 	#package : 'Announcements-Core',

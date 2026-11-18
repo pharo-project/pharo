@@ -6,7 +6,7 @@ Class {
 	#name : 'LongMessageDialogWindow',
 	#superclass : 'MessageDialogWindow',
 	#instVars : [
-		'entryText'
+		#entryText
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

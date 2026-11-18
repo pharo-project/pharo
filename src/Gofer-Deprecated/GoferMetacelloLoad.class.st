@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferMetacelloLoad',
 	#superclass : 'GoferLoad',
 	#instVars : [
-		'version'
+		#version
 	],
 	#category : 'Gofer-Deprecated-Operations',
 	#package : 'Gofer-Deprecated',

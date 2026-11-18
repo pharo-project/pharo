@@ -5,10 +5,10 @@ Class {
 	#name : 'TaskbarTask',
 	#superclass : 'Object',
 	#instVars : [
-		'morph',
-		'state',
-		'label',
-		'icon'
+		#morph,
+		#state,
+		#label,
+		#icon
 	],
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'

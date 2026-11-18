@@ -5,7 +5,7 @@ Class {
 	#name : 'ClySystemEnvironmentTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'dummySystemEnvironment'
+		#dummySystemEnvironment
 	],
 	#category : 'Calypso-SystemQueries-Tests-Domain',
 	#package : 'Calypso-SystemQueries-Tests',

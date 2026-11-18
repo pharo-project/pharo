@@ -8,8 +8,8 @@ Class {
 	#name : 'CoStatisticsHeuristicWrapper',
 	#superclass : 'CoASTNodeFetcherHeuristic',
 	#instVars : [
-		'wrapped',
-		'statistics'
+		#wrapped,
+		#statistics
 	],
 	#category : 'HeuristicCompletion-Model-Statistics',
 	#package : 'HeuristicCompletion-Model',

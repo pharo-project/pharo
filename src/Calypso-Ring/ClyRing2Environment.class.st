@@ -28,10 +28,10 @@ Class {
 	#name : 'ClyRing2Environment',
 	#superclass : 'Object',
 	#instVars : [
-		'environment',
-		'name',
-		'packageOrganizer',
-		'projectManager'
+		#environment,
+		#name,
+		#packageOrganizer,
+		#projectManager
 	],
 	#category : 'Calypso-Ring',
 	#package : 'Calypso-Ring'

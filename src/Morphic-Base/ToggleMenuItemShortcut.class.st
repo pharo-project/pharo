@@ -17,9 +17,9 @@ Class {
 	#name : 'ToggleMenuItemShortcut',
 	#superclass : 'DisplayableObject',
 	#instVars : [
-		'keyText',
-		'owner',
-		'color'
+		#keyText,
+		#owner,
+		#color
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',

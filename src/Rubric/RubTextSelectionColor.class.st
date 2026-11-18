@@ -2,15 +2,15 @@ Class {
 	#name : 'RubTextSelectionColor',
 	#superclass : 'TextAttribute',
 	#instVars : [
-		'colorBlock',
-		'backgroundColorBlock',
-		'emphasisCode'
+		#colorBlock,
+		#backgroundColorBlock,
+		#emphasisCode
 	],
 	#classVars : [
-		'FindReplaceSelection',
-		'OppositeDelimiterSelection',
-		'PrimarySelection',
-		'SecondarySelection'
+		#FindReplaceSelection,
+		#OppositeDelimiterSelection,
+		#PrimarySelection,
+		#SecondarySelection
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

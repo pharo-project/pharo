@@ -9,7 +9,7 @@ Class {
 	#name : 'DTCommentToTestResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'testsResult'
+		#testsResult
 	],
 	#category : 'DrTests-CommentsToTests-Base',
 	#package : 'DrTests-CommentsToTests',

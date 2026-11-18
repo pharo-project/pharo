@@ -5,7 +5,7 @@ Class {
 	#name : 'CDPackageNode',
 	#superclass : 'CDNode',
 	#instVars : [
-		'packageName'
+		#packageName
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

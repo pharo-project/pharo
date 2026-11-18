@@ -5,20 +5,20 @@ Class {
 	#name : 'RubScrolledTextMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'hasEditingConflicts',
-		'hasUnacceptedEdits',
-		'alwaysAccept',
-		'setTextSelector',
-		'getTextSelector',
-		'getSelectionSelector',
-		'setSelectionSelector',
-		'autoAccept',
-		'scrollPane',
-		'rulers',
-		'enabled',
-		'highlights',
-		'getBackgroundColorSelector',
-		'askBeforeDiscardingEdits'
+		#hasEditingConflicts,
+		#hasUnacceptedEdits,
+		#alwaysAccept,
+		#setTextSelector,
+		#getTextSelector,
+		#getSelectionSelector,
+		#setSelectionSelector,
+		#autoAccept,
+		#scrollPane,
+		#rulers,
+		#enabled,
+		#highlights,
+		#getBackgroundColorSelector,
+		#askBeforeDiscardingEdits
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',
@@ -644,7 +644,7 @@ RubScrolledTextMorph >> hasRuler: aRuler [
 
 { #category : 'rulers handling' }
 RubScrolledTextMorph >> hasRulerNamed: aKey [
-	^ self rulers anySatisfy: [ :r | r key = aKey ]
+	^ self rulers anySatisfy: [ :r | r key sameContents: aKey ]
 ]
 
 { #category : 'model protocol' }
@@ -911,7 +911,7 @@ RubScrolledTextMorph >> resetState [
 
 { #category : 'rulers handling' }
 RubScrolledTextMorph >> rulerNamed: aKey [
-	^self rulers detect: [ :r | r key = aKey ] ifNone: [  ]
+	^self rulers detect: [ :r | r key sameContents: aKey ] ifNone: [  ]
 ]
 
 { #category : 'accessing - rulers' }

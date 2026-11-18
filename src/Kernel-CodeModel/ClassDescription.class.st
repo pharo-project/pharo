@@ -12,7 +12,7 @@ Class {
 	#name : 'ClassDescription',
 	#superclass : 'Behavior',
 	#instVars : [
-		'protocols'
+		#protocols
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',
@@ -528,7 +528,7 @@ ClassDescription >> hasSlotNamed: aString [
 ClassDescription >> includesSharedPoolNamed:  aSharedPoolString [
 	"Answer whether the receiver uses the shared pool named aSharedPoolString"
 	<reflection: 'Class structural inspection - Shared pool inspection'>
-	^ self sharedPools anySatisfy: [:each | each name = aSharedPoolString]
+	^ self sharedPools anySatisfy: [:each | each name sameContents: aSharedPoolString]
 ]
 
 { #category : 'initialization' }
@@ -837,14 +837,14 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 { #category : 'protocols' }
 ClassDescription >> protocolNamed: aString [
 
-	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
+	^ self protocolNamed: aString asSymbol ifAbsent: [ NotFound signalFor: aString ]
 ]
 
 { #category : 'protocols' }
 ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
 
 	^ self protocols
-		  detect: [ :e | e name = aString ]
+		  detect: [ :e | e name sameContents: aString ]
 		  ifNone: aBlock
 ]
 

@@ -15,7 +15,7 @@ Class {
 	#name : 'ZnMultiValueDictionary',
 	#superclass : 'OrderedDictionary',
 	#instVars : [
-		'limit'
+		#limit
 	],
 	#category : 'Zinc-Resource-Meta-Core',
 	#package : 'Zinc-Resource-Meta-Core'

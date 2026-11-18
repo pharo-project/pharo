@@ -24,9 +24,9 @@ ReNoPrintStringInPrintOnRule class >> initialize [
 { #category : 'running' }
 ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemPrintStrings |
-	aMethod selector = #printOn: ifFalse: [ ^self ].
+	(aMethod selector sameContents: #printOn:) ifFalse: [ ^self ].
 	problemPrintStrings :=
-		aMethod sendNodes select: [ :msgSend | msgSend selector = #printString].
+		aMethod sendNodes select: [ :msgSend | msgSend selector sameContents: #printString].
 
 	problemPrintStrings do: [ :msgSend |
 			aCriticBlock cull: (self

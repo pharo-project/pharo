@@ -5,9 +5,9 @@ Class {
 	#name : 'RubTextChanged',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'start',
-		'stop',
-		'text'
+		#start,
+		#stop,
+		#text
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

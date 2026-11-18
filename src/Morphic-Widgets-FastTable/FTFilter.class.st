@@ -16,7 +16,7 @@ Class {
 	#name : 'FTFilter',
 	#superclass : 'Object',
 	#instVars : [
-		'pattern'
+		#pattern
 	],
 	#category : 'Morphic-Widgets-FastTable-Functions',
 	#package : 'Morphic-Widgets-FastTable',

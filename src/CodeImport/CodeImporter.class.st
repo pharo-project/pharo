@@ -43,10 +43,10 @@ Class {
 	#name : 'CodeImporter',
 	#superclass : 'Object',
 	#instVars : [
-		'readStream',
-		'codeDeclarations',
-		'parserClass',
-		'logSource'
+		#readStream,
+		#codeDeclarations,
+		#parserClass,
+		#logSource
 	],
 	#category : 'CodeImport-Base',
 	#package : 'CodeImport',

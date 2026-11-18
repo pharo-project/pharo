@@ -5,7 +5,7 @@ Class {
 	#name : 'OSTouchStateGestureDetector',
 	#superclass : 'OSTouchGestureDetector',
 	#instVars : [
-		'modeActivated'
+		#modeActivated
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

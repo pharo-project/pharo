@@ -5,8 +5,8 @@ Class {
 	#name : 'DamageRecorder',
 	#superclass : 'Object',
 	#instVars : [
-		'invalidRects',
-		'totalRepaint'
+		#invalidRects,
+		#totalRepaint
 	],
 	#category : 'Morphic-Core-Support',
 	#package : 'Morphic-Core',

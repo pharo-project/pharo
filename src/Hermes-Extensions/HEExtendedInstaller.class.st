@@ -13,8 +13,8 @@ Class {
 	#name : 'HEExtendedInstaller',
 	#superclass : 'HEInstaller',
 	#instVars : [
-		'failOnUndeclared',
-		'duplicationMode'
+		#failOnUndeclared,
+		#duplicationMode
 	],
 	#category : 'Hermes-Extensions-ClassInstaller',
 	#package : 'Hermes-Extensions',

@@ -5,8 +5,8 @@ Class {
 	#name : 'GlyphForm',
 	#superclass : 'Form',
 	#instVars : [
-		'advance',
-		'linearAdvance'
+		#advance,
+		#linearAdvance
 	],
 	#category : 'FreeType-Graphics-Fonts',
 	#package : 'FreeType-Graphics',

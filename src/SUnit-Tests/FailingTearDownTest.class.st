@@ -11,8 +11,8 @@ Class {
 	#name : 'FailingTearDownTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'shouldFailTearDown',
-		'assignedVariableToTestCleanup'
+		#shouldFailTearDown,
+		#assignedVariableToTestCleanup
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

@@ -7,9 +7,9 @@ Class {
 	#name : 'AthensProjectiveTransform',
 	#superclass : 'AthensAffineTransform',
 	#instVars : [
-		'w0',
-		'w1',
-		'w2'
+		#w0,
+		#w1,
+		#w2
 	],
 	#category : 'Athens-Core-Matrices',
 	#package : 'Athens-Core',

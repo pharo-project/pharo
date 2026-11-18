@@ -7,8 +7,8 @@ Class {
 	#name : 'HEMethodLiteral',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'className',
-		'selector'
+		#className,
+		#selector
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

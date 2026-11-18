@@ -18,11 +18,11 @@ Class {
 	#name : 'OCASTTranslator',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'methodBuilder',
-		'nextUniqueInlineID'
+		#methodBuilder,
+		#nextUniqueInlineID
 	],
 	#classVars : [
-		'OptimizedMessages'
+		#OptimizedMessages
 	],
 	#category : 'OpalCompiler-Core-Translator',
 	#package : 'OpalCompiler-Core',

@@ -7,9 +7,9 @@ Class {
 	#name : 'DTTestCaseProfilingData',
 	#superclass : 'Object',
 	#instVars : [
-		'testCase',
-		'duration',
-		'testResult'
+		#testCase,
+		#duration,
+		#testResult
 	],
 	#category : 'DrTests-TestsProfiling',
 	#package : 'DrTests-TestsProfiling'

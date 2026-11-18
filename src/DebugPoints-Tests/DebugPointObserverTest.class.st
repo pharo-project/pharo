@@ -2,9 +2,9 @@ Class {
 	#name : 'DebugPointObserverTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'dp',
-		'node',
-		'observer'
+		#dp,
+		#node,
+		#observer
 	],
 	#category : 'DebugPoints-Tests-Model',
 	#package : 'DebugPoints-Tests',

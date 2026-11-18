@@ -93,7 +93,7 @@ RegisteredClassAnnotationsTest >> testIncludeForbiddenClassesAsSpecialForbiddenA
 	| allForbidden forbidden actualAnnotation |
 
 	allForbidden := ForbiddenClassAnnotation registeredInstancesFor: ClassWithForbiddenAnnotationExample.
-	forbidden := allForbidden detect: [:each | each declarationSelector = #forbiddenAnnotation].
+	forbidden := allForbidden detect: [:each | each declarationSelector sameContents: #forbiddenAnnotation].
 	actualAnnotation := forbidden actualAnnotation.
 	self assert: actualAnnotation class equals: ForbiddenClassAnnotationExample
 ]
@@ -114,7 +114,7 @@ RegisteredClassAnnotationsTest >> testNotIncludeForbiddenClassesAsBrokenAnnotati
 
 	broken := BrokenClassAnnotation registeredInstancesFor: ClassWithForbiddenAnnotationExample.
 	broken
-		detect: [:each | each declarationSelector = #forbiddenAnnotation]
+		detect: [:each | each declarationSelector sameContents: #forbiddenAnnotation]
 		ifFound: [ :ann | self assert: false description: 'forbidden annotation should not be broken' ]
 ]
 

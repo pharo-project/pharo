@@ -2,13 +2,13 @@ Class {
 	#name : 'SliderMorph',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'slider',
-		'value',
-		'setValueSelector',
-		'sliderShadow',
-		'sliderColor',
-		'descending',
-		'dragging'
+		#slider,
+		#value,
+		#setValueSelector,
+		#sliderShadow,
+		#sliderColor,
+		#descending,
+		#dragging
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

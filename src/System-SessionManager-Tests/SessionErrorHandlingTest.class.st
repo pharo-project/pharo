@@ -5,8 +5,8 @@ Class {
 	#name : 'SessionErrorHandlingTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'manager',
-		'session'
+		#manager,
+		#session
 	],
 	#category : 'System-SessionManager-Tests',
 	#package : 'System-SessionManager-Tests'

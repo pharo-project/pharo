@@ -20,7 +20,7 @@ Class {
 	#name : 'ClyClassCommentsQuery',
 	#superclass : 'ClyClassQuery',
 	#instVars : [
-		'pattern'
+		#pattern
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

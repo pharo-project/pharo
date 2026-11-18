@@ -5,11 +5,11 @@ Class {
 	#name : 'QSystemTally',
 	#superclass : 'Link',
 	#instVars : [
-		'class',
-		'method',
-		'receivers',
-		'tally',
-		'senders'
+		#class,
+		#method,
+		#receivers,
+		#tally,
+		#senders
 	],
 	#category : 'Tool-Profilers-System',
 	#package : 'Tool-Profilers',

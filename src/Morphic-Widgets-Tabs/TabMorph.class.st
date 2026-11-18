@@ -10,21 +10,21 @@ Class {
 	#name : 'TabMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'closeable',
-		'label',
-		'morph',
-		'state',
-		'fadeOut',
-		'retrievingBlock',
-		'closeIcon',
-		'actions',
-		'menu',
-		'retrievingProcess',
-		'retrievingSemaphore',
-		'model'
+		#closeable,
+		#label,
+		#morph,
+		#state,
+		#fadeOut,
+		#retrievingBlock,
+		#closeIcon,
+		#actions,
+		#menu,
+		#retrievingProcess,
+		#retrievingSemaphore,
+		#model
 	],
 	#classVars : [
-		'Icons'
+		#Icons
 	],
 	#category : 'Morphic-Widgets-Tabs-Morphs',
 	#package : 'Morphic-Widgets-Tabs',

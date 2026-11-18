@@ -29,7 +29,7 @@ Class {
 	#name : 'BottomBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'trimSize'
+		#trimSize
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

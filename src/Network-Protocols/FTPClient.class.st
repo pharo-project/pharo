@@ -11,7 +11,7 @@ Class {
 	#name : 'FTPClient',
 	#superclass : 'TelnetProtocolClient',
 	#instVars : [
-		'dataSocket'
+		#dataSocket
 	],
 	#category : 'Network-Protocols-Protocols',
 	#package : 'Network-Protocols',

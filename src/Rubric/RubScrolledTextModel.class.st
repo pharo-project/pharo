@@ -7,11 +7,11 @@ Class {
 	#traits : 'TViewModel',
 	#classTraits : 'TViewModel classTrait',
 	#instVars : [
-		'hasUnacceptedEdits',
-		'announcer',
-		'text',
-		'primarySelectionInterval',
-		'interactionModel'
+		#hasUnacceptedEdits,
+		#announcer,
+		#text,
+		#primarySelectionInterval,
+		#interactionModel
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

@@ -18,7 +18,7 @@ Class {
 	#name : 'ClyAsyncMethodGroup',
 	#superclass : 'ClyMethodGroup',
 	#instVars : [
-		'asyncQueryResult'
+		#asyncQueryResult
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

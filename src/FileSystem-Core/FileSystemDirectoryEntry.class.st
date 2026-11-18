@@ -7,7 +7,7 @@ Class {
 	#name : 'FileSystemDirectoryEntry',
 	#superclass : 'Object',
 	#instVars : [
-		'reference'
+		#reference
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',

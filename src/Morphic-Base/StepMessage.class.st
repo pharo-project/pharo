@@ -18,7 +18,7 @@ Class {
 	#name : 'StepMessage',
 	#superclass : 'MorphicAlarm',
 	#instVars : [
-		'stepTime'
+		#stepTime
 	],
 	#category : 'Morphic-Base-Events',
 	#package : 'Morphic-Base',

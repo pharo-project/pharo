@@ -5,7 +5,7 @@ Class {
 	#name : 'CompositeBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'borders'
+		#borders
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

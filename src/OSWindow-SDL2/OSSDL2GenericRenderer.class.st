@@ -5,22 +5,22 @@ Class {
 	#name : 'OSSDL2GenericRenderer',
 	#superclass : 'OSWindowGenericRenderer',
 	#instVars : [
-		'renderer',
-		'staticTextureCache',
-		'activeBlendMode',
-		'activeRed',
-		'activeGreen',
-		'activeBlue',
-		'activeAlpha',
-		'renderTargetTextureCache',
-		'currentRenderTarget',
-		'textureForObjectCache',
-		'subpixelFontFirstPassBlendMode',
-		'subpixelFontSecondPassBlendMode',
-		'premultipliedCompositeAlphaBlending'
+		#renderer,
+		#staticTextureCache,
+		#activeBlendMode,
+		#activeRed,
+		#activeGreen,
+		#activeBlue,
+		#activeAlpha,
+		#renderTargetTextureCache,
+		#currentRenderTarget,
+		#textureForObjectCache,
+		#subpixelFontFirstPassBlendMode,
+		#subpixelFontSecondPassBlendMode,
+		#premultipliedCompositeAlphaBlending
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Rendering',
 	#package : 'OSWindow-SDL2',

@@ -23,11 +23,11 @@ Class {
 	#name : 'SystemSettingsPersistence',
 	#superclass : 'Object',
 	#instVars : [
-		'fileReference',
-		'settingTree'
+		#fileReference,
+		#settingTree
 	],
 	#classInstVars : [
-		'lastSettingsComputerID'
+		#lastSettingsComputerID
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-Core',
 	#package : 'System-Settings-Core',

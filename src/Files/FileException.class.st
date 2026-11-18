@@ -5,7 +5,7 @@ Class {
 	#name : 'FileException',
 	#superclass : 'Error',
 	#instVars : [
-		'fileName'
+		#fileName
 	],
 	#category : 'Files-Core',
 	#package : 'Files',

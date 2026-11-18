@@ -5,11 +5,11 @@ Class {
 	#name : 'OSTouchPinchDetector',
 	#superclass : 'OSTouchDirectionnalGestureDetector',
 	#instVars : [
-		'maxDistanceBetweenFingersLine',
-		'fingersDistanceFromCenter'
+		#maxDistanceBetweenFingersLine,
+		#fingersDistanceFromCenter
 	],
 	#classVars : [
-		'MaxDistanceBetweenFingersLine'
+		#MaxDistanceBetweenFingersLine
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

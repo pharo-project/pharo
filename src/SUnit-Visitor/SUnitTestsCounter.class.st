@@ -5,7 +5,7 @@ Class {
 	#name : 'SUnitTestsCounter',
 	#superclass : 'SUnitVisitor',
 	#instVars : [
-		'count'
+		#count
 	],
 	#category : 'SUnit-Visitor',
 	#package : 'SUnit-Visitor'

@@ -31,9 +31,9 @@ Class {
 	#name : 'CmdMenuCommandActivationStrategy',
 	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
-		'menuItemOrder',
-		'menuGroup',
-		'menuItemName'
+		#menuItemOrder,
+		#menuGroup,
+		#menuItemName
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

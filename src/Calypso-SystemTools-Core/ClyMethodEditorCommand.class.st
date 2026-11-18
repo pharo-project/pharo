@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyMethodEditorCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'methodEditor'
+		#methodEditor
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

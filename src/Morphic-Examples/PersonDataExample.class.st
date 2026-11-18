@@ -5,10 +5,10 @@ Class {
 	#name : 'PersonDataExample',
 	#superclass : 'Object',
 	#instVars : [
-		'firstName',
-		'secondName',
-		'age',
-		'married'
+		#firstName,
+		#secondName,
+		#age,
+		#married
 	],
 	#category : 'Morphic-Examples-MorphTreeWidget',
 	#package : 'Morphic-Examples',

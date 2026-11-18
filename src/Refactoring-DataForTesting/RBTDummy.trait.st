@@ -1,7 +1,7 @@
 Trait {
 	#name : 'RBTDummy',
 	#instVars : [
-		'var1'
+		#var1
 	],
 	#category : 'Refactoring-DataForTesting-Utils',
 	#package : 'Refactoring-DataForTesting',

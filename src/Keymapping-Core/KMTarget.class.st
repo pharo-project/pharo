@@ -5,8 +5,8 @@ Class {
 	#name : 'KMTarget',
 	#superclass : 'Object',
 	#instVars : [
-		'morph',
-		'targetSelector'
+		#morph,
+		#targetSelector
 	],
 	#category : 'Keymapping-Core-Base',
 	#package : 'Keymapping-Core',

@@ -7,15 +7,15 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'font',
-		'utfConverter',
-		'cairoFont',
-		'extents',
-		'glyphExtents',
-		'cache'
+		#font,
+		#utfConverter,
+		#cairoFont,
+		#extents,
+		#glyphExtents,
+		#cache
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

@@ -14,11 +14,11 @@ Class {
 	#name : 'PermaLink',
 	#superclass : 'Object',
 	#instVars : [
-		'slotOrVariable',
-		'persistenceType',
-		'isInstanceSpecific',
-		'slotOrVarClass',
-		'link'
+		#slotOrVariable,
+		#persistenceType,
+		#isInstanceSpecific,
+		#slotOrVarClass,
+		#link
 	],
 	#category : 'Reflectivity-Installer',
 	#package : 'Reflectivity',

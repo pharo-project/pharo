@@ -10,14 +10,14 @@ Class {
 	#name : 'NetNameResolver',
 	#superclass : 'Object',
 	#classVars : [
-		'DefaultHostName',
-		'HaveNetwork',
-		'ResolverBusy',
-		'ResolverError',
-		'ResolverMutex',
-		'ResolverReady',
-		'ResolverSemaphore',
-		'ResolverUninitialized'
+		#DefaultHostName,
+		#HaveNetwork,
+		#ResolverBusy,
+		#ResolverError,
+		#ResolverMutex,
+		#ResolverReady,
+		#ResolverSemaphore,
+		#ResolverUninitialized
 	],
 	#category : 'Network-Kernel-Base',
 	#package : 'Network-Kernel',

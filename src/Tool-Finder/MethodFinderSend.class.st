@@ -6,9 +6,9 @@ Class {
 	#name : 'MethodFinderSend',
 	#superclass : 'Object',
 	#instVars : [
-		'receiver',
-		'selector',
-		'arguments'
+		#receiver,
+		#selector,
+		#arguments
 	],
 	#category : 'Tool-Finder-MethodFinder\r\t',
 	#package : 'Tool-Finder',

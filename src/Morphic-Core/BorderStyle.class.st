@@ -7,7 +7,7 @@ Class {
 	#name : 'BorderStyle',
 	#superclass : 'Object',
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'Morphic-Core-Borders',
 	#package : 'Morphic-Core',

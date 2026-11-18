@@ -15,9 +15,9 @@ Class {
 	#name : 'DiskFileAttributesTestsResource',
 	#superclass : 'TestResource',
 	#instVars : [
-		'file',
-		'beforeCreationTime',
-		'afterCreationTime'
+		#file,
+		#beforeCreationTime,
+		#afterCreationTime
 	],
 	#category : 'FileSystem-Tests-Attributes-Resources',
 	#package : 'FileSystem-Tests-Attributes',

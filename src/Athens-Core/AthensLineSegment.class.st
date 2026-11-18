@@ -8,7 +8,7 @@ Class {
 	#name : 'AthensLineSegment',
 	#superclass : 'AthensPathSegment',
 	#instVars : [
-		'point'
+		#point
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

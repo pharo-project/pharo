@@ -15,7 +15,7 @@ Class {
 	#superclass : 'MessageSend',
 	#type : 'weak',
 	#instVars : [
-		'shouldBeNil'
+		#shouldBeNil
 	],
 	#category : 'Kernel-Messaging',
 	#package : 'Kernel',

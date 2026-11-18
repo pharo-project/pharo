@@ -24,11 +24,11 @@ Class {
 	#name : 'SycMethodArgumentsRemoverPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'selectorInput',
-		'argumentsList',
-		'previewResult',
-		'methodName',
-		'args'
+		#selectorInput,
+		#argumentsList,
+		#previewResult,
+		#methodName,
+		#args
 	],
 	#category : 'SystemCommands-RefactoringSupport-View',
 	#package : 'SystemCommands-RefactoringSupport',

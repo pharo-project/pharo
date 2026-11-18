@@ -10,7 +10,7 @@ Class {
 	#name : 'RxsCharacter',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'character'
+		#character
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

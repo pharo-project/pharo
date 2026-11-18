@@ -2,8 +2,8 @@ Class {
 	#name : 'FTScrollingChanged',
 	#superclass : 'FTAnnouncement',
 	#instVars : [
-		'newScrollingIndex',
-		'oldScrollingIndex'
+		#newScrollingIndex,
+		#oldScrollingIndex
 	],
 	#category : 'Morphic-Widgets-FastTable-Announcement',
 	#package : 'Morphic-Widgets-FastTable',

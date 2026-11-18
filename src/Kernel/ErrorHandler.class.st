@@ -2,7 +2,7 @@ Class {
 	#name : 'ErrorHandler',
 	#superclass : 'Object',
 	#classVars : [
-		'DefaultErrorHandler'
+		#DefaultErrorHandler
 	],
 	#category : 'Kernel-Exceptions',
 	#package : 'Kernel',

@@ -11,7 +11,7 @@ Class {
 	#traits : 'CmTWithBasicNameAndDescription + CmTDecorable',
 	#classTraits : 'CmTWithBasicNameAndDescription classTrait + CmTDecorable classTrait',
 	#instVars : [
-		'entries'
+		#entries
 	],
 	#category : 'Commander2-Groups',
 	#package : 'Commander2',
@@ -45,7 +45,7 @@ CmCommandGroup >> allCommands [
 
 { #category : 'public-api' }
 CmCommandGroup >> commandOrGroupNamed: aString [
-	^ (entries detect: [ :commandOrRegister | commandOrRegister name = aString ])
+	^ (entries detect: [ :commandOrRegister | commandOrRegister name sameContents: aString ])
 ]
 
 { #category : 'public-api' }
@@ -96,7 +96,7 @@ CmCommandGroup >> hasEntryNamed: aString [
 	"Returns true if one of my entries (command, registry, ...) is named aString.
 	 Else returns false.
 	"
-	^ entries anySatisfy: [ :any | any name = aString ]
+	^ entries anySatisfy: [ :any | any name sameContents: aString ]
 ]
 
 { #category : 'testing' }

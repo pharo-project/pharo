@@ -14,9 +14,9 @@ Class {
 	#name : 'RBVariableNode',
 	#superclass : 'RBValueNode',
 	#instVars : [
-		'name',
-		'variable',
-		'start'
+		#name,
+		#variable,
+		#start
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -26,13 +26,13 @@ Class {
 { #category : 'instance creation' }
 RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 
-	anIdentifierName = #self
+	(anIdentifierName sameContents: #self)
 		ifTrue: [ ^ self selfNode start: aPosition ].
-	anIdentifierName = #thisContext
+	(anIdentifierName sameContents: #thisContext)
 		ifTrue: [ ^ self thisContextNode start: aPosition ].
-	anIdentifierName = #thisProcess
+	(anIdentifierName sameContents: #thisProcess)
 		ifTrue: [ ^ self thisProcessNode start: aPosition ].
-	anIdentifierName = #super
+	(anIdentifierName sameContents: #super)
 		ifTrue: [ ^ self superNode start: aPosition ].
 	^ self named: anIdentifierName start: aPosition
 ]
@@ -249,7 +249,7 @@ RBVariableNode >> precedence [
 
 { #category : 'testing' }
 RBVariableNode >> references: aVariableName [
-	^self name = aVariableName
+	^self name sameContents: aVariableName
 ]
 
 { #category : 'replacing' }

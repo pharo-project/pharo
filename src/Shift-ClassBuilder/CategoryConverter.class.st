@@ -9,9 +9,9 @@ Class {
 	#name : 'CategoryConverter',
 	#superclass : 'Object',
 	#instVars : [
-		'packageName',
-		'tagName',
-		'environment'
+		#packageName,
+		#tagName,
+		#environment
 	],
 	#category : 'Shift-ClassBuilder-Builder',
 	#package : 'Shift-ClassBuilder',

@@ -7,7 +7,7 @@ Class {
 	#name : 'FTOutlineDataSource',
 	#superclass : 'FTDataSource',
 	#instVars : [
-		'items'
+		#items
 	],
 	#category : 'Morphic-Widgets-FastTable-DataSource',
 	#package : 'Morphic-Widgets-FastTable',

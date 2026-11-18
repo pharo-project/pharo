@@ -5,9 +5,9 @@ Class {
 	#name : 'GeneralScrollPaneMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'scroller',
-		'hScrollbar',
-		'vScrollbar'
+		#scroller,
+		#hScrollbar,
+		#vScrollbar
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'
@@ -300,7 +300,7 @@ GeneralScrollPaneMorph >> keyStroke: evt [
 GeneralScrollPaneMorph >> minHeight [
 	"Fit the width of the scroll target if vResizing is shrinkWrap."
 
-	^self vResizing = #shrinkWrap
+	^(self vResizing sameContents: #shrinkWrap)
 		ifTrue: [self scrollTarget minExtent y + self scrollbarThickness + 5]
 		ifFalse: [super minHeight]
 ]
@@ -309,7 +309,7 @@ GeneralScrollPaneMorph >> minHeight [
 GeneralScrollPaneMorph >> minWidth [
 	"Fit the width of the scroll target if hResizing is shrinkWrap."
 
-	^self hResizing = #shrinkWrap
+	^(self hResizing sameContents: #shrinkWrap)
 		ifTrue: [self scrollTarget minExtent x + self scrollbarThickness + 5]
 		ifFalse: [super minWidth]
 ]

@@ -22,7 +22,7 @@ Class {
 	#name : 'FTSelectionRejected',
 	#superclass : 'FTAnnouncement',
 	#instVars : [
-		'direction'
+		#direction
 	],
 	#category : 'Morphic-Widgets-FastTable-Announcement',
 	#package : 'Morphic-Widgets-FastTable',

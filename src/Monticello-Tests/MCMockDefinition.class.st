@@ -5,7 +5,7 @@ Class {
 	#name : 'MCMockDefinition',
 	#superclass : 'MCDefinition',
 	#instVars : [
-		'token'
+		#token
 	],
 	#category : 'Monticello-Tests-Mocks',
 	#package : 'Monticello-Tests',

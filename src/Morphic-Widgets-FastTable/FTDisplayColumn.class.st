@@ -8,8 +8,8 @@ Class {
 	#name : 'FTDisplayColumn',
 	#superclass : 'Object',
 	#instVars : [
-		'column',
-		'width'
+		#column,
+		#width
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',

@@ -13,9 +13,9 @@ Class {
 	#name : 'CoResultSet',
 	#superclass : 'Object',
 	#instVars : [
-		'results',
-		'fetcher',
-		'filter'
+		#results,
+		#fetcher,
+		#filter
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

@@ -5,11 +5,11 @@ Class {
 	#name : 'PluggableDialogWindow',
 	#superclass : 'ModelDependentDialogWindow',
 	#instVars : [
-		'statusValue',
-		'buttons',
-		'contentMorph',
-		'applyChangesSelector',
-		'defaultFocusMorph'
+		#statusValue,
+		#buttons,
+		#contentMorph,
+		#applyChangesSelector,
+		#defaultFocusMorph
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

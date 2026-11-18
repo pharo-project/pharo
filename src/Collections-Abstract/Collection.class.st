@@ -27,7 +27,7 @@ Collection class >> empty [
 { #category : 'testing' }
 Collection class >> isAbstract [
 
-	^self name = #Collection
+	^self name sameContents: #Collection
 ]
 
 { #category : 'instance creation' }
@@ -941,7 +941,7 @@ Collection >> identityIncludes: anObject [
 
 	"({#hello. #world} identityIncludes: #hello) >>> true"
 	"({'hel','lo'. 'world'} identityIncludes: 'hello') >>> false"
-	"({'hel','lo'. 'world'} includes: 'hello') >>> true"
+	"({'hel','lo'. 'world'} includes: #hello) >>> true"
 
 	self do: [:each | anObject == each ifTrue: [^true]].
 	^false
@@ -1007,9 +1007,9 @@ Collection >> includes: anObject [
 	"('Hello' includes: $l) >>> true"
 	"('Hello' includes: $h) >>> false"
 
-	"({'hello'. 'world'} includes: 'hello') >>> true"
-	"({'hel','lo'. 'world'} includes: 'hello') >>> true"
-	^ self anySatisfy: [:each | each = anObject]
+	"({'hello'. 'world'} includes: #hello) >>> true"
+	"({'hel','lo'. 'world'} includes: #hello) >>> true"
+	^ self anySatisfy: [:each | each sameContents: anObject]
 ]
 
 { #category : 'testing' }

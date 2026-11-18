@@ -8,8 +8,8 @@ Class {
 	#name : 'Bezier3Segment',
 	#superclass : 'LineSegment',
 	#instVars : [
-		'via1',
-		'via2'
+		#via1,
+		#via2
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

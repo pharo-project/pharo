@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferWorking',
 	#superclass : 'GoferOperation',
 	#instVars : [
-		'workingCopies'
+		#workingCopies
 	],
 	#category : 'Gofer-Deprecated-Operations',
 	#package : 'Gofer-Deprecated',

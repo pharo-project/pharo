@@ -5,7 +5,7 @@ Class {
 	#name : 'FTAbstractColumnSortingStrategyTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'strategy'
+		#strategy
 	],
 	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
 	#package : 'Morphic-Widgets-FastTable-Tests',

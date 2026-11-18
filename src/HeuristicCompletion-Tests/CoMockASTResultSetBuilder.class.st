@@ -7,7 +7,7 @@ Class {
 	#name : 'CoMockASTResultSetBuilder',
 	#superclass : 'CoASTResultSetBuilder',
 	#instVars : [
-		'heuristic'
+		#heuristic
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

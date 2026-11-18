@@ -18,9 +18,9 @@ Class {
 	#name : 'DropEvent',
 	#superclass : 'MorphicEvent',
 	#instVars : [
-		'position',
-		'contents',
-		'wasHandled'
+		#position,
+		#contents,
+		#wasHandled
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

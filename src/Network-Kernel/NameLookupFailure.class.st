@@ -8,7 +8,7 @@ Class {
 	#name : 'NameLookupFailure',
 	#superclass : 'NetworkError',
 	#instVars : [
-		'hostName'
+		#hostName
 	],
 	#category : 'Network-Kernel-Exceptions',
 	#package : 'Network-Kernel',

@@ -5,7 +5,7 @@ Class {
 	#name : 'InfiniteForm',
 	#superclass : 'DisplayObject',
 	#instVars : [
-		'patternForm'
+		#patternForm
 	],
 	#category : 'Graphics-Display Objects-Forms',
 	#package : 'Graphics-Display Objects',

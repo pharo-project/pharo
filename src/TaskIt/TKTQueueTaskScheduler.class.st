@@ -7,7 +7,7 @@ Class {
 	#traits : 'TTaskScheduler',
 	#classTraits : 'TTaskScheduler classTrait',
 	#instVars : [
-		'queue'
+		#queue
 	],
 	#category : 'TaskIt-Worker',
 	#package : 'TaskIt',

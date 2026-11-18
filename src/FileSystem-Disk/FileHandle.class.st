@@ -7,10 +7,10 @@ Class {
 	#name : 'FileHandle',
 	#superclass : 'FileSystemHandle',
 	#instVars : [
-		'id'
+		#id
 	],
 	#classVars : [
-		'Registry'
+		#Registry
 	],
 	#category : 'FileSystem-Disk-Base',
 	#package : 'FileSystem-Disk',

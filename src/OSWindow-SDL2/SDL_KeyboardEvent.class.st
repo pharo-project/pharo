@@ -5,14 +5,14 @@ Class {
 	#name : 'SDL_KeyboardEvent',
 	#superclass : 'SDL2MappedEvent',
 	#classVars : [
-		'OFFSET_KEYSYM',
-		'OFFSET_PADDING2',
-		'OFFSET_PADDING3',
-		'OFFSET_REPEAT',
-		'OFFSET_STATE',
-		'OFFSET_TIMESTAMP',
-		'OFFSET_TYPE',
-		'OFFSET_WINDOWID'
+		#OFFSET_KEYSYM,
+		#OFFSET_PADDING2,
+		#OFFSET_PADDING3,
+		#OFFSET_REPEAT,
+		#OFFSET_STATE,
+		#OFFSET_TIMESTAMP,
+		#OFFSET_TYPE,
+		#OFFSET_WINDOWID
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

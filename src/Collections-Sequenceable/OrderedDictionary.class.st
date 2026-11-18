@@ -32,8 +32,8 @@ Class {
 	#name : 'OrderedDictionary',
 	#superclass : 'Collection',
 	#instVars : [
-		'dictionary',
-		'orderedKeys'
+		#dictionary,
+		#orderedKeys
 	],
 	#category : 'Collections-Sequenceable-Ordered',
 	#package : 'Collections-Sequenceable',

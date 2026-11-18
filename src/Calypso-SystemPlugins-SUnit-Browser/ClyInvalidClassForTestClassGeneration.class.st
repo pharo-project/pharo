@@ -8,7 +8,7 @@ Class {
 	#name : 'ClyInvalidClassForTestClassGeneration',
 	#superclass : 'Error',
 	#instVars : [
-		'baseClass'
+		#baseClass
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Exceptions',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',

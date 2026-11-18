@@ -8,10 +8,10 @@ Class {
 	#name : 'CairoPNGPaint',
 	#superclass : 'AthensAbstractPaint',
 	#instVars : [
-		'fileName'
+		#fileName
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Paints',
 	#package : 'Athens-Cairo',

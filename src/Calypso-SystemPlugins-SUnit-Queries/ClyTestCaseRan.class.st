@@ -10,7 +10,7 @@ Class {
 	#name : 'ClyTestCaseRan',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'testCase'
+		#testCase
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Queries',
 	#package : 'Calypso-SystemPlugins-SUnit-Queries'

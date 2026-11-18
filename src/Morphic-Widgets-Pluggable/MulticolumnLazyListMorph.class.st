@@ -5,7 +5,7 @@ Class {
 	#name : 'MulticolumnLazyListMorph',
 	#superclass : 'LazyListMorph',
 	#instVars : [
-		'columnWidths'
+		#columnWidths
 	],
 	#category : 'Morphic-Widgets-Pluggable-Lists',
 	#package : 'Morphic-Widgets-Pluggable',

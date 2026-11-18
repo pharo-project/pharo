@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyVariableReferencesQueryTest',
 	#superclass : 'ClyVariableReferencesTest',
 	#instVars : [
-		'var2'
+		#var2
 	],
 	#category : 'Calypso-SystemQueries-Tests-Queries',
 	#package : 'Calypso-SystemQueries-Tests',

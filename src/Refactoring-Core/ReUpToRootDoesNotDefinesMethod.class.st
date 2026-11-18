@@ -5,7 +5,7 @@ Class {
 	#name : 'ReUpToRootDoesNotDefinesMethod',
 	#superclass : 'ReClassesCondition',
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

@@ -7,15 +7,15 @@ Class {
 	#name : 'SnapshotOperation',
 	#superclass : 'Object',
 	#instVars : [
-		'isImageStarting',
-		'error',
-		'save',
-		'quit',
-		'sessionManager',
-		'imageFormatOption'
+		#isImageStarting,
+		#error,
+		#save,
+		#quit,
+		#sessionManager,
+		#imageFormatOption
 	],
 	#classVars : [
-		'NextImageFormatOptionToUse'
+		#NextImageFormatOptionToUse
 	],
 	#category : 'System-Support-Image',
 	#package : 'System-Support',

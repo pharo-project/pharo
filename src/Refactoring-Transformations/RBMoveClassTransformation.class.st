@@ -21,8 +21,8 @@ Class {
 	#name : 'RBMoveClassTransformation',
 	#superclass : 'RBClassTransformation',
 	#instVars : [
-		'packageName',
-		'tagName'
+		#packageName,
+		#tagName
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

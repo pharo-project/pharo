@@ -7,9 +7,9 @@ Class {
 	#name : 'DoubleLink',
 	#superclass : 'Object',
 	#instVars : [
-		'value',
-		'nextLink',
-		'previousLink'
+		#value,
+		#nextLink,
+		#previousLink
 	],
 	#category : 'Collections-DoubleLinkedList-Base',
 	#package : 'Collections-DoubleLinkedList',

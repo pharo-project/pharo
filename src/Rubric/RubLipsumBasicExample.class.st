@@ -10,7 +10,7 @@ Class {
 	#name : 'RubLipsumBasicExample',
 	#superclass : 'Model',
 	#instVars : [
-		'textModel'
+		#textModel
 	],
 	#category : 'Rubric-Editing-Widgets-Examples',
 	#package : 'Rubric',

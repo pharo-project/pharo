@@ -12,5 +12,5 @@ Class {
 { #category : 'testing' }
 DTPackagesCommand class >> isAbstract [
 
-	^ self name = #DTPackagesCommand
+	^ self name sameContents: #DTPackagesCommand
 ]

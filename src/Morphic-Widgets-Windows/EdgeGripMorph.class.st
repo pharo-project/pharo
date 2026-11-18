@@ -5,9 +5,9 @@ Class {
 	#name : 'EdgeGripMorph',
 	#superclass : 'AbstractResizerMorph',
 	#instVars : [
-		'target',
-		'edgeName',
-		'fitTargetOwner'
+		#target,
+		#edgeName,
+		#fitTargetOwner
 	],
 	#category : 'Morphic-Widgets-Windows-Resizing',
 	#package : 'Morphic-Widgets-Windows',
@@ -91,11 +91,11 @@ EdgeGripMorph >> fitTargetBoundsInOwner: aRect [
 	targetOwner := self target owner ifNil: [^self].
 	ownerMinExt :=  targetOwner minExtent.
 	ownerMinExt x > self target owner width
-		ifTrue: [self edgeName = #left
+		ifTrue: [(self edgeName sameContents: #left)
 				ifTrue: [self target bounds: (aRect left + (ownerMinExt x - targetOwner width) @ aRect top extent: (aRect width - (ownerMinExt x - targetOwner width)) @ aRect height)]
 				ifFalse: [self target bounds: (aRect origin extent: (aRect width - (ownerMinExt x - targetOwner width)) @ aRect height)]].
 	ownerMinExt y > self target owner height
-		ifTrue: [self edgeName = #top
+		ifTrue: [(self edgeName sameContents: #top)
 				ifTrue: [self target bounds: (aRect left @ (aRect top + (ownerMinExt y - targetOwner height)) extent: aRect width @ (aRect height - (ownerMinExt y - targetOwner height)))]
 				ifFalse: [self target bounds: (aRect origin extent: aRect width @ (aRect height - (ownerMinExt y - targetOwner height)))]]
 ]
@@ -231,9 +231,9 @@ EdgeGripMorph >> rightLayoutFrame [
 EdgeGripMorph >> setLayoutSizingFor: aSymbol [
 	"Adjust the sizing for use within table layouts."
 
-	(aSymbol = #left or: [aSymbol = #right])
+	((aSymbol sameContents: #left) or: [aSymbol sameContents: #right])
 		ifTrue: [self hResizing: #rigid; vResizing: #spaceFill].
-	(aSymbol = #top or: [aSymbol = #bottom])
+	((aSymbol sameContents: #top) or: [aSymbol sameContents: #bottom])
 		ifTrue: [self hResizing: #spaceFill; vResizing: #rigid]
 ]
 
@@ -284,11 +284,11 @@ EdgeGripMorph >> targetPoint: aPoint [
 		ifTrue: [self target layoutPolicy minExtentOf: self target in: self target layoutBounds]
 		ifFalse: [self target minimumExtent].
 	rect width <= minExt x ifTrue: [
-		rect := self edgeName = #left
+		rect := (self edgeName sameContents: #left)
 			ifTrue: [rect withSideOrCorner: #left setToPoint: self target bounds bottomRight - minExt]
 			ifFalse: [rect withSideOrCorner: #right setToPoint: self target bounds topLeft + minExt]].
 	rect height <= minExt y ifTrue: [
-		rect := self edgeName = #top
+		rect := (self edgeName sameContents: #top)
 			ifTrue: [rect withSideOrCorner: #top setToPoint: self target bounds bottomRight - minExt]
 			ifFalse: [rect withSideOrCorner: #bottom setToPoint: self target bounds topLeft + minExt]].
 	self setTargetBounds: rect

@@ -2,8 +2,8 @@ Class {
 	#name : 'ShClassInstallerAnnouncementsTest',
 	#superclass : 'ShClassInstallerTest',
 	#instVars : [
-		'numberOfAnnouncements',
-		'newTrait'
+		#numberOfAnnouncements,
+		#newTrait
 	],
 	#category : 'Shift-ClassBuilder-Tests-Installer',
 	#package : 'Shift-ClassBuilder-Tests',

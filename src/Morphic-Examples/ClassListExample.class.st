@@ -6,7 +6,7 @@ Class {
 	#name : 'ClassListExample',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'rootClass'
+		#rootClass
 	],
 	#category : 'Morphic-Examples-MorphTreeWidget',
 	#package : 'Morphic-Examples',

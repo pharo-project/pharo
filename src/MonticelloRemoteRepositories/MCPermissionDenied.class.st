@@ -5,7 +5,7 @@ Class {
 	#name : 'MCPermissionDenied',
 	#superclass : 'Error',
 	#instVars : [
-		'repository'
+		#repository
 	],
 	#category : 'MonticelloRemoteRepositories',
 	#package : 'MonticelloRemoteRepositories'

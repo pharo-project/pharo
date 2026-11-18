@@ -72,10 +72,10 @@ Class {
 	#name : 'Generator',
 	#superclass : 'Stream',
 	#instVars : [
-		'block',
-		'next',
-		'continue',
-		'home'
+		#block,
+		#next,
+		#continue,
+		#home
 	],
 	#category : 'Collections-Streams-Base',
 	#package : 'Collections-Streams',

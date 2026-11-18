@@ -14,11 +14,11 @@ Class {
 	#name : 'ZnEntityReader',
 	#superclass : 'Object',
 	#instVars : [
-		'headers',
-		'stream',
-		'streaming',
-		'binary',
-		'allowReadingUpToEnd'
+		#headers,
+		#stream,
+		#streaming,
+		#binary,
+		#allowReadingUpToEnd
 	],
 	#category : 'Zinc-HTTP-Streaming',
 	#package : 'Zinc-HTTP',
@@ -82,14 +82,14 @@ ZnEntityReader >> isBinary [
 { #category : 'testing' }
 ZnEntityReader >> isChunked [
 	| transferEncoding |
-	transferEncoding := self headers at: 'Transfer-Encoding' ifAbsent: [ ^ false ].
+	transferEncoding := self headers at: #'Transfer-Encoding' ifAbsent: [ ^ false ].
 	^ transferEncoding = 'chunked' or: [ transferEncoding beginsWith: 'chunked' ]
 ]
 
 { #category : 'testing' }
 ZnEntityReader >> isGzipped [
 	| contentEncoding |
-	contentEncoding := self headers at: 'Content-Encoding' ifAbsent: [ ^ false ].
+	contentEncoding := self headers at: #'Content-Encoding' ifAbsent: [ ^ false ].
 	^ contentEncoding = 'gzip'
 ]
 

@@ -19,8 +19,8 @@ Class {
 	#name : 'ClyVariable',
 	#superclass : 'Object',
 	#instVars : [
-		'actualVariable',
-		'definingClass'
+		#actualVariable,
+		#definingClass
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

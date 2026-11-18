@@ -5,10 +5,10 @@ Class {
 	#name : 'AthensTreeDemo',
 	#superclass : 'Object',
 	#instVars : [
-		'nodeExtentBlock',
-		'nodeChildsBlock',
-		'root',
-		'rows'
+		#nodeExtentBlock,
+		#nodeChildsBlock,
+		#root,
+		#rows
 	],
 	#category : 'Athens-Examples-Morphic',
 	#package : 'Athens-Examples',

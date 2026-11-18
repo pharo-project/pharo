@@ -7,8 +7,8 @@ Class {
 	#name : 'UndefinedSlot',
 	#superclass : 'Slot',
 	#instVars : [
-		'ast',
-		'classIsRebuild'
+		#ast,
+		#classIsRebuild
 	],
 	#category : 'Kernel-CodeModel-Variables',
 	#package : 'Kernel-CodeModel',

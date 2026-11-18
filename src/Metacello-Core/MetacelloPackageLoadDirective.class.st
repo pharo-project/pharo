@@ -2,7 +2,7 @@ Class {
 	#name : 'MetacelloPackageLoadDirective',
 	#superclass : 'MetacelloDirective',
 	#instVars : [
-		'repositorySpecs'
+		#repositorySpecs
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
@@ -13,7 +13,7 @@ Class {
 MetacelloPackageLoadDirective >> = anotherPackageDirective [
 
 	anotherPackageDirective species = self species ifFalse: [ ^ false ].
-	^ anotherPackageDirective packageName = self packageName
+	^ anotherPackageDirective packageName sameContents: self packageName
 ]
 
 { #category : 'visiting' }

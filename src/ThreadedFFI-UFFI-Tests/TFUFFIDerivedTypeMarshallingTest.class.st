@@ -2,7 +2,7 @@ Class {
 	#name : 'TFUFFIDerivedTypeMarshallingTest',
 	#superclass : 'TFUFFITestCase',
 	#classVars : [
-		'gchar'
+		#gchar
 	],
 	#category : 'ThreadedFFI-UFFI-Tests',
 	#package : 'ThreadedFFI-UFFI-Tests'

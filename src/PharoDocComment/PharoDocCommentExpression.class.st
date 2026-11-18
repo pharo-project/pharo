@@ -5,9 +5,9 @@ Class {
 	#name : 'PharoDocCommentExpression',
 	#superclass : 'Object',
 	#instVars : [
-		'source',
-		'node',
-		'cachedExpressionNode'
+		#source,
+		#node,
+		#cachedExpressionNode
 	],
 	#category : 'PharoDocComment-Base',
 	#package : 'PharoDocComment',

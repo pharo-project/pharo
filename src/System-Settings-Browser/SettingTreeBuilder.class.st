@@ -5,9 +5,9 @@ Class {
 	#name : 'SettingTreeBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'nodeList',
-		'currentParent',
-		'currentPragma'
+		#nodeList,
+		#currentParent,
+		#currentPragma
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'

@@ -13,7 +13,7 @@ Class {
 	#name : 'OCScopesCollector',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'scopes'
+		#scopes
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',

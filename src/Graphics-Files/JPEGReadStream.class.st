@@ -13,11 +13,11 @@ Class {
 	#name : 'JPEGReadStream',
 	#superclass : 'ReadStream',
 	#instVars : [
-		'bitBuffer',
-		'bitsInBuffer'
+		#bitBuffer,
+		#bitsInBuffer
 	],
 	#classVars : [
-		'MaxBits'
+		#MaxBits
 	],
 	#category : 'Graphics-Files',
 	#package : 'Graphics-Files'

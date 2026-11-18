@@ -28,10 +28,10 @@ Class {
 	#name : 'EntryCompletion',
 	#superclass : 'Object',
 	#instVars : [
-		'dataSourceBlock',
-		'filterBlock',
-		'chooseBlock',
-		'chooser'
+		#dataSourceBlock,
+		#filterBlock,
+		#chooseBlock,
+		#chooser
 	],
 	#category : 'Polymorph-Widgets-Utilities',
 	#package : 'Polymorph-Widgets',

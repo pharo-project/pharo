@@ -6,7 +6,7 @@ Class {
 	#name : 'ZdcPluginSSLSessionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'session'
+		#session
 	],
 	#category : 'Zodiac-Tests',
 	#package : 'Zodiac-Tests'

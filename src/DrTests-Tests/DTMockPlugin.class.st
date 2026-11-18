@@ -5,7 +5,7 @@ Class {
 	#name : 'DTMockPlugin',
 	#superclass : 'DrTestsPlugin',
 	#instVars : [
-		'hasBeenRun'
+		#hasBeenRun
 	],
 	#category : 'DrTests-Tests',
 	#package : 'DrTests-Tests'

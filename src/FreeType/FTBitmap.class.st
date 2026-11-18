@@ -5,17 +5,17 @@ Class {
 	#name : 'FTBitmap',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_BUFFER',
-		'OFFSET_NUM_GRAYS',
-		'OFFSET_PALETTE',
-		'OFFSET_PALETTE_MODE',
-		'OFFSET_PITCH',
-		'OFFSET_PIXEL_MODE',
-		'OFFSET_ROWS',
-		'OFFSET_WIDTH'
+		#OFFSET_BUFFER,
+		#OFFSET_NUM_GRAYS,
+		#OFFSET_PALETTE,
+		#OFFSET_PALETTE_MODE,
+		#OFFSET_PITCH,
+		#OFFSET_PIXEL_MODE,
+		#OFFSET_ROWS,
+		#OFFSET_WIDTH
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

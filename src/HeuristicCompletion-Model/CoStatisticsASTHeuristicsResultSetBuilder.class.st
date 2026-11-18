@@ -5,7 +5,7 @@ Class {
 	#name : 'CoStatisticsASTHeuristicsResultSetBuilder',
 	#superclass : 'CoASTHeuristicsResultSetBuilder',
 	#instVars : [
-		'statistics'
+		#statistics
 	],
 	#category : 'HeuristicCompletion-Model-Statistics',
 	#package : 'HeuristicCompletion-Model',

@@ -5,8 +5,8 @@ Class {
 	#name : 'EpMethodModification',
 	#superclass : 'EpMethodChange',
 	#instVars : [
-		'oldMethod',
-		'newMethod'
+		#oldMethod,
+		#newMethod
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

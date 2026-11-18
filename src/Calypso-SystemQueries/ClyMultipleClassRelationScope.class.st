@@ -28,7 +28,7 @@ Class {
 	#name : 'ClyMultipleClassRelationScope',
 	#superclass : 'ClyClassHierarchyScope',
 	#instVars : [
-		'relationScopeClasses'
+		#relationScopeClasses
 	],
 	#category : 'Calypso-SystemQueries-Scopes',
 	#package : 'Calypso-SystemQueries',

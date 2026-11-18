@@ -51,9 +51,9 @@ Class {
 	#name : 'PragmaMenuBuilder',
 	#superclass : 'MenuRegistration',
 	#instVars : [
-		'pragmaKeywords',
-		'model',
-		'currentRoot'
+		#pragmaKeywords,
+		#model,
+		#currentRoot
 	],
 	#category : 'MenuRegistration-Core',
 	#package : 'MenuRegistration',

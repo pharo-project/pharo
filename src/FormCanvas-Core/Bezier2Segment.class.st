@@ -8,7 +8,7 @@ Class {
 	#name : 'Bezier2Segment',
 	#superclass : 'LineSegment',
 	#instVars : [
-		'via'
+		#via
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

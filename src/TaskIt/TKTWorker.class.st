@@ -29,10 +29,10 @@ Class {
 	#traits : 'TFinalizable',
 	#classTraits : 'TFinalizable classTrait',
 	#instVars : [
-		'process',
-		'name',
-		'exceptionHandler',
-		'priority'
+		#process,
+		#name,
+		#exceptionHandler,
+		#priority
 	],
 	#category : 'TaskIt-Worker',
 	#package : 'TaskIt',

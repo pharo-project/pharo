@@ -6,8 +6,8 @@ Class {
 	#name : 'Timespan',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'start',
-		'duration'
+		#start,
+		#duration
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'

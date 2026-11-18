@@ -5,13 +5,13 @@ Class {
 	#name : 'DebugPointTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'dp',
-		'node',
-		'context',
-		'dp2',
-		'cls',
-		'testClass',
-		'testSubclass'
+		#dp,
+		#node,
+		#context,
+		#dp2,
+		#cls,
+		#testClass,
+		#testSubclass
 	],
 	#category : 'DebugPoints-Tests-Model',
 	#package : 'DebugPoints-Tests',

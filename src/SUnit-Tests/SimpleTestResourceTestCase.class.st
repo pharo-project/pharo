@@ -5,7 +5,7 @@ Class {
 	#name : 'SimpleTestResourceTestCase',
 	#superclass : 'TestCase',
 	#instVars : [
-		'resource'
+		#resource
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

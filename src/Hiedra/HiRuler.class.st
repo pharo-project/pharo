@@ -35,13 +35,13 @@ Class {
 	#name : 'HiRuler',
 	#superclass : 'Object',
 	#instVars : [
-		'links',
-		'elementsByRow',
-		'nodeByValue',
-		'nodeByRow',
-		'valueByRow',
-		'rowByValue',
-		'linksByRow'
+		#links,
+		#elementsByRow,
+		#nodeByValue,
+		#nodeByRow,
+		#valueByRow,
+		#rowByValue,
+		#linksByRow
 	],
 	#category : 'Hiedra-Model',
 	#package : 'Hiedra',
