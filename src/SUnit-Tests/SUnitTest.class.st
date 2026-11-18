@@ -169,13 +169,11 @@ SUnitTest >> noop [
 { #category : 'testing' }
 SUnitTest >> raiseDeprecationWarnings [
 
-	| oldRaiseWarning |
-	oldRaiseWarning := Deprecation raiseWarning.
+	| oldReaction |
+	oldReaction := Deprecation reaction.
 	[
-		Deprecation raiseWarning: true.
-		self deprecatedMessage 
-	] ensure: [ 
-		Deprecation raiseWarning: oldRaiseWarning ]
+		Deprecation reaction: WarnDeprecationReaction.
+		self deprecatedMessage ] ensure: [ Deprecation reaction: oldReaction ]
 ]
 
 { #category : 'private' }
@@ -507,23 +505,16 @@ SUnitTest >> testHangedTestDueToFailedChildProcess [
 { #category : 'testing' }
 SUnitTest >> testIgnoreDeprecationWarnings [
 
-	| oldRaiseWarning oldShowWarning reachedHere |
-	"save old state to recover it later"
-	oldRaiseWarning := Deprecation raiseWarning.
-	oldShowWarning := Deprecation showWarning.
+	| oldReaction reachedHere |
+	oldReaction := Deprecation reaction.
 	reachedHere := false.
 	[
-		Deprecation raiseWarning: false.
-		Deprecation showWarning: false.
+		Deprecation reaction: IgnoreDeprecationReaction.
 		"Run the default action explicitly: on the Pharo CI, SUnit makes a deprecation reaching it an error."
 		[ self deprecatedMessage ]
 			on: Deprecation
 			do: [ :deprecation | deprecation resume: deprecation defaultAction ].
-		reachedHere := true.
-		self assert: true ] ensure: [
-			Deprecation raiseWarning: oldRaiseWarning.
-			Deprecation showWarning: oldRaiseWarning ].
-	"we reached reachedHere"
+		reachedHere := true ] ensure: [ Deprecation reaction: oldReaction ].
 	self assert: reachedHere
 ]
 
@@ -574,16 +565,17 @@ SUnitTest >> testLongRunningTestThenGreenTest [
 { #category : 'testing' }
 SUnitTest >> testRaiseDeprecationWarnings [
 
-	| case result deprecationWasRaised |
-	"On the Pharo CI a deprecation reaching SUnit is an error of the test instead: DeprecationOnCITest checks both."
-	self skipOnPharoCITestingEnvironment.
+	| case result deprecationWasRaised oldReaction |
 	case := self newTestCase: #raiseDeprecationWarnings.
 	deprecationWasRaised := false.
-	[ result := case run ]
-		on: Deprecation
-		do: [ :e |
-			deprecationWasRaised := true.
-			e resume ].
+	oldReaction := Deprecation reaction.
+	"raiseDeprecationWarnings sets its own reaction; the error reaction, which the CI uses, is checked by DeprecationAsErrorTest."
+	[
+		[ result := case run ]
+			on: Deprecation
+			do: [ :e |
+				deprecationWasRaised := true.
+				e resume ] ] ensure: [ Deprecation reaction: oldReaction ].
 	self assert: deprecationWasRaised.
 	self assertEmpty: result defects asArray.
 	self
