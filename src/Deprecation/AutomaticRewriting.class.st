@@ -191,9 +191,9 @@ AutomaticRewriting >> defaultAction [
 ]
 
 { #category : 'compatibility period' }
-AutomaticRewriting >> deprecatedClass [
+AutomaticRewriting >> deprecatedMethod [
 
-	^ self contextOfDeprecatedMethod homeMethod methodClass
+	^ self contextOfDeprecatedMethod homeMethod
 ]
 
 { #category : 'private' }
@@ -250,12 +250,21 @@ AutomaticRewriting >> isAtEndOfCompatibilityPeriod [
 ]
 
 { #category : 'compatibility period' }
-AutomaticRewriting >> isKernel [
-	"PHEP-0004: the deprecated API is kernel when the class that defines it belongs to the minimal image. The class is asked rather than the method, since deprecated methods move to DeprecatedN packages. Without the bootstrap baseline, assume kernel, which keeps the longer period."
+AutomaticRewriting >> isDeprecatedPackageName: aString [
+	"Whether aString names a package of deprecated methods of one Pharo version, such as Deprecated14 or Deprecated14-Kernel."
 
-	| baseline |
+	^ (aString beginsWith: 'Deprecated') and: [ aString size > 10 and: [ (aString at: 11) isDigit ] ]
+]
+
+{ #category : 'compatibility period' }
+AutomaticRewriting >> isKernel [
+	"PHEP-0004: whether the deprecated API belongs to the kernel, decided by the package of the deprecated method, not of its class: an extension method belongs to the package that extends the class. A method moved to a DeprecatedN package keeps its kind in the name of that package: DeprecatedN-Kernel holds kernel methods, DeprecatedN the others. Without the bootstrap baseline, assume kernel, which keeps the longer period."
+
+	| packageName baseline |
+	packageName := self deprecatedMethod package name.
+	(self isDeprecatedPackageName: packageName) ifTrue: [ ^ packageName endsWith: '-Kernel' ].
 	baseline := self class environment at: #BaselineOfPharoBootstrap ifAbsent: [ ^ true ].
-	^ baseline kernelPackageNames includes: self deprecatedClass instanceSide package name
+	^ baseline kernelPackageNames includes: packageName
 ]
 
 { #category : 'private' }
