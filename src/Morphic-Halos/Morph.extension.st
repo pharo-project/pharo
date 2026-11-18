@@ -853,6 +853,13 @@ Morph >> editBalloonHelpContent: aString [
 ]
 
 { #category : '*Morphic-Halos' }
+Morph >> editBalloonHelpText [
+	"Modify the receiver's balloon help text."
+
+	self editBalloonHelpContent: self balloonText
+]
+
+{ #category : '*Morphic-Halos' }
 Morph >> grabMorph: evt [
 
 	evt hand grabMorph: self
@@ -1134,6 +1141,12 @@ Morph >> resizeMorph: evt [
 	handle := HandleMorph new forEachPointDo: [ :newPoint | self extent: newPoint - self bounds topLeft ].
 	evt hand attachMorph: handle.
 	handle startStepping
+]
+
+{ #category : '*Morphic-Halos' }
+Morph >> selectedObject [
+	"answer the selected object for the hand or nil is none"
+	^ self primaryHand selectedObject
 ]
 
 { #category : '*Morphic-Halos' }

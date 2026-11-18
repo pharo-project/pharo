@@ -31,3 +31,28 @@ MorphRootEventHandler >> handleYellowButtonMenu: shiftState for: aMorph [
 
 	^ false
 ]
+
+{ #category : 'notifications' }
+MorphRootEventHandler >> morph: aMorph wrappedInto: aWrapperMorph [
+	"aMorph was wrapped into aWrapperMorph (for rotating or scaling). Notification: every handler hears it"
+]
+
+{ #category : 'notifications' }
+MorphRootEventHandler >> morphDeleted: aMorph [
+	"aMorph is being deleted. Notification: every handler hears it"
+]
+
+{ #category : 'notifications' }
+MorphRootEventHandler >> morphDropped: aMorph into: aTargetMorph event: anEvent [
+	"aMorph was dropped into aTargetMorph. Notification: every handler hears it"
+]
+
+{ #category : 'notifications' }
+MorphRootEventHandler >> morphKeyStroke: anEvent for: aMorph [
+	"aMorph, usually the world, got a keystroke no morph had the focus for. Notification: every handler hears it"
+]
+
+{ #category : 'notifications' }
+MorphRootEventHandler >> morphMouseDown: anEvent for: aMorph [
+	"aMorph got a mouse down. Notification: every handler hears it"
+]

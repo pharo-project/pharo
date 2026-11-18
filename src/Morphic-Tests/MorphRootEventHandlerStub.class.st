@@ -54,3 +54,15 @@ MorphRootEventHandlerStub >> initialize [
 	handled := OrderedCollection new.
 	handles := true
 ]
+
+{ #category : 'notifications' }
+MorphRootEventHandlerStub >> morph: aMorph wrappedInto: aWrapperMorph [
+
+	handled add: #wrapped -> aMorph
+]
+
+{ #category : 'notifications' }
+MorphRootEventHandlerStub >> morphDeleted: aMorph [
+
+	handled add: #deleted -> aMorph
+]

@@ -61,3 +61,43 @@ HaloRootEventHandler >> handleYellowButtonMenu: shiftState for: aMorph [
 	menu popUpInWorld: aMorph currentWorld.
 	^ true
 ]
+
+{ #category : 'notifications' }
+HaloRootEventHandler >> morph: aMorph wrappedInto: aWrapperMorph [
+	"The halo follows the morph into its wrapper"
+
+	aMorph halo ifNotNil: [ :halo | halo setTarget: aWrapperMorph ]
+]
+
+{ #category : 'notifications' }
+HaloRootEventHandler >> morphDeleted: aMorph [
+
+	aMorph removeHalo
+]
+
+{ #category : 'notifications' }
+HaloRootEventHandler >> morphDropped: aMorph into: aTargetMorph event: anEvent [
+	"A morph dropped into another owner loses its halo. A dropped morph containing the halo's target (e.g. a menu grabbed by one of its items) gets the halo"
+
+	| halo |
+	(aMorph formerOwner isNotNil and: [ aMorph formerOwner ~~ aTargetMorph ])
+		ifTrue: [ aMorph removeHalo ].
+	halo := anEvent hand halo.
+	(halo isNotNil and: [ halo target hasOwner: aMorph ])
+		ifTrue: [ aMorph addHalo: anEvent ]
+]
+
+{ #category : 'notifications' }
+HaloRootEventHandler >> morphKeyStroke: anEvent for: aMorph [
+	"Arrow keys move or resize the morph that has the halo"
+
+	aMorph selectedObject ifNotNil: [ :selected | selected moveOrResizeFromKeystroke: anEvent ]
+]
+
+{ #category : 'notifications' }
+HaloRootEventHandler >> morphMouseDown: anEvent for: aMorph [
+	"A click on the world shakes off the halo; a click elsewhere removes it unless it stays up"
+
+	aMorph isWorldMorph ifTrue: [ ^ anEvent hand removeHalo ].
+	anEvent hand removeHaloFromClick: anEvent on: aMorph
+]

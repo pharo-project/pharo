@@ -37,6 +37,21 @@ MorphRootEventHandlerTest >> setUp [
 ]
 
 { #category : 'tests' }
+MorphRootEventHandlerTest >> testDeletingAMorphNotifiesEveryHandler [
+
+	| other |
+	other := MorphRootEventHandlerStub new.
+	root
+		addRootEventHandler: handler;
+		addRootEventHandler: other.
+
+	child delete.
+
+	self assert: handler handled asArray equals: { #deleted -> child }.
+	self assert: other handled asArray equals: { #deleted -> child }
+]
+
+{ #category : 'tests' }
 MorphRootEventHandlerTest >> testHandlersAreAskedInOrderUntilOneHandlesTheGesture [
 
 	| declining last |
@@ -98,6 +113,16 @@ MorphRootEventHandlerTest >> testSpecialGestureGoesToTheRootHandler [
 	child handleSpecialGesture: self mouseDown.
 
 	self assert: handler handled asArray equals: { #specialGesture -> child }
+]
+
+{ #category : 'tests' }
+MorphRootEventHandlerTest >> testWrappingAMorphNotifiesTheHandlers [
+
+	root addRootEventHandler: handler.
+
+	child addFlexShell.
+
+	self assert: handler handled asArray equals: { #wrapped -> child }
 ]
 
 { #category : 'tests' }

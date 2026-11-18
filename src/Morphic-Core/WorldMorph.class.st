@@ -522,12 +522,6 @@ WorldMorph >> fullscreenChanged: fullscreenAnnouncement [
 	self worldState worldRenderer fullscreenMode: fullscreenAnnouncement fullscreen
 ]
 
-{ #category : 'world state' }
-WorldMorph >> haloMorphs [
-
-	^ self hands collect: [ :h | h halo ] thenSelect: [ :halo | halo isNotNil ]
-]
-
 { #category : 'project state' }
 WorldMorph >> hands [
 

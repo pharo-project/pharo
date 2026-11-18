@@ -16,6 +16,12 @@ WorldMorph >> buildMetaMenu: evt [
 ]
 
 { #category : '*Morphic-Halos' }
+WorldMorph >> haloMorphs [
+
+	^ self hands collect: [ :h | h halo ] thenSelect: [ :halo | halo isNotNil ]
+]
+
+{ #category : '*Morphic-Halos' }
 WorldMorph >> wantsDirectionHandles [
 
 	^ false

@@ -310,18 +310,14 @@ Morph >> addDropShadow [
 
 { #category : 'rotate scale and flex' }
 Morph >> addFlexShell [
-
 	"Wrap a rotating and scaling shell around this morph."
 
-	| oldHalo flexMorph myWorld anIndex |
+	| flexMorph myWorld anIndex |
 	myWorld := self world.
-	oldHalo := self halo.
 	anIndex := self owner submorphIndexOf: self.
-	self owner
-		addMorph: (flexMorph := TransformationMorph new asFlexOf: self)
-		asElementNumber: anIndex.
+	self owner addMorph: (flexMorph := TransformationMorph new asFlexOf: self) asElementNumber: anIndex.
 	self transferStateToRenderer: flexMorph.
-	oldHalo ifNotNil: [ oldHalo setTarget: flexMorph ].
+	self notifyRootEventHandlers: [ :handler | handler morph: self wrappedInto: flexMorph ].
 	myWorld ifNotNil: [ flexMorph startSteppingSubmorphs ].
 
 	^ flexMorph
@@ -1352,16 +1348,14 @@ Morph >> delete [
 	"Remove the receiver as a submorph of its owner and make its
 	new owner be nil."
 
-	self removeHalo.
+	self notifyRootEventHandlers: [ :handler | handler morphDeleted: self ].
 	self activeHand ifNotNil: [ :hand |
 		hand
 			releaseKeyboardFocus: self;
-			releaseMouseFocus: self.
-	].
-	owner ifNotNil:[
+			releaseMouseFocus: self ].
+	owner ifNotNil: [
 		self privateDelete.
-		self announceDeleted.
-	]
+		self announceDeleted ]
 ]
 
 { #category : 'halos and balloon help' }
@@ -1645,13 +1639,6 @@ Morph >> duplicate [
 	newMorph arrangeToStartStepping.
 		newMorph privateOwner: nil. "no longer in world"
 	^newMorph
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> editBalloonHelpText [
-	"Modify the receiver's balloon help text."
-
-	self editBalloonHelpContent: self balloonText
 ]
 
 { #category : 'accessing' }
@@ -2127,7 +2114,6 @@ Morph >> handleListenEvent: anEvent [
 
 { #category : 'events - processing' }
 Morph >> handleMouseDown: anEvent [
-
 	"System level event handling."
 
 	anEvent wasHandled ifTrue: [ ^ self ]. "not interested"
@@ -2136,20 +2122,17 @@ Morph >> handleMouseDown: anEvent [
 
 	(anEvent isSpecialMetaMenuGesture and: [ self cmdGesturesEnabled ]) ifTrue: [
 		self invokeMetaMenu: anEvent.
-		^ self eventHandler ifNotNil: [ :handler |
-			  handler mouseDown: anEvent fromMorph: self ] ].
+		^ self eventHandler ifNotNil: [ :handler | handler mouseDown: anEvent fromMorph: self ] ].
 
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
 
 	"Check to open halo"
-	(anEvent isSpecialGesture and: [self cmdGesturesEnabled])
-		ifTrue: [
-			^ self handleSpecialGesture: anEvent ].
+	(anEvent isSpecialGesture and: [ self cmdGesturesEnabled ]) ifTrue: [ ^ self handleSpecialGesture: anEvent ].
 
 	self mouseDown: anEvent.
 
-	anEvent hand removeHaloFromClick: anEvent on: self.
+	self notifyRootEventHandlers: [ :handler | handler morphMouseDown: anEvent for: self ].
 	(self handlesMouseStillDown: anEvent) ifTrue: [
 		self
 			startStepping: #handleMouseStillDown:
@@ -2157,8 +2140,7 @@ Morph >> handleMouseDown: anEvent [
 			arguments: { anEvent copy resetHandlerFields }
 			stepTime: self mouseStillDownStepRate ].
 
-	^ self eventHandler ifNotNil: [ :handler |
-		  handler mouseDown: anEvent fromMorph: self ]
+	^ self eventHandler ifNotNil: [ :handler | handler mouseDown: anEvent fromMorph: self ]
 ]
 
 { #category : 'events - processing' }
@@ -3610,6 +3592,13 @@ Morph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 ]
 
+{ #category : 'events - root handler' }
+Morph >> notifyRootEventHandlers: aBlock [
+	"Tell every handler of my root something happened, by evaluating aBlock with each"
+
+	self rootEventHandlers do: aBlock
+]
+
 { #category : 'halos and balloon help' }
 Morph >> okayToBrownDragEasily [
 	"Answer whether it it okay for the receiver to be brown-dragged easily -- i.e. repositioned within its container without extracting it.  At present this is just a hook -- nobody declines."
@@ -4624,12 +4613,6 @@ Morph >> screenRectangle [
 	"For compatibility only"
 
 	^ self fullBounds
-]
-
-{ #category : 'selected object' }
-Morph >> selectedObject [
-	"answer the selected object for the hand or nil is none"
-	^ self primaryHand selectedObject
 ]
 
 { #category : 'dropping/grabbing' }

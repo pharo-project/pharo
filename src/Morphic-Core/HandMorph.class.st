@@ -480,23 +480,6 @@ HandMorph >> grabMorph: aMorph from: formerOwner [
 	grabbed justGrabbedFrom: formerOwner
 ]
 
-{ #category : 'halos and balloon help' }
-HandMorph >> halo [
-	"Return the halo associated with this hand, if any"
-	^self valueOfProperty: #halo
-]
-
-{ #category : 'halo handling' }
-HandMorph >> halo: newHalo [
-	"Set halo associated with this hand"
-	| oldHalo |
-	oldHalo := self halo.
-	(oldHalo isNil or:[oldHalo == newHalo]) ifFalse:[oldHalo delete].
-	newHalo
-		ifNil:[self removeProperty: #halo]
-		ifNotNil:[self setProperty: #halo toValue: newHalo]
-]
-
 { #category : 'events - processing' }
 HandMorph >> handleEvent: anEvent [
 	| evt  |
@@ -792,17 +775,6 @@ HandMorph >> objectToPaste [
 	"PasteBuffer usableDuplicateIn: self world"
 ]
 
-{ #category : 'halo handling' }
-HandMorph >> obtainHalo: aHalo [
-	"Used for transfering halos between hands"
-
-	self halo == aHalo
-		ifTrue: [ ^ self ].
-	"Find former owner"
-	self world hands detect: [ :hand | hand halo == aHalo ] ifFound: [ :formerOwner | formerOwner releaseHalo: aHalo ].
-	self halo: aHalo
-]
-
 { #category : 'paste buffer' }
 HandMorph >> pasteBuffer [
 	"Return the paste buffer associated with this hand"
@@ -900,12 +872,6 @@ HandMorph >> releaseCachedState [
 	self releaseAllFocus
 ]
 
-{ #category : 'halo handling' }
-HandMorph >> releaseHalo: aHalo [
-	"Used for transfering halos between hands"
-	self removeProperty: #halo
-]
-
 { #category : 'focus handling' }
 HandMorph >> releaseKeyboardFocus [
 	"Release the current keyboard focus unconditionally"
@@ -934,36 +900,6 @@ HandMorph >> releaseMouseFocus: aMorph [
 HandMorph >> removeEventListener: anObject [
 	"Remove anObject from the current event listeners."
 	self eventListeners: (self removeListener: anObject from: self eventListeners)
-]
-
-{ #category : 'halo handling' }
-HandMorph >> removeHalo [
-	"remove the receiver's halo (if any)"
-	self halo ifNotNil: [ :h | self removeHaloAround: h target ]
-]
-
-{ #category : 'halo handling' }
-HandMorph >> removeHaloAround: aMorph [
-	"remove the receiver's halo associated to aMorph (if any)"
-	| halo |
-	halo := self halo.
-	halo
-		ifNil: [ ^ self ].
-	halo target == aMorph
-		ifFalse: [ ^ self ].
-	self removeProperty: #halo.
-	halo delete
-]
-
-{ #category : 'halo handling' }
-HandMorph >> removeHaloFromClick: anEvent on: aMorph [
-	| halo |
-	halo := self halo
-				ifNil: [^ self].
-	(halo target hasOwner: self)
-		ifTrue: [^ self].
-	(halo staysUpWhenMouseIsDownIn: aMorph)
-		ifFalse: [self removeHalo]
 ]
 
 { #category : 'listeners' }
@@ -1038,15 +974,6 @@ HandMorph >> savePatchFrom: aCanvas [
 		intoSavedPatch: savedPatch.
 	savedPatch offset: myBnds topLeft.
 	^damageRect
-]
-
-{ #category : 'selected object' }
-HandMorph >> selectedObject [
-	"answer the selected object for the hand or nil is none"
-	| halo |
-	halo := self halo.
-	halo ifNil: [^ nil].
-	^ halo target renderedMorph
 ]
 
 { #category : 'private - events' }
