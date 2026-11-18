@@ -454,8 +454,7 @@ MenuRegistration >> printOn: aStream [
 
 { #category : 'initialization' }
 MenuRegistration >> release [
-	itemList := nil.
-	self releaseActionMap
+	itemList := nil
 ]
 
 { #category : 'accessing' }
