@@ -3057,30 +3057,9 @@ Morph >> handleMouseWheel: anEvent [
 
 { #category : 'meta actions' }
 Morph >> handleSpecialGesture: mouseDownEvent [
-	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
-	| h tfm doNotDrag |
-	h := mouseDownEvent hand halo.
-	"Prevent wrap around halo transfers originating from throwing the event back in"
-	doNotDrag := false.
-	h ifNotNil:[
-		(h innerTarget == self) ifTrue:[doNotDrag := true].
-		(h innerTarget hasOwner: self) ifTrue:[doNotDrag := true].
-		(self hasOwner: h target) ifTrue:[doNotDrag := true]].
+	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) are handled by my root, usually the world"
 
-	tfm := (self transformedFrom: nil) inverseTransformation.
-
-	"cmd-drag on flexed morphs works better this way"
-	h := self addHalo: (mouseDownEvent transformedBy: tfm).
-	h ifNil: [^ self].
-	doNotDrag ifTrue:[^self].
-	"Initiate drag transition if requested"
-	mouseDownEvent hand
-		waitForClicksOrDrag: h
-		event: (mouseDownEvent transformedBy: tfm)
-		selectors: { nil. nil. nil. #dragTarget:. }
-		threshold: 5.
-	"Pass focus explicitly here"
-	mouseDownEvent hand newMouseFocus: h
+	^ self rootEventHandler handleSpecialGesture: mouseDownEvent for: self
 ]
 
 { #category : 'event handling' }
@@ -3690,12 +3669,9 @@ Morph >> invalidRect: aRectangle from: aMorph [
 
 { #category : 'meta actions' }
 Morph >> invokeMetaMenu: evt [
-	| menu |
-	self world ifNil: [ ^self ].
+	"The meta menu gesture is handled by my root, usually the world"
 
-	menu := self buildMetaMenu: evt.
-	self addTitleForHaloMenu: menu.
-	menu popUpEvent: evt in: self world
+	^ self rootEventHandler handleMetaMenuGesture: evt for: self
 ]
 
 { #category : 'classification' }
@@ -5578,6 +5554,21 @@ Morph >> root [
 
 	(owner isNil or: [owner isWorldOrHandMorph]) ifTrue: [^self].
 	^owner root
+]
+
+{ #category : 'events - root handler' }
+Morph >> rootEventHandler [
+	"Answer the handler of meta gestures of my root: the outermost owner, usually the world"
+
+	owner ifNotNil: [ ^ owner rootEventHandler ].
+	^ self valueOfProperty: #rootEventHandler ifAbsent: [ MorphRootEventHandler new ]
+]
+
+{ #category : 'events - root handler' }
+Morph >> rootEventHandler: aMorphRootEventHandler [
+	"Handle the meta gestures of the morphs under me, when I am a root"
+
+	self setProperty: #rootEventHandler toValue: aMorphRootEventHandler
 ]
 
 { #category : 'submorphs - accessing' }
