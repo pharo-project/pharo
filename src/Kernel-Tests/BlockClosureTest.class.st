@@ -14,9 +14,91 @@ Class {
 }
 
 { #category : 'helpers' }
+BlockClosureTest >> blockAdding: incrementValue [
+
+	^ [ :n | n + incrementValue ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> blockUsingSelf [
+
+	^ [ self exampleMethod ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> blockWithArgs2Using: aSymbol [
+
+	^ [ :a :b | (a perform: aSymbol) min: (b perform: aSymbol) ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> blockWithArgsUsing: aSymbol [
+
+	^ [ :a :b | (a perform: aSymbol) < (b perform: aSymbol) ]
+]
+
+{ #category : 'helpers' }
 BlockClosureTest >> blockWithNonLocalReturn: resultObject [
 
 	^[ ^resultObject ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> blockYielding: resultObject [
+
+	^ [ resultObject ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> blockYieldingMutable: resultObject [
+
+	| tmp block |
+	tmp := 1.
+	block := [ tmp ].
+	tmp := resultObject.
+	^ block
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> cleanBlock1 [
+
+	<compilerOptions: #( optionCleanBlockClosure )>
+	^ [ :n | n + 1 ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> cleanBlock1Again [
+
+	<compilerOptions: #( optionCleanBlockClosure )>
+	^ [ :n | n + 1 ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> cleanBlock1ExtraArg [
+
+	<compilerOptions: #( optionCleanBlockClosure )>
+	^ [ :n :m | n + 1 ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> cleanBlock2 [
+
+	<compilerOptions: #( optionCleanBlockClosure )>
+	^ [ :n | n + 2 ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> constantBlock1 [
+
+	<compilerOptions: #( optionConstantBlockClosure )>
+	^ [ 1 ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> constantBlock2 [
+
+	<compilerOptions: #( optionConstantBlockClosure )>
+	^ [ 2 ]
 ]
 
 { #category : 'running' }
@@ -142,6 +224,104 @@ BlockClosureTest >> testCullCullCullCull [
 		equals: 4
 ]
 
+{ #category : 'helpers' }
+BlockClosureTest >> testEqualsCleanBlocks [
+
+	self assert: self cleanBlock1 equals: self cleanBlock1.
+	self assert: self cleanBlock1 equals: self cleanBlock1Again. "Different method but same bytecodes etc"
+	self deny: self cleanBlock1 equals: self cleanBlock2.
+	self deny: self cleanBlock1 equals: self cleanBlock1ExtraArg.
+	self deny: self cleanBlock1 equals: self constantBlock1
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> testEqualsClosingMutableValues [
+
+	| tmp |
+	self
+		assert: (self blockYieldingMutable: 1)
+		equals: (self blockYieldingMutable: 1).
+	self
+		deny: (self blockYieldingMutable: 1)
+		equals: (self blockYieldingMutable: 2).
+	"Blocks closing over a potentially-mutable value are considered equal so long as that value is equal,
+	but not if it then changes. Effectively the block itself is a mutable object, with all the caveats that entails."
+	tmp := 1.
+	aBlock := [ tmp ].
+	self assert: (self blockYieldingMutable: 1) equals: aBlock.
+	tmp := 2.
+	self deny: (self blockYieldingMutable: 1) equals: aBlock
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> testEqualsConstantBlocks [
+	"Constant blocks"
+
+	self assert: self constantBlock1 equals: self constantBlock1. "These will actually be identical"
+	self assert: self constantBlock1 equals: [ 1 ]. "Different method but same bytecodes etc"
+	self assert: [ 1 ] equals: [ 1 ].
+	self deny: self constantBlock1 equals: self constantBlock2. "Different literal value"
+	self deny: [ 1 ] equals: [ 2 ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> testEqualsCopyingConstantValues [
+
+	self assert: (self blockYielding: 1) equals: (self blockYielding: 1).
+	self deny: (self blockYielding: 1) equals: (self blockYielding: 2).
+	self
+		assert: (self blockWithArgsUsing: #foo)
+		equals: (self blockWithArgsUsing: #foo).
+	self
+		deny: (self blockWithArgsUsing: #foo)
+		equals: (self blockWithArgsUsing: #bar).
+	self
+		deny: (self blockWithArgsUsing: #foo)
+		equals: (self blockWithArgs2Using: #foo).
+	self deny: self cleanBlock1 equals: (self blockAdding: 1) "These end up doing the same thing, but are definitely not the same code"
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> testEqualsNonLocalReturn [
+
+	| tmp otherBlock |
+	"Deciding how equality should work for blocks with a non-local return is Hard,
+	and seems like a hell of an edge case. For now, they will essentially never be equal"
+	self assert: [ ^1 ] equals: [ ^1 ].
+	self
+		deny: (self blockWithNonLocalReturn: 1)
+		equals: (self blockWithNonLocalReturn: 1).
+	self
+		deny: (self blockWithNonLocalReturn: 1)
+		equals: (self blockWithNonLocalReturn: 2).
+	tmp := 1.
+	aBlock := [ ^ tmp ].
+	otherBlock := self blockWithNonLocalReturn: 1.
+	"These blocks have the same code..."
+	self assert: aBlock compiledBlock equals: otherBlock compiledBlock.
+	"...but because they return to different places, they are not equal"
+	self deny: (self blockWithNonLocalReturn: 1) equals: [ ^ tmp ]
+]
+
+{ #category : 'helpers' }
+BlockClosureTest >> testEqualsWithReceiver [
+
+	self assert: self blockUsingSelf equals: self blockUsingSelf.
+	self assert: self blockUsingSelf equals: [ self exampleMethod ].
+	self shouldFix: [ "Blocks involving super sends do not compare equal because the super send creates a copy of the global variable binding"
+		self assert: [ super exampleMethod ] equals: [ super exampleMethod ].
+		self deny: [ self exampleMethod ] equals: [ super exampleMethod ] ].
+	self deny: self blockUsingSelf equals: self copy blockUsingSelf.
+	"This block doesn't use the receiver, so they *could* be considered equal even though it differs,
+	but this is expensive to test and seems like an uncommon case"
+	self
+		deny: (self blockYielding: 1)
+		equals: (self copy blockYielding: 1).
+	"ivar access"
+	self assert: [ aBlock ] equals: [ aBlock ].
+	self deny: [ aBlock ] equals: [ testSelector ]
+]
+
 { #category : 'tests - evaluating' }
 BlockClosureTest >> testHasNonLocalReturn [
 
@@ -205,21 +385,24 @@ BlockClosureTest >> testIsClean [
 { #category : 'tests' }
 BlockClosureTest >> testLiteralEqual [
 	"Check that if we have two clean blocks with the same code, they are not #literalEqual:"
+
 	| methodToTest compiledBlocks |
 	methodToTest := self class compiler
-		options: #(+ optionCleanBlockClosure);
-		compile: 'twoCleanBlocks
+		                options: #( #+ optionCleanBlockClosure );
+		                compile: 'twoCleanBlocks
 
 	| value |
 	[3].
 	"just two clean blocks"
 	[3].'.
 
-	compiledBlocks := methodToTest literals select: [ :each | each isBlock ].
+	compiledBlocks := methodToTest literals select: [ :each |
+		                  each isBlock ].
 	self assert: compiledBlocks size equals: 2.
-	self deny: (compiledBlocks first literalEqual: compiledBlocks second).
-	"Clean blocks are not equal as they have a different compiledBlock"
-	self deny: compiledBlocks first equals: compiledBlocks second
+	"Blocks do have the same code so are equal"
+	self assert: compiledBlocks first equals: compiledBlocks second.
+	"But like variables, blocks are only #literalEqual: if identical"
+	self deny: (compiledBlocks first literalEqual: compiledBlocks second)
 ]
 
 { #category : 'tests' }
