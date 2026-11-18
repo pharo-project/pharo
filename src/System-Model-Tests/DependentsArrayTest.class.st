@@ -4,8 +4,8 @@ SUnit tests for class  DependentsArray
 Class {
 	#name : 'DependentsArrayTest',
 	#superclass : 'TestCase',
-	#category : 'System-Object Events-Tests',
-	#package : 'System-Object Events-Tests'
+	#category : 'System-Model-Tests',
+	#package : 'System-Model-Tests'
 }
 
 { #category : 'tests' }

@@ -13,7 +13,7 @@ Class {
 ManifestMorphicBase class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Object Events')
+	^ #()
 ]
 
 { #category : 'code-critics' }
