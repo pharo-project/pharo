@@ -508,17 +508,16 @@ DropListMorph >> listSelectionIndex: anInteger [
 	"Set the list selection."
 
 	self hideList.
-	anInteger = 0 ifTrue: [^self].
+	anInteger = 0 ifTrue: [ ^ self ].
 	listSelectionIndex := anInteger.
 	self
 		changed: #listSelectionIndex;
-		updateContents;
-		triggerEvent: #selectionIndex with: anInteger.
-	self model ifNotNil: [:m |
-		self setIndexSelector ifNotNil: [:s |
+		updateContents.
+	self model ifNotNil: [ :m |
+		self setIndexSelector ifNotNil: [ :s |
 			self useSelectionIndex
-				ifTrue: [m perform: s with: anInteger]
-				ifFalse: [m perform: s with: self selectedItem]]]
+				ifTrue: [ m perform: s with: anInteger ]
+				ifFalse: [ m perform: s with: self selectedItem ] ] ]
 ]
 
 { #category : 'private' }
@@ -811,24 +810,20 @@ DropListMorph >> updateList [
 
 { #category : 'updating' }
 DropListMorph >> updateListSelectionIndex [
-
 	"Update the list selection."
 
 	| i |
-
 	self useSelectionIndex
-		ifTrue: [ i := self getCurrentSelectionIndex.
-			listSelectionIndex = i
-				ifTrue: [ ^ self ].
-			listSelectionIndex := i
-			]
-		ifFalse: [ i := self getCurrentSelection.
-			listSelectionIndex := i ifNil: [ 0 ] ifNotNil: [ self list indexOf: i ]
-			].
+		ifTrue: [
+			i := self getCurrentSelectionIndex.
+			listSelectionIndex = i ifTrue: [ ^ self ].
+			listSelectionIndex := i ]
+		ifFalse: [
+			i := self getCurrentSelection.
+			listSelectionIndex := i ifNil: [ 0 ] ifNotNil: [ self list indexOf: i ] ].
 	self
 		changed: #listSelectionIndex;
-		updateContents;
-		triggerEvent: #selectionIndex with: i
+		updateContents
 ]
 
 { #category : 'protocol' }
