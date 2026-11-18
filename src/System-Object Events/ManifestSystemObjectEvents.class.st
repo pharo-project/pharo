@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'testing' }
+ManifestSystemObjectEvents class >> deprecatedIn [
+
+	^ #Pharo15
+]
+
+{ #category : 'testing' }
 ManifestSystemObjectEvents class >> isDeprecated [
 	"Symbol-keyed object events. Use announcements instead"
 
