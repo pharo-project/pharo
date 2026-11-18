@@ -3267,30 +3267,6 @@ UITheme >> newTaskListButtonIn: aTasklist for: aTask [
 ]
 
 { #category : 'morph creation' }
-UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
-	"Answer a taskbar thumbnail morph for the given window."
-
-	|answer thumb|
-	thumb := aWindow taskbarThumbnail.
-	answer := PanelMorph new
-		hResizing: #shrinkWrap;
-		vResizing: #shrinkWrap;
-		changeTableLayout;
-		layoutInset: 8 scaledByDisplayScaleFactor;
-		cellInset: 4 scaledByDisplayScaleFactor;
-		addMorphBack: thumb;
-		addMorphBack: ((self
-			buttonLabelForText: (aWindow labelString ))
-				color: Color white).
-	answer
-		extent: answer minExtent;
-		fillStyle: (self taskListFillStyleFor: answer);
-		borderStyle: (self taskbarThumbnailNormalBorderStyleFor: aWindow);
-		cornerStyle: (self taskbarThumbnailCornerStyleFor: answer).
-	^answer
-]
-
-{ #category : 'morph creation' }
 UITheme >> newTextEditorIn: aThemedMorph for: aModel getText: getSel setText: setSel getEnabled: enabledSel menu: aMenuSelector [
 	"Answer a text (Smalltalk code) editor for the given model."
 
