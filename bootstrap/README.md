@@ -17,28 +17,56 @@ The idea: a **host** image (an older Pharo with the bootstrap tools) reads the s
 
 ## Overview
 
+Each box is a stage of the Jenkins pipeline, named as in the `Jenkinsfile`.
+
 ```mermaid
 flowchart TD
-    subgraph host["Host image (Pharo 10 + Espell, VMMaker, Hermes)"]
-        src[(src/ Tonel sources)] --> ring[Ring model of the new image]
-        ring --> espell[Espell + VM simulator<br/>build the kernel object by object]
-        ring --> hermes[HERing2ToHermesBuilder<br/>export *.hermes]
-        src --> mcz[Export *.mcz<br/>package-cache]
+    subgraph fetch["Jenkins: Fetch Requirements (2-download.sh)"]
+        download[Target VM, host VM and host image]
     end
 
-    espell --> kernel[bootstrap.image<br/>kernel, no compiler]
-    kernel -->|BasicHermesTool| k2[+ additional kernel packages]
-    k2 -->|loadHermes| compiler[compiler image]
-    compiler -->|loadHermes| traits[traits image]
-    traits -->|loadHermes| mc[monticello_bootstrap image]
-    mc -->|loadHermes + reload *.mcz| metacello[metacello image]
+    subgraph bootstrap["Jenkins: Bootstrap (3-prepare.sh, skipped on a cache hit)"]
+        subgraph host["Host image (Pharo 10 + Espell, VMMaker, Hermes)"]
+            src[(src/ Tonel sources)] --> ring[Ring model of the new image]
+            ring --> espell[Espell + VM simulator<br/>build the kernel object by object]
+            ring --> hermes[HERing2ToHermesBuilder<br/>export *.hermes]
+            src --> mcz[Export *.mcz<br/>package-cache]
+        end
+        espell --> kernel[bootstrap.image<br/>kernel, no compiler]
+    end
+
+    subgraph metacelloStage["Jenkins: Metacello (4-installMetacello.sh)"]
+        kernel -->|BasicHermesTool| k2[+ additional kernel packages]
+        k2 -->|loadHermes| compiler[compiler image]
+        compiler -->|loadHermes| traits[traits image]
+        traits -->|loadHermes| mc[monticello_bootstrap image]
+        mc -->|loadHermes + reload *.mcz| metacello[metacello image]
+    end
     hermes -.-> k2 & compiler & traits & mc & metacello
     mcz -.-> metacello
 
-    metacello -->|Tests-ISO-*| iso[Isolated baseline tests]
-    metacello -->|metacello install BaselineOfPharo| pharo[Pharo image]
-    pharo --> tests[Full tests on unix, osx, windows<br/>+ command line tests]
-    pharo --> upload[Upload to files.pharo.org<br/>development branches only]
+    download --> src
+
+    subgraph iso["Jenkins: Tests-ISO-* (in parallel)"]
+        isoTests[Isolated baseline tests]
+    end
+
+    subgraph full["Jenkins: Full Image (5-installIDE.sh)"]
+        pharo[Pharo image]
+    end
+
+    subgraph uploadStage["Jenkins: Upload to files.pharo.org (PharoXY branches only)"]
+        upload[Upload the images]
+    end
+
+    subgraph testStages["Jenkins: Tests-unix-64, Tests-osx-64, Tests-windows-64, Tests-Pharo-command-line (in parallel)"]
+        tests[Full tests + command line tests]
+    end
+
+    metacello --> isoTests
+    metacello -->|metacello install BaselineOfPharo| pharo
+    pharo --> upload
+    pharo --> tests
 ```
 
 | Step | Script | Runs in | Produces |
