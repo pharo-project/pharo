@@ -117,11 +117,10 @@ DebugSession >> chooseTraitOverwriteFor: aClass trait: aTrait [
 DebugSession >> clear [
 	"If after resuming the process the user does plan to reuse this session with
 	the same process, it should call this method."
+
 	exception := nil.
 	interruptedProcess := nil.
-	self updateContextTo: nil.
-	
-	self triggerEvent: #clear
+	self updateContextTo: nil
 ]
 
 { #category : 'debugging actions' }
@@ -137,12 +136,6 @@ DebugSession >> completeTo: aContext [
 DebugSession >> context [
 
 	^ interruptedContext
-]
-
-{ #category : 'context' }
-DebugSession >> contextChanged [
-
-	self triggerEvent: #contextChanged
 ]
 
 { #category : 'accessing' }
@@ -180,48 +173,38 @@ DebugSession >> exception: anObject [
 DebugSession >> fastStepThrough: aContext [
 	"Send messages until you return to aContext.
 	 Used to step into a block in the method."
-	|  ctrl originContext targetContext |
-	ctrl := self stepThroughController.	
-		
+
+	| ctrl originContext targetContext |
+	ctrl := self stepThroughController.
+
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 	"Wrap blocks in aContext with HaltingBlocks"
 	ctrl prepareContextForStepThrough: aContext.
-	
+
 	originContext := ctrl completeStep: aContext inProcess: interruptedProcess.
-	targetContext := ctrl findNextContext: originContext 
-								 having: aContext home 
-					  			 fixing: interruptedProcess suspendedContext .
-	
-	targetContext == originContext 
+	targetContext := ctrl findNextContext: originContext having: aContext home fixing: interruptedProcess suspendedContext.
+
+	targetContext == originContext
 		ifTrue: [ "Step through is equivalent to Step over"
 			interruptedProcess suspendedContext: originContext.
 			interruptedProcess isTerminated
-					ifTrue: [ aContext terminateTo: nil ]
-					ifFalse: [ self updateContextTo: 
-									(self stepToFirstInterestingBytecodeIn: interruptedProcess) ] ]
+				ifTrue: [ aContext terminateTo: nil ]
+				ifFalse: [ self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess) ] ]
 		ifFalse: [ "Step through either enters of exits the block"
 			interruptedProcess suspendedContext: targetContext.
-			self updateContextTo: targetContext ].
-			
-	self triggerEvent: #stepThrough
+			self updateContextTo: targetContext ]
 ]
 
 { #category : 'evaluating' }
 DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forContext: aContext [
 
-	aClass
-		compile: (DynamicMessageImplementor for: aMessage in: aClass) value
-		classified: aSymbol.
+	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value classified: aSymbol.
 
 	aContext privRefreshWith: (aClass lookupSelector: aMessage selector).
-	aContext method numArgs > 0 ifTrue:
-		[aMessage arguments withIndexDo:
-			[:arg :index|
-				aContext tempAt: index put: arg]].
+	aContext method numArgs > 0 ifTrue: [ aMessage arguments withIndexDo: [ :arg :index | aContext tempAt: index put: arg ] ].
 
-	self updateContextTo: aContext.
-	self contextChanged
+	self updateContextTo: aContext
 ]
 
 { #category : 'callbacks' }
@@ -242,22 +225,6 @@ DebugSession >> initialize [
 	super initialize.
 
 	debugCallBack := self
-]
-
-{ #category : 'private' }
-DebugSession >> installAlarm: aSelector [
-
-	self installAlarm: aSelector withArgument: #()
-]
-
-{ #category : 'private' }
-DebugSession >> installAlarm: aSelector withArgument: args [
-
-	self currentWorld
-		addAlarm: aSelector
-		withArguments: args
-		for: self
-		at: Time millisecondClockValue + 200
 ]
 
 { #category : 'accessing' }
@@ -346,11 +313,10 @@ DebugSession >> peelToFirstLike: aContext [
 
 	| ctxt |
 	self flag: 'should be called only on the selected context'.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 
 	ctxt := interruptedProcess popTo: aContext findSecondToOldestSimilarSender.
-	self updateContextTo: ctxt.
-	self contextChanged
+	self updateContextTo: ctxt
 ]
 
 { #category : 'private' }
@@ -408,14 +374,14 @@ DebugSession >> recompileMethodTo: sourceCode inContext: aContext notifying: aNo
 	recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: sourceCode inSession: self.
 	recompilationContext ifNil: [ ^ false ].
 
-	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: sourceCode notifying: aNotifyer inSession: self.
+	newMethod := (self createModelForContext: recompilationContext)
+		             recompileCurrentMethodTo: sourceCode
+		             notifying: aNotifyer
+		             inSession: self.
 	newMethod ifNil: [ ^ false ].
 
 	(self isContextPostMortem: self interruptedContext) ifFalse: [
-		self rewindContextToMethod: newMethod fromContext: recompilationContext ]. 
-	"Use an alarm instead of triggering the notification directly, as the content of
-	the editor can still be unaccepted. "
-	self installAlarm: #contextChanged.
+		self rewindContextToMethod: newMethod fromContext: recompilationContext ].
 
 	^ true
 ]
@@ -423,15 +389,14 @@ DebugSession >> recompileMethodTo: sourceCode inContext: aContext notifying: aNo
 { #category : 'debugging actions' }
 DebugSession >> restart: aContext [
 	"Proceed from the initial state of selectedContext."
+
 	"Closing now depends on a setting (RestartAlsoProceeds class variable) --> not supported in this version"
 
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 
 	"Issue 3015 - Hernan"
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ].
-	self unwindAndRestartToContext: aContext.
-
-	self triggerEvent: #restart
+	self unwindAndRestartToContext: aContext
 ]
 
 { #category : 'debugging actions' }
@@ -441,12 +406,9 @@ DebugSession >> resume [
 
 	"If the user of this session does not plan to reuse it, it should call 'self clean' "
 
-	Smalltalk okayToProceedEvenIfSpaceIsLow
-		ifFalse: [ ^ self ].
-	(self isContextPostMortem: self interruptedContext)
-		ifTrue: [ ^ self ].
-	self resumeProcess.
-	self triggerEvent: #resume
+	Smalltalk okayToProceedEvenIfSpaceIsLow ifFalse: [ ^ self ].
+	(self isContextPostMortem: self interruptedContext) ifTrue: [ ^ self ].
+	self resumeProcess
 ]
 
 { #category : 'debugging actions' }
@@ -456,12 +418,9 @@ DebugSession >> resume: aValue [
 
 	"If the user of this session does not plan to reuse it, it should call 'self clean' "
 
-	Smalltalk okayToProceedEvenIfSpaceIsLow
-		ifFalse: [ ^ self ].
-	(self isContextPostMortem: self interruptedContext)
-		ifTrue: [ ^ self ].
-	self resumeProcessWithValue: aValue.
-	self triggerEvent: #resume
+	Smalltalk okayToProceedEvenIfSpaceIsLow ifFalse: [ ^ self ].
+	(self isContextPostMortem: self interruptedContext) ifTrue: [ ^ self ].
+	self resumeProcessWithValue: aValue
 ]
 
 { #category : 'private' }
@@ -495,13 +454,12 @@ DebugSession >> returnValue: anObject from: aContext [
 
 	| previous |
 	self flag: 'should be called only on the selected context. WHY?'.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 
 	previous := aContext sender.
 	"self resetContext: previous."
 	interruptedProcess popTo: previous value: anObject.
-	self updateContextTo: previous.
-	self contextChanged
+	self updateContextTo: previous
 ]
 
 { #category : 'evaluating' }
@@ -572,12 +530,10 @@ DebugSession >> stepInto: aContext [
 	"Send the selected message in selectedContext, and take control in
 	the method invoked to allow further step or send."
 
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 
 	interruptedProcess step: aContext.
-	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
-
-	self triggerEvent: #stepInto
+	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess)
 ]
 
 { #category : 'debugging actions' }
@@ -599,15 +555,12 @@ DebugSession >> stepOver: aContext [
 
 	| newContext |
 	aContext stepIntoQuickMethod: false.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 
 	newContext := interruptedProcess completeStep: aContext.
-	self updateContextTo:
-		(newContext == aContext
-			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
-			ifFalse: [ newContext ]).
-
-	self triggerEvent: #stepOver
+	self updateContextTo: (newContext == aContext
+		 ifTrue: [ self stepToFirstInterestingBytecodeIn: interruptedProcess ]
+		 ifFalse: [ newContext ])
 ]
 
 { #category : 'debugging actions' }
@@ -620,16 +573,14 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
-	
+
 	self class fastStepThroughMode ifTrue: [ ^ self fastStepThrough: aContext ].
-	
+
 	aContext stepIntoQuickMethod: false.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 
 	interruptedProcess stepToHome: aContext.
-	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
-
-	self triggerEvent: #stepThrough
+	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess)
 ]
 
 { #category : 'accessing' }
