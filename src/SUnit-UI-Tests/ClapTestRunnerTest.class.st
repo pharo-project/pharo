@@ -99,7 +99,7 @@ ClapTestRunnerTest >> testDeprecationsAsErrorsDuringTheRun [
 			              Deprecation reaction.
 			              Deprecation rewriting } ].
 	self assert: strategies equals: {
-		ErrorDeprecationReaction.
+		ErrorAtEndOfCompatibilityPeriodDeprecationReaction.
 		NeverRewriteDeprecation }.
 	self assert: Deprecation reaction identicalTo: oldReaction.
 	self assert: Deprecation rewriting identicalTo: oldRewriting

@@ -6,6 +6,12 @@ Class {
 	#tag : 'Strategies'
 }
 
+{ #category : 'reacting' }
+ErrorDeprecationReaction class >> failsTestsFor: anAutomaticRewriting [
+
+	^ true
+]
+
 { #category : 'accessing' }
 ErrorDeprecationReaction class >> label [
 
