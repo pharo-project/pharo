@@ -89,6 +89,15 @@ MergeDiffMorph >> initialize [
 ]
 
 { #category : 'actions' }
+MergeDiffMorph >> joinClicked [
+	"A join has probably changed its selection state."
+
+	self
+		changed;
+		changed: #selectedDifferences
+]
+
+{ #category : 'actions' }
 MergeDiffMorph >> joinSectionClass [
 	"Answer the class to use for a new join section."
 
@@ -99,17 +108,7 @@ MergeDiffMorph >> joinSectionClass [
 MergeDiffMorph >> newJoinMorph [
 	"Answer a new join morph."
 
-	^super newJoinMorph
-		when: #joinClicked send: #update: to: self with: #joinClicked
-]
-
-{ #category : 'actions' }
-MergeDiffMorph >> update: aspect [
-	"A join has probably changed its selection state."
-
-	super update: aspect.
-	aspect == #joinClicked
-		ifTrue: [self
-				changed;
-				changed: #selectedDifferences]
+	^ super newJoinMorph
+		  whenClickedDo: [ self joinClicked ];
+		  yourself
 ]

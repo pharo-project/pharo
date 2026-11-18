@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'srcOffset',
 		'dstOffset',
-		'mappings'
+		'mappings',
+		'clickAction'
 	],
 	#category : 'Tool-Diff-Morphs',
 	#package : 'Tool-Diff',
@@ -87,10 +88,11 @@ DiffJoinMorph >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
+	clickAction := [ ].
 	self
 		mappings: OrderedCollection new;
-		srcOffset: 0@0;
-		dstOffset: 0@0
+		srcOffset: 0 @ 0;
+		dstOffset: 0 @ 0
 ]
 
 { #category : 'layout' }
@@ -121,11 +123,9 @@ DiffJoinMorph >> mappings: anObject [
 DiffJoinMorph >> mouseDown: evt [
 	"Check for a click."
 
-	self mappings
-		detect: [ :j | j containsPoint: evt position - self topLeft ]
-		ifFound: [ :cj |
-			cj clicked.
-			self triggerEvent: #joinClicked ].
+	self mappings detect: [ :j | j containsPoint: evt position - self topLeft ] ifFound: [ :cj |
+		cj clicked.
+		clickAction value ].
 	super mouseDown: evt
 ]
 
@@ -151,4 +151,11 @@ DiffJoinMorph >> updateMappings [
 
 	self mappings do: [:j |
 		j width: self width]
+]
+
+{ #category : 'event handling' }
+DiffJoinMorph >> whenClickedDo: aBlock [
+	"aBlock runs when a join is clicked"
+
+	clickAction := aBlock
 ]
