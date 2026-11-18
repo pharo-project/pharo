@@ -339,8 +339,7 @@ TabMorph >> actions [
 { #category : 'protocol' }
 TabMorph >> actions: aCollection [
 
-	actions := aCollection.
-	self triggerEvent: #actionsChanged with: self
+	actions := aCollection
 ]
 
 { #category : 'protocol' }
@@ -401,14 +400,6 @@ TabMorph >> addRefreshMenuItemOn: aMenu [
 		add: 'Refresh content'
 		target: self
 		selector: #refreshContent
-]
-
-{ #category : 'private' }
-TabMorph >> addToSelection [
-
-	self triggerEvent: #tabAddedToSelection with: self.
-
-	"No need to change here since the toolbar I belong to will do it"
 ]
 
 { #category : 'private - drawing' }
@@ -485,9 +476,8 @@ TabMorph >> defaultIcon [
 TabMorph >> delete [
 
 	super delete.
-	morph ifNotNil: [morph delete].
-	retrievingProcess ifNotNil: [ retrievingProcess terminate ].
-	self triggerEvent: #tabDeleted with: self
+	morph ifNotNil: [ morph delete ].
+	retrievingProcess ifNotNil: [ retrievingProcess terminate ]
 ]
 
 { #category : 'drawing' }
@@ -692,8 +682,7 @@ TabMorph >> morph [
 { #category : 'protocol' }
 TabMorph >> morph: anObject [
 
-	morph := anObject.
-	self triggerEvent: #tabRefreshed with: self
+	morph := anObject
 ]
 
 { #category : 'event handling' }
@@ -722,13 +711,10 @@ TabMorph >> mouseLeaveIcon [
 
 { #category : 'event handling' }
 TabMorph >> mouseUp: event [
+	"Selecting several tabs with a modifier key was done by the tab bar, listening to events of the tab"
 
-	(event commandKeyPressed or: [ event controlKeyPressed ])
-		ifTrue: [ self toggleSelection ]
-		ifFalse: [
-			event shiftPressed
-				ifTrue: [ self selectToMe ]
-				ifFalse: [ self selected: true ] ]
+	(event commandKeyPressed or: [ event controlKeyPressed or: [ event shiftPressed ] ]) ifTrue: [ ^ self ].
+	self selected: true
 ]
 
 { #category : 'protocol' }
@@ -741,18 +727,8 @@ TabMorph >> okToClose [
 TabMorph >> refreshContent [
 
 	morph := nil.
-	self triggerEvent: #tabEmptyContents with: self.
-
 	"Trigger the update"
 	self softRetrieveMorph
-]
-
-{ #category : 'private' }
-TabMorph >> removeFromSelection [
-
-	self triggerEvent: #tabRemovedFromSelection with: self.
-
-	"No need to change here since the toolbar I belong to will do it"
 ]
 
 { #category : 'protocol' }
@@ -779,14 +755,6 @@ TabMorph >> retrievingBlock: anObject [
 	retrievingBlock ifNotNil: [ self softRetrieveMorph ]
 ]
 
-{ #category : 'private' }
-TabMorph >> selectToMe [
-
-	self triggerEvent: #tabSelectTo with: self.
-
-	"No need to change here since the toolbar I belong to will do it"
-]
-
 { #category : 'accessing' }
 TabMorph >> selected [
 
@@ -796,14 +764,10 @@ TabMorph >> selected [
 { #category : 'protocol' }
 TabMorph >> selected: aBoolean [
 
-	(state isSelectedMatchingTheState: aBoolean)
-		ifTrue: [ ^ self triggerEvent: #tabResetSelection with: self ].
+	(state isSelectedMatchingTheState: aBoolean) ifTrue: [ ^ self ].
 
 	state := state newStateForSelected: aBoolean.
-	aBoolean
-		ifTrue: [
-			self triggerEvent: #tabSelected with: self.
-			self showCloseIcon ].
+	aBoolean ifTrue: [ self showCloseIcon ]
 
 	"No need to change here since the toolbar Ibelong to will do it"
 ]
@@ -844,40 +808,27 @@ TabMorph >> silentlySelected: aBoolean [
 
 { #category : 'protocol' }
 TabMorph >> softRetrieveMorph [
+
 	| oldIcon |
 	"Like retrieveMorph but done in a separated process"
 	morph ifNotNil: [ ^ self ].
-	retrievingProcess
-		ifNotNil: [
-			"The retrieving process is already running, let's wait for its result"
-			retrievingProcess isTerminated
-				ifFalse: [ ^ self ] ].
+	retrievingProcess ifNotNil: [ "The retrieving process is already running, let's wait for its result"
+		retrievingProcess isTerminated ifFalse: [ ^ self ] ].
 
 	oldIcon := self icon ifNotNil: [ :i | i form ].
 	label icon: TabBuildingIconMorph new.
-	retrievingProcess := [ [
-		morph := retrievingBlock value]
-	ensure: [
-		self morphicUIManager defer: [
-			self icon: oldIcon.
-			self triggerEvent: #tabRefreshed with: self].
-		"I should signal all waiters here"
-		[retrievingSemaphore isEmpty] whileFalse: [ retrievingSemaphore signal].
-	] ] forkAt: Processor activePriority - 2
+	retrievingProcess := [
+		                     [ morph := retrievingBlock value ] ensure: [
+			                     self morphicUIManager defer: [ self icon: oldIcon ].
+			                     "I should signal all waiters here"
+			                     [ retrievingSemaphore isEmpty ] whileFalse: [ retrievingSemaphore signal ] ] ] forkAt:
+		                     Processor activePriority - 2
 ]
 
 { #category : 'protocol' }
 TabMorph >> themeChanged [
 	super themeChanged.
 	morph ifNotNil: #themeChanged
-]
-
-{ #category : 'private' }
-TabMorph >> toggleSelection [
-
-	self selected
-		ifTrue: [ self removeFromSelection ]
-		ifFalse: [ self addToSelection ]
 ]
 
 { #category : 'protocol' }
