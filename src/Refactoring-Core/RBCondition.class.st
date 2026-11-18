@@ -151,17 +151,6 @@ RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
 ]
 
 { #category : 'instance creation' }
-RBCondition class >> empty [
-	"Returns an empty condition"
-	self
-		deprecated: 'Use RBCondition true instead'
-		on: '2023-06-30'
-		in: #Pharo12
-		transformWith: '`@rec empty' -> '`@ true'.
-	^ self true
-]
-
-{ #category : 'instance creation' }
 RBCondition class >> hasSuperclass: aClass [
 	^self new
 		block: [aClass superclass isNil not]
