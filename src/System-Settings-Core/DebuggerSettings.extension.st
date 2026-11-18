@@ -36,34 +36,33 @@ DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 		parentName: #tools;
 		description: 'All Debugger settings';
 		with: [
-				(aBuilder group: #deprecationHandling)
-					label: 'Deprecation handling';
-					description: 'How deprecation are handled';
-					target: Deprecation;
-					with: [
-							(aBuilder setting: #activateTransformations)
-								label: 'Performs automatic transformations on deprecated methods';
-								defaultValue: true;
-								description: 'If true, then the caller will be rewritten for each deprecated method invocation'.
-							(aBuilder setting: #raiseWarning)
-								label: 'Raise a blocking dialog';
-								defaultValue: true;
-								description: 'If true, then a dialog is popup for each deprecated method invocation'.
-							(aBuilder setting: #showWarning)
-								label: 'Transcript message';
-								defaultValue: true;
-								description: 'If true, then a message is send to the Transcript for each deprecated method invocation' ].
+			(aBuilder group: #deprecationHandling)
+				label: 'Deprecation handling';
+				description: 'How deprecation are handled';
+				target: Deprecation;
+				with: [
+					(aBuilder pickOne: #reaction)
+						label: 'Reaction';
+						domainValues: DeprecationReaction allSubclasses;
+						defaultValue: Deprecation defaultReaction;
+						description: 'What happens when a deprecated method runs. Every deprecation is recorded in the log anyway.'.
+					(aBuilder pickOne: #rewriting)
+						label: 'Rewrite the callers';
+						domainValues: DeprecationRewriting allSubclasses;
+						defaultValue: Deprecation defaultRewriting;
+						description:
+							'When a deprecation that has a rewriting rule rewrites the caller of the deprecated method. PHEP-0004 rewrites only in the last version of its compatibility period: 4 versions for kernel packages, 2 for the others.' ].
 
-				(aBuilder setting: #logDebuggerStackToFile)
-					label: 'Write message to debug log file when fall into debugger';
-					target: DebugSession;
-					defaultValue: false;
-					description: 'If true, whenever you fall into a debugger a summary of its stack will be written to a file named'.
+			(aBuilder setting: #logDebuggerStackToFile)
+				label: 'Write message to debug log file when fall into debugger';
+				target: DebugSession;
+				defaultValue: false;
+				description: 'If true, whenever you fall into a debugger a summary of its stack will be written to a file named'.
 
 
-				(aBuilder setting: #logFileName)
-					label: 'Log file name';
-					target: Smalltalk;
-					defaultValue: 'PharoDebug.log';
-					description: 'A name of the file, which will be used for logging all errors and notifications' ]
+			(aBuilder setting: #logFileName)
+				label: 'Log file name';
+				target: Smalltalk;
+				defaultValue: 'PharoDebug.log';
+				description: 'A name of the file, which will be used for logging all errors and notifications' ]
 ]

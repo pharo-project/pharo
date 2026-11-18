@@ -8,25 +8,85 @@ Class {
 
 { #category : 'helpers' }
 DeprecationTest >> callerIsTransformedWhenSending: aSelector [
-	"Compile a caller of aSelector in ExampleForDeprecationTest, run it with transformations active, and answer whether it now sends #newMessage instead. The deprecation is handled here and its default action run explicitly, since on the Pharo CI SUnit makes a deprecation reaching it an error."
 
-	| classFactory oldRaiseWarning oldActivateTransformations caller transformed |
+	^ self callerIsTransformedWhenSending: aSelector rewriting: CompatibilityPeriodRewriteDeprecation
+]
+
+{ #category : 'helpers' }
+DeprecationTest >> callerIsTransformedWhenSending: aSelector rewriting: aRewriting [
+	"Compile a caller of aSelector in ExampleForDeprecationTest, run it with aRewriting, and answer whether it now sends #newMessage instead. The deprecation is handled here and its default action run explicitly, since on the Pharo CI SUnit makes a deprecation reaching it an error."
+
+	| classFactory caller |
 	classFactory := ClassFactoryForTestCase environment: SystemEnvironment new.
 	classFactory silentlyCompile: 'sendsDeprecatedMessage ^ self ' , aSelector in: ExampleForDeprecationTest.
-	[
-		oldRaiseWarning := Deprecation raiseWarning.
-		oldActivateTransformations := Deprecation activateTransformations.
-		Deprecation raiseWarning: false.
-		Deprecation activateTransformations: true.
-		[ ExampleForDeprecationTest new perform: #sendsDeprecatedMessage ]
+	^ [
+		  self
+			  reaction: IgnoreDeprecationReaction
+			  rewriting: aRewriting
+			  during: [ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new perform: #sendsDeprecatedMessage ] ].
+		  caller := ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessage.
+		  (caller sendsSelector: #newMessage) and: [ (caller sendsSelector: aSelector) not ] ] ensure: [
+		  ExampleForDeprecationTest removeSelector: #sendsDeprecatedMessage ]
+]
+
+{ #category : 'helpers' }
+DeprecationTest >> reaction: aReaction rewriting: aRewriting during: aBlock [
+	"Run aBlock with these deprecation strategies, and restore the ones of the image afterwards."
+
+	| oldReaction oldRewriting |
+	oldReaction := Deprecation reaction.
+	oldRewriting := Deprecation rewriting.
+	Deprecation
+		reaction: aReaction;
+		rewriting: aRewriting.
+	^ aBlock ensure: [
+		  Deprecation
+			  reaction: oldReaction;
+			  rewriting: oldRewriting ]
+]
+
+{ #category : 'helpers' }
+DeprecationTest >> runDefaultActionOfDeprecationsIn: aBlock [
+	"Run the default action of the deprecations signaled by aBlock, as if no one handled them: on the Pharo CI, SUnit makes a deprecation reaching it an error."
+
+	^ aBlock
+		  on: Deprecation
+		  do: [ :deprecation | deprecation resume: deprecation defaultAction ]
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testAlwaysRewritingTransformsWithoutVersion [
+
+	self assert:
+		(self callerIsTransformedWhenSending: #deprecatedMessageWithTransformAndNoVersion rewriting: AlwaysRewriteDeprecation)
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testCompatibilityPeriodRewritingNeedsAVersion [
+
+	self deny:
+		(self
+			 callerIsTransformedWhenSending: #deprecatedMessageWithTransformAndNoVersion
+			 rewriting: CompatibilityPeriodRewriteDeprecation)
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testDeprecatedSettingsChooseStrategies [
+
+	self reaction: LogDeprecationReaction rewriting: CompatibilityPeriodRewriteDeprecation during: [
+		[
+			Deprecation activateTransformations: false.
+			self assert: Deprecation rewriting identicalTo: NeverRewriteDeprecation.
+			Deprecation activateTransformations: true.
+			self assert: Deprecation rewriting identicalTo: CompatibilityPeriodRewriteDeprecation.
+			Deprecation raiseWarning: true.
+			self assert: Deprecation reaction identicalTo: WarnDeprecationReaction.
+			Deprecation raiseWarning: false.
+			self assert: Deprecation reaction identicalTo: LogDeprecationReaction.
+			Deprecation showWarning: false.
+			self assert: Deprecation reaction identicalTo: IgnoreDeprecationReaction ]
 			on: Deprecation
-			do: [ :deprecation | deprecation resume: deprecation defaultAction ].
-		caller := ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessage.
-		transformed := (caller sendsSelector: #newMessage) and: [ (caller sendsSelector: aSelector) not ] ] ensure: [
-			Deprecation raiseWarning: oldRaiseWarning.
-			Deprecation activateTransformations: oldActivateTransformations.
-			ExampleForDeprecationTest removeSelector: #sendsDeprecatedMessage ].
-	^ transformed
+			do: [ :deprecation | deprecation resume ] ]
 ]
 
 { #category : 'tests' }
@@ -80,6 +140,57 @@ DeprecationTest >> testDeprecationWithoutVersionDoesNotTransform [
 	self deny: (self callerIsTransformedWhenSending: #deprecatedMessageWithTransformAndNoVersion)
 ]
 
+{ #category : 'tests - strategies' }
+DeprecationTest >> testErrorReactionSignalsAnError [
+
+	self reaction: ErrorDeprecationReaction rewriting: NeverRewriteDeprecation during: [
+		self
+			should: [ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new deprecatedMessageWithTransform ] ]
+			raise: Error ]
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testEveryReactionRecordsTheDeprecation [
+	"The warning reaction opens a blocking dialog, so it is left out."
+
+	(DeprecationReaction allSubclasses copyWithout: WarnDeprecationReaction) do: [ :reaction |
+		| seen |
+		self reaction: reaction rewriting: NeverRewriteDeprecation during: [
+			seen := Deprecation deprecationsWhile: [
+				        [ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new deprecatedMessageWithTransform ] ]
+					        on: Error , DeprecationPerformedNotification
+					        do: [ :exception | exception return ] ] ].
+		self assert: seen size = 1 description: reaction label ]
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testIgnoreReactionNotifiesNothing [
+
+	| notified |
+	notified := false.
+	self reaction: IgnoreDeprecationReaction rewriting: NeverRewriteDeprecation during: [
+		[ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new deprecatedMessageWithTransform ] ]
+			on: DeprecationPerformedNotification
+			do: [ :notification |
+				notified := true.
+				notification resume ] ].
+	self deny: notified
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testLogReactionNotifies [
+
+	| notified |
+	notified := false.
+	self reaction: LogDeprecationReaction rewriting: NeverRewriteDeprecation during: [
+		[ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new deprecatedMessageWithTransform ] ]
+			on: DeprecationPerformedNotification
+			do: [ :notification |
+				notified := true.
+				notification resume ] ].
+	self assert: notified
+]
+
 { #category : 'tests' }
 DeprecationTest >> testMessageTextFromBlock [
 	| notification |
@@ -90,26 +201,26 @@ DeprecationTest >> testMessageTextFromBlock [
 	self assert: notification messageText notNil
 ]
 
+{ #category : 'tests - strategies' }
+DeprecationTest >> testNeverRewritingDoesNotTransform [
+
+	self deny: (self callerIsTransformedWhenSending: #deprecatedMessageWithTransform rewriting: NeverRewriteDeprecation)
+]
+
 { #category : 'tests' }
 DeprecationTest >> testNoInfiniteLoopWhenShowWarningIsTrue [
 	"Regression test for https://github.com/pharo-project/pharo/issues/19396"
 
 	<ignoreNotImplementedSelectors: #( sendsDeprecatedMessageWithTransform )>
-	| oldShowWarning oldActivateTransformations classFactory |
+	| classFactory |
 	classFactory := ClassFactoryForTestCase new.
 	classFactory
 		silentlyCompile: 'sendsDeprecatedMessageWithTransform ^ self deprecatedMessageWithTransform'
 		in: ExampleForDeprecationTest.
-	[
-		oldShowWarning := Deprecation showWarning.
-		oldActivateTransformations := Deprecation activateTransformations.
-		Deprecation showWarning: true.
-		Deprecation activateTransformations: true.
+	self reaction: LogDeprecationReaction rewriting: AlwaysRewriteDeprecation during: [
 		[ ExampleForDeprecationTest new sendsDeprecatedMessageWithTransform ]
 			on: Deprecation
-			do: [ :deprecation | deprecation resume: deprecation defaultAction ] ] ensure: [
-			Deprecation showWarning: oldShowWarning.
-			Deprecation activateTransformations: oldActivateTransformations ].
+			do: [ :deprecation | deprecation resume: deprecation defaultAction ] ].
 	ExampleForDeprecationTest removeSelector: #sendsDeprecatedMessageWithTransform
 ]
 
