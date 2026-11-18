@@ -39,15 +39,16 @@ DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 			(aBuilder group: #deprecationHandling)
 				label: 'Deprecation handling';
 				description: 'How deprecation are handled';
-				target: Deprecation;
-				with: [
+				with: [ "A pick-one setting does not take the target of its group, so each names it"
 					(aBuilder pickOne: #reaction)
 						label: 'Reaction';
+						target: Deprecation;
 						domainValues: DeprecationReaction allSubclasses;
 						defaultValue: Deprecation defaultReaction;
 						description: 'What happens when a deprecated method runs. Every deprecation is recorded in the log anyway.'.
 					(aBuilder pickOne: #rewriting)
 						label: 'Rewrite the callers';
+						target: Deprecation;
 						domainValues: DeprecationRewriting allSubclasses;
 						defaultValue: Deprecation defaultRewriting;
 						description:
