@@ -61,22 +61,16 @@ MergeDiffMorph >> compositeText [
 MergeDiffMorph >> indicateDst [
 	"Change the indicators of the joins to the dst side."
 
-	self joinMappings do: [:section |
-		section selectionState: #dst].
-	self
-		changed;
-		changed: #selectedDifferences
+	self joinMappings do: [ :section | section selectionState: #dst ].
+	self changed
 ]
 
 { #category : 'obsolete' }
 MergeDiffMorph >> indicateSrc [
 	"Change the indicators of the joins to the src side."
 
-	self joinMappings do: [:section |
-		section selectionState: #src].
-	self
-		changed;
-		changed: #selectedDifferences
+	self joinMappings do: [ :section | section selectionState: #src ].
+	self changed
 ]
 
 { #category : 'initialization' }
@@ -90,11 +84,9 @@ MergeDiffMorph >> initialize [
 
 { #category : 'actions' }
 MergeDiffMorph >> joinClicked [
-	"A join has probably changed its selection state."
+	"A join has probably changed its selection state: redraw"
 
-	self
-		changed;
-		changed: #selectedDifferences
+	self changed
 ]
 
 { #category : 'actions' }
