@@ -43,6 +43,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Morphic-Testing-Support';
 			package: 'Morphic-Tests';
 			package: 'Morphic-Widgets-FastTable-Tests';
+				package: 'Morphic-Widgets-ColorPicker-Tests';
 			package: 'NECompletion-Tests';
 			package: 'PragmaCollector-Tests';
 			package: 'Rubric-SpecFindReplaceDialog-Tests';
