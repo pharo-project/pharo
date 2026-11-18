@@ -267,6 +267,7 @@ def bootstrapImage(){
         isoTesters['Clap'] = { defineIsoTestStage("Clap") }
         isoTesters['Regex'] = { defineIsoTestStage("Regex") }
         isoTesters['Flashback'] = { defineIsoTestStage("Flashback") }
+        isoTesters['Fuel'] = { defineIsoTestStage("Fuel") }
         parallel isoTesters
 
         stage ("Full Image") {

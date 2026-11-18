@@ -34,6 +34,14 @@ MetacelloLoadTarget >> load: aDirective [
 	self registerResolvedProjectsAsLoaded
 ]
 
+{ #category : 'loading' }
+MetacelloLoadTarget >> loadPackageDirectives: aCollectionOfDirectives [
+	"Load the packages of aCollectionOfDirectives together, saying first what loads: when a package fails to compile, the last line printed names it"
+
+	MetacelloNotification signal: 'Loading -> ' , ((aCollectionOfDirectives collect: [ :each | each packageName ]) joinUsing: ', ') , ' (' , ((aCollectionOfDirectives collect: [ :each | each spec project label ]) asSet asSortedCollection joinUsing: ', ') , ')'.
+	engine loader loadAtomicPackageDirectives: aCollectionOfDirectives engine: engine
+]
+
 { #category : 'accessing' }
 MetacelloLoadTarget >> loader [
 	
@@ -80,9 +88,7 @@ MetacelloLoadTarget >> visitLinearLoadDirective: aMetacelloLinearLoadDirective [
 { #category : 'visiting' }
 MetacelloLoadTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective [
 
-	engine loader
-		loadAtomicPackageDirectives: { aMetacelloPackageLoadDirective }
-		engine: engine
+	self loadPackageDirectives: { aMetacelloPackageLoadDirective }
 ]
 
 { #category : 'visiting' }
