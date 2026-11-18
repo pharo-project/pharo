@@ -7,7 +7,8 @@ Class {
 	#superclass : 'Morph',
 	#instVars : [
 		'selectedColor',
-		'locationMorph'
+		'locationMorph',
+		'colorSelectedAction'
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'
@@ -120,6 +121,7 @@ SVColorSelectorMorph >> hideLocation [
 SVColorSelectorMorph >> initialize [
 	"Initialize the receiver."
 
+	colorSelectedAction := [ :aColor |  ].
 	super initialize.
 	self locationMorph: self newLocationMorph.
 	self
@@ -236,8 +238,8 @@ SVColorSelectorMorph >> selectedColor: aColor [
 	"Set the value of selectedColor."
 
 	selectedColor := aColor.
-	self locationMorph visible ifTrue: [self updateSelectedLocation].
-	self triggerEvent: #colorSelected with: aColor
+	self locationMorph visible ifTrue: [ self updateSelectedLocation ].
+	colorSelectedAction value: aColor
 ]
 
 { #category : 'accessing' }
@@ -283,4 +285,11 @@ SVColorSelectorMorph >> updateSelectedLocation [
 
 	self locationMorph
 		position: (self selectedLocation - (self locationMorph extent // 2 + (self locationMorph extent \\ 2)))
+]
+
+{ #category : 'accessing' }
+SVColorSelectorMorph >> whenColorSelectedDo: aBlock [
+	"aBlock receives each color selected"
+
+	colorSelectedAction := aBlock
 ]
