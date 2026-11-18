@@ -14,9 +14,8 @@ Class {
 	#instVars : [
 		'tab'
 	],
-	#category : 'Morphic-Widgets-Tabs-States',
-	#package : 'Morphic-Widgets-Tabs',
-	#tag : 'States'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'instance creation' }
