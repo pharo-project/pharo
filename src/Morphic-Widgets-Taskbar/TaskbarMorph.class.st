@@ -18,12 +18,6 @@ Class {
 	#package : 'Morphic-Widgets-Taskbar'
 }
 
-{ #category : 'class initialization' }
-TaskbarMorph class >> initialize [
-	"Initialize the receiver."
-	self showTaskbarPreferenceChanged
-]
-
 { #category : 'setting' }
 TaskbarMorph class >> maximumButtons [
 	^ MaximumButtons ifNil: [MaximumButtons := self maximumButtonsDefault]
