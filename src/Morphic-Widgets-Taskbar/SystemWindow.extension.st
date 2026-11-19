@@ -8,21 +8,6 @@ SystemWindow >> basicTaskThumbnailOfSize: thumbExtent [
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> canBeMovedToLeft [
-
-
-	self worldTaskbar ifNil: [ ^ false ].
-	^ self worldTaskbar canMoveLeft: self
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> canBeMovedToRight [
-
-	self worldTaskbar ifNil: [ ^ false ].
-	^ self worldTaskbar canMoveRight: self
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> isTaskbarPresent [
 	"Answer whether there is a taskbar in the world."
 
@@ -126,8 +111,9 @@ SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 SystemWindow >> taskbarButtonMenu: aMenu [
 	"Answer the menu for the task bar button."
 
-	| menu theme submenu  moveSubmenu |
+	| menu theme submenu moveSubmenu taskbar |
 	theme :=  self theme.
+	taskbar := self worldTaskbar.
 	menu := theme newMenuIn: self for: self.
 
 	menu
@@ -169,21 +155,24 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		subMenu: moveSubmenu.
 	moveSubmenu
 		addToggle: 'Move left' translated
-		target: self
-		selector: #taskbarMoveLeft
+		target: taskbar
+		selector: #moveTaskLeftOf:
 		getStateSelector: nil
-		enablementSelector: #canBeMovedToLeft.
+		enablementSelector: [ taskbar canMoveLeft: self ]
+		argumentList: { self }.
 	moveSubmenu
 		addToggle: 'Move right' translated
-		target: self
-		selector: #taskbarMoveRight
+		target: taskbar
+		selector: #moveTaskRightOf:
 		getStateSelector: nil
-		enablementSelector: #canBeMovedToRight.
+		enablementSelector: [ taskbar canMoveRight: self ]
+		argumentList: { self }.
 	moveSubmenu
 		addToggle: 'Move to...' translated
-		target: self
-		selector: #taskbarMoveTo
-		getStateSelector: nil.
+		target: taskbar
+		selector: #askPositionAndMoveTaskOf:
+		getStateSelector: nil
+		argumentList: { self }.
 	menu addLine.
 
 	submenu := theme newMenuIn: self for: self.

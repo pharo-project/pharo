@@ -98,6 +98,27 @@ TaskbarMorph class >> taskbarSettingOn: aBuilder [
 ]
 
 { #category : 'taskbar' }
+TaskbarMorph >> askPositionAndMoveTaskOf: aMorph [
+	"Ask where to move the task of aMorph, and move it there"
+
+	| taskBarSize taskLocation desiredLocation answer |
+	taskBarSize := self orderedTasks size.
+	taskLocation := self orderedTasks indexOf: (self taskOf: aMorph).
+
+	answer := UIManager default request: 'Enter new task location: 1..' , taskBarSize printString initialAnswer: taskLocation asString title: 'Move Task'.
+
+	answer ifNil: [ ^ self ].
+
+	[
+		desiredLocation := answer asNumber.
+		((1 to: taskBarSize) includes: desiredLocation) ifFalse: [ self error: 'incorrect location' ] ] onErrorDo: [
+			InformativeNotification signal: 'Location must be a number between 1 and ' , taskBarSize printString.
+			^ self ].
+
+	self moveTaskOf: aMorph by: desiredLocation - taskLocation
+]
+
+{ #category : 'taskbar' }
 TaskbarMorph >> buttonForMorph: aMorph [
 	"Answer the button corresonding to the given
 	morph or nil if none."
@@ -269,6 +290,26 @@ TaskbarMorph >> move: task withOffset: offset [
 	newOrderedTasks add: task beforeIndex: newTaskIndex.
 	self orderedTasks: newOrderedTasks.
 	^ self updateTaskButtons
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskLeftOf: aMorph [
+
+	self moveTaskOf: aMorph by: -1
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskOf: aMorph by: offset [
+	"Move the task of aMorph by offset positions (negative: to the left)"
+
+	self updateTasks.
+	(self taskOf: aMorph) ifNotNil: [ :task | self move: task withOffset: offset ]
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskRightOf: aMorph [
+
+	self moveTaskOf: aMorph by: 1
 ]
 
 { #category : 'accessing' }

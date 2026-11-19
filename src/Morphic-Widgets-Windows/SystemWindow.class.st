@@ -1816,8 +1816,8 @@ SystemWindow >> initialize [
 	self extent: (300 @ 200) scaledByDisplayScaleFactor.
 	mustNotClose := false.
 	updatablePanes := Array new.
-	self bindKeyCombination: ($k meta shift alt ) toAction: [self taskbarMoveLeft ].
-	self bindKeyCombination: ($l meta shift alt) toAction: [self taskbarMoveRight ].
+	self bindKeyCombination: ($k meta shift alt ) toAction: [ self worldTaskbar ifNotNil: [ :taskbar | taskbar moveTaskLeftOf: self ] ].
+	self bindKeyCombination: ($l meta shift alt) toAction: [ self worldTaskbar ifNotNil: [ :taskbar | taskbar moveTaskRightOf: self ] ].
 	self bindKeyCombination: $w meta toAction: [ self class closeTopWindow ]
 ]
 
@@ -2342,12 +2342,6 @@ SystemWindow >> mouseUp: evt [
 	| cp |
 	cp := evt cursorPoint.
 	submorphs do: [:m | (m containsPoint: cp) ifTrue: [m mouseUp: evt]]
-]
-
-{ #category : 'move' }
-SystemWindow >> moveTaskbarTaskToOffset: offset [
-
-	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar updateTasks; move: self taskbarTask withOffset: offset ]
 ]
 
 { #category : 'open/close' }
@@ -3046,40 +3040,6 @@ SystemWindow >> taskbarIconName [
 			ifNotNil: [ :aName | ^aName ] ].
 
 	^ super taskbarIconName
-]
-
-{ #category : 'move' }
-SystemWindow >> taskbarMoveLeft [
-
-	self moveTaskbarTaskToOffset: -1
-]
-
-{ #category : 'move' }
-SystemWindow >> taskbarMoveRight [
-
-
-	self moveTaskbarTaskToOffset: 1
-]
-
-{ #category : 'move' }
-SystemWindow >> taskbarMoveTo [
-	"Move the current task button to the prompted location"
-
-	| taskBarSize taskLocation desiredLocation answer |
-	taskBarSize := self worldTaskbar orderedTasks size.
-	taskLocation := self worldTaskbar orderedTasks indexOf: self taskbarTask.
-
-	answer := UIManager default request: 'Enter new task location: 1..' , taskBarSize printString initialAnswer: taskLocation asString title: 'Move Task'.
-
-	answer ifNil: [ ^ self ].
-
-	[
-		desiredLocation := answer asNumber.
-		((1 to: taskBarSize) includes: desiredLocation) ifFalse: [ self error: 'incorrect location' ] ] onErrorDo: [
-			InformativeNotification signal: 'Location must be a number between 1 and ' , taskBarSize printString.
-			^ self ].
-
-	self moveTaskbarTaskToOffset: (taskLocation - desiredLocation) negated
 ]
 
 { #category : 'theme' }
