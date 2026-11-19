@@ -51,7 +51,7 @@ MorphicInitialization class >> installRootEventHandlers [
 
 	World
 		addRootEventHandler: DesktopRootEventHandler new;
-		addRootEventHandler: TaskListRootEventHandler new;
+		addRootEventHandler: TaskbarRootEventHandler new;
 		addRootEventHandler: HaloRootEventHandler new
 ]
 

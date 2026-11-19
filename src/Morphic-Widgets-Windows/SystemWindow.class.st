@@ -1816,8 +1816,6 @@ SystemWindow >> initialize [
 	self extent: (300 @ 200) scaledByDisplayScaleFactor.
 	mustNotClose := false.
 	updatablePanes := Array new.
-	self bindKeyCombination: ($k meta shift alt ) toAction: [ self worldTaskbar ifNotNil: [ :taskbar | taskbar moveTaskLeftOf: self ] ].
-	self bindKeyCombination: ($l meta shift alt) toAction: [ self worldTaskbar ifNotNil: [ :taskbar | taskbar moveTaskRightOf: self ] ].
 	self bindKeyCombination: $w meta toAction: [ self class closeTopWindow ]
 ]
 
