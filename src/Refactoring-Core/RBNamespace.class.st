@@ -685,7 +685,7 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 
 	| change value dict |
 	change := changeFactory renamePackage: aRBPackage to: aSymbol.
-	self perform: [  ] onlyWithChange: change.
+	changes addChange: change.
 	self flushCaches.
 	dict := changedPackages.
 	self markPackageAsRemoved: aRBPackage name.
