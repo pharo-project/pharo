@@ -172,20 +172,15 @@ WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion.
 	dropActionBlock := nil.
 	dragActionBlock := nil.
-	resizeActionBlock := nil.
-	
-	self initializeWorldAndActiveWorld
+	resizeActionBlock := nil
 ]
 
-{ #category : 'class initialization' }
-WorldMorph class >> initializeWorldAndActiveWorld [
-	"This method is creating the World and ActiveWorld global variables.
-	Waybe some of the initialization code could go directly in WorldMorph and other classes normal initialization?"
+{ #category : 'instance creation' }
+WorldMorph class >> installNewWorld [
+	"Create a world of my kind with its hand, and install it as World and ActiveWorld.
+	Morphic's initialization does it once all of Pharo is loaded; loading Morphic never creates a world"
 
 	| world hand |
-	"Ensure Morph is initialized."
-	Morph initialize.
-	
 	world := self new.
 	hand := HandMorph new.
 	world addHand: hand.
@@ -200,13 +195,13 @@ WorldMorph class >> initializeWorldAndActiveWorld [
 	world borderWidth: 0.
 
 	world displayWorldSafely.
-	MorphicCoreUIManager new spawnNewProcess.
 
 	world cleanseOtherworldlySteppers.
 
 	world worldState invalidate.
 
-	hand targetOffset: 0 @ 0
+	hand targetOffset: 0 @ 0.
+	^ world
 ]
 
 { #category : 'settings' }

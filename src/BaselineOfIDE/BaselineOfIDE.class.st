@@ -260,10 +260,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		register: StFinderPresenter as: #finder;
 		register: StProcessBrowser as: #processBrowser.
 
-	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
-	MorphicCoreUIManager writeClassVariableNamed: #UIProcess value: nil.
-
-	PolymorphSystemSettings desktopColor: Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
 	FreeTypeSystemSettings loadFt2Library: true.
 	FreeTypeSettings current monitorType: #LCD.
@@ -285,8 +281,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	RubCharacterScanner initialize.
 
 	RubAbstractTextArea highlightMessageSend: true.
-
-	(self class environment at: #PolymorphSystemSettings) defaultTheme beCurrent.
 
 	SDL_Event initialize.
 

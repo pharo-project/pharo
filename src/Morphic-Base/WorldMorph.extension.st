@@ -48,3 +48,10 @@ WorldMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]
 ]
+
+{ #category : '*Morphic-Base' }
+WorldMorph >> notifyUser: aStringOrText [
+	"Tell the user aStringOrText, with a message dialog"
+
+	self theme messageIn: self text: aStringOrText title: 'Information' translated
+]

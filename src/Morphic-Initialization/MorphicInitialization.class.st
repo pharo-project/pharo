@@ -23,12 +23,21 @@ MorphicInitialization class >> cleanUp [
 ]
 
 { #category : 'initialization' }
+MorphicInitialization class >> createWorld [
+	"Loading Morphic never creates a world: this is where Pharo's desktop world is born"
+
+	DesktopWorldMorph installNewWorld
+]
+
+{ #category : 'initialization' }
 MorphicInitialization class >> initializeEnvironment [
 	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it."
 
 	self
+		createWorld;
 		startUIProcess;
 		cleanUp;
+		useDefaultTheme;
 		initializeFontsAndDesktop;
 		installRootEventHandlers;
 		openWorldBars
@@ -72,4 +81,10 @@ MorphicInitialization class >> startUIProcess [
 	ErrorHandler default: ErrorHandler forCurrentSystemConfiguration.
 	"Back to the UI manager this session runs with (non interactive from the command line)"
 	UIManager default: UIManager forCurrentSystemConfiguration
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> useDefaultTheme [
+
+	PolymorphSystemSettings defaultTheme beCurrent
 ]
