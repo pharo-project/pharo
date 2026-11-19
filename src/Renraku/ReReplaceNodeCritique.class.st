@@ -25,8 +25,9 @@ ReReplaceNodeCritique class >> rule: aRule achor: anAnchor oldNode: aNode newNod
 
 { #category : 'accessing' }
 ReReplaceNodeCritique >> change [
-    "Build the method change after removing or replacing the matched node."
-		
+    "Parse a fresh AST, then remove or replace the matched node.
+    Generate an add-method change from the updated AST."
+
     | newTree newTreeNode parent |
     newTree := self entity parseTree.
     newTreeNode := newTree nodeAtTraversalIndex: (
@@ -37,9 +38,9 @@ ReReplaceNodeCritique >> change [
     (newNode isSequence and: [
         newNode statements isEmpty and: [
             newNode temporaries isEmpty and: [
-                parent notNil and: [
+                parent isNotNil and: [
                     parent isSequence and: [
-                        parent statements anySatisfy: [ :each | each == newTreeNode ] ] ] ] ] ])
+                        parent statements identityIncludes: newTreeNode ] ] ] ] ])
         ifTrue: [ parent removeNode: newTreeNode ]
         ifFalse: [
             newTreeNode replaceMethodSource: newNode.
