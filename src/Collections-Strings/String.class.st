@@ -1228,16 +1228,6 @@ String >> endsWithAColon [
 	^ self notEmpty and: [ self last == $: ]
 ]
 
-{ #category : 'testing' }
-String >> endsWithDigit [
-	"Answer whether the receiver's final character represents a digit."
-	"'foo10' endsWithDigit >>> true"
-	"'foo10foo' endsWithDigit >>> false"
-	"'foo1' endsWithDigit >>> true"
-
-	^ self notEmpty and: [self last isDigit]
-]
-
 { #category : 'converting' }
 String >> escapeCharacter: aCharacter [
 	"Returns a copy of the string doubling all occurence of aCharacter."
@@ -1986,17 +1976,6 @@ String >> isByteString [
 	^false
 ]
 
-{ #category : 'verification' }
-String >> isCapitalized [
-	"Return true if the first letter is capitalized"
-	
-	"'abc' isCapitalized >>> false"
-	"'Abc' isCapitalized >>> true"
-	
-	self ifEmpty: [ ^ false ].
-	^ self first isUppercase
-]
-
 { #category : 'testing' }
 String >> isLiteral [
 
@@ -2142,17 +2121,6 @@ String >> lineCorrespondingToIndex: anIndex [
 	self lineIndicesDo: [:start :endWithoutDelimiters :end |
 		anIndex <= end ifTrue: [^self copyFrom: start to: endWithoutDelimiters]].
 	^''
-]
-
-{ #category : 'accessing' }
-String >> lineCount [
-	"Answer the number of lines represented by the receiver, where every line delimiter CR, LF or CRLF pair adds one line."
-
-	| lineCount |
-	lineCount := 0.
-	self lineIndicesDo: [:start :endWithoutDelimiters :end |
-		lineCount := lineCount + 1].
-	^lineCount
 ]
 
 { #category : 'accessing' }
@@ -2308,14 +2276,6 @@ String >> numArgs [
 	"Test case of binary selector, if self allSatisfy: #isSpecial (inlined for speed)"
 	1 to: self size do: [ :i | (self at: i) isSpecial ifFalse: [ ^ -1 ] ].
 	^ 1
-]
-
-{ #category : 'converting' }
-String >> numericSuffix [
-	"'abc98' numericSuffix >>> 98"
-	"'98abc' numericSuffix >>> 0"
-	
-	^ self stemAndNumericSuffix last
 ]
 
 { #category : 'testing' }
@@ -2527,23 +2487,6 @@ String >> startsWithDigit [
 	"'11abc' startsWithDigit >>> true"
 
 	^ self size > 0 and: [self first isDigit]
-]
-
-{ #category : 'converting' }
-String >> stemAndNumericSuffix [
-	"Parse the receiver into a string-valued stem and a numeric-valued suffix."
-	
-	"'Fred2305' stemAndNumericSuffix >>> #('Fred' 2305)"
-
-	| stem suffix position |
-	stem := self.
-	suffix := 0.
-	position := 1.
-	[stem endsWithDigit and: [stem size > 1]] whileTrue:
-		[suffix :=  stem last digitValue * position + suffix.
-		position := position * 10.
-		stem := stem copyFrom: 1 to: stem size - 1].
-	^ { stem . suffix }
 ]
 
 { #category : 'storing' }
