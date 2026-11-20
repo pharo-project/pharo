@@ -673,7 +673,10 @@ ClassDescription >> package: aPackage [
 { #category : 'accessing - packages' }
 ClassDescription >> package: aPackage tag: aTag [
 
-	self deprecated: 'Please use directly the package organizer'.
+	self
+		deprecated: 'Please use directly the package organizer'
+		on: '2026-03-23'
+		in: #Pharo14.
 	^ ((self packageOrganizer ensurePackage: aPackage) ensureTag: aTag) addClass: self
 ]
 

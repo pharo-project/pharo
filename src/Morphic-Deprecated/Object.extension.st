@@ -9,7 +9,9 @@ Object >> systemIcon [
 		deprecated: 'The direct usage of #systemIcon is not recommended anymore since it
 	introduces a dependency with UI layer we do not want to have here. Instead, our UI
 	components should us #systemIconName to get the icon to use, and then user can resolve it
-	as their want (since different applications can have different iconpacks, etc.) #Pharo11'
+	as their want (since different applications can have different iconpacks, etc.)'
+		on: '2025-08-29'
+		in: #Pharo14
 		transformWith: '`@receiver systemIcon' -> '`@receiver iconNamed: `@receiver systemIconName'.
 
 	^ self iconNamed: self systemIconName

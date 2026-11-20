@@ -4,6 +4,9 @@ Extension { #name : 'Delay' }
 Delay class >> forDuration: aDuration [
 	"Return a new Delay for the given duration."
 
-	self deprecated: 'Use #forMilliseconds: instead' transformWith: '`@rcv forDuration: `@arg' -> '`@rcv forMilliseconds: `@arg asMilliSeconds'.
+	self
+		deprecated: 'Use #forMilliseconds: instead'
+		in: #Pharo14
+		transformWith: '`@rcv forDuration: `@arg' -> '`@rcv forMilliseconds: `@arg asMilliSeconds'.
 	^ self forMilliseconds: aDuration asMilliSeconds
 ]

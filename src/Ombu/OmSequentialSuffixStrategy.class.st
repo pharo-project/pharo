@@ -13,9 +13,7 @@ Class {
 OmSequentialSuffixStrategy >> nextTo: aName in: aDirectory [
 
 	| fileReference |
-	fileReference := OmFileStore
-		fileReferenceForStoreNamed: aName
-		inDirectory: aDirectory.
-
-	^ fileReference nextVersion basenameWithoutExtension
+	fileReference := OmFileStore fileReferenceForStoreNamed: aName inDirectory: aDirectory.
+	fileReference exists ifFalse: [ ^ fileReference basenameWithoutExtension ].
+	^ (FileVersionner from: fileReference) nextVersion basenameWithoutExtension
 ]

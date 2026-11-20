@@ -4,7 +4,8 @@ Extension { #name : 'OCProgramNode' }
 OCProgramNode >> hasLinks [
 	self
 		deprecated: 'use #hasMetaLinks'
-		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
+		in: #Pharo14
+		transformWith: '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
 	^self hasMetaLinks
 ]
 
@@ -12,6 +13,7 @@ OCProgramNode >> hasLinks [
 OCProgramNode >> isReservedVariable [
 	self
 		deprecated: 'Please use #isPseudoVariable instead'
+		in: #Pharo14
 		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
 
 	^ self isPseudoVariable

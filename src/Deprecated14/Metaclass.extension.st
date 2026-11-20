@@ -4,6 +4,7 @@ Extension { #name : 'Metaclass' }
 Metaclass >> trait: aTraitCompositionOrArray instanceVariableNames: instVarString [
 	self
 		deprecated: 'Use #trait:slots: instead.'
+		in: #Pharo14
 		transformWith: '`@rcv trait: `@arg1 instanceVariableNames: `@arg2' -> '`@rcv trait: `@arg1 slots: `@arg2 asSlotCollection'.
 
 
@@ -13,7 +14,10 @@ Metaclass >> trait: aTraitCompositionOrArray instanceVariableNames: instVarStrin
 { #category : '*Deprecated14' }
 Metaclass >> uses: aTraitCompositionOrArray [
 
-	self deprecated: 'Please use #trait: instead' transformWith: '`@receiver trait: `@arg' -> '`@receiver trait: `@arg'.
+	self
+		deprecated: 'Please use #trait: instead'
+		in: #Pharo14
+		transformWith: '`@receiver trait: `@arg' -> '`@receiver trait: `@arg'.
 
 	^ self trait: aTraitCompositionOrArray
 ]
@@ -23,6 +27,7 @@ Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString
 	
 	self
 		deprecated: 'Use #trait:slots: instead.'
+		in: #Pharo14
 		transformWith: '`@rcv uses: `@arg1 instanceVariableNames: `@arg2' -> '`@rcv trait: `@arg1 slots: `@arg2 asSlotCollection'.
 	^ self trait: aTraitCompositionOrArray slots: instVarString asSlotCollection
 ]
@@ -32,5 +37,6 @@ Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
 	
 	self
 		deprecated: 'Use #trait:slots: instead.'
+		in: #Pharo14
 		transformWith: '`@rcv uses: `@arg1 slots: `@arg2' -> '`@rcv trait: `@arg1 slots: `@arg2'.
 ]

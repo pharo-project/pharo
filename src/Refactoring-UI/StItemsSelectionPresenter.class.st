@@ -43,8 +43,11 @@ StItemsSelectionPresenter class >> defaultLayout [
 { #category : 'specs' }
 StItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 
-	self deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
-	to a POM or application. Instead, create with newApplication: and set the elements on instance side'.
+	self
+		deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
+	to a POM or application. Instead, create with newApplication: and set the elements on instance side'
+		on: '2026-02-02'
+		in: #Pharo14.
 	
 	^ self new
 		label: aString withItems: items selecting: selectedItems;
@@ -55,8 +58,11 @@ StItemsSelectionPresenter class >> label: aString withItems: items selecting: se
 { #category : 'specs' }
 StItemsSelectionPresenter class >> title: aTitle label: aString withItems: items selecting: selectedItems [
 
-	self deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
-	to a POM or application. Instead, create with newApplication: and set the elements on instance side'.
+	self
+		deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
+	to a POM or application. Instead, create with newApplication: and set the elements on instance side'
+		on: '2026-02-02'
+		in: #Pharo14.
 
 	^ self new
 		  title: aTitle

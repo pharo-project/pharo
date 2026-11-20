@@ -130,14 +130,22 @@ CoASTHeuristicsResultSetBuilder class >> variablesHeuristic: aCollection [
 { #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 	
-	self deprecated: 'Use messagesHeuristic' transformWith: '`@rec messageHeuristic' -> '`@rec messagesHeuristic'.
+	self
+		deprecated: 'Use messagesHeuristic'
+		on: '2025-12-30'
+		in: #Pharo14
+		transformWith: '`@rec messageHeuristic' -> '`@rec messagesHeuristic'.
 	^ self messagesHeuristic
 ]
 
 { #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> messageHeuristic: aHeuristic [
 
-		self deprecated: 'Use messagesHeuristic' transformWith: '`@rec messageHeuristic: `@arg' -> '`@rec messagesHeuristic: `@arg'.
+		self
+			deprecated: 'Use messagesHeuristic'
+			on: '2025-12-30'
+			in: #Pharo14
+			transformWith: '`@rec messageHeuristic: `@arg' -> '`@rec messagesHeuristic: `@arg'.
 	self messagesHeuristic: aHeuristic
 ]
 
@@ -160,14 +168,22 @@ CoASTHeuristicsResultSetBuilder >> messagesHeuristic: aHeuristic [
 { #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic [
 
-		self deprecated: 'Use methodNodeHeuristic' transformWith: '`@rec methodNodeHeuristic' -> '`@rec methodNodesHeuristic'.
+		self
+			deprecated: 'Use methodNodeHeuristic'
+			on: '2025-12-30'
+			in: #Pharo14
+			transformWith: '`@rec methodNodeHeuristic' -> '`@rec methodNodesHeuristic'.
 		^ self methodNodesHeuristic
 ]
 
 { #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic: aHeuristic [
 
-	self deprecated: 'Use methodNodesHeuristic:' transformWith: '`@rec methodNodeHeuristic: `@arg' -> '`@rec methodNodesHeuristic: `@arg'.
+	self
+		deprecated: 'Use methodNodesHeuristic:'
+		on: '2025-12-30'
+		in: #Pharo14
+		transformWith: '`@rec methodNodeHeuristic: `@arg' -> '`@rec methodNodesHeuristic: `@arg'.
 	self methodNodesHeuristic: aHeuristic
 ]
 

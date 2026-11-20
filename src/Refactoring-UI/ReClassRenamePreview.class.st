@@ -1,23 +1,16 @@
 Class {
 	#name : 'ReClassRenamePreview',
 	#superclass : 'Object',
-	#instVars : [ 'driver', 'compositeChange', 'warning', 'errorMessage' ],
+	#instVars : [
+		'driver',
+		'compositeChange',
+		'warning',
+		'errorMessage'
+	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
-
-{ #category : 'accessing' }
-ReClassRenamePreview >> driver [
-
-	^ driver
-]
-
-{ #category : 'accessing' }
-ReClassRenamePreview >> driver: anObject [
-
-	driver := anObject
-]
 
 { #category : 'accessing' }
 ReClassRenamePreview >> compositeChange [
@@ -32,15 +25,15 @@ ReClassRenamePreview >> compositeChange: anObject [
 ]
 
 { #category : 'accessing' }
-ReClassRenamePreview >> warning [
+ReClassRenamePreview >> driver [
 
-	^ warning
+	^ driver
 ]
 
 { #category : 'accessing' }
-ReClassRenamePreview >> warning: anObject [
+ReClassRenamePreview >> driver: anObject [
 
-	warning := anObject
+	driver := anObject
 ]
 
 { #category : 'accessing' }
@@ -53,4 +46,16 @@ ReClassRenamePreview >> errorMessage [
 ReClassRenamePreview >> errorMessage: anObject [
 
 	errorMessage := anObject
+]
+
+{ #category : 'accessing' }
+ReClassRenamePreview >> warning [
+
+	^ warning
+]
+
+{ #category : 'accessing' }
+ReClassRenamePreview >> warning: anObject [
+
+	warning := anObject
 ]

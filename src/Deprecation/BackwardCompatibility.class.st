@@ -52,14 +52,11 @@ BackwardCompatibility class >> backwardsCompatibilityWhile: aBlock [
 	^ result
 ]
 
-{ #category : 'handling' }
-BackwardCompatibility >> defaultAction [
-    RecursionStopper during: [
-        self class addLog: self.
-        self showWarning ifTrue: [ self logTranscript ].
-        self raiseWarning ifTrue: [ super defaultAction ].
-        self shouldTransform ifTrue: [ self transform ]
-    ]
+{ #category : 'settings' }
+BackwardCompatibility class >> defaultRewriting [
+	"Methods kept for backward compatibility rewrite their callers as soon as they run, as they always did."
+
+	^ AlwaysRewriteDeprecation
 ]
 
 { #category : 'private' }

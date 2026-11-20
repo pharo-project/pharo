@@ -5,6 +5,8 @@ WorldMorph class >> scaleFactor [
 
 	self
 		deprecated: 'Use #zoomFactor instead.'
+		on: '2025-10-29'
+		in: #Pharo14
 		transformWith: '`@rcv scaleFactor' -> '`@rcv zoomFactor'.
 	^ self zoomFactor
 ]
@@ -14,18 +16,8 @@ WorldMorph class >> scaleFactor: aValue [
 
 	self
 		deprecated: 'Use #zoomFactor: instead.'
+		on: '2025-10-29'
+		in: #Pharo14
 		transformWith: '`@rcv scaleFactor: `@arg1' -> '`@rcv zoomFactor: `@arg1'.
 	^ self zoomFactor: aValue
-]
-
-{ #category : '*Morphic-Deprecated' }
-WorldMorph >> scaleFactor: newZoomFactor [
-
-	self
-		deprecated: 'Use #zoomFactor: instead'
-		on: '20/12/2024'
-		in: 'pharo13'
-		transformWith:
-		'`@receiver scaleFactor: `@arg' -> '`@receiver zoomFactor: `@arg'.
-	self zoomFactor: newZoomFactor
 ]
