@@ -13,7 +13,7 @@ ProjectManagerTest >> testPackagesInAProject [
 
 	self
 		assertCollection:
-			#( 'BaselineOfSUnit' 'SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'SUnit-Visitor' 'SUnit-Visitor-Tests' 'SUnit-MockObjects' 'SUnit-MockObjects-Tests'
+			#( 'BaselineOfSUnit' 'SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'SUnit-Visitor' 'SUnit-Visitor-Tests' 'SUnit-MockObjects' 'SUnit-MockObjects-Tests' 'SUnit-SmokeVerifier' 'SUnit-SmokeVerifier-Tests'
 			   'SUnit-UI' 'Coverage' 'SUnit-Basic-CLI' 'SUnit-UI-Tests'  'Coverage-Tests')
 		hasSameElements: (sUnitProject packages collect: [ :package | package name ])
 ]
