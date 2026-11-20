@@ -1447,8 +1447,7 @@ MorphTreeMorph >> release [
 		columns := nil ].
 	listManager ifNotNil: [
 		listManager release.
-		listManager := nil ].
-	self releaseActionMap "we are not sure if we need it"
+		listManager := nil ]
 ]
 
 { #category : 'column handling' }

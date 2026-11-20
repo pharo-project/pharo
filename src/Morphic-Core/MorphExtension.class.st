@@ -18,27 +18,12 @@ Class {
 		'layoutProperties',
 		'borderStyle',
 		'cornerStyle',
-		'actionMap',
 		'clipSubmorphs'
 	],
 	#category : 'Morphic-Core-Kernel',
 	#package : 'Morphic-Core',
 	#tag : 'Kernel'
 }
-
-{ #category : 'accessing' }
-MorphExtension >> actionMap [
-	"Answer the value of actionMap"
-
-	^actionMap ifNil: [self valueOfProperty: #actionMap]
-]
-
-{ #category : 'accessing' }
-MorphExtension >> actionMap: anObject [
-	"Set the value of actionMap"
-
-	actionMap := anObject
-]
 
 { #category : 'accessing - other properties' }
 MorphExtension >> assureOtherProperties [
@@ -418,7 +403,6 @@ MorphExtension >> veryDeepInner: deepCopier [
 	layoutProperties := layoutProperties veryDeepCopyWith: deepCopier.
 	borderStyle := borderStyle  veryDeepCopyWith: deepCopier.
 	cornerStyle := cornerStyle veryDeepCopyWith: deepCopier.
-	actionMap := actionMap veryDeepCopyWith: deepCopier.
 	clipSubmorphs := clipSubmorphs veryDeepCopyWith: deepCopier.
 
 	otherProperties ifNil: [ ^self ].

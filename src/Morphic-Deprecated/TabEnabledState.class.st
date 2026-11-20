@@ -4,9 +4,8 @@ I am the state of a tab enabled but not yet selected
 Class {
 	#name : 'TabEnabledState',
 	#superclass : 'TabState',
-	#category : 'Morphic-Widgets-Tabs-States',
-	#package : 'Morphic-Widgets-Tabs',
-	#tag : 'States'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'protocol' }

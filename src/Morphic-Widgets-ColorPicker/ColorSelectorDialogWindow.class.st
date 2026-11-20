@@ -219,9 +219,10 @@ ColorSelectorDialogWindow >> newContentMorph [
 ColorSelectorDialogWindow >> newHSVAColorSelectorMorph [
 	"Answer a hsva color selector."
 
-	^HSVAColorSelectorMorph new
-		extent: (40@28) + 152;
-		when: #selectedColor send: #colorSelected: to: self
+	^ HSVAColorSelectorMorph new
+		  extent: 40 @ 28 + 152;
+		  whenColorSelectedDo: [ :aColor | self colorSelected: aColor ];
+		  yourself
 ]
 
 { #category : 'actions' }

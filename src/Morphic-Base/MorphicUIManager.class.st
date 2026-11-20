@@ -267,8 +267,7 @@ MorphicUIManager >> deactivate [
 	activeTranscript := Transcript.
 	SystemProgressMorph disable.
 
-	self triggerEvent: #aboutToLeaveWorld.
-	WorldMorph extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].
+	WorldMorph extraWorldList do: [ :world | world removeModalWindow ].
 
 	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld)
 ]

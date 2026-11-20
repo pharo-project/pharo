@@ -13,5 +13,5 @@ Class {
 ManifestMorphicWidgetsWindows class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Object Events' #'System-Localization')
+	^ #(#'System-Localization')
 ]
