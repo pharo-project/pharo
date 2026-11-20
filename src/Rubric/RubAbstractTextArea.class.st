@@ -2101,7 +2101,10 @@ RubAbstractTextArea >> themeChanged [
 	].
 
 	self class backgroundColor: self theme backgroundColor.
-	self color: self defaultColor.
+	"In a scroll pane, the scroll pane draws the background (see #scrollPane:)"
+	self color: (scrollPane
+			 ifNil: [ self defaultColor ]
+			 ifNotNil: [ Color transparent ]).
 	super themeChanged
 ]
 
