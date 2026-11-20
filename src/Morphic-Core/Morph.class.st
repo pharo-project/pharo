@@ -225,11 +225,6 @@ Morph >> activeHand [
    ^ world activeHand
 ]
 
-{ #category : 'menus' }
-Morph >> addAddHandMenuItemsForHalo: aMenu hand: aHandMorph [
-	"The former charter of this method was to add halo menu items that pertained specifically to the hand.  Over time this charter has withered, and most morphs reimplement this method simply to add their morph-specific menu items.  So in the latest round, all other implementors in the standard image have been removed.  However, this is left here as a hook for the benefit of existing code in client uses."
-]
-
 { #category : 'events - alarms' }
 Morph >> addAlarm: aSelector after: delayTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
@@ -291,58 +286,6 @@ Morph >> addAllMorphs: aCollection after: anotherMorph [
 			atIndex: (submorphs indexOf: anotherMorph ifAbsent: [submorphs size])
 ]
 
-{ #category : 'menu' }
-Morph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
-	"Probably one could offer border-style items even if it's not a borderedMorph, so this remains a loose end for the moment"
-]
-
-{ #category : 'layout - menu' }
-Morph >> addCellLayoutMenuItems: aMenu hand: aHand [
-	"Cell (e.g., child) related items"
-	| menu sub |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	menu addUpdating: #hasDisableTableLayoutString selector: #changeDisableTableLayout.
-	menu addLine.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#rigid #shrinkWrap #spaceFill)
-		do: [ :sym |
-			sub
-				addUpdating: #hResizingString:
-				target: self
-				selector: #hResizing:
-				argumentList: (Array with: sym) ].
-	menu add: 'horizontal resizing' subMenu: sub.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#rigid #shrinkWrap #spaceFill)
-		do: [ :sym |
-			sub
-				addUpdating: #vResizingString:
-				target: self
-				selector: #vResizing:
-				argumentList: (Array with: sym) ].
-	menu add: 'vertical resizing' subMenu: sub.
-	aMenu ifNotNil: [ aMenu add: 'child layout' subMenu: menu ].
-	^ menu
-]
-
-{ #category : 'menus' }
-Morph >> addCustomHaloMenuItems: aMenu hand: aHandMorph [
-	"Add morph-specific items to the given menu which was invoked by the given hand from the halo.  To get started, we defer to the counterpart method used with the option-menu, but in time we can have separate menu choices for halo-menus and for option-menus"
-
-	self addCustomMenuItems: aMenu hand: aHandMorph
-]
-
-{ #category : 'menus' }
-Morph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
-	"Add morph-specific items to the given menu which was invoked by the given hand.  This method provides is invoked both from the halo-menu and from the control-menu regimes."
-]
-
-{ #category : 'debug and other' }
-Morph >> addDebuggingItemsTo: aMenu hand: aHandMorph [
-	aMenu add: 'debug...' subMenu: (self buildDebugMenu: aHandMorph).
-	aMenu lastItem icon: (self iconNamed: #smallDebug)
-]
-
 { #category : 'updating' }
 Morph >> addDependent: anObject [
 
@@ -363,186 +306,6 @@ Morph >> addDropShadow [
 	self shadowOffset: 3@3.
 	self layoutChanged.
 	self changed
-]
-
-{ #category : 'drop shadows' }
-Morph >> addDropShadowMenuItems: aMenu hand: aHand [
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	menu
-		addUpdating: #hasDropShadowString
-		selector: #toggleDropShadow.
-	menu addLine.
-	menu add: 'shadow color...' target: self selector: #changeShadowColor.
-	menu add: 'shadow offset...' target: self selector: #setShadowOffset:.
-	aMenu add: 'drop shadow' subMenu: menu
-]
-
-{ #category : 'meta actions' }
-Morph >> addEmbeddingMenuItemsTo: aMenu hand: aHandMorph [
-	"Construct a menu offerring embed targets for the receiver.  If the incoming menu is is not degenerate, add the constructed menu as a submenu; in any case, answer the embed-target menu"
-
-	| menu potentialEmbeddingTargets |
-	potentialEmbeddingTargets := self potentialEmbeddingTargets.
-	potentialEmbeddingTargets size > 1
-		ifFalse: [ ^ self ].
-	menu := self morphicUIManager newMenuIn: self for: self.
-	potentialEmbeddingTargets
-		reverseDo: [ :m |
-			menu
-				add: m class name asString
-				target: m
-				selector: #addMorphFrontFromWorldPosition:
-				argument: self topRendererOrSelf.
-			menu lastItem icon: (m iconOrThumbnailOfSize: 16).
-			self owner == m
-				ifTrue: [ menu lastItem emphasis: 1 ] ].
-	aMenu add: 'embed into' subMenu: menu.
-	^ menu
-]
-
-{ #category : 'menus' }
-Morph >> addExportMenuItems: aMenu hand: aHandMorph [
-	"Add export items to the menu"
-
-	aMenu
-		ifNotNil: [ | aSubMenu |
-			aSubMenu := self morphicUIManager newMenuIn: self for: self.
-			aSubMenu add: 'BMP file' selector: #exportAsBMP.
-			aSubMenu add: 'GIF file' selector: #exportAsGIF.
-			aSubMenu add: 'JPEG file' selector: #exportAsJPEG.
-			aSubMenu add: 'PNG file' selector: #exportAsPNG.
-			aMenu
-				add: 'export...'
-				icon: (self iconNamed: #smallExport)
-				subMenu: aSubMenu.
-			aMenu lastItem
-				icon: (self iconNamed: #smallExport) ]
-]
-
-{ #category : 'menus' }
-Morph >> addFillStyleMenuItems: aMenu hand: aHand [
-	"Add the items for changing the current fill style of the Morph"
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	self fillStyle addFillStyleMenuItems: menu hand: aHand from: self.
-	menu addLine.
-	menu add: 'solid fill' selector: #useSolidFill.
-	menu add: 'gradient fill' selector: #useGradientFill.
-	menu add: 'bitmap fill' selector: #useBitmapFill.
-	menu add: 'default fill' selector: #useDefaultFill.
-	aMenu add: 'fill style' subMenu: menu
-]
-
-{ #category : 'rotate scale and flex' }
-Morph >> addFlexShell [
-
-	"Wrap a rotating and scaling shell around this morph."
-
-	| oldHalo flexMorph myWorld anIndex |
-	myWorld := self world.
-	oldHalo := self halo.
-	anIndex := self owner submorphIndexOf: self.
-	self owner
-		addMorph: (flexMorph := TransformationMorph new asFlexOf: self)
-		asElementNumber: anIndex.
-	self transferStateToRenderer: flexMorph.
-	oldHalo ifNotNil: [ oldHalo setTarget: flexMorph ].
-	myWorld ifNotNil: [ flexMorph startSteppingSubmorphs ].
-
-	^ flexMorph
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> addHalo [
-	"Invoke a halo programatically (e.g., not from a meta gesture)"
-	^self addHalo: nil
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> addHalo: evt from: formerHaloOwner [
-	"Transfer a halo from the former halo owner to the receiver"
-	^self addHalo: evt
-]
-
-{ #category : 'menus' }
-Morph >> addHaloActionsTo: aMenu [
-	"Add items to aMenu representing actions requestable via halo"
-
-	| subMenu |
-	subMenu := self morphicUIManager newMenuIn: self for: self.
-	subMenu
-	buildTitle: [ :menuTitle | menuTitle
-		bigTitle: self externalName
-	];
-	add: 'delete' selector: #dismissViaHalo.
-	subMenu balloonTextForLastItem: 'Delete this object -- warning -- can be destructive!' translated.
-
-	self maybeAddCollapseItemTo: subMenu.
-	subMenu add: 'grab' selector: #openInHand.
-	subMenu balloonTextForLastItem: 'Pick this object up -- warning, since this removes it from its container, it can have adverse effects.' translated.
-
-	subMenu addLine.
-
-	subMenu add: 'resize'  selector: #resizeFromMenu.
-	subMenu balloonTextForLastItem: 'Change the size of this object' translated.
-
-	subMenu add: 'duplicate'  selector: #maybeDuplicateMorph.
-	subMenu balloonTextForLastItem: 'Hand me a copy of this object'.
-
-	subMenu addLine.
-
-	subMenu add: 'set color'  target: self renderedMorph selector: #changeColor.
-	subMenu balloonTextForLastItem: 'Change the color of this object'.
-
-	subMenu addLine.
-
-	subMenu add: 'inspect' target: self selector: #inspect.
-	subMenu balloonTextForLastItem: 'Open an Inspector on this object'.
-
-	aMenu add: 'halo actions...' subMenu: subMenu
-]
-
-{ #category : 'layout - menu' }
-Morph >> addLayoutMenuItems: topMenu hand: aHand [
-	| aMenu |
-	aMenu := self morphicUIManager newMenuIn: self for: self.
-	aMenu addUpdating: #hasNoLayoutString selector: #changeNoLayout.
-	aMenu addUpdating: #hasProportionalLayoutString selector: #changeProportionalLayout.
-	aMenu addUpdating: #hasTableLayoutString selector: #changeTableLayout.
-	aMenu addLine.
-	aMenu add: 'change layout inset...' selector: #changeLayoutInset:.
-	aMenu addLine.
-	self addCellLayoutMenuItems: aMenu hand: aHand.
-	self addTableLayoutMenuItems: aMenu hand: aHand.
-	topMenu ifNotNil: [ topMenu add: 'layout' subMenu: aMenu ].
-	^aMenu
-]
-
-{ #category : 'menus' }
-Morph >> addMiscExtrasTo: aMenu [
-	"Add a submenu of miscellaneous extra items to the menu."
-
-	| subMenu |
-	self isWorldMorph
-		ifTrue: [ ^ self ].
-	subMenu := self morphicUIManager newMenuIn: self for: self.
-	self renderedMorph isSystemWindow
-		ifFalse: [ subMenu add: 'put in a window' selector: #embedInWindow ].
-	subMenu add: 'adhere to edge...' selector: #adhereToEdge.
-	aMenu add: 'extras...' subMenu: subMenu
-]
-
-{ #category : 'menu' }
-Morph >> addModelYellowButtonItemsTo: aCustomMenu event: evt [
-	"Give my models a chance to add their context-menu items to
-	aCustomMenu."
-	self model
-		ifNotNil: [:mod |
-			mod
-				addModelYellowButtonMenuItemsTo: aCustomMenu
-				forMorph: self
-				hand: evt hand]
 ]
 
 { #category : 'submorphs - add/remove' }
@@ -648,254 +411,14 @@ Morph >> addMorphInLayer: aMorph [
 	self addMorphBack: aMorph
 ]
 
-{ #category : 'menu' }
-Morph >> addMyYellowButtonMenuItemsToSubmorphMenus [
-	"Answer true if I have items to add to the context menus of my submorphs"
-
-	^true
-]
-
-{ #category : 'menu' }
-Morph >> addNestedYellowButtonItemsTo: aMenu event: evt [
-	"Add items to aMenu starting with me and proceeding down
-	through my submorph chain,
-	letting any submorphs that include the event position
-	contribute their items to the bottom of the menu, separated by
-	a line."
-
-	| underMouse submenu |
-	self addYellowButtonMenuItemsTo: aMenu event: evt.
-	underMouse := self submorphThat: [ :each | each containsPoint: evt position ] ifNone: [ ^ self ].
-	(underMouse addMyYellowButtonMenuItemsToSubmorphMenus and: [ underMouse hasYellowButtonMenu ])
-		ifFalse: [ ^ self ].
-	aMenu addLine.
-	submenu := self morphicUIManager newMenuIn: underMouse for: underMouse.
-	underMouse addNestedYellowButtonItemsTo: submenu event: evt.
-	aMenu add: underMouse externalName icon: (underMouse iconOrThumbnailOfSize: 16) subMenu: submenu
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> addOptionalHandlesTo: aHalo box: box [
-]
-
-{ #category : 'menus' }
-Morph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
-	"Add standard halo items to the menu"
-
-	aMenu add: 'send to back' selector: #goBehind.
-	aMenu add: 'bring to front' selector: #comeToFront.
-	self addEmbeddingMenuItemsTo: aMenu hand: aHandMorph.
-	aMenu addLine.
-	self addFillStyleMenuItems: aMenu hand: aHandMorph.
-	self addBorderStyleMenuItems: aMenu hand: aHandMorph.
-	self addDropShadowMenuItems: aMenu hand: aHandMorph.
-	self addLayoutMenuItems: aMenu hand: aHandMorph.
-	self addHaloActionsTo: aMenu.
-	owner isTextMorph
-		ifTrue: [ self addTextAnchorMenuItems: aMenu hand: aHandMorph ].
-	aMenu addLine.
-	self addToggleItemsToHaloMenu: aMenu.
-	aMenu addLine.
-	self addExportMenuItems: aMenu hand: aHandMorph.
-	self addMiscExtrasTo: aMenu.
-	self addDebuggingItemsTo: aMenu hand: aHandMorph.
-	aMenu addLine.
-	aMenu defaultTarget: aHandMorph
-]
-
-{ #category : 'layout - menu' }
-Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
-	| menu sub |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	menu addUpdating: #hasReverseCellsString selector: #changeReverseCells.
-	menu addUpdating: #hasClipLayoutCellsString selector: #changeClipLayoutCells.
-	menu addUpdating: #hasRubberBandCellsString selector: #changeRubberBandCells.
-	menu addLine.
-	menu add: 'change cell inset...' selector: #changeCellInset:.
-	menu add: 'change min cell size...' selector: #changeMinCellSize:.
-	menu add: 'change max cell size...' selector: #changeMaxCellSize:.
-	menu addLine.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#leftToRight #rightToLeft #topToBottom #bottomToTop)
-		do: [ :sym |
-			sub
-				addUpdating: #listDirectionString:
-				target: self
-				selector: #changeListDirection:
-				argumentList: (Array with: sym) ].
-	menu add: 'list direction' subMenu: sub.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#none #leftToRight #rightToLeft #topToBottom #bottomToTop)
-		do: [ :sym |
-			sub
-				addUpdating: #wrapDirectionString:
-				target: self
-				selector: #wrapDirection:
-				argumentList: (Array with: sym) ].
-	menu add: 'wrap direction' subMenu: sub.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#center #topLeft #topRight #bottomLeft #bottomRight #topCenter #leftCenter #rightCenter #bottomCenter)
-		do: [ :sym |
-			sub
-				addUpdating: #cellPositioningString:
-				target: self
-				selector: #cellPositioning:
-				argumentList: (Array with: sym) ].
-	menu add: 'cell positioning' subMenu: sub.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#topLeft #bottomRight #center #justified)
-		do: [ :sym |
-			sub
-				addUpdating: #listCenteringString:
-				target: self
-				selector: #listCentering:
-				argumentList: (Array with: sym) ].
-	menu add: 'list centering' subMenu: sub.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#topLeft #bottomRight #center #justified)
-		do: [ :sym |
-			sub
-				addUpdating: #wrapCenteringString:
-				target: self
-				selector: #wrapCentering:
-				argumentList: (Array with: sym) ].
-	menu add: 'wrap centering' subMenu: sub.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#none #equal)
-		do: [ :sym |
-			sub
-				addUpdating: #listSpacingString:
-				target: self
-				selector: #listSpacing:
-				argumentList: (Array with: sym) ].
-	menu add: 'list spacing' subMenu: sub.
-	sub := self morphicUIManager newMenuIn: self for: self.
-	#(#none #localRect #localSquare #globalRect #globalSquare)
-		do: [ :sym |
-			sub
-				addUpdating: #cellSpacingString:
-				target: self
-				selector: #cellSpacing:
-				argumentList: (Array with: sym) ].
-	menu add: 'cell spacing' subMenu: sub.
-	aMenu ifNotNil: [ aMenu add: 'table layout' subMenu: menu ].
-	^ menu
-]
-
-{ #category : 'text-anchor' }
-Morph >> addTextAnchorMenuItems: topMenu hand: aHand [
-	| aMenu |
-	aMenu := self morphicUIManager newMenuIn: self for: self.
-	aMenu addUpdating: #hasInlineAnchorString selector: #changeInlineAnchor.
-	aMenu addUpdating: #hasParagraphAnchorString selector: #changeParagraphAnchor.
-	aMenu addUpdating: #hasDocumentAnchorString selector: #changeDocumentAnchor.
-	topMenu ifNotNil: [ topMenu add: 'text anchor' subMenu: aMenu ].
-	^aMenu
-]
-
-{ #category : 'menu' }
-Morph >> addTitleForHaloMenu: aMenu [
-	aMenu buildTitle: [ :menuTitle | menuTitle
-		bigTitle: self externalName;
-		icon: (self iconOrThumbnailOfSize: 18);
-		cellInset: 3
-	]
-]
-
-{ #category : 'menus' }
-Morph >> addToggleItemsToHaloMenu: aMenu [
-	"Add standard true/false-checkbox items to the memu"
-
-	#(#(#resistsRemovalString #toggleResistsRemoval 'whether I should be reistant to easy deletion via the pink X handle' true) #(#stickinessString #toggleStickiness 'whether I should be resistant to a drag done by mousing down on me' true) #(#lockedString #lockUnlockMorph 'when "locked", I am inert to all user interactions' true) #(#hasClipSubmorphsString #changeClipSubmorphs 'whether the parts of objects within me that are outside my bounds should be masked.' false) #(#hasDirectionHandlesString #changeDirectionHandles 'whether direction handles are shown with the halo' false) #(#hasDragAndDropEnabledString #changeDragAndDrop 'whether I am open to having objects dropped into me' false))
-		do: [ :each |
-			aMenu addUpdating: each first selector: each second.
-			aMenu balloonTextForLastItem: each third translated ].
-	self couldHaveRoundedCorners
-		ifFalse: [ ^ self ].
-	aMenu addUpdating: #roundedCornersString selector: #toggleCornerRounding.
-	aMenu balloonTextForLastItem: 'whether my corners should be rounded' translated
-]
-
 { #category : 'utilities' }
 Morph >> addTransparentSpacerOfSize: aPoint [
 	self addMorphBack: (self transparentSpacerOfSize: aPoint)
 ]
 
-{ #category : 'menu' }
-Morph >> addYellowButtonMenuItemsTo: aMenu event: evt [
-	"Populate aMenu with appropriate menu items for a
-	yellow-button (context menu) click."
-	aMenu defaultTarget: self.
-	self defaultYellowButtonMenuEnabled ifFalse: [^ self].
-	"aMenu addStayUpItem."
-	self addModelYellowButtonItemsTo: aMenu event: evt.
-	self cmdGesturesEnabled ifTrue: [
-			aMenu addLine.
-			aMenu add: 'inspect' selector: #inspect].
-	aMenu addLine.
-	self isWorldMorph ifFalse: [aMenu add: 'delete' selector: #delete].
-	self world selectedObject == self
-		ifTrue: [aMenu add: 'halo off' selector: #removeHalo]
-		ifFalse: [aMenu add: 'halo on' selector: #addHalo].
-	(self isWorldMorph
-			or: [self wantsToBeTopmost])
-		ifFalse: [
-			aMenu addLine.
-			aMenu add: 'send to back' selector: #goBehind.
-			aMenu add: 'bring to front' selector: #comeToFront.
-			self addEmbeddingMenuItemsTo: aMenu hand: evt hand].
-	self isWorldMorph ifFalse: [
-			self isFullOnScreen ifFalse: [aMenu add: 'move onscreen' selector: #goHome]].
-			self addLayoutMenuItems: aMenu hand: evt hand.
-			(owner isNotNil
-					and: [owner isTextMorph])
-				ifTrue: [self addTextAnchorMenuItems: aMenu hand: evt hand].
-	self isWorldMorph ifFalse: [
-			aMenu addLine.
-			self addToggleItemsToHaloMenu: aMenu].
-	aMenu addLine.
-	self isWorldMorph
-		ifFalse: [aMenu add: 'copy to paste buffer' selector: #copyToPasteBuffer:].
-	(self allStringsAfter: nil) isEmpty ifFalse: [aMenu add: 'copy text' selector: #clipText].
-	self addExportMenuItems: aMenu hand: evt hand.
-	aMenu addLine.
-	aMenu add: 'adhere to edge...' selector: #adhereToEdge.
-	self addCustomMenuItems: aMenu hand: evt hand
-]
-
 { #category : 'change reporting' }
 Morph >> addedMorph: aMorph [
 	"Notify the receiver that the given morph was just added."
-]
-
-{ #category : 'menus' }
-Morph >> adhereToEdge [
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	#(top right bottom left - center - topLeft topRight bottomRight bottomLeft - none)
-		do: [:each |
-			each == #-
-				ifTrue: [menu addLine]
-				ifFalse: [menu add: each asString selector: #setToAdhereToEdge: argument: each]].
-	menu popUpEvent: self currentEvent in: self world
-]
-
-{ #category : 'menus' }
-Morph >> adhereToEdge: edgeSymbol [
-	| edgeMessage |
-	(owner isNil or: [owner isHandMorph]) ifTrue: [^self].
-
-	"these are implemented in Morph, no need to use perform:"
-	edgeSymbol == #bottomLeft ifTrue: [ ^ self bottomLeft: owner bottomLeft ].
-	edgeSymbol == #bottomRight ifTrue: [ ^ self bottomRight: owner bottomRight ].
-	edgeSymbol == #adjustedCenter ifTrue: [ ^ self adjustedCenter: owner adjustedCenter ].
-
-	(owner class canUnderstand:  edgeSymbol) ifFalse:  [^self].
-	(self class canUnderstand: ( edgeMessage := (edgeSymbol , ':') asSymbol ))
-		 ifFalse:  [^self].
-
-	self perform: edgeMessage
-		withArguments: (Array with: (owner perform: edgeSymbol))
 ]
 
 { #category : 'layout' }
@@ -919,20 +442,6 @@ Morph >> adjustLayoutBounds [
 	myExtent y < self minHeight
 		ifTrue: [ myExtent := myExtent x @ (myExtent y max: self minHeight - self bounds height + self layoutBounds height) ].
 	self layoutBounds: (box origin extent: myExtent)
-]
-
-{ #category : 'menus' }
-Morph >> adjustedCenter [
-	"Provides a hook for objects to provide a reference point other than the receiver's center,for the purpose of centering a submorph under special circumstances, such as BalloonMorph"
-
-	^ self center
-]
-
-{ #category : 'menus' }
-Morph >> adjustedCenter: c [
-	"Set the receiver's position based on the #adjustedCenter protocol for adhereToEdge.  By default this simply sets the receiver's center.   Though there are (at its inception anyway) no other implementors of this method, it is required in use with the #adhereToEdge when the centering of a submorph is to be with reference to a rectangle  other than the receiver's center."
-
-	self center: c
 ]
 
 { #category : 'accessing' }
@@ -1181,18 +690,6 @@ Morph >> balloonHelpEnabled [
 	^ self theme settings balloonHelpEnabled
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> balloonHelpTextForHandle: aHandle [
-	"Answer a string providing balloon help for the
-	given halo handle"
-	(aHandle eventHandler mouseSelectorsInclude: #doRecolor:with:) ifTrue: [^ 'Change color'].
-	(aHandle eventHandler mouseSelectorsInclude: #mouseDownInDimissHandle:with:) ifTrue: [^ 'Remove from screen' translated].
-	#(#(#addFullHandles 'More halo handles')  #(#chooseEmphasisOrAlignment 'Emphasis & alignment') #(#chooseFont 'Change font') #(#chooseNewGraphicFromHalo 'Choose a new graphic') #(#chooseStyle 'Change style') #(#doDebug:with: 'Debug') #(#doDirection:with: 'Choose forward direction') #(#doDup:with: 'Duplicate')  #(#doMenu:with: 'Menu') #(#doGrab:with: 'Pick up')  #(#mouseDownInCollapseHandle:with: 'Collapse') #(#mouseDownOnHelpHandle: 'Help')  #(#prepareToTrackCenterOfRotation:with: 'Move object or set center of rotation') #(#startDrag:with: 'Move') #(#startGrow:with: 'Change size') #(#startRot:with: 'Rotate') #(#startScale:with: 'Change scale')#(#trackCenterOfRotation:with: 'Set center of rotation') )
-		do: [:pair | (aHandle eventHandler mouseSelectorsInclude: pair first)
-				ifTrue: [^ pair last]].
-	^ 'unknown halo handle' translated
-]
-
 { #category : 'accessing' }
 Morph >> balloonText [
 	"Answer balloon help text or nil, if no help is available.
@@ -1425,103 +922,6 @@ Morph >> breakDependents [
 	self removeProperty: #announcer
 ]
 
-{ #category : 'debug and other' }
-Morph >> buildDebugMenu: aHand [
-	"Answer a debugging menu for the receiver.
-	 The hand argument is seemingly historical and plays no role presently"
-
-	| aMenu |
-	aMenu := self morphicUIManager newMenuIn: self for: self.
-	(self hasProperty: #errorOnDraw)
-		ifTrue: [ aMenu add: 'start drawing again' selector: #resumeAfterDrawError ].
-	(self hasProperty: #drawError)
-		ifTrue: [ aMenu add: 'debug drawing error' selector: #debugDrawError.
-			aMenu addLine ].
-	(self hasProperty: #errorOnStep)
-		ifTrue: [ aMenu add: 'start stepping again' selector: #resumeAfterStepError.
-			aMenu addLine ].
-	aMenu add: 'inspect morph' selector: #inspectInMorphic:.
-	aMenu lastItem
-		icon: (self iconNamed: #smallInspectIt).
-	aMenu add: 'inspect owner chain' selector: #inspectOwnerChain.
-	aMenu lastItem
-		icon: (self iconNamed: #smallInspectIt).
-	aMenu addLine.
-	aMenu
-		add: 'browse morph class'
-		target: self
-		selector: #browseHierarchy.
-	^ aMenu
-]
-
-{ #category : 'meta actions' }
-Morph >> buildHandleMenu: aHand [
-	"Build the morph menu for the given morph's halo's menu handle. This menu has two sections. The first section contains commands that are interpreted by the hand; the second contains commands provided by the target morph. This method allows the morph to decide which items should be included in the hand's section of the menu."
-
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	menu addLine.
-	self addStandardHaloMenuItemsTo: menu hand: aHand.
-	menu defaultTarget: aHand.
-	self addAddHandMenuItemsForHalo: menu  hand: aHand.
-	menu defaultTarget: self.
-	self addCustomHaloMenuItems: menu hand: aHand.
-	menu defaultTarget: aHand.
-	^ menu
-]
-
-{ #category : 'meta actions' }
-Morph >> buildMetaMenu: evt [
-	"Build the morph menu. This menu has two sections. The first section contains commands that are handled by the hand; the second contains commands handled by the argument morph."
-
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	menu add: 'grab' selector: #grabMorph:.
-	menu add: 'copy to paste buffer' selector: #copyToPasteBuffer:.
-	self maybeAddCollapseItemTo: menu.
-	menu add: 'delete' selector: #dismissMorph:.
-	menu addLine.
-	menu add: 'copy text' selector: #clipText.
-	menu addLine.
-	menu add: 'go behind' selector: #goBehind.
-	menu add: 'add halo' selector: #addHalo:.
-	menu add: 'duplicate' selector: #maybeDuplicateMorph:.
-	self addEmbeddingMenuItemsTo: menu hand: evt hand.
-	menu add: 'resize' selector: #resizeMorph:.
-	"Give the argument control over what should be done about fill styles"
-	self addFillStyleMenuItems: menu hand: evt hand.
-	self addDropShadowMenuItems: menu hand: evt hand.
-	self addLayoutMenuItems: menu hand: evt hand.
-	menu
-		addUpdating: #hasClipSubmorphsString
-		target: self
-		selector: #changeClipSubmorphs
-		argumentList: #().
-	menu addLine.
-	menu
-		add: 'inspect'
-		selector: #inspectAt:event:
-		argument: evt position.
-	menu add: 'explore' selector: #inspect.
-	menu lastItem
-		icon: (self iconNamed: #smallInspectIt).
-	menu addLine.
-	menu add: 'show actions' selector: #showActions.
-	menu addLine.
-	self addDebuggingItemsTo: menu hand: evt hand.
-	self addCustomMenuItems: menu hand: evt hand.
-	^ menu
-]
-
-{ #category : 'menu' }
-Morph >> buildYellowButtonMenu: aHand [
-	"build the morph menu for the yellow button"
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	self addNestedYellowButtonItemsTo: menu event: self activeHand lastEvent.
-	^ menu
-]
-
 { #category : 'testing' }
 Morph >> canDrawBorder: aBorderStyle [
 	"Return true if the receiver can be drawn with the given border style."
@@ -1561,11 +961,6 @@ Morph >> cellPositioning: aSymbol [
 ]
 
 { #category : 'layout - properties' }
-Morph >> cellPositioningString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self cellPositioning
-]
-
-{ #category : 'layout - properties' }
 Morph >> cellSpacing [
 	"Layout specific. This property describes how the cell size for each element in a list should be computed.
 		#globalRect - globally equal rectangular cells
@@ -1592,11 +987,6 @@ Morph >> cellSpacing: aSymbol [
 	self layoutChanged
 ]
 
-{ #category : 'layout - properties' }
-Morph >> cellSpacingString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self cellSpacing
-]
-
 { #category : 'geometry' }
 Morph >> center [
 
@@ -1608,142 +998,9 @@ Morph >> center: aPoint [
 	self position: (aPoint - (self extent // 2))
 ]
 
-{ #category : 'layout - menu' }
-Morph >> changeClipLayoutCells [
-	self invalidRect: self fullBounds.
-	self clipLayoutCells: self clipLayoutCells not.
-	self invalidRect: self fullBounds
-]
-
 { #category : 'drawing' }
 Morph >> changeClipSubmorphs [
 	self clipSubmorphs: self clipSubmorphs not
-]
-
-{ #category : 'user prompt' }
-Morph >> changeColor [
-
-	| dialog |
-	dialog := ColorSelectorDialogWindow new
-		title: 'Choose color';
-		selectedColor: self color.
-	dialog openModal.
-	dialog cancelled
-		ifFalse: [self fillStyle: dialog selectedColor]
-]
-
-{ #category : 'meta actions' }
-Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor hand: aHand [
-	"Put up a color picker for changing some kind of color."
-
-	(self morphicUIManager chooseColor: aColor)
-		ifNotNil: [:nc | anObject perform: aSymbol with: nc]
-]
-
-{ #category : 'menus' }
-Morph >> changeDirectionHandles [
-	^self wantsDirectionHandles: self wantsDirectionHandles not
-]
-
-{ #category : 'layout - menu' }
-Morph >> changeDisableTableLayout [
-	self disableTableLayout: self disableTableLayout not.
-	self layoutChanged
-]
-
-{ #category : 'text-anchor' }
-Morph >> changeDocumentAnchor [
-	"Change the anchor from/to document anchoring"
-
-	| newType |
-	newType := self textAnchorType == #document
-		ifTrue: [#paragraph]
-		ifFalse: [ #document].
-	owner isTextMorph
-		ifTrue:
-			[owner
-				anchorMorph: self
-				at: self position
-				type: newType]
-]
-
-{ #category : 'menus' }
-Morph >> changeDragAndDrop [
-	^self enableDragNDrop: self dragNDropEnabled not
-]
-
-{ #category : 'text-anchor' }
-Morph >> changeInlineAnchor [
-	"Change the anchor from/to line anchoring"
-
-	| newType |
-	newType := self textAnchorType == #inline
-				ifTrue: [#paragraph]
-				ifFalse: [#inline].
-	owner isTextMorph
-		ifTrue:
-			[owner
-				anchorMorph: self
-				at: self position
-				type: newType]
-]
-
-{ #category : 'layout - menu' }
-Morph >> changeListDirection: aSymbol [
-	| listDir wrapDir |
-	self listDirection: aSymbol.
-	(self wrapDirection == #none) ifTrue:[^self].
-	"otherwise automatically keep a valid table layout"
-	listDir := self listDirection.
-	wrapDir := self wrapDirection.
-	(listDir == #leftToRight or:[listDir == #rightToLeft]) ifTrue:[
-		wrapDir == #leftToRight ifTrue:[^self wrapDirection: #topToBottom].
-		wrapDir == #rightToLeft ifTrue:[^self wrapDirection: #bottomToTop].
-	] ifFalse:[
-		wrapDir == #topToBottom ifTrue:[^self wrapDirection: #leftToRight].
-		wrapDir == #bottomToTop ifTrue:[^self wrapDirection: #rightToLeft].
-	]
-]
-
-{ #category : 'layout - menu' }
-Morph >> changeNoLayout [
-	self layoutPolicy ifNil:[^self]. "already no layout"
-	self layoutPolicy: nil.
-	self layoutChanged
-]
-
-{ #category : 'text-anchor' }
-Morph >> changeParagraphAnchor [
-	"Change the anchor from/to paragraph anchoring"
-
-	| newType |
-	newType := self textAnchorType == #paragraph
-		ifTrue: [#document]
-		ifFalse: [#paragraph].
-	owner isTextMorph
-		ifTrue:
-			[owner
-				anchorMorph: self
-				at: self position
-				type: newType]
-]
-
-{ #category : 'layout - menu' }
-Morph >> changeReverseCells [
-	self reverseTableCells: self reverseTableCells not
-]
-
-{ #category : 'layout - menu' }
-Morph >> changeRubberBandCells [
-	self rubberBandCells: self rubberBandCells not
-]
-
-{ #category : 'drop shadows' }
-Morph >> changeShadowColor [
-	"Change the shadow color of the receiver -- triggered, e.g. from a menu"
-
-	(self morphicUIManager chooseColor: self shadowColor)
-		ifNotNil: [:nc | self shadowColor: nc]
 ]
 
 { #category : 'recategorized' }
@@ -1926,12 +1183,6 @@ Morph >> comeToFront [
 		ifFalse: [outerMorph owner addMorphFront: outerMorph]
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> comeToFrontAndAddHalo [
-	self comeToFront.
-	self addHalo
-]
-
 { #category : 'layout' }
 Morph >> computeBounds [
 	[ self doLayoutIn: self layoutBounds ]
@@ -1977,11 +1228,6 @@ Morph >> containsPoint: aPoint event: anEvent [
 Morph >> copy [
 
 	^ self veryDeepCopy
-]
-
-{ #category : 'meta actions' }
-Morph >> copyToPasteBuffer: evt [
-	^evt hand copyToPasteBuffer: self
 ]
 
 { #category : 'submorphs - add/remove' }
@@ -2064,17 +1310,8 @@ Morph >> defaultYellowButtonMenuEnabled [
 { #category : 'deferred message' }
 Morph >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
-	self owner
-		ifNotNil: [ self owner defer: aValuable]
-		ifNil: [ self morphicUIManager defer: aValuable ]
-]
 
-{ #category : 'halos and balloon help' }
-Morph >> defersHaloOnClickTo: aSubMorph [
-	"If a cmd-click on aSubMorph would make it a preferred recipient of the halo, answer true"
-	"May want to add a way (via a property) for morphs to assert true here -- this would let certain kinds of morphs that are unusually reluctant to take the halo on initial click"
-
-	^ false
+	self owner ifNotNil: [ self owner defer: aValuable ] ifNil: [ UIManager default defer: aValuable ]
 ]
 
 { #category : 'rotate scale and flex' }
@@ -2089,16 +1326,13 @@ Morph >> delete [
 	"Remove the receiver as a submorph of its owner and make its
 	new owner be nil."
 
-	self removeHalo.
 	self activeHand ifNotNil: [ :hand |
 		hand
 			releaseKeyboardFocus: self;
-			releaseMouseFocus: self.
-	].
-	owner ifNotNil:[
+			releaseMouseFocus: self ].
+	owner ifNotNil: [
 		self privateDelete.
-		self announceDeleted.
-	]
+		self announceDeleted ]
 ]
 
 { #category : 'halos and balloon help' }
@@ -2144,19 +1378,6 @@ Morph >> dismissMorph [
 	w := self world ifNil:[^self].
 	w stopStepping: self.
 	self delete
-]
-
-{ #category : 'meta actions' }
-Morph >> dismissMorph: evt [
-	self dismissMorph
-]
-
-{ #category : 'submorphs - add/remove' }
-Morph >> dismissViaHalo [
-	"The user has clicked in the delete halo-handle.  This provides a hook in case some concomitant action should be taken, or if the particular morph is not one which should be put in the trash can, for example."
-
-	self setProperty: #lastPosition toValue: self positionInWorld.
-	self dismissMorph
 ]
 
 { #category : 'change reporting' }
@@ -2395,35 +1616,6 @@ Morph >> duplicate [
 	newMorph arrangeToStartStepping.
 		newMorph privateOwner: nil. "no longer in world"
 	^newMorph
-]
-
-{ #category : 'meta actions' }
-Morph >> duplicateMorph: evt [
-	"Make and return a duplicate of the receiver's argument"
-	| dup |
-	dup := self duplicate.
-	evt hand grabMorph: dup from: owner. "duplicate was ownerless so use #grabMorph:from: here"
-	^dup
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> editBalloonHelpContent: aString [
-	| reply |
-	reply := self morphicUIManager
-		multiLineRequest: 'Edit the balloon help text for ' translated, self externalName
-		initialAnswer: (aString ifNil: [self noHelpString] ifNotNil: [aString])
-		answerHeight: 200.
-	reply ifNil: [^ self].  "User cancelled out of the dialog"
-	(reply isEmpty or: [reply asString = self noHelpString])
-		ifTrue: [self setBalloonText: nil]
-		ifFalse: [self setBalloonText: reply]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> editBalloonHelpText [
-	"Modify the receiver's balloon help text."
-
-	self editBalloonHelpContent: self balloonText
 ]
 
 { #category : 'accessing' }
@@ -2771,12 +1963,6 @@ Morph >> goHome [
 		ifTrue: [self bottom: box bottom - fb bottom + self bottom]
 ]
 
-{ #category : 'meta actions' }
-Morph >> grabMorph: evt [
-
-	evt hand grabMorph: self
-]
-
 { #category : 'dropping/grabbing' }
 Morph >> grabTransform [
 	"Return the transform for the receiver which should be applied during grabbing"
@@ -2804,24 +1990,6 @@ Morph >> hResizing: aSymbol [
 	"
 	self assureLayoutProperties hResizing: aSymbol.
 	self layoutChanged
-]
-
-{ #category : 'layout - properties' }
-Morph >> hResizingString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self hResizing
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> halo [
-	^ self primaryHand halo
-		ifNotNil: [ :h | h target == self ifTrue: [ h ] ]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> haloClass [
-	"Answer the name of the desired kind of HaloMorph to launch on behalf of the receiver"
-
-	^ #HaloMorph
 ]
 
 { #category : 'accessing' }
@@ -2923,29 +2091,17 @@ Morph >> handleListenEvent: anEvent [
 
 { #category : 'events - processing' }
 Morph >> handleMouseDown: anEvent [
-
 	"System level event handling."
 
 	anEvent wasHandled ifTrue: [ ^ self ]. "not interested"
 	anEvent hand removePendingBalloonFor: self.
 	anEvent wasHandled: true.
 
-	(anEvent isSpecialMetaMenuGesture and: [ self cmdGesturesEnabled ]) ifTrue: [
-		self invokeMetaMenu: anEvent.
-		^ self eventHandler ifNotNil: [ :handler |
-			  handler mouseDown: anEvent fromMorph: self ] ].
-
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
 
-	"Check to open halo"
-	(anEvent isSpecialGesture and: [self cmdGesturesEnabled])
-		ifTrue: [
-			^ self handleSpecialGesture: anEvent ].
-
 	self mouseDown: anEvent.
 
-	anEvent hand removeHaloFromClick: anEvent on: self.
 	(self handlesMouseStillDown: anEvent) ifTrue: [
 		self
 			startStepping: #handleMouseStillDown:
@@ -2953,8 +2109,7 @@ Morph >> handleMouseDown: anEvent [
 			arguments: { anEvent copy resetHandlerFields }
 			stepTime: self mouseStillDownStepRate ].
 
-	^ self eventHandler ifNotNil: [ :handler |
-		  handler mouseDown: anEvent fromMorph: self ]
+	^ self eventHandler ifNotNil: [ :handler | handler mouseDown: anEvent fromMorph: self ]
 ]
 
 { #category : 'events - processing' }
@@ -3055,34 +2210,6 @@ Morph >> handleMouseWheel: anEvent [
 		self mouseWheel: anEvent]
 ]
 
-{ #category : 'meta actions' }
-Morph >> handleSpecialGesture: mouseDownEvent [
-	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
-	| h tfm doNotDrag |
-	h := mouseDownEvent hand halo.
-	"Prevent wrap around halo transfers originating from throwing the event back in"
-	doNotDrag := false.
-	h ifNotNil:[
-		(h innerTarget == self) ifTrue:[doNotDrag := true].
-		(h innerTarget hasOwner: self) ifTrue:[doNotDrag := true].
-		(self hasOwner: h target) ifTrue:[doNotDrag := true]].
-
-	tfm := (self transformedFrom: nil) inverseTransformation.
-
-	"cmd-drag on flexed morphs works better this way"
-	h := self addHalo: (mouseDownEvent transformedBy: tfm).
-	h ifNil: [^ self].
-	doNotDrag ifTrue:[^self].
-	"Initiate drag transition if requested"
-	mouseDownEvent hand
-		waitForClicksOrDrag: h
-		event: (mouseDownEvent transformedBy: tfm)
-		selectors: { nil. nil. nil. #dragTarget:. }
-		threshold: 5.
-	"Pass focus explicitly here"
-	mouseDownEvent hand newMouseFocus: h
-]
-
 { #category : 'event handling' }
 Morph >> handleTextEditionEvent: anEvent [
 	"System level event handling."
@@ -3139,37 +2266,16 @@ Morph >> handlerForMouseDown: anEvent [
 	installed and can be used for morphs further down the hierarchy to negotiate whether
 	the inner or the outer morph should finally handle the event."
 
-	anEvent isSpecialGesture
-		ifTrue: [ ^ self handlerForSpecialGestureDown: anEvent ].
+	anEvent blueButtonPressed ifTrue: [ ^ self handlerForBlueButtonDown: anEvent ].
+	anEvent yellowButtonPressed ifTrue: [ ^ self handlerForYellowButtonDown: anEvent ].
+	(self handlesMouseDown: anEvent) ifFalse: [ ^ nil ]. "not interested"
 
-	anEvent blueButtonPressed
-		ifTrue: [^ self handlerForBlueButtonDown: anEvent].
-	anEvent yellowButtonPressed
-		ifTrue: [^ self handlerForYellowButtonDown: anEvent].
-	(self handlesMouseDown: anEvent)
-		ifFalse: [^ nil].	"not interested"
-
-	anEvent handler
-		ifNil: [^ self ].	"Same priority but I am innermost"
+	anEvent handler ifNil: [ ^ self ]. "Same priority but I am innermost"
 
 	"Nobody else was interested"
-	^self mouseDownPriority >= anEvent handler mouseDownPriority
-		ifTrue: [ self]
-		ifFalse: [ nil]
-]
-
-{ #category : 'meta actions' }
-Morph >> handlerForSpecialGestureDown: anEvent [
-	"Return the (prospective) handler for a special gesture event (Halos).
-	The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event."
-
-	self wantsHaloFromClick ifFalse: [ ^ nil ].
-
-	self class cycleHalosBothDirections
-		ifTrue: [ anEvent handler ifNil: [ ^ self ].
-			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
-
-	^ self
+	^ self mouseDownPriority >= anEvent handler mouseDownPriority
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : 'event handling' }
@@ -3295,37 +2401,10 @@ Morph >> handlesTextInputEvent: evt [
 	^false
 ]
 
-{ #category : 'layout - menu' }
-Morph >> hasClipLayoutCellsString [
-	^ (self clipLayoutCells) -> 'clip to cell size' translated
-]
-
 { #category : 'drawing' }
 Morph >> hasClipSubmorphsString [
 	"Answer a string that represents the clip-submophs checkbox"
 	^ (self clipSubmorphs) -> 'provide clipping' translated
-]
-
-{ #category : 'menus' }
-Morph >> hasDirectionHandlesString [
-	^ (self wantsDirectionHandles) ->  'direction handles' translated
-]
-
-{ #category : 'layout - menu' }
-Morph >> hasDisableTableLayoutString [
-	^ (self disableTableLayout) -> 'disable layout in tables' translated
-]
-
-{ #category : 'text-anchor' }
-Morph >> hasDocumentAnchorString [
-	^ (self textAnchorType == #document) ->  'Document' translated
-]
-
-{ #category : 'menus' }
-Morph >> hasDragAndDropEnabledString [
-	"Answer a string to characterize the drag & drop status of the
-	receiver"
-	^ (self dragNDropEnabled) -> 'accept drops' translated
 ]
 
 { #category : 'drop shadows' }
@@ -3345,11 +2424,6 @@ Morph >> hasDropShadow: aBool [
 		ifFalse:[self removeProperty: #hasDropShadow]
 ]
 
-{ #category : 'drop shadows' }
-Morph >> hasDropShadowString [
-	^ (self hasDropShadow) ->  'show shadow' translated
-]
-
 { #category : 'accessing - extension' }
 Morph >> hasExtension [
 	"answer whether the receiver has extention"
@@ -3361,23 +2435,6 @@ Morph >> hasFocus [
 	^ false
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> hasHalo [
-	^self hasProperty: #hasHalo
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> hasHalo: aBool [
-	aBool
-		ifTrue:[self setProperty: #hasHalo toValue: true]
-		ifFalse:[self removeProperty: #hasHalo]
-]
-
-{ #category : 'text-anchor' }
-Morph >> hasInlineAnchorString [
-	^ (self textAnchorType == #inline)-> 'Inline' translated
-]
-
 { #category : 'testing' }
 Morph >> hasKeyboardFocus [
 	"Answer whether the receiver has keyboard focus."
@@ -3386,22 +2443,12 @@ Morph >> hasKeyboardFocus [
 		activeHand ifNil: [^false])  keyboardFocus = self
 ]
 
-{ #category : 'layout - menu' }
-Morph >> hasNoLayoutString [
-	^ (self layoutPolicy isNil) -> 'no layout' translated
-]
-
 { #category : 'structure' }
 Morph >> hasOwner: aMorph [
 	"Return true if the receiver has aMorph in its owner chain"
 	aMorph ifNil:[^true].
 	self allOwnersDo:[:m| m = aMorph ifTrue:[^true]].
 	^false
-]
-
-{ #category : 'text-anchor' }
-Morph >> hasParagraphAnchorString [
-	^ (self textAnchorType == #paragraph) -> 'Paragraph' translated
 ]
 
 { #category : 'accessing - properties' }
@@ -3414,33 +2461,9 @@ Morph >> hasProperty: aSymbol [
 		  ifNotNil: [ :ext | ext hasProperty: aSymbol ]
 ]
 
-{ #category : 'layout - menu' }
-Morph >> hasProportionalLayoutString [
-	| layout |
-	^ ((layout := self layoutPolicy) isNotNil
-			and: [layout isProportionalLayout]) -> 'proportional layout' translated
-]
-
-{ #category : 'layout - menu' }
-Morph >> hasReverseCellsString [
-	^ (self reverseTableCells) -> 'reverse table cells' translated
-]
-
-{ #category : 'layout - menu' }
-Morph >> hasRubberBandCellsString [
-	^ (self rubberBandCells) -> 'rubber band cells' translated
-]
-
 { #category : 'submorphs - accessing' }
 Morph >> hasSubmorphs [
 	^submorphs notEmpty
-]
-
-{ #category : 'layout - menu' }
-Morph >> hasTableLayoutString [
-	| layout |
-	^ ((layout := self layoutPolicy) isNotNil
-			and: [layout isTableLayout]) ->   'table layout' translated
 ]
 
 { #category : 'menu' }
@@ -3628,30 +2651,6 @@ Morph >> insetColor [
 	^ owner ifNil: [ self color ] ifNotNil: [ self colorForInsets ]
 ]
 
-{ #category : 'meta actions' }
-Morph >> inspectAt: aPoint event: evt [
-	|  morphs target |
-	morphs := self morphsAt: aPoint.
-	(morphs includes: self) ifFalse:[morphs := morphs copyWith: self].
-	target := self morphicUIManager
-				chooseFrom: (morphs
-						collect: [:t |t class name asString])
-				values: morphs
-				title: ('inspect whom? (deepest at top)' translated).
-	target ifNil:[^self].
-	target inspectInMorphic: evt
-]
-
-{ #category : 'menus' }
-Morph >> inspectInMorphic: evt [
-	(Smalltalk tools toolNamed: #inspector) inspect: self
-]
-
-{ #category : 'debug and other' }
-Morph >> inspectOwnerChain [
-	self ownerChain inspectWithLabel: 'Owner chain for ', self printString
-]
-
 { #category : 'geometry' }
 Morph >> intersects: aRectangle [
 	"Answer whether aRectangle, which is in World coordinates, intersects me."
@@ -3686,16 +2685,6 @@ Morph >> invalidRect: aRectangle from: aMorph [
 		self clipSubmorphs
 			ifTrue:[damageRect := aRectangle intersect: self clippingBounds ifNone: [ ^ self ]]].
 	owner ifNotNil: [owner invalidRect: damageRect from: self]
-]
-
-{ #category : 'meta actions' }
-Morph >> invokeMetaMenu: evt [
-	| menu |
-	self world ifNil: [ ^self ].
-
-	menu := self buildMetaMenu: evt.
-	self addTitleForHaloMenu: menu.
-	menu popUpEvent: evt in: self world
 ]
 
 { #category : 'classification' }
@@ -3964,22 +2953,6 @@ Morph >> layoutInset: aNumber [
 	self layoutChanged
 ]
 
-{ #category : 'layout - menu' }
-Morph >> layoutMenuPropertyString: aSymbol from: currentSetting [
-	| wording |
-	wording := String
-				streamContents: [:stream |
-					| index |
-					index := 1.
-					aSymbol keysAndValuesDo: [:idx :ch | ch isUppercase
-								ifTrue: [stream nextPutAll: (aSymbol copyFrom: index to: idx - 1) asLowercase.
-										stream nextPutAll: ' '.
-										index := idx]].
-					index < aSymbol size
-						ifTrue: [stream nextPutAll: (aSymbol copyFrom: index to: aSymbol size) asLowercase]].
-	^ (aSymbol == currentSetting) -> wording translated
-]
-
 { #category : 'layout - properties' }
 Morph >> layoutPolicy [
 	"Layout specific. Return the layout policy describing how children
@@ -4067,11 +3040,6 @@ Morph >> listCentering: aSymbol [
 ]
 
 { #category : 'layout - properties' }
-Morph >> listCenteringString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self listCentering
-]
-
-{ #category : 'layout - properties' }
 Morph >> listDirection [
 	"Layout specific. This property describes the direction in which a list-like layout should be applied. Possible values are:
 		#leftToRight
@@ -4094,11 +3062,6 @@ Morph >> listDirection: aSymbol [
 	indicating the direction in which any layout should take place"
 	self assureTableProperties listDirection: aSymbol.
 	self layoutChanged
-]
-
-{ #category : 'layout - properties' }
-Morph >> listDirectionString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self listDirection
 ]
 
 { #category : 'base - widgets' }
@@ -4131,11 +3094,6 @@ Morph >> listSpacing: aSymbol [
 	self layoutChanged
 ]
 
-{ #category : 'layout - properties' }
-Morph >> listSpacingString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self listSpacing
-]
-
 { #category : 'geometry' }
 Morph >> localPointToGlobal: aPoint [
 	^self point: aPoint in: nil
@@ -4151,19 +3109,6 @@ Morph >> lock: aBoolean [
 	"change the receiver's lock property"
 	(extension isNil and: [aBoolean not]) ifTrue: [^ self].
 	self assureExtension locked: aBoolean
-]
-
-{ #category : 'menus' }
-Morph >> lockUnlockMorph [
-	"If the receiver is locked, unlock it; if unlocked, lock it"
-
-	self isLocked ifTrue: [self unlock] ifFalse: [self lock]
-]
-
-{ #category : 'menus' }
-Morph >> lockedString [
-	"Answer the string to be shown in a menu to represent the 'locked' status"
-	^ (self isLocked) -> 'be locked' translated
 ]
 
 { #category : 'submorphs - accessing' }
@@ -4186,28 +3131,6 @@ Morph >> maxCellSize: aPoint [
 	"Layout specific. This property specifies the maximum size of a table cell."
 	self assureTableProperties maxCellSize: aPoint.
 	self layoutChanged
-]
-
-{ #category : 'menus' }
-Morph >> maybeAddCollapseItemTo: aMenu [
-	"If appropriate, add a collapse item to the given menu"
-
-	| anOwner |
-	(anOwner := self topRendererOrSelf owner) ifNotNil:
-			[anOwner isWorldMorph ifTrue:
-				[aMenu add: 'collapse' target: self selector: #collapse]]
-]
-
-{ #category : 'meta actions' }
-Morph >> maybeDuplicateMorph [
-	"Maybe duplicate the morph"
-
-	^self duplicate openInHand
-]
-
-{ #category : 'meta actions' }
-Morph >> maybeDuplicateMorph: evt [
-	^self duplicateMorph: evt
 ]
 
 { #category : 'settings' }
@@ -4316,11 +3239,6 @@ Morph >> minimumExtent: aPoint [
 	"Remember a minimumExtent, for possible future use"
 
 	self setProperty: #minimumExtent toValue: aPoint
-]
-
-{ #category : 'menus' }
-Morph >> model [
-	^ nil
 ]
 
 { #category : 'structure' }
@@ -4460,17 +3378,6 @@ Morph >> mouseDown: evt [
 	"Handle a mouse down event. It can be handled here or in the event handler"
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> mouseDownOnHelpHandle: anEvent [
-	"The mouse went down in the show-balloon handle"
-
-	| str |
-	anEvent shiftPressed ifTrue: [^ self editBalloonHelpText].
-	str := self balloonText.
-	str ifNil: [str := self noHelpString].
-	self showBalloon: str hand: anEvent hand
-]
-
 { #category : 'events - processing' }
 Morph >> mouseDownPriority [
 	"Return the default mouse down priority for the receiver"
@@ -4588,18 +3495,11 @@ Morph >> navigateFocusForward [
 
 { #category : 'event handling' }
 Morph >> navigationKey: event [
-	"Check for tab key activity and change focus as appropriate.
-	Check for menu key to do popup."
+	"Let my window handle navigation keys"
 
-	(event key = KeyboardKey escape and: [
-			event anyModifierKeyPressed]) ifTrue: [
-		^ self yellowButtonActivity: false ].
+	self window ifNotNil: [ :win | (win handlesKeyDown: event) ifTrue: [ (win keyDown: event) ifTrue: [ ^ true ] ] ].
 
-	self window ifNotNil: [:win |
-		(win handlesKeyDown: event) ifTrue: [
-			(win keyDown: event) ifTrue: [^true]]].
-
-	^false
+	^ false
 ]
 
 { #category : 'structure' }
@@ -4617,13 +3517,6 @@ Morph >> noHelpString [
 { #category : 'submorphs - accessing' }
 Morph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> okayToAddDismissHandle [
-	"Answer whether a halo on the receiver should offer a dismiss handle.  This provides a hook for making it harder to disassemble some strucures even momentarily"
-
-	^self resistsRemoval not
 ]
 
 { #category : 'halos and balloon help' }
@@ -4913,35 +3806,6 @@ Morph >> postOpenInWorld: aWorld [
 	self startSteppingSubmorphs
 ]
 
-{ #category : 'meta actions' }
-Morph >> potentialEmbeddingTargets [
-	"Return the potential targets for embedding the receiver"
-
-	| oneUp topRend |
-	(oneUp := (topRend := self topRendererOrSelf) owner) ifNil: [ ^ #() ].
-	^ (oneUp morphsAt: topRend referencePosition behind: topRend unlocked: true) reject: [ :m | m isFlexMorph ]
-]
-
-{ #category : 'meta actions' }
-Morph >> potentialTargets [
-	"Return the potential targets for the receiver.
-	This is derived from Morph>>potentialEmbeddingTargets."
-	owner ifNil:[^#()].
-	^owner morphsAt: self referencePosition behind: self unlocked: true not
-]
-
-{ #category : 'meta actions' }
-Morph >> potentialTargetsAt: aPoint [
-	"Return the potential targets for the receiver.
-	This is derived from Morph>>potentialEmbeddingTargets."
-	| realOwner |
-	realOwner := self topRendererOrSelf
-	owner
-		ifNil: [^ #()].
-	^ realOwner
-		morphsAt: aPoint
-]
-
 { #category : 'opening' }
 Morph >> preOpenInWorld: aWorld [
 	"Interact with a world to decide how to position myself.
@@ -4957,13 +3821,6 @@ Morph >> preferredCornerStyle [
 	"Answer the preferred corner style."
 
 	^#square
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> preferredDuplicationHandleSelector [
-	"Answer the selector, either #addMakeSiblingHandle: or addDupHandle:, to be offered as the default in a halo open on me"
-
-	^ #addDupHandle:
 ]
 
 { #category : 'event handling' }
@@ -4984,7 +3841,7 @@ Morph >> prepareForScaling [
 	then wrap it in one and return it.
 	Polygons, eg, may override to return themselves."
 
-	^ self addFlexShell
+	^ TransformationMorph flexing: self
 ]
 
 { #category : 'copying' }
@@ -5219,8 +4076,9 @@ Morph >> processEvent: anEvent [
 Morph >> processEvent: anEvent using: defaultDispatcher [
 	"This is the central entry for dispatching events in morphic. Given some event and a default dispatch strategy, find the right receiver and let him handle it.
 	WARNING: This is a powerful hook. If you want to use a different event dispatcher from the default, here is the place to hook it in. Depending on how the dispatcher is written (e.g., whether it calls simply #processEvent: or #processEvent:using:) you can change the dispatch strategy for entire trees of morphs. Similarly, you can disable entire trees of morphs from receiving any events whatsoever. Read the documentation in class MorphicEventDispatcher before playing with it. "
-	(self rejectsEvent: anEvent) ifTrue:[^#rejected].
-	^defaultDispatcher dispatchEvent: anEvent with: self
+
+	(self rejectsEvent: anEvent) ifTrue: [ ^ #rejected ].
+	^ defaultDispatcher dispatchEvent: anEvent with: self
 ]
 
 { #category : 'accessing' }
@@ -5384,12 +4242,6 @@ Morph >> removeFlexShell [
 	self isFlexed ifTrue: [self owner removeFlexShell]
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> removeHalo [
-	"remove the surrounding halo (if any)"
-	self primaryHand removeHaloAround: self
-]
-
 { #category : 'submorphs - add/remove' }
 Morph >> removeMorph: aMorph [
 	"Remove the given morph from my submorphs"
@@ -5505,20 +4357,6 @@ Morph >> resistsRemoval: aBoolean [
 	aBoolean
 		ifTrue: [ self setProperty: #resistsRemoval toValue: true ]
 		ifFalse: [ self removeProperty: #resistsRemoval ]
-]
-
-{ #category : 'menus' }
-Morph >> resistsRemovalString [
-	"Answer the string to be shown in a menu to represent the
-	'resistsRemoval' status"
-	^ (self resistsRemoval) -> 'resist being deleted' translated
-]
-
-{ #category : 'meta actions' }
-Morph >> resizeFromMenu [
-	"Commence an interaction that will resize the receiver"
-
-	self resizeMorph: self activeHand lastEvent
 ]
 
 { #category : 'debug and other' }
@@ -5682,12 +4520,6 @@ Morph >> screenRectangle [
 	"For compatibility only"
 
 	^ self fullBounds
-]
-
-{ #category : 'selected object' }
-Morph >> selectedObject [
-	"answer the selected object for the hand or nil is none"
-	^ self primaryHand selectedObject
 ]
 
 { #category : 'dropping/grabbing' }
@@ -5870,41 +4702,6 @@ Morph >> show [
 	self changed
 ]
 
-{ #category : 'meta actions' }
-Morph >> showActions [
-	"Put up a message list browser of all the code that this morph
-	would run for mouseUp, mouseDown, mouseMove, mouseEnter,
-	mouseLeave, and mouseLinger."
-
-	| list cls selector adder |
-	list := SortedCollection new.
-	adder := [:mrClass :mrSel | list
-				add: (RGMethodDefinition realClass: mrClass selector: mrSel)].
-	"the eventHandler"
-	self eventHandler
-		ifNotNil: [list := self eventHandler methodRefList.
-			(self eventHandler handlesMouseDown: nil)
-				ifFalse: [adder value: HandMorph value: #grabMorph:]].
-	"If not those, then non-default raw events"
-	#(#keyStroke: #mouseDown: #mouseEnter: #mouseLeave: #mouseMove: #mouseUp: #doButtonAction )
-		do: [:sel |
-			cls := self class whichClassIncludesSelector: sel.
-			cls
-				ifNotNil: ["want more than default behavior"
-					cls == Morph
-						ifFalse: [adder value: cls value: sel]]].
-	"The mechanism on a Button"
-	(self respondsTo: #actionSelector)
-		ifTrue: ["A button"
-			selector := self actionSelector.
-			cls := self target class whichClassIncludesSelector: selector.
-			cls
-				ifNotNil: ["want more than default behavior"
-					cls == Morph
-						ifFalse: [adder value: cls value: selector]]].
-	(Smalltalk tools toolNamed: #messageList) browse: list title:  'Actions of ' , self printString from: self class
-]
-
 { #category : 'halos and balloon help' }
 Morph >> showBalloon: msgString [
 	"Pop up a balloon containing the given string,
@@ -6064,16 +4861,6 @@ Morph >> simulateRightMouseUp [
 	self simulateMouseUpWith: MouseEvent yellowButton
 ]
 
-{ #category : 'menus' }
-Morph >> snapToEdgeIfAppropriate [
-	| edgeSymbol oldBounds aWorld |
-	(edgeSymbol := self valueOfProperty: #edgeToAdhereTo) ifNotNil:
-		[oldBounds := bounds.
-		self adhereToEdge: edgeSymbol.
-		bounds ~= oldBounds ifTrue: [(aWorld := self world) ifNotNil: [aWorld viewBox ifNotNil:
-			[aWorld displayWorld]]]]
-]
-
 { #category : 'layout - properties' }
 Morph >> spaceFillWeight [
 	"Layout specific. This property describes the relative weight that
@@ -6163,13 +4950,6 @@ Morph >> stepAt: millisecondClockValue [
 Morph >> stepTime [
 
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
-]
-
-{ #category : 'menus' }
-Morph >> stickinessString [
-	"Answer the string to be shown in a menu to represent the stickiness status"
-
-	^ (self isSticky) ->  'resist being picked up' translated
 ]
 
 { #category : 'accessing' }
@@ -6362,19 +5142,6 @@ Morph >> target: aMorph [
 "Morphs with targets will override. This backstop does nothing."
 "This is here because targeting meta-actions are taken at morph level.
 Do not remove."
-]
-
-{ #category : 'meta actions' }
-Morph >> targetWith: evt [
-	"Some other morph become target of the receiver"
-	|  newTarget |
-	newTarget := self morphicUIManager
-				chooseFrom: (self potentialTargets
-						collect: [:t | t class name asString])
-				values: self potentialTargets
-				title: (self externalName, ' targets...' translated).
-	newTarget ifNil:[^self].
-	self target: newTarget
 ]
 
 { #category : 'text-anchor' }
@@ -6618,50 +5385,6 @@ Morph >> topRight: aPoint [
 	self position: ((aPoint x - bounds width) @ (aPoint y))
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> transferHalo: event from: formerHaloOwner [
-	"Progressively transfer the halo to the next likely recipient"
-	| localEvt w target |
-
-	self flag: #workAround. "For halo's distinction between 'target' and 'innerTarget' we need to bypass any renderers."
-	(formerHaloOwner == self and:[self isRenderer and:[self wantsHaloFromClick not]]) ifTrue:[
-		event shiftPressed ifTrue:[
-			target := owner.
-			localEvt := event transformedBy: (self transformedFrom: owner).
-		] ifFalse:[
-			target := self renderedMorph.
-			localEvt := event transformedBy: (target transformedFrom: self).
-		].
-		^target transferHalo: localEvt from: target].
-
-"	formerHaloOwner == self ifTrue:[^ self removeHalo]."
-
-	"Never transfer halo to top-most world"
-	(self isWorldMorph and:[owner isNil]) ifFalse:[
-		(self wantsHaloFromClick and:[formerHaloOwner ~~ self])
-			ifTrue:[^self addHalo: event from: formerHaloOwner]].
-
-	event shiftPressed ifTrue:[
-		"Pass it outwards"
-		owner ifNotNil:[^owner transferHalo: event from: formerHaloOwner].
-		"We're at the top level; throw the event back in to find recipient"
-		formerHaloOwner removeHalo.
-		^self processEvent: event copy resetHandlerFields.
-	].
-	self submorphsDo:[:m|
-		localEvt := event transformedBy: (m transformedFrom: self).
-		(m fullContainsPoint: localEvt position)
-			ifTrue:[^m transferHalo: event from: formerHaloOwner].
-	].
-	"We're at the bottom most level; throw the event back up to the root to find recipient"
-	formerHaloOwner removeHalo.
-
-
-	(w := self world) ifNil: [ ^self ].
-	localEvt := event transformedBy: (self transformedFrom: w) inverseTransformation.
-	^ w processEvent: localEvt resetHandlerFields
-]
-
 { #category : 'menus' }
 Morph >> transferStateToRenderer: aRenderer [
 	"Transfer knownName, and visible over to aRenderer, which is being imposed above me as a transformation shell"
@@ -6695,11 +5418,10 @@ Morph >> transformFromWorld [
 
 { #category : 'geometry' }
 Morph >> transformedBy: aTransform [
-	aTransform isIdentity ifTrue:[^self].
-	aTransform isPureTranslation ifTrue:[
-		^self position: (aTransform localPointToGlobal: self position).
-	].
-	^self addFlexShell transformedBy: aTransform
+
+	aTransform isIdentity ifTrue: [ ^ self ].
+	aTransform isPureTranslation ifTrue: [ ^ self position: (aTransform localPointToGlobal: self position) ].
+	^ (TransformationMorph flexing: self) transformedBy: aTransform
 ]
 
 { #category : 'events - processing' }
@@ -6800,11 +5522,6 @@ Morph >> vResizing: aSymbol [
 	"
 	self assureLayoutProperties vResizing: aSymbol.
 	self layoutChanged
-]
-
-{ #category : 'layout - properties' }
-Morph >> vResizingString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self vResizing
 ]
 
 { #category : 'accessing - properties' }
@@ -6915,16 +5632,6 @@ Morph >> wantsBalloon [
 	^ (self balloonText isNotNil) and: [self balloonHelpEnabled]
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> wantsDirectionHandles [
-	^self valueOfProperty: #wantsDirectionHandles ifAbsent:[false]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> wantsDirectionHandles: aBool [
-	self setProperty: #wantsDirectionHandles toValue: aBool
-]
-
 { #category : 'event handling' }
 Morph >> wantsDropFiles: anEvent [
 	"Return true if the receiver wants files dropped from the OS."
@@ -6939,34 +5646,7 @@ Morph >> wantsDroppedMorph: aMorph event: evt [
 ]
 
 { #category : 'halos and balloon help' }
-Morph >> wantsHaloFor: aSubMorph [
-	^ false
-]
-
-{ #category : 'halos and balloon help' }
 Morph >> wantsHaloFromClick [
-	^ true
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> wantsHaloHandleWithSelector: aSelector inHalo: aHaloMorph [
-	"Answer whether the receiver would like to offer the halo handle with the given selector (e.g. #addCollapseHandle:)"
-
-	(#(addDismissHandle:) includes: aSelector) ifTrue:
-		[^ self resistsRemoval not].
-
-	(#( addDragHandle: ) includes: aSelector) ifTrue:
-		[^ self okayToBrownDragEasily].
-
-	(#(addGrowHandle: addScaleHandle:) includes: aSelector) ifTrue:
-		[^ self okayToResizeEasily].
-
-	(#( addRotateHandle: ) includes: aSelector) ifTrue:
-		[^ self okayToRotateEasily].
-
-	(#(addRecolorHandle:) includes: aSelector) ifTrue:
-		[^ self renderedMorph wantsRecolorHandle].
-
 	^ true
 ]
 
@@ -6991,13 +5671,6 @@ Morph >> wantsKeyboardFocusNavigation [
 	when navigated to by keyboard."
 
 	^self wantsKeyboardFocus
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> wantsRecolorHandle [
-	"Answer whether the receiver would like a recoloring halo handle to be put up.  Since this handle also presently affords access to the property-sheet, it is presently always allowed, even though SketchMorphs don't like regular recoloring"
-
-	^ true
 ]
 
 { #category : 'rounding' }
@@ -7145,11 +5818,6 @@ Morph >> wrapCentering: aSymbol [
 ]
 
 { #category : 'layout - properties' }
-Morph >> wrapCenteringString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self wrapCentering
-]
-
-{ #category : 'layout - properties' }
 Morph >> wrapDirection [
 	"Layout specific. This property describes the direction along which a list-like layout should be wrapped. Possible values are:
 		#leftToRight
@@ -7174,33 +5842,4 @@ Morph >> wrapDirection: aSymbol [
 	indicating in which direction wrapping should occur. This direction must be orthogonal to the list direction, that is if listDirection is #leftToRight or #rightToLeft then wrapDirection must be #topToBottom or #bottomToTop and vice versa."
 	self assureTableProperties wrapDirection: aSymbol.
 	self layoutChanged
-]
-
-{ #category : 'layout - properties' }
-Morph >> wrapDirectionString: aSymbol [
-	^self layoutMenuPropertyString: aSymbol from: self wrapDirection
-]
-
-{ #category : 'event handling' }
-Morph >> yellowButtonActivity: shiftState [
-	"Find me or my outermost owner that has items to add to a
-	yellow button menu.
-	shiftState is true if the shift was pressed.
-	Otherwise, build a menu that contains the contributions from
-	myself and my interested submorphs,
-	and present it to the user."
-	| menu |
-	self isWorldMorph
-		ifFalse: [| outerOwner |
-			outerOwner := self outermostOwnerWithYellowButtonMenu.
-			outerOwner
-				ifNil: [^ false].
-			outerOwner == self
-				ifFalse: [^ outerOwner yellowButtonActivity: shiftState]].
-	menu := self buildYellowButtonMenu: self activeHand.
-	menu
-		addTitle: self externalName
-		icon: (self iconOrThumbnailOfSize: 28).
-	menu popUpInWorld: self currentWorld.
-	^ true
 ]

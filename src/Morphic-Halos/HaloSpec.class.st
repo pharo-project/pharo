@@ -11,9 +11,8 @@ Class {
 		'color',
 		'iconSymbol'
 	],
-	#category : 'Morphic-Base-Widgets',
-	#package : 'Morphic-Base',
-	#tag : 'Widgets'
+	#category : 'Morphic-Halos',
+	#package : 'Morphic-Halos'
 }
 
 { #category : 'actions' }

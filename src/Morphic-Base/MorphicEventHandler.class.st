@@ -133,24 +133,6 @@ MorphicEventHandler >> keyUp: event fromMorph: sourceMorph [
 	^self notifyMorphsOfEvent: event ofType: #keyUp from: sourceMorph
 ]
 
-{ #category : 'accessing' }
-MorphicEventHandler >> methodRefList [
-	"Return a MethodReference for each message I can send."
-	| list |
-	list := OrderedCollection new.
-	subscriptions do: [
-		:subscriptionSet |
-
-		subscriptionSet do: [ 	 :s |
-			s  ifNotNil: [list
-						add: (RGMethodDefinition
-								realClass: (s recipient class whichClassIncludesSelector: s selector)
-								selector: s selector)]
-							]
-		].
-	^ list
-]
-
 { #category : 'events' }
 MorphicEventHandler >> mouseDown: event fromMorph: sourceMorph [
 	"Take double-clicks into account."

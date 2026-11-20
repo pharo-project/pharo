@@ -125,24 +125,6 @@ PasteUpMorph >> addMorphInLayer: aMorph [
 ]
 
 { #category : 'menu & halo' }
-PasteUpMorph >> addWorldHaloMenuItemsTo: aMenu hand: aHandMorph [
-	"Add standard halo items to the menu, given that the receiver is a World"
-
-	self addFillStyleMenuItems: aMenu hand: aHandMorph.
-	self addLayoutMenuItems: aMenu hand: aHandMorph.
-
-	aMenu addLine.
-	self addWorldToggleItemsToHaloMenu: aMenu.
-	aMenu addLine.
-	self addExportMenuItems: aMenu hand: aHandMorph.
-	self addMiscExtrasTo: aMenu.
-	self addDebuggingItemsTo: aMenu hand: aHandMorph.
-
-	aMenu addLine.
-	aMenu defaultTarget: aHandMorph
-]
-
-{ #category : 'menu & halo' }
 PasteUpMorph >> addWorldToggleItemsToHaloMenu: aMenu [
 	"Add toggle items for the world to the halo menu"
 
@@ -294,12 +276,6 @@ PasteUpMorph >> defaultColor [
 		r: 0.8
 		g: 1.0
 		b: 0.6
-]
-
-{ #category : 'halos and balloon help' }
-PasteUpMorph >> defersHaloOnClickTo: aSubMorph [
-	"If a cmd-click on aSubMorph would make it a preferred recipient of the halo, answer true"
-	^ true
 ]
 
 { #category : 'world menu' }
@@ -586,8 +562,7 @@ PasteUpMorph >> isEasySelecting [
 PasteUpMorph >> keyStroke: anEvent [
 	"A keystroke has been made.  Service event handlers and, if it's a keystroke presented to the world, dispatch it to #unfocusedKeystroke:"
 
-	super keyStroke: anEvent.	"Give event handlers a chance"
-	self selectedObject ifNotNil: [ :selected | selected moveOrResizeFromKeystroke: anEvent ].
+	super keyStroke: anEvent. "Give event handlers a chance"
 	self dispatchKeystroke: anEvent
 ]
 
@@ -667,26 +642,19 @@ PasteUpMorph >> morphsInFrontOf: someMorph overlapping: aRectangle do: aBlock [
 PasteUpMorph >> mouseDown: evt [
 	"Handle a mouse down event."
 
-	| grabbedMorph handHadHalos |
+	| grabbedMorph |
 	(self class isMenuOpenByLeftClick
-		ifTrue: [ evt yellowButtonPressed "left click" ]
-		ifFalse: [ evt redButtonPressed	"right click" ])
-		ifTrue: [ ^ self popUpContentsMenu: evt ].
+		 ifTrue: [ evt yellowButtonPressed "left click" ]
+		 ifFalse: [ evt redButtonPressed "right click" ]) ifTrue: [ ^ self popUpContentsMenu: evt ].
 	grabbedMorph := self morphToGrab: evt.
-	grabbedMorph
-		ifNotNil: [
-			grabbedMorph isSticky
-				ifTrue: [ ^ self ].
-			^ evt hand grabMorph: grabbedMorph ].
-	(super handlesMouseDown: evt)
-		ifTrue: [ ^ super mouseDown: evt ].
-	handHadHalos := evt hand halo isNotNil.
-	evt hand removeHalo.	"shake off halos"
-	evt hand releaseKeyboardFocus.	"shake of keyboard foci"
-	(evt shiftPressed not and: [ self isWorldMorph not and: [ self isEasySelecting not ] ])
-		ifTrue: [
-			evt wasHandled: false.
-			^ self ].	"explicitly ignore the event if we're not the world and we'll not select,
+	grabbedMorph ifNotNil: [
+		grabbedMorph isSticky ifTrue: [ ^ self ].
+		^ evt hand grabMorph: grabbedMorph ].
+	(super handlesMouseDown: evt) ifTrue: [ ^ super mouseDown: evt ].
+	evt hand releaseKeyboardFocus. "shake of keyboard foci"
+	(evt shiftPressed not and: [ self isWorldMorph not and: [ self isEasySelecting not ] ]) ifTrue: [
+		evt wasHandled: false.
+		^ self ]. "explicitly ignore the event if we're not the world and we'll not select,
 		so that we could be picked up if need be"
 	(evt shiftPressed or: [ self isEasySelecting ])
 		ifTrue: [
@@ -697,13 +665,14 @@ PasteUpMorph >> mouseDown: evt [
 			evt hand
 				waitForClicksOrDrag: self
 				event: evt
-				selectors:
-					{clickSelector.
+				selectors: {
+					clickSelector.
 					nil.
 					nil.
-					#dragThroughOnDesktop:}
+					#dragThroughOnDesktop: }
 				threshold: 5 ]
-		ifFalse: [ self invokeWorldMenu: evt ]	"We'll select on drag, let's decide what to do on click"	"We wont select, just bring world menu if I'm the world"
+		ifFalse: [ "We'll select on drag, let's decide what to do on click" "We wont select, just bring world menu if I'm the world"
+			self invokeWorldMenu: evt ]
 ]
 
 { #category : 'navigation' }
