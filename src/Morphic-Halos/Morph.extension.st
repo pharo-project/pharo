@@ -1310,6 +1310,13 @@ Morph >> wantsHaloHandleWithSelector: aSelector inHalo: aHaloMorph [
 ]
 
 { #category : '*Morphic-Halos' }
+Morph >> wantsMetaMenu [
+	"Answer whether the meta menu gesture opens a meta menu on me"
+
+	^ true
+]
+
+{ #category : '*Morphic-Halos' }
 Morph >> wantsRecolorHandle [
 	"Answer whether the receiver would like a recoloring halo handle to be put up.  Since this handle also presently affords access to the property-sheet, it is presently always allowed, even though SketchMorphs don't like regular recoloring"
 
@@ -1324,4 +1331,21 @@ Morph >> wrapCenteringString: aSymbol [
 { #category : '*Morphic-Halos' }
 Morph >> wrapDirectionString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self wrapDirection
+]
+
+{ #category : '*Morphic-Halos' }
+Morph >> yellowButtonActivity: shiftState [
+	"Open the morph menu of me or of my outermost owner that has items for it.
+	shiftState is true if the shift was pressed."
+
+	| menu |
+	self isWorldMorph ifFalse: [
+		| outerOwner |
+		outerOwner := self outermostOwnerWithYellowButtonMenu.
+		outerOwner ifNil: [ ^ false ].
+		outerOwner == self ifFalse: [ ^ outerOwner yellowButtonActivity: shiftState ] ].
+	menu := self buildYellowButtonMenu: self activeHand.
+	menu addTitle: self externalName icon: (self iconOrThumbnailOfSize: 28).
+	menu popUpInWorld: self currentWorld.
+	^ true
 ]

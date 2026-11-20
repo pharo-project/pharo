@@ -308,21 +308,6 @@ Morph >> addDropShadow [
 	self changed
 ]
 
-{ #category : 'rotate scale and flex' }
-Morph >> addFlexShell [
-	"Wrap a rotating and scaling shell around this morph."
-
-	| flexMorph myWorld anIndex |
-	myWorld := self world.
-	anIndex := self owner submorphIndexOf: self.
-	self owner addMorph: (flexMorph := TransformationMorph new asFlexOf: self) asElementNumber: anIndex.
-	self transferStateToRenderer: flexMorph.
-	self notifyRootEventHandlers: [ :handler | handler morph: self wrappedInto: flexMorph ].
-	myWorld ifNotNil: [ flexMorph startSteppingSubmorphs ].
-
-	^ flexMorph
-]
-
 { #category : 'submorphs - add/remove' }
 Morph >> addMorph: aMorph [
 
@@ -424,13 +409,6 @@ Morph >> addMorphInLayer: aMorph [
 		].
 	].
 	self addMorphBack: aMorph
-]
-
-{ #category : 'events - root handler' }
-Morph >> addRootEventHandler: aMorphRootEventHandler [
-	"Ask aMorphRootEventHandler about the meta gestures of the morphs under me, when I am a root, after the handlers I already have"
-
-	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWith: aMorphRootEventHandler)
 ]
 
 { #category : 'utilities' }
@@ -1348,7 +1326,6 @@ Morph >> delete [
 	"Remove the receiver as a submorph of its owner and make its
 	new owner be nil."
 
-	self notifyRootEventHandlers: [ :handler | handler morphDeleted: self ].
 	self activeHand ifNotNil: [ :hand |
 		hand
 			releaseKeyboardFocus: self;
@@ -2120,19 +2097,11 @@ Morph >> handleMouseDown: anEvent [
 	anEvent hand removePendingBalloonFor: self.
 	anEvent wasHandled: true.
 
-	(anEvent isSpecialMetaMenuGesture and: [ self cmdGesturesEnabled ]) ifTrue: [
-		self invokeMetaMenu: anEvent.
-		^ self eventHandler ifNotNil: [ :handler | handler mouseDown: anEvent fromMorph: self ] ].
-
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
 
-	"Check to open halo"
-	(anEvent isSpecialGesture and: [ self cmdGesturesEnabled ]) ifTrue: [ ^ self handleSpecialGesture: anEvent ].
-
 	self mouseDown: anEvent.
 
-	self notifyRootEventHandlers: [ :handler | handler morphMouseDown: anEvent for: self ].
 	(self handlesMouseStillDown: anEvent) ifTrue: [
 		self
 			startStepping: #handleMouseStillDown:
@@ -2241,13 +2210,6 @@ Morph >> handleMouseWheel: anEvent [
 		self mouseWheel: anEvent]
 ]
 
-{ #category : 'meta actions' }
-Morph >> handleSpecialGesture: mouseDownEvent [
-	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) are handled by the first of my root's handlers that wants them"
-
-	^ self rootEventHandlers anySatisfy: [ :handler | handler handleSpecialGesture: mouseDownEvent for: self ]
-]
-
 { #category : 'event handling' }
 Morph >> handleTextEditionEvent: anEvent [
 	"System level event handling."
@@ -2304,37 +2266,16 @@ Morph >> handlerForMouseDown: anEvent [
 	installed and can be used for morphs further down the hierarchy to negotiate whether
 	the inner or the outer morph should finally handle the event."
 
-	anEvent isSpecialGesture
-		ifTrue: [ ^ self handlerForSpecialGestureDown: anEvent ].
+	anEvent blueButtonPressed ifTrue: [ ^ self handlerForBlueButtonDown: anEvent ].
+	anEvent yellowButtonPressed ifTrue: [ ^ self handlerForYellowButtonDown: anEvent ].
+	(self handlesMouseDown: anEvent) ifFalse: [ ^ nil ]. "not interested"
 
-	anEvent blueButtonPressed
-		ifTrue: [^ self handlerForBlueButtonDown: anEvent].
-	anEvent yellowButtonPressed
-		ifTrue: [^ self handlerForYellowButtonDown: anEvent].
-	(self handlesMouseDown: anEvent)
-		ifFalse: [^ nil].	"not interested"
-
-	anEvent handler
-		ifNil: [^ self ].	"Same priority but I am innermost"
+	anEvent handler ifNil: [ ^ self ]. "Same priority but I am innermost"
 
 	"Nobody else was interested"
-	^self mouseDownPriority >= anEvent handler mouseDownPriority
-		ifTrue: [ self]
-		ifFalse: [ nil]
-]
-
-{ #category : 'meta actions' }
-Morph >> handlerForSpecialGestureDown: anEvent [
-	"Return the (prospective) handler for a special gesture event (Halos).
-	The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event."
-
-	self wantsHaloFromClick ifFalse: [ ^ nil ].
-
-	self class cycleHalosBothDirections
-		ifTrue: [ anEvent handler ifNil: [ ^ self ].
-			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
-
-	^ self
+	^ self mouseDownPriority >= anEvent handler mouseDownPriority
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : 'event handling' }
@@ -2744,13 +2685,6 @@ Morph >> invalidRect: aRectangle from: aMorph [
 		self clipSubmorphs
 			ifTrue:[damageRect := aRectangle intersect: self clippingBounds ifNone: [ ^ self ]]].
 	owner ifNotNil: [owner invalidRect: damageRect from: self]
-]
-
-{ #category : 'meta actions' }
-Morph >> invokeMetaMenu: evt [
-	"The meta menu gesture is handled by the first of my root's handlers that wants it"
-
-	^ self rootEventHandlers anySatisfy: [ :handler | handler handleMetaMenuGesture: evt for: self ]
 ]
 
 { #category : 'classification' }
@@ -3561,18 +3495,11 @@ Morph >> navigateFocusForward [
 
 { #category : 'event handling' }
 Morph >> navigationKey: event [
-	"Check for tab key activity and change focus as appropriate.
-	Check for menu key to do popup."
+	"Let my window handle navigation keys"
 
-	(event key = KeyboardKey escape and: [
-			event anyModifierKeyPressed]) ifTrue: [
-		^ self yellowButtonActivity: false ].
+	self window ifNotNil: [ :win | (win handlesKeyDown: event) ifTrue: [ (win keyDown: event) ifTrue: [ ^ true ] ] ].
 
-	self window ifNotNil: [:win |
-		(win handlesKeyDown: event) ifTrue: [
-			(win keyDown: event) ifTrue: [^true]]].
-
-	^false
+	^ false
 ]
 
 { #category : 'structure' }
@@ -3590,13 +3517,6 @@ Morph >> noHelpString [
 { #category : 'submorphs - accessing' }
 Morph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
-]
-
-{ #category : 'events - root handler' }
-Morph >> notifyRootEventHandlers: aBlock [
-	"Tell every handler of my root something happened, by evaluating aBlock with each"
-
-	self rootEventHandlers do: aBlock
 ]
 
 { #category : 'halos and balloon help' }
@@ -3921,7 +3841,7 @@ Morph >> prepareForScaling [
 	then wrap it in one and return it.
 	Polygons, eg, may override to return themselves."
 
-	^ self addFlexShell
+	^ TransformationMorph flexing: self
 ]
 
 { #category : 'copying' }
@@ -4156,8 +4076,9 @@ Morph >> processEvent: anEvent [
 Morph >> processEvent: anEvent using: defaultDispatcher [
 	"This is the central entry for dispatching events in morphic. Given some event and a default dispatch strategy, find the right receiver and let him handle it.
 	WARNING: This is a powerful hook. If you want to use a different event dispatcher from the default, here is the place to hook it in. Depending on how the dispatcher is written (e.g., whether it calls simply #processEvent: or #processEvent:using:) you can change the dispatch strategy for entire trees of morphs. Similarly, you can disable entire trees of morphs from receiving any events whatsoever. Read the documentation in class MorphicEventDispatcher before playing with it. "
-	(self rejectsEvent: anEvent) ifTrue:[^#rejected].
-	^defaultDispatcher dispatchEvent: anEvent with: self
+
+	(self rejectsEvent: anEvent) ifTrue: [ ^ #rejected ].
+	^ defaultDispatcher dispatchEvent: anEvent with: self
 ]
 
 { #category : 'accessing' }
@@ -4343,12 +4264,6 @@ Morph >> removeProperty: aSymbol [
 	extension removeProperty: aSymbol
 ]
 
-{ #category : 'events - root handler' }
-Morph >> removeRootEventHandler: aMorphRootEventHandler [
-
-	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWithout: aMorphRootEventHandler)
-]
-
 { #category : 'submorphs - add/remove' }
 Morph >> removedMorph: aMorph [
 	"Notify the receiver that aMorph was just removed from its children"
@@ -4501,14 +4416,6 @@ Morph >> root [
 
 	(owner isNil or: [owner isWorldOrHandMorph]) ifTrue: [^self].
 	^owner root
-]
-
-{ #category : 'events - root handler' }
-Morph >> rootEventHandlers [
-	"Answer the handlers of meta gestures of my root (the outermost owner, usually the world), in the order they are asked"
-
-	owner ifNotNil: [ ^ owner rootEventHandlers ].
-	^ self valueOfProperty: #rootEventHandlers ifAbsent: [ #(  ) ]
 ]
 
 { #category : 'submorphs - accessing' }
@@ -5511,11 +5418,10 @@ Morph >> transformFromWorld [
 
 { #category : 'geometry' }
 Morph >> transformedBy: aTransform [
-	aTransform isIdentity ifTrue:[^self].
-	aTransform isPureTranslation ifTrue:[
-		^self position: (aTransform localPointToGlobal: self position).
-	].
-	^self addFlexShell transformedBy: aTransform
+
+	aTransform isIdentity ifTrue: [ ^ self ].
+	aTransform isPureTranslation ifTrue: [ ^ self position: (aTransform localPointToGlobal: self position) ].
+	^ (TransformationMorph flexing: self) transformedBy: aTransform
 ]
 
 { #category : 'events - processing' }
@@ -5936,19 +5842,4 @@ Morph >> wrapDirection: aSymbol [
 	indicating in which direction wrapping should occur. This direction must be orthogonal to the list direction, that is if listDirection is #leftToRight or #rightToLeft then wrapDirection must be #topToBottom or #bottomToTop and vice versa."
 	self assureTableProperties wrapDirection: aSymbol.
 	self layoutChanged
-]
-
-{ #category : 'event handling' }
-Morph >> yellowButtonActivity: shiftState [
-	"Find me or my outermost owner that has items to add to a
-	yellow button menu.
-	shiftState is true if the shift was pressed.
-	The menu itself is opened by the first of my root's handlers that wants to."
-
-	self isWorldMorph ifFalse: [
-		| outerOwner |
-		outerOwner := self outermostOwnerWithYellowButtonMenu.
-		outerOwner ifNil: [ ^ false ].
-		outerOwner == self ifFalse: [ ^ outerOwner yellowButtonActivity: shiftState ] ].
-	^ self rootEventHandlers anySatisfy: [ :handler | handler handleYellowButtonMenu: shiftState for: self ]
 ]

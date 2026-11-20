@@ -266,7 +266,6 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 	"This message is sent to a dropped morph after it has been dropped on -- and been accepted by -- a drop-sensitive morph"
 
 	| aWindow |
-	self notifyRootEventHandlers: [ :handler | handler morphDropped: self into: aMorph event: anEvent ].
 	self formerOwner: nil.
 	self formerPosition: nil.
 	(aWindow := aMorph ownerThatIsA: SystemWindow) ifNotNil: [ aWindow isActive ifFalse: [ aWindow activate ] ].

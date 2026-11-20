@@ -23,6 +23,18 @@ TransformationMorph class >> example1 [
 	transformationMorph openInWorld
 ]
 
+{ #category : 'instance creation' }
+TransformationMorph class >> flexing: aMorph [
+	"Wrap a rotating and scaling shell around aMorph, in its place in its owner. Answer the shell"
+
+	| flexMorph anIndex |
+	anIndex := aMorph owner submorphIndexOf: aMorph.
+	aMorph owner addMorph: (flexMorph := self new asFlexOf: aMorph) asElementNumber: anIndex.
+	aMorph transferStateToRenderer: flexMorph.
+	flexMorph world ifNotNil: [ flexMorph startSteppingSubmorphs ].
+	^ flexMorph
+]
+
 { #category : 'private' }
 TransformationMorph >> adjustAfter: changeBlock [
 	"Cause this morph to remain cetered where it was before, and

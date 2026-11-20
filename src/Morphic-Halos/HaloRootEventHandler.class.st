@@ -1,7 +1,7 @@
 "
 I give meta gestures their meaning in the Pharo desktop: a special gesture (cmd-click on macOS, alt-click elsewhere) opens a halo on the morph, the meta menu gesture opens its meta menu, and the yellow button opens its morph menu.
 
-Add me to a root morph, usually the world: aWorld addRootEventHandler: HaloRootEventHandler new.
+Add me to a world: aWorld addRootEventHandler: HaloRootEventHandler new.
 "
 Class {
 	#name : 'HaloRootEventHandler',
@@ -11,22 +11,53 @@ Class {
 }
 
 { #category : 'event handling' }
-HaloRootEventHandler >> handleMetaMenuGesture: evt for: aMorph [
+HaloRootEventHandler >> handleEvent: anEvent in: aWorld [
+	"Open a meta menu (shift + special gesture) or a halo (special gesture: cmd-click on macOS, alt-click elsewhere) on the morph under the hand.
+	Keep the halo up to date: clicks elsewhere and drops remove it, arrow keys move its morph.
+	Escape with a modifier opens the morph menu of the keyboard focus holder."
 
-	| menu |
-	aMorph world ifNil: [ ^ false ].
-
-	menu := aMorph buildMetaMenu: evt.
-	aMorph addTitleForHaloMenu: menu.
-	menu popUpEvent: evt in: aMorph world.
-	^ true
+	anEvent isKeyboard ifTrue: [
+		anEvent isKeyDown ifTrue: [ ^ self openMorphMenu: anEvent in: aWorld ].
+		anEvent isKeystroke ifTrue: [ ^ self moveHaloMorph: anEvent ].
+		^ false ].
+	anEvent isDropEvent ifTrue: [
+		anEvent hand removeHalo.
+		^ false ].
+	(anEvent isMouse and: [ anEvent isMouseDown ]) ifFalse: [ ^ false ].
+	Morph cmdGesturesEnabled ifTrue: [
+		anEvent isSpecialMetaMenuGesture ifTrue: [ ^ self openMetaMenu: anEvent in: aWorld ].
+		(anEvent isSpecialGesture and: [ self openHalo: anEvent in: aWorld ]) ifTrue: [ ^ true ] ].
+	^ self removeHaloFromClick: anEvent in: aWorld
 ]
 
-{ #category : 'event handling' }
-HaloRootEventHandler >> handleSpecialGesture: mouseDownEvent for: aMorph [
-	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
+{ #category : 'private' }
+HaloRootEventHandler >> morphsUnder: anEvent in: aWorld [
+	"Answer the unlocked morphs of aWorld under anEvent, innermost first. Morphs of a world embedded in aWorld belong to that world"
 
-	| h tfm doNotDrag |
+	^ (aWorld morphsAt: anEvent position unlocked: true) select: [ :each | each ~~ aWorld and: [ each world == aWorld ] ]
+]
+
+{ #category : 'private' }
+HaloRootEventHandler >> moveHaloMorph: aKeyboardEvent [
+	"Arrow keys move or resize the morph that has the halo, when nothing has the keyboard focus. Let the key go on"
+
+	aKeyboardEvent hand keyboardFocus ifNil: [
+		aKeyboardEvent hand selectedObject ifNotNil: [ :selected | selected moveOrResizeFromKeystroke: aKeyboardEvent ] ].
+	^ false
+]
+
+{ #category : 'private' }
+HaloRootEventHandler >> openHalo: mouseDownEvent in: aWorld [
+	"Allow a mouse-sensitive morph to be moved, or bring up its halo.
+	A special gesture on a halo transfers it. Morphs that handle the blue button themselves keep the gesture."
+
+	| under aMorph h doNotDrag |
+	under := self morphsUnder: mouseDownEvent in: aWorld.
+	(under anySatisfy: [ :each | (each handlerForBlueButtonDown: mouseDownEvent) isNotNil ]) ifTrue: [ ^ false ].
+	under detect: [ :each | each isKindOf: HaloMorph ] ifFound: [ :halo |
+		halo handleSpecialGesture: mouseDownEvent.
+		^ true ].
+	aMorph := under detect: [ :each | each wantsHaloFromClick ] ifNone: [ ^ false ].
 	h := mouseDownEvent hand halo.
 	"Prevent wrap around halo transfers originating from throwing the event back in"
 	doNotDrag := false.
@@ -35,16 +66,13 @@ HaloRootEventHandler >> handleSpecialGesture: mouseDownEvent for: aMorph [
 		(h innerTarget hasOwner: aMorph) ifTrue: [ doNotDrag := true ].
 		(aMorph hasOwner: h target) ifTrue: [ doNotDrag := true ] ].
 
-	tfm := (aMorph transformedFrom: nil) inverseTransformation.
-
-	"cmd-drag on flexed morphs works better this way"
-	h := aMorph addHalo: (mouseDownEvent transformedBy: tfm).
+	h := aMorph addHalo: mouseDownEvent.
 	h ifNil: [ ^ true ].
 	doNotDrag ifTrue: [ ^ true ].
 	"Initiate drag transition if requested"
 	mouseDownEvent hand
 		waitForClicksOrDrag: h
-		event: (mouseDownEvent transformedBy: tfm)
+		event: mouseDownEvent
 		selectors: { nil. nil. nil. #dragTarget: }
 		threshold: 5.
 	"Pass focus explicitly here"
@@ -52,52 +80,33 @@ HaloRootEventHandler >> handleSpecialGesture: mouseDownEvent for: aMorph [
 	^ true
 ]
 
-{ #category : 'event handling' }
-HaloRootEventHandler >> handleYellowButtonMenu: shiftState for: aMorph [
+{ #category : 'private' }
+HaloRootEventHandler >> openMetaMenu: anEvent in: aWorld [
 
-	| menu |
-	menu := aMorph buildYellowButtonMenu: aMorph activeHand.
-	menu addTitle: aMorph externalName icon: (aMorph iconOrThumbnailOfSize: 28).
-	menu popUpInWorld: aMorph currentWorld.
+	| target menu |
+	target := (self morphsUnder: anEvent in: aWorld) detect: [ :each | each wantsMetaMenu ] ifNone: [ ^ false ].
+	menu := target buildMetaMenu: anEvent.
+	target addTitleForHaloMenu: menu.
+	menu popUpEvent: anEvent in: aWorld.
 	^ true
 ]
 
-{ #category : 'notifications' }
-HaloRootEventHandler >> morph: aMorph wrappedInto: aWrapperMorph [
-	"The halo follows the morph into its wrapper"
+{ #category : 'private' }
+HaloRootEventHandler >> openMorphMenu: aKeyboardEvent in: aWorld [
 
-	aMorph halo ifNotNil: [ :halo | halo setTarget: aWrapperMorph ]
+	(aKeyboardEvent keyCharacter = Character escape and: [ aKeyboardEvent anyModifierKeyPressed ]) ifFalse: [ ^ false ].
+	(aKeyboardEvent hand keyboardFocus ifNil: [ aWorld ]) yellowButtonActivity: false.
+	"The key press that follows the key down would still reach the focus holder"
+	aKeyboardEvent supressNextKeyPress: true.
+	^ true
 ]
 
-{ #category : 'notifications' }
-HaloRootEventHandler >> morphDeleted: aMorph [
+{ #category : 'private' }
+HaloRootEventHandler >> removeHaloFromClick: anEvent in: aWorld [
+	"A click on the world shakes off the halo; a click elsewhere removes it unless it stays up. Let the click go on"
 
-	aMorph removeHalo
-]
-
-{ #category : 'notifications' }
-HaloRootEventHandler >> morphDropped: aMorph into: aTargetMorph event: anEvent [
-	"A morph dropped into another owner loses its halo. A dropped morph containing the halo's target (e.g. a menu grabbed by one of its items) gets the halo"
-
-	| halo |
-	(aMorph formerOwner isNotNil and: [ aMorph formerOwner ~~ aTargetMorph ])
-		ifTrue: [ aMorph removeHalo ].
-	halo := anEvent hand halo.
-	(halo isNotNil and: [ halo target hasOwner: aMorph ])
-		ifTrue: [ aMorph addHalo: anEvent ]
-]
-
-{ #category : 'notifications' }
-HaloRootEventHandler >> morphKeyStroke: anEvent for: aMorph [
-	"Arrow keys move or resize the morph that has the halo"
-
-	aMorph selectedObject ifNotNil: [ :selected | selected moveOrResizeFromKeystroke: anEvent ]
-]
-
-{ #category : 'notifications' }
-HaloRootEventHandler >> morphMouseDown: anEvent for: aMorph [
-	"A click on the world shakes off the halo; a click elsewhere removes it unless it stays up"
-
-	aMorph isWorldMorph ifTrue: [ ^ anEvent hand removeHalo ].
-	anEvent hand removeHaloFromClick: anEvent on: aMorph
+	| under |
+	under := self morphsUnder: anEvent in: aWorld.
+	under ifEmpty: [ anEvent hand removeHalo ] ifNotEmpty: [ anEvent hand removeHaloFromClick: anEvent on: under first ].
+	^ false
 ]

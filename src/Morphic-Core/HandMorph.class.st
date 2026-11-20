@@ -984,11 +984,9 @@ HandMorph >> sendEvent: anEvent focus: focusHolder [
 
 { #category : 'private - events' }
 HandMorph >> sendEvent: anEvent focus: focusHolder clear: aBlock [
-	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
-	| result |
-	focusHolder ifNotNil:[^self sendFocusEvent: anEvent to: focusHolder clear: aBlock].
-	result := owner processEvent: anEvent.
-	^result
+	"Give the event to my world, which sends it to the morph holding the focus, or dispatches it if none"
+
+	^ owner processEvent: anEvent focus: focusHolder clear: aBlock
 ]
 
 { #category : 'private - events' }

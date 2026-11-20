@@ -312,6 +312,13 @@ WorldMorph >> addHand: aHandMorph [
 	aHandMorph privateOwner: self
 ]
 
+{ #category : 'events - root handler' }
+WorldMorph >> addRootEventHandler: aMorphRootEventHandler [
+	"Offer events to aMorphRootEventHandler before dispatching them, after the handlers I already have"
+
+	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWith: aMorphRootEventHandler)
+]
+
 { #category : 'submorphs - accessing' }
 WorldMorph >> allMorphsDo: aBlock [
 	"Enumerate all morphs in the world, including those held in hands."
@@ -608,6 +615,24 @@ WorldMorph >> privateMoveBy: delta [
 	super privateMoveBy: delta
 ]
 
+{ #category : 'events - processing' }
+WorldMorph >> processEvent: anEvent focus: focusHolder clear: aBlock [
+	"My hand gives me its events. Offer them to my root event handlers, then send them to the hand's focus holder, or dispatch them to my morphs"
+
+	focusHolder ifNil: [ ^ self processEvent: anEvent ].
+	(self rootEventHandlersTake: anEvent) ifTrue: [ ^ self ].
+	^ anEvent hand sendFocusEvent: anEvent to: focusHolder clear: aBlock
+]
+
+{ #category : 'events - processing' }
+WorldMorph >> processEvent: anEvent using: defaultDispatcher [
+	"Offer anEvent to my root event handlers before dispatching it to my morphs"
+
+	(self rejectsEvent: anEvent) ifTrue: [ ^ #rejected ].
+	(self rootEventHandlersTake: anEvent) ifTrue: [ ^ self ].
+	^ super processEvent: anEvent using: defaultDispatcher
+]
+
 { #category : 'event handling' }
 WorldMorph >> releaseCachedState [
 	super releaseCachedState.
@@ -632,6 +657,12 @@ WorldMorph >> removeHand: aHandMorph [
 	worldState removeHand: aHandMorph
 ]
 
+{ #category : 'events - root handler' }
+WorldMorph >> removeRootEventHandler: aMorphRootEventHandler [
+
+	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWithout: aMorphRootEventHandler)
+]
+
 { #category : 'event handling' }
 WorldMorph >> requestStopTextEditing [
 
@@ -648,6 +679,22 @@ WorldMorph >> requestTextEditingAt: aRectangle [
 WorldMorph >> restoreMorphicDisplay [
 
 	worldState worldRenderer restoreMorphicDisplay
+]
+
+{ #category : 'events - root handler' }
+WorldMorph >> rootEventHandlers [
+	"Answer the handlers I offer events to before dispatching them, in the order they are asked"
+
+	^ self valueOfProperty: #rootEventHandlers ifAbsent: [ #(  ) ]
+]
+
+{ #category : 'events - root handler' }
+WorldMorph >> rootEventHandlersTake: anEvent [
+	"Answer whether one of my handlers took anEvent"
+
+	(self rootEventHandlers anySatisfy: [ :handler | handler handleEvent: anEvent in: self ]) ifFalse: [ ^ false ].
+	anEvent wasHandled: true.
+	^ true
 ]
 
 { #category : 'stepping' }

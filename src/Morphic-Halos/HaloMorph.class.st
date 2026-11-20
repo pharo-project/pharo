@@ -978,12 +978,6 @@ HaloMorph >> handleSpecialGesture: event [
 		threshold: 5
 ]
 
-{ #category : 'meta actions' }
-HaloMorph >> handlerForSpecialGestureDown:  anEvent [
-	"The special gesture for halo has been done"
-	^ self
-]
-
 { #category : 'initialization' }
 HaloMorph >> initialize [
 
@@ -1244,8 +1238,7 @@ HaloMorph >> setTarget: aMorph [
 
 	target := aMorph topRendererOrSelf.
 	innerTarget := target renderedMorph.
-	innerTarget wantsDirectionHandles
-		ifTrue: [self showDirectionHandles: true addHandles: false].
+	innerTarget wantsDirectionHandles ifTrue: [ self showDirectionHandles: true addHandles: false ].
 	target hasHalo: true
 ]
 
@@ -1307,25 +1300,25 @@ HaloMorph >> startGrow: evt with: growHandle [
 
 { #category : 'private' }
 HaloMorph >> startRot: evt with: rotHandle [
-	"Initialize rotation of my target if it is rotatable"
+	"Initialize rotation of my target if it is rotatable. Follow it if it gets wrapped in a flex shell"
 
 	self obtainHaloForEvent: evt andRemoveAllHandlesBut: rotHandle.
 	target prepareForRotating.
+	self setTarget: target.
 	growingOrRotating := true.
 	angleOffset := evt cursorPoint - (target pointInWorld: target referencePosition).
-	angleOffset := Point
-			r: angleOffset r
-			degrees: angleOffset degrees - target rotationDegrees
+	angleOffset := Point r: angleOffset r degrees: angleOffset degrees - target rotationDegrees
 ]
 
 { #category : 'private' }
 HaloMorph >> startScale: evt with: scaleHandle [
-	"Initialize scaling of my target."
+	"Initialize scaling of my target. Follow it if it gets wrapped in a flex shell"
 
 	self obtainHaloForEvent: evt andRemoveAllHandlesBut: scaleHandle.
 	target prepareForScaling.
+	self setTarget: target.
 	growingOrRotating := true.
-	positionOffset := 0@0.
+	positionOffset := 0 @ 0.
 	originalExtent := target extent
 ]
 
@@ -1336,19 +1329,17 @@ HaloMorph >> staysUpWhenMouseIsDownIn: aMorph [
 
 { #category : 'stepping' }
 HaloMorph >> step [
+
 	| newBounds |
-	target
-		ifNil: [^ self].
+	target ifNil: [ ^ self ].
+	"My target left its world: so do I"
+	target world ifNil: [ ^ self delete ].
 	newBounds := target isWorldMorph
-				ifTrue: [target bounds]
-				ifFalse: [self localHaloBoundsFor: target renderedMorph].
-	newBounds = self bounds
-		ifTrue: [^ self].
-	newBounds extent = self bounds extent
-		ifTrue: [^ self position: newBounds origin].
-	growingOrRotating
-		ifFalse: [submorphs size > 1
-				ifTrue: [self addHandles]].
+		             ifTrue: [ target bounds ]
+		             ifFalse: [ self localHaloBoundsFor: target renderedMorph ].
+	newBounds = self bounds ifTrue: [ ^ self ].
+	newBounds extent = self bounds extent ifTrue: [ ^ self position: newBounds origin ].
+	growingOrRotating ifFalse: [ submorphs size > 1 ifTrue: [ self addHandles ] ].
 	"adjust halo bounds if appropriate"
 	self bounds: newBounds
 ]

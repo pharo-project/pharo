@@ -20,12 +20,6 @@ MorphHandlingMiddleButton >> blueButtonUp: anEvent [
 ]
 
 { #category : 'meta actions' }
-MorphHandlingMiddleButton >> handleSpecialGesture: anEvent [
-
-	receivedBlueButtonDown := true
-]
-
-{ #category : 'meta actions' }
 MorphHandlingMiddleButton >> handlerForBlueButtonDown: anEvent [
 
 	^ self
@@ -36,6 +30,12 @@ MorphHandlingMiddleButton >> initialize [
 
 	super initialize.
 	receivedBlueButtonUp := receivedBlueButtonDown := false
+]
+
+{ #category : 'meta actions' }
+MorphHandlingMiddleButton >> mouseDown: anEvent [
+
+	anEvent blueButtonPressed ifTrue: [ receivedBlueButtonDown := true ]
 ]
 
 { #category : 'testing' }

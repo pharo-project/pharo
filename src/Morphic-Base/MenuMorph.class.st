@@ -866,12 +866,6 @@ MenuMorph >> invokeAt: aPoint in: aWorld allowKeyboard: aBoolean [
 	^ selection ifNil: [ selectedItem ifNotNil: [selectedItem target] ]
 ]
 
-{ #category : 'private' }
-MenuMorph >> invokeMetaMenu: evt [
-	stayUp ifFalse:[^self]. "Don't allow this"
-	^super invokeMetaMenu: evt
-]
-
 { #category : 'invoking' }
 MenuMorph >> invokeModal [
 	"Invoke this menu and don't return until the user has chosen a value.

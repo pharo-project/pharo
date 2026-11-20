@@ -1,7 +1,7 @@
 "
-I handle meta gestures (special gesture, meta menu gesture, yellow button menu) for the morphs under a root morph, usually the world. A root keeps an ordered list of handlers like me; the morphs below it ask their root, and each handler is asked in turn until one answers that it handled the gesture.
+I take events at a world before it dispatches them. A world keeps an ordered list of handlers like me and offers each event to them in turn (handleEvent:in:), before sending it to its hand's focus holder or to its morphs. The first handler that answers true takes the event.
 
-I handle nothing: I answer false. With only Morphic's core loaded a root has no handlers, and meta gestures are ignored. Modules on top of the core, such as halos, add a subclass of me to the root: aWorld addRootEventHandler: aHandler.
+I take nothing: I answer false. With only Morphic's core loaded a world has no handlers. Modules on top of the core, such as halos, add a subclass of me to the world: aWorld addRootEventHandler: aHandler.
 "
 Class {
 	#name : 'MorphRootEventHandler',
@@ -12,47 +12,8 @@ Class {
 }
 
 { #category : 'event handling' }
-MorphRootEventHandler >> handleMetaMenuGesture: anEvent for: aMorph [
-	"aMorph got the meta menu gesture. Answer whether I handled it: no"
+MorphRootEventHandler >> handleEvent: anEvent in: aWorld [
+	"aWorld got anEvent and is about to dispatch it. Answer whether I took it instead: no"
 
 	^ false
-]
-
-{ #category : 'event handling' }
-MorphRootEventHandler >> handleSpecialGesture: anEvent for: aMorph [
-	"aMorph got a special gesture (cmd-click on macOS, alt-click elsewhere). Answer whether I handled it: no"
-
-	^ false
-]
-
-{ #category : 'event handling' }
-MorphRootEventHandler >> handleYellowButtonMenu: shiftState for: aMorph [
-	"aMorph wants its yellow button menu. Answer whether I opened one: no"
-
-	^ false
-]
-
-{ #category : 'notifications' }
-MorphRootEventHandler >> morph: aMorph wrappedInto: aWrapperMorph [
-	"aMorph was wrapped into aWrapperMorph (for rotating or scaling). Notification: every handler hears it"
-]
-
-{ #category : 'notifications' }
-MorphRootEventHandler >> morphDeleted: aMorph [
-	"aMorph is being deleted. Notification: every handler hears it"
-]
-
-{ #category : 'notifications' }
-MorphRootEventHandler >> morphDropped: aMorph into: aTargetMorph event: anEvent [
-	"aMorph was dropped into aTargetMorph. Notification: every handler hears it"
-]
-
-{ #category : 'notifications' }
-MorphRootEventHandler >> morphKeyStroke: anEvent for: aMorph [
-	"aMorph, usually the world, got a keystroke no morph had the focus for. Notification: every handler hears it"
-]
-
-{ #category : 'notifications' }
-MorphRootEventHandler >> morphMouseDown: anEvent for: aMorph [
-	"aMorph got a mouse down. Notification: every handler hears it"
 ]

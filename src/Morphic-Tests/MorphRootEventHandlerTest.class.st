@@ -15,6 +15,19 @@ Class {
 }
 
 { #category : 'helpers' }
+MorphRootEventHandlerTest >> keyDown: aCharacter [
+
+	^ KeyboardEvent new
+		  setType: #keyDown
+		  buttons: 0
+		  position: 0 @ 0
+		  keyValue: aCharacter asInteger
+		  charCode: aCharacter asInteger
+		  hand: nil
+		  stamp: 0
+]
+
+{ #category : 'helpers' }
 MorphRootEventHandlerTest >> mouseDown [
 
 	^ MouseButtonEvent new
@@ -22,7 +35,7 @@ MorphRootEventHandlerTest >> mouseDown [
 		  position: 0 @ 0
 		  which: MouseButtonEvent redButton
 		  buttons: MouseButtonEvent redButton
-		  hand: nil
+		  hand: HandMorph new
 		  stamp: 0
 ]
 
@@ -30,61 +43,80 @@ MorphRootEventHandlerTest >> mouseDown [
 MorphRootEventHandlerTest >> setUp [
 
 	super setUp.
-	root := Morph new.
+	root := WorldMorph new.
+	root extent: 100 @ 100.
 	child := Morph new.
 	root addMorph: child.
 	handler := MorphRootEventHandlerStub new
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testDeletingAMorphNotifiesEveryHandler [
+MorphRootEventHandlerTest >> testEventDeclinedByTheHandlersGoesDown [
 
-	| other |
-	other := MorphRootEventHandlerStub new.
-	root
-		addRootEventHandler: handler;
-		addRootEventHandler: other.
+	| received |
+	received := false.
+	child on: #mouseDown send: #value to: [ received := true ].
+	root addRootEventHandler: (handler
+		 decline;
+		 yourself).
 
-	child delete.
+	root processEvent: self mouseDown.
 
-	self assert: handler handled asArray equals: { #deleted -> child }.
-	self assert: other handled asArray equals: { #deleted -> child }
+	self assert: handler handled asArray equals: { (#mouseDown -> root) }.
+	self assert: received
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testHandlersAreAskedInOrderUntilOneHandlesTheGesture [
+MorphRootEventHandlerTest >> testEventTakenByAHandlerDoesNotGoDown [
+
+	| received event |
+	received := false.
+	child on: #mouseDown send: #value to: [ received := true ].
+	root addRootEventHandler: handler.
+
+	root processEvent: (event := self mouseDown).
+
+	self assert: event wasHandled.
+	self deny: received
+]
+
+{ #category : 'tests' }
+MorphRootEventHandlerTest >> testHandlersAreAskedInOrderUntilOneTakesTheEvent [
 
 	| declining last |
-	declining := MorphRootEventHandlerStub new decline; yourself.
+	declining := MorphRootEventHandlerStub new
+		             decline;
+		             yourself.
 	last := MorphRootEventHandlerStub new.
 	root
 		addRootEventHandler: declining;
 		addRootEventHandler: handler;
 		addRootEventHandler: last.
 
-	self assert: (child handleSpecialGesture: self mouseDown).
+	root processEvent: self mouseDown.
 
-	self assert: declining handled asArray equals: { #specialGesture -> child }.
-	self assert: handler handled asArray equals: { #specialGesture -> child }.
+	self assert: declining handled asArray equals: { (#mouseDown -> root) }.
+	self assert: handler handled asArray equals: { (#mouseDown -> root) }.
 	self assertEmpty: last handled
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testMetaMenuGestureGoesToTheRootHandler [
+MorphRootEventHandlerTest >> testKeyDownsFromTheHandGoToTheHandlersBeforeTheFocus [
 
+	| hand received |
+	hand := HandMorph new.
+	root addHand: hand.
+	received := false.
+	child on: #keyDown send: #value to: [ received := true ].
+	hand newKeyboardFocus: child.
 	root addRootEventHandler: handler.
 
-	child invokeMetaMenu: self mouseDown.
+	hand handleEvent: ((self keyDown: $a)
+		 setHand: hand;
+		 yourself).
 
-	self assert: handler handled asArray equals: { #metaMenuGesture -> child }
-]
-
-{ #category : 'tests' }
-MorphRootEventHandlerTest >> testMorphsAskTheHandlersOfTheirRoot [
-
-	root addRootEventHandler: handler.
-
-	self assert: child rootEventHandlers asArray equals: { handler }
+	self assert: handler handled asArray equals: { (#keyDown -> root) }.
+	self deny: received
 ]
 
 { #category : 'tests' }
@@ -93,45 +125,30 @@ MorphRootEventHandlerTest >> testRemovedHandlerIsNoLongerAsked [
 	root addRootEventHandler: handler.
 	root removeRootEventHandler: handler.
 
-	child handleSpecialGesture: self mouseDown.
+	root processEvent: self mouseDown.
 
 	self assertEmpty: handler handled
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testRootWithoutHandlerIgnoresMetaGestures [
+MorphRootEventHandlerTest >> testRootWithoutHandlerLetsEventsGoDown [
 
-	self assertEmpty: child rootEventHandlers.
-	self deny: (child handleSpecialGesture: self mouseDown)
+	| received |
+	received := false.
+	child on: #mouseDown send: #value to: [ received := true ].
+
+	root processEvent: self mouseDown.
+
+	self assertEmpty: root rootEventHandlers.
+	self assert: received
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testSpecialGestureGoesToTheRootHandler [
+MorphRootEventHandlerTest >> testSubmorphsDoNotAskTheHandlers [
 
 	root addRootEventHandler: handler.
 
-	child handleSpecialGesture: self mouseDown.
+	child processEvent: self mouseDown.
 
-	self assert: handler handled asArray equals: { #specialGesture -> child }
-]
-
-{ #category : 'tests' }
-MorphRootEventHandlerTest >> testWrappingAMorphNotifiesTheHandlers [
-
-	root addRootEventHandler: handler.
-
-	child addFlexShell.
-
-	self assert: handler handled asArray equals: { #wrapped -> child }
-]
-
-{ #category : 'tests' }
-MorphRootEventHandlerTest >> testYellowButtonMenuGoesToTheRootHandler [
-
-	root addRootEventHandler: handler.
-	root setProperty: #wantsYellowButtonMenu toValue: true.
-
-	root yellowButtonActivity: false.
-
-	self assert: handler handled asArray equals: { #yellowButtonMenu -> root }
+	self assertEmpty: handler handled
 ]

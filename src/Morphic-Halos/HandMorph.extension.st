@@ -2,8 +2,9 @@ Extension { #name : 'HandMorph' }
 
 { #category : '*Morphic-Halos' }
 HandMorph >> halo [
-	"Return the halo associated with this hand, if any"
-	^self valueOfProperty: #halo
+	"Return the halo associated with this hand, if any. A halo that left the world is gone"
+
+	^ (self valueOfProperty: #halo) ifNotNil: [ :halo | halo owner ifNotNil: [ halo ] ]
 ]
 
 { #category : '*Morphic-Halos' }

@@ -21,23 +21,9 @@ MorphRootEventHandlerStub >> decline [
 ]
 
 { #category : 'event handling' }
-MorphRootEventHandlerStub >> handleMetaMenuGesture: anEvent for: aMorph [
+MorphRootEventHandlerStub >> handleEvent: anEvent in: aWorld [
 
-	handled add: #metaMenuGesture -> aMorph.
-	^ handles
-]
-
-{ #category : 'event handling' }
-MorphRootEventHandlerStub >> handleSpecialGesture: anEvent for: aMorph [
-
-	handled add: #specialGesture -> aMorph.
-	^ handles
-]
-
-{ #category : 'event handling' }
-MorphRootEventHandlerStub >> handleYellowButtonMenu: shiftState for: aMorph [
-
-	handled add: #yellowButtonMenu -> aMorph.
+	handled add: anEvent type -> aWorld.
 	^ handles
 ]
 
@@ -53,16 +39,4 @@ MorphRootEventHandlerStub >> initialize [
 	super initialize.
 	handled := OrderedCollection new.
 	handles := true
-]
-
-{ #category : 'notifications' }
-MorphRootEventHandlerStub >> morph: aMorph wrappedInto: aWrapperMorph [
-
-	handled add: #wrapped -> aMorph
-]
-
-{ #category : 'notifications' }
-MorphRootEventHandlerStub >> morphDeleted: aMorph [
-
-	handled add: #deleted -> aMorph
 ]
