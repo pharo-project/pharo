@@ -1291,18 +1291,21 @@ ReflectivityControlTest >> testInsteadVariableWrite [
 
 { #category : 'tests - options' }
 ReflectivityControlTest >> testLinkOneShot [
+
 	| sendNode |
-	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
+	sendNode := (ReflectivityExamples >> #exampleMethod) sendNodes first.
+	self deny: sendNode hasMetalink description: 'A link was already installed on the node before the test: ' , sendNode links printString.
 	link := MetaLink new
-		metaObject: self;
-		options: #(+ optionOneShot);
-		selector: #tagExec.
+		        metaObject: self;
+		        options: #( #+ optionOneShot );
+		        selector: #tagExec.
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: tag equals: #yes.
-	self deny: sendNode hasMetalink.
+	self deny: sendNode hasMetalink description: 'The one shot link was not removed. Links on the node: ' , sendNode links printString , '. Links of the node owning the method: '
+		, (ReflectivityExamples >> #exampleMethod) ast sendNodes first links printString , '. Same node: ' , (sendNode == (ReflectivityExamples >> #exampleMethod) ast sendNodes first) printString.
 	tag := nil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: tag isNil
