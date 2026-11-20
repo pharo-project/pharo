@@ -1,5 +1,5 @@
 "
-I give meta gestures their meaning in the Pharo desktop: a special gesture (cmd-click on macOS, alt-click elsewhere) opens a halo on the morph, the meta menu gesture opens its meta menu, and the yellow button opens its morph menu.
+I give meta gestures their meaning: a special gesture (cmd-click on macOS, alt-click elsewhere) opens a halo on the morph under the hand, the meta menu gesture opens its meta menu, and escape with a modifier opens the morph menu of the keyboard focus holder. I also keep the halo up to date from the events I see: a click elsewhere or a drop removes it, arrow keys move its morph.
 
 Add me to a world: aWorld addRootEventHandler: HaloRootEventHandler new.
 "
