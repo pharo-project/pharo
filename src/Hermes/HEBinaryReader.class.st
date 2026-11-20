@@ -19,9 +19,9 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : 'Hermes-CommandLineHandler',
+	#category : 'Hermes-Reading',
 	#package : 'Hermes',
-	#tag : 'CommandLineHandler'
+	#tag : 'Reading'
 }
 
 { #category : 'initialization' }
