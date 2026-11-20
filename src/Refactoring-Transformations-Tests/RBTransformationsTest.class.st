@@ -347,7 +347,7 @@ RBTransformationsTest >> testRenameClassTransform [
 		                  to: newClassName.
 	transformation generateChanges.
 
-	self assert: transformation model changes changes size equals: 11.
+	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: newClassName.
 	self
