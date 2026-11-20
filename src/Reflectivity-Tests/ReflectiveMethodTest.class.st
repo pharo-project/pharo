@@ -48,22 +48,23 @@ ReflectiveMethodTest >> testCreateReflectiveMethodAndInvalidate [
 ]
 
 { #category : 'tests - creation' }
-ReflectiveMethodTest >> testDestroyTwin [	
+ReflectiveMethodTest >> testDestroyTwin [
+
 	| sendNode compiledMethod link |
 	selector := #exampleMethod.
 	link := MetaLink new.
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast body statements first value.
-	sendNode link: link.	
+	sendNode link: link.
 	compiledMethod := (ReflectivityExamples >> #exampleMethod) compiledMethod.
-	
-	self assert: compiledMethod reflectiveMethod notNil.
+	self assert: compiledMethod reflectiveMethod isNotNil.
 	self assert: (ReflectivityExamples >> #exampleMethod) linkCount equals: 1.
 	self assert: compiledMethod ast linkCount equals: 1.
-	
 	compiledMethod destroyTwin.
-	
 	self assert: (ReflectivityExamples >> #exampleMethod) reflectiveMethod isNil.
-	self assert: (ReflectivityExamples >> #exampleMethod) ast linkCount equals: 0
+	self assert: (ReflectivityExamples >> #exampleMethod) ast linkCount equals: 0.
+	"Destroying the twin does not remove the link from the node, so we remove it to not leak it in the other tests"
+	link uninstall.
+	self deny: sendNode hasMetalink
 ]
 
 { #category : 'tests - creation' }
