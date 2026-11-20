@@ -1,6 +1,6 @@
 Extension { #name : 'SystemEnvironment' }
 
-{ #category : '*System-Model' }
+{ #category : '*DeepCopier' }
 SystemEnvironment >> veryDeepCopyWith: deepCopier [
 	"Return self. I can't be copied. Do not record me."
 ]
