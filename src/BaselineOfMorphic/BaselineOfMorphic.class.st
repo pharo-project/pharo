@@ -22,7 +22,7 @@ Class {
 	#package : 'BaselineOfMorphic'
 }
 
-{ #category : 'baseline' }
+{ #category : 'baselines' }
 BaselineOfMorphic >> baseline: spec [
 
 	<baseline>
@@ -73,7 +73,16 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: 'core' ].
 
+		spec package: 'Polymorph-Widgets'.
+    
+		"Custom themes"
 		spec package: 'DarkBlueTheme'.
+		spec project: 'Pastels' with: [
+		spec
+			baseline: 'Pastels';
+			repository: (self classNamed: #BaselineOfPharo) pastelsRepository;
+			loads: 'default';
+			requires: #('Polymorph-Widgets') ].
 
 		spec package: 'Settings-Graphics'.
 		spec package: 'Settings-Polymorph'.
