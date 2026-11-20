@@ -91,7 +91,7 @@ ClyBrowserMorph >> spawnQueryBrowserOn: aQuery withState: navigationBlock [
 			^ InformativeNotification signal:  'There are no ', targetQuery description ]  ].
 
 	self 
-		spawnBrowser: (Smalltalk tools toolNamed: #messageList)
+		spawnBrowser: ClyQueryBrowserMorph
 		withState: [ :browser |
 			browser queryScopes: self allNavigationScopes.
 			browser showResultOf: targetQuery.
