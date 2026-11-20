@@ -63,6 +63,67 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 ]
 
 { #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackagePreservesAliasesAndExclusionsWhenRemappingTraits [
+
+	| refactoring sourceComposition copiedComposition |
+	refactoring := self createRefactoringWithArguments: {
+		TReComposedTraitForDuplication packageName.
+		#RefactoringCOPYSmallPackageForTest }.
+	sourceComposition := TReTraitToBeUsedInDuplication
+		@ { #aliasedMethod -> #methodInTrait } - { #methodInTrait }.
+	(refactoring model classFor: TReComposedTraitForDuplication)
+		traitComposition: sourceComposition.
+	self executeRefactoring: (refactoring classMappings: {
+		#TReComposedTraitForDuplication -> #TReDuplicatedComposedTrait.
+		#TReTraitToBeUsedInDuplication -> #TReDuplicatedTrait } asDictionary).
+	copiedComposition := (refactoring model classNamed: #TReDuplicatedComposedTrait)
+		traitComposition.
+	self assertCollection: (copiedComposition traits collect: #name)
+		hasSameElements: #( TReDuplicatedTrait ).
+	self assertCollection: sourceComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self
+		assert: (OCParser parseExpression: copiedComposition traitCompositionExpression)
+		equals: (OCParser parseExpression: 'TReDuplicatedTrait @ { (#aliasedMethod -> #methodInTrait) } - { #methodInTrait }')
+]
+
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageInstallsCopiedTraitsUsingCopiedTraits [
+	"Runs the changes in the image: the copied composed trait is created while the copied base trait may not exist yet."
+
+	| base composed refactoring environment copiedBase copiedComposed |
+	environment := self class environment.
+	base := self class classInstaller make: [ :builder |
+		builder
+			beTrait;
+			name: #TRBFTBase;
+			package: #RefactoringSmallPackageForTest ].
+	base compile: 'baseValue ^ 1'.
+	composed := self class classInstaller make: [ :builder |
+		builder
+			beTrait;
+			name: #TRBFTComposed;
+			traitComposition: base;
+			package: #RefactoringSmallPackageForTest ].
+	refactoring := self createRefactoringWithArguments: {
+		#RefactoringSmallPackageForTest.
+		#RefactoringCOPYSmallPackageForTest }.
+	(refactoring classMappings: {
+		#RBFTTest1 -> #BarFTTest1.
+		#RBFTTest2 -> #BarFTTest2.
+		#TRBFTBase -> #TRBFTCopyBase.
+		#TRBFTComposed -> #TRBFTCopyComposed } asDictionary) execute.
+	copiedBase := environment at: #TRBFTCopyBase.
+	copiedComposed := environment at: #TRBFTCopyComposed.
+	self assert: copiedComposed isTrait.
+	self assert: copiedComposed traitComposition traits asArray equals: { copiedBase }.
+	self
+		assert: copiedComposed class basicTraitComposition
+		equals: copiedComposed traitComposition classComposition.
+	self assert: composed traitComposition traits asArray equals: { base }
+]
+
+{ #category : 'tests' }
 RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 
 	| refactoring aModel |

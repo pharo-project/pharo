@@ -67,8 +67,10 @@ ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withN
 { #category : 'copying' }
 ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
 
-	^ (self copyClass: aClass withName: copyName in: aSymbol)
+	^ self new
 		  model: aRBNamespace;
+		  packageName: aSymbol;
+		  copyClass: aClass withName: copyName;
 		  yourself
 ]
 
@@ -95,10 +97,31 @@ ReDuplicateClassRefactoring >> classMethods: anObject [
 
 { #category : 'transforming' }
 ReDuplicateClassRefactoring >> copyClass [
+	"shortcut: the model has no class-side trait composition, so custom classTraits are not copied; model them in RBMetaclass if a copy must keep them."
+
+	aClass isTrait ifTrue: [ ^ self copyTraitDefinition ].
+
+	self copyClassDefinition
+]
+
+{ #category : 'transforming' }
+ReDuplicateClassRefactoring >> copyClassDefinition [
 
 	self generateChangesFor:
 		((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: aClass superclass;
+			 traitComposition: aClass traitComposition;
+			 packageName: self packageName;
+			 comment: aClass comment;
+			 tagName: self packageTagName;
+			 yourself)
+]
+
+{ #category : 'transforming' }
+ReDuplicateClassRefactoring >> copyTraitDefinition [
+
+	self generateChangesFor:
+		((RBInsertNewTraitRefactoring model: self model className: className)
 			 traitComposition: aClass traitComposition;
 			 packageName: self packageName;
 			 comment: aClass comment;
