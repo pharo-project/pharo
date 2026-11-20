@@ -24,6 +24,15 @@ ProcessMonitorTestServiceTest >> fork: aBlock [
 ]
 
 { #category : 'running' }
+ProcessMonitorTestServiceTest >> isNextAddGrowing: aWeakSet [
+
+	| probe |
+	probe := aWeakSet copy.
+	probe add: Object new.
+	^ (probe instVarNamed: #array) size > (aWeakSet instVarNamed: #array) size
+]
+
+{ #category : 'running' }
 ProcessMonitorTestServiceTest >> setUp [
 	super setUp.
 
@@ -31,6 +40,18 @@ ProcessMonitorTestServiceTest >> setUp [
 	testService failTestLeavingProcesses.
 	testService terminateProcessesAfterTest.
 	executionEnvironment activated
+]
+
+{ #category : 'running' }
+ProcessMonitorTestServiceTest >> step: aProcess until: aBlock [
+	"Step aProcess until aBlock answers true.
+	Answer false if it does not happen within a bounded number of steps"
+
+	10000 timesRepeat: [
+		aBlock value ifTrue: [ ^ true ].
+		aProcess isTerminated ifTrue: [ ^ false ].
+		aProcess step ].
+	^ aBlock value
 ]
 
 { #category : 'tests' }
@@ -140,6 +161,46 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllRunningProcesses [
 
 	self assert: process isTerminated.
 	self assert: testService forkedProcesses isEmpty
+]
+
+{ #category : 'tests' }
+ProcessMonitorTestServiceTest >> testCleanUpShouldWaitForProcessBeingAdded [
+	"#handleNewProcess: runs in the forking process, which can be preempted by the test process running #cleanUpAfterTest.
+	Here the forking process is stopped inside WeakSet>>#growTo: of forkedProcesses,
+	after the new array was created but before it was stored, and the clean-up runs in a higher-priority process.
+	The clean-up should wait until the process is added, and forkedProcesses should stay consistent"
+
+	| forkedProcesses keptProcesses adderErrors adder cleanUpDone |
+	forkedProcesses := testService forkedProcesses.
+	keptProcesses := OrderedCollection new. "forkedProcesses is a weak set"
+	[ self isNextAddGrowing: forkedProcesses ] whileFalse: [
+		testService handleNewProcess: (keptProcesses add: [ ] newProcess) ].
+	adderErrors := OrderedCollection new.
+	adder := self
+		newProcess: 'Adder'
+		toImmediatelyExecute: [
+			[ testService handleNewProcess: (keptProcesses add: [ ] newProcess) ]
+				on: Error
+				do: [ :error | adderErrors add: error ] ].
+	self assert: (self step: adder until: [
+			| context |
+			context := adder suspendedContext.
+			context method == (WeakSet >> #growTo:)
+				and: [ context receiver == forkedProcesses
+				and: [ context stackPtr > context numTemps
+				and: [ (context top isKindOf: WeakArray)
+				and: [ context top ~~ (forkedProcesses instVarNamed: #array) ] ] ] ] ]).
+
+	cleanUpDone := Semaphore new.
+	(self
+		newProcess: 'Clean-up'
+		toImmediatelyExecute: [ [ testService cleanUpAfterTest ] ensure: [ cleanUpDone signal ] ]) resume.
+	self assert: (self step: adder until: [ adder isTerminated ]).
+	self deny: (cleanUpDone waitTimeoutMilliseconds: 1000).
+
+	self assert: adderErrors isEmpty description: [ 'Adding a process failed: ' , adderErrors first printString ].
+	self assert: forkedProcesses isEmpty.
+	self shouldnt: [ testService runningProcesses ] raise: Error
 ]
 
 { #category : 'tests' }
@@ -393,6 +454,64 @@ ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
 	process := self fork: [testService recordTestFailure: Error new].
 	self assert: (testService isTestProcessFailed: process).
 	self deny: (testService isTestProcessFailed: #anotherProcess)
+]
+
+{ #category : 'tests' }
+ProcessMonitorTestServiceTest >> testLockAllowsCallingServiceMethods [
+	"The mutex is re-entrant: service methods called inside #lock: do not wait for the lock.
+	The block runs in a helper process, so that a deadlock would fail the test instead of blocking it"
+
+	| process done runningProcesses error |
+	process := [ ] newProcess.
+	done := Semaphore new.
+	(self
+		newProcess: 'Lock owner'
+		toImmediatelyExecute: [
+			[ runningProcesses := testService lock: [ :aService |
+				aService handleNewProcess: process.
+				aService isMainTestProcessFailed.
+				aService runningProcesses ] ]
+				on: Error
+				do: [ :anError | error := anError ].
+			done signal ]) resume.
+
+	self deny: (done waitTimeoutMilliseconds: 1000).
+	self assert: error isNil description: [ 'Lock owner failed: ' , error printString ].
+	self assert: (testService forkedProcesses includes: process).
+	self assert: runningProcesses isEmpty
+]
+
+{ #category : 'tests' }
+ProcessMonitorTestServiceTest >> testLockAnswersBlockValueWithServiceAsArgument [
+
+	| argument |
+	self
+		assert: (testService lock: [ :aService |
+			argument := aService.
+			#result ])
+		equals: #result.
+	self assert: argument identicalTo: testService
+]
+
+{ #category : 'tests' }
+ProcessMonitorTestServiceTest >> testLockMakesOtherProcessesWait [
+	"A higher-priority process registering a process while the test process holds the lock waits until the lock is released"
+
+	| process adder added |
+	process := [ ] newProcess.
+	added := Semaphore new.
+	testService lock: [ :aService |
+		adder := self
+			newProcess: 'Adder'
+			toImmediatelyExecute: [
+				aService handleNewProcess: process.
+				added signal ].
+		adder resume.
+		self assert: adder isWaiting.
+		self deny: (aService forkedProcesses includes: process) ].
+
+	self deny: (added waitTimeoutMilliseconds: 1000).
+	self assert: (testService forkedProcesses includes: process)
 ]
 
 { #category : 'tests' }
