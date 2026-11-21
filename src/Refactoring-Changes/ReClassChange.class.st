@@ -105,8 +105,15 @@ ReClassChange >> hash [
 ]
 
 { #category : 'testing' }
-ReClassChange >> isInScope: aRBBrowserEnvironment [ 
-	^ aRBBrowserEnvironment includesClass: self changeClass.
+ReClassChange >> isInScope: aRBBrowserEnvironment [
+	"A change may target a class that does not exist yet (e.g. duplicate/create class).
+	Those changes must stay visible in the preview; asking the environment about nil
+	would raise 'receiver of isMeta is nil' and abort the refactoring."
+
+	| class |
+	class := self changeClass.
+	class ifNil: [ ^ true ].
+	^ aRBBrowserEnvironment includesClass: class
 ]
 
 { #category : 'private' }
