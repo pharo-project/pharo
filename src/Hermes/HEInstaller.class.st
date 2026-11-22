@@ -44,9 +44,9 @@ HEInstaller class >> enableClassInitialization [
 ]
 
 { #category : 'accessing' }
-HEInstaller class >> enableClassInitialization: anObject [
+HEInstaller class >> enableClassInitialization: aBoolean [
 
-	EnableClassInitialization := anObject
+	EnableClassInitialization := aBoolean
 ]
 
 { #category : 'creating classes' }
@@ -76,7 +76,7 @@ HEInstaller >> build: aHEClass [
 	^ newClass
 ]
 
-{ #category : 'creating traits' }
+{ #category : 'creating classes' }
 HEInstaller >> buildTrait: aTraitDefinition [
 
 	(self existingTrait: aTraitDefinition) ifNotNil: [ :x | ^ x ].
@@ -84,15 +84,15 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	self supportsTraits ifFalse: [ self error: 'Trait support is not installed' ].
 
 	^ self class classInstaller make: [ :builder |
-		  builder
-			  beTrait;
-			  name: aTraitDefinition traitName;
-			  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
-			  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
-			  package: aTraitDefinition packageName;
-			  environment: environment.
+			  builder
+				  beTrait;
+				  name: aTraitDefinition traitName;
+				  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
+				  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
+				  package: aTraitDefinition packageName;
+				  environment: environment.
 
-		  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
+			  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
 ]
 
 { #category : 'creating traits' }
@@ -129,10 +129,9 @@ HEInstaller >> doInstallPackage: aHEPackage [
 
 	"6. Install extension methods"
 	aHEPackage extensionMethods do: [ :method | self installExtensionMethod: method ].
-	
+
 	"7. Initialize classes if the option is enabled"
-	self class enableClassInitialization ifTrue: [
-		newClasses do: [ :newClass | (newClass class isLocalSelector: #initialize) ifTrue: [ newClass initialize ] ] ].
+	self class enableClassInitialization ifTrue: [ newClasses do: [ :newClass | (newClass class isLocalSelector: #initialize) ifTrue: [ newClass initialize ] ] ].
 
 	"8. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
@@ -219,53 +218,45 @@ HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 { #category : 'reporting undeclared' }
 HEInstaller >> newUndeclaredVariables [
 	"Return the collection of undeclared variables created during this installation"
-	^ self class undeclaredRegistry associations reject: [ :asoc |
-		  originalUndeclareds associations includes: asoc ]
+
+	^ self class undeclaredRegistry associations reject: [ :association | originalUndeclareds associations includes: association ]
 ]
 
 { #category : 'installing methods' }
-HEInstaller >> rebuildMethod: hermesMethod into: aClass [
+HEInstaller >> rebuildMethod: aMethod into: aClass [
 
 	| newMethod literalSpace extendedEnvironment |
-	(self shouldBuildMethod: hermesMethod in: aClass) ifFalse: [ ^ self ].
+	(self shouldBuildMethod: aMethod in: aClass) ifFalse: [ ^ self ].
 
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
 	extendedEnvironment newClass: aClass.
-	extendedEnvironment newSelector: hermesMethod name.
+	extendedEnvironment newSelector: aMethod name.
 
-	newMethod := CompiledMethod
-		             basicNew:
-		             hermesMethod bytecode size + CompiledMethod trailerSize
-		             header: (hermesMethod headerFor: extendedEnvironment).
+	"We reserve the space of an empty trailer after the bytecode."
+	newMethod := CompiledMethod basicNew: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
-	hermesMethod literals doWithIndex: [ :literal :idx |
-		newMethod
-			literalAt: idx
-			put: (literal asLiteralIn: extendedEnvironment) ].
+	aMethod literals doWithIndex: [ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
-	literalSpace := hermesMethod literals size + 1 * Smalltalk wordSize.
+	"The method installer installs the method under its own selector, so the selector must be the name of the Hermes method."
+	newMethod selector: aMethod name.
+	literalSpace := aMethod literals size + 1 * Smalltalk wordSize.
 
-	hermesMethod bytecode doWithIndex: [ :e :idx |
-		newMethod at: idx + literalSpace put: e ].
+	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 
 	aClass methodInstaller
 		logged: false;
-		protocol: hermesMethod protocol;
-			install: newMethod
-			into: aClass
-			compiler: nil
+		protocol: aMethod protocol;
+		install: newMethod into: aClass compiler: nil
 ]
 
 { #category : 'reporting undeclared' }
 HEInstaller >> reportNewUndeclareds: newUndeclareds [
 
-	newUndeclareds ifNotEmpty: [
-		self error: 'New Undeclared created... check dependencies: '
-			, (newUndeclareds collect: [ :e | e key ]) printString ]
+	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , (newUndeclareds collect: [ :association | association key ]) printString ]
 ]
 
 { #category : 'validating existence' }
@@ -286,8 +277,8 @@ HEInstaller >> supportsTraits [
 
 { #category : 'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
+
 	self reportNewUndeclareds: self newUndeclaredVariables.
-	
-	SystemNotification signal: ('[Hermes] Remaining Undeclared variables in the system: '
-		, self class undeclaredRegistry keys printString)
+
+	SystemNotification signal: '[Hermes] Remaining Undeclared variables in the system: ' , self class undeclaredRegistry keys printString
 ]

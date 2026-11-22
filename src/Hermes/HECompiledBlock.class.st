@@ -23,8 +23,7 @@ HECompiledBlock class >> tag [
 { #category : 'reading' }
 HECompiledBlock >> asLiteralIn: anEnvironment [
 
-	| containingBlockOrMethod newBlock literalSpace previousBlock|
-
+	| containingBlockOrMethod newBlock literalSpace previousBlock |
 	previousBlock := anEnvironment newBlock.
 	containingBlockOrMethod := previousBlock ifNil: [ anEnvironment newMethod ].
 
@@ -32,14 +31,12 @@ HECompiledBlock >> asLiteralIn: anEnvironment [
 
 	anEnvironment newBlock: newBlock.
 
-	literals
-		doWithIndex:
-			[ :literal :idx | newBlock literalAt: idx put: (literal asLiteralIn: anEnvironment) ].
+	literals doWithIndex: [ :literal :idx | newBlock literalAt: idx put: (literal asLiteralIn: anEnvironment) ].
 
 	newBlock literalAt: literals size put: containingBlockOrMethod.
-	literalSpace := (literals size + 1) * Smalltalk wordSize.
+	literalSpace := literals size + 1 * Smalltalk wordSize.
 
- 	bytecode doWithIndex: [ :e :idx | newBlock at: idx + literalSpace put: e ].
+	bytecode doWithIndex: [ :e :idx | newBlock at: idx + literalSpace put: e ].
 
 	anEnvironment newBlock: previousBlock.
 

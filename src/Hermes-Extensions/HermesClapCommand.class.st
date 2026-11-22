@@ -1,37 +1,18 @@
 "
-Class: HermesCommandLineHandler
-                                                                                                    
-This is the command line handler to load Hermes files in the image.
-The format is intented to export any of the objects. However, the command line expects to have a package as its root element.
-It loads the hermes files passed as parameter.
-They are loaded in the order of the parameters.
+I am the command line command loading Hermes files in the image, in the order they are given. Each file is expected to contain a package.
 
-Usage: loadHermes [--save] [extendedOptions] [<hermesFiles> ...]
+I install the packages with a HEExtendedInstaller, whose options I set from the command line. I am only available when Hermes-Extensions is loaded: without it, BasicHermesTool loads Hermes files with the minimal installer and no option, as during the bootstrap of Pharo.
+
+Usage: loadHermes [--save] [--no-fail-on-undeclared] [--on-duplication <action>] <hermesFiles>
+
+	--save	saves the image after loading the files
+	--no-fail-on-undeclared	does not fail when the loading creates new undeclared variables
+	--on-duplication <action>	what to do when an element of a package already exists in the image: fail (default), ignore to keep the version of the image, or replace to use the version of the file
 
 Examples:
-#Load the package Test-Package
-pharo Pharo.image loadHermes Test-Package.hermes
 
-#Load the package Test-Package and saving
-pharo Pharo.image loadHermes --save Test-Package.hermes
-
-
-Extensions
-=========
-
-no-fail-on-undeclared		It does not fail the loading if there are new undeclared variables. By default it fails.
-on-duplication=action	When there is a duplication in the loading package what is the action to take:
-fail		(default) Fail on a duplication
-ignore	Ignore the error and do not do nothing. Keeping the image version
-replace	Replace the image version with the one in the Hermes Package.
-
-Examples
-
-#Load the package Test-Package without failing on new undeclared variables.
-pharo Pharo.image loadHermes --save --no-fail-on-undeclared Test-Package.hermes
-
-#Load the package Test-Package replacing the image version with the ones in the hermes file.
-pharo Pharo.image loadHermes --save --on-duplication replace Test-Package.hermes
+	pharo Pharo.image loadHermes --save Test-Package.hermes
+	pharo Pharo.image loadHermes --save --on-duplication replace Test-Package.hermes
 "
 Class {
 	#name : 'HermesClapCommand',
@@ -75,13 +56,7 @@ HermesClapCommand >> allHermesFiles [
 { #category : 'accessing' }
 HermesClapCommand >> duplicationMode [
 
-	^ self
-		  positional: #'on-duplication'
-		  ifPresent: [ :action |
-				  (#( fail ignore replace ) includes: action asSymbol)
-					  ifTrue: [ action ]
-					  ifFalse: [ #fail ] ]
-		  ifAbsent: [ #fail ]
+	^ self positional: #'on-duplication' ifAbsent: [ #fail ]
 ]
 
 { #category : 'execution' }
@@ -96,20 +71,21 @@ HermesClapCommand >> execute [
 
 { #category : 'execution' }
 HermesClapCommand >> processFile: aFileName [
-
 	"It loads the package and installs it in the image"
+
 	| reader readPackage |
-	SystemNotification signal: ('[Hermes] Reading ' , aFileName).
+	SystemNotification signal: '[Hermes] Reading ' , aFileName.
 
 	reader := HEBinaryReader new
-		stream: (File named: aFileName) readStream;
-		yourself.
+		          stream: (File named: aFileName) readStream;
+		          yourself.
 
 	readPackage := HEPackage readFrom: reader.
 
-	SystemNotification signal: ('[Hermes] Installing ' , aFileName).
+	SystemNotification signal: '[Hermes] Installing ' , aFileName.
 	HEExtendedInstaller new
-		forOptions: self;
+		failOnUndeclared: self shouldFailOnUndeclared;
+		duplicationMode: (HEDuplicationModeStrategy forOption: self duplicationMode);
 		installPackage: readPackage
 ]
 
@@ -128,5 +104,7 @@ HermesClapCommand >> shouldFailOnUndeclared [
 { #category : 'validating' }
 HermesClapCommand >> validateParameters [
 
-	self allHermesFiles ifEmpty: [ ^ self context exitFailure: 'Missing Hermes file as argument' ]
+	self allHermesFiles ifEmpty: [ ^ self context exitFailure: 'Missing Hermes file as argument' ].
+	((HEDuplicationModeStrategy allSubclasses collect: [ :strategy | strategy keyword ]) includes: self duplicationMode asString) ifFalse: [
+		^ self context exitFailure: 'Unknown action on duplication: ' , self duplicationMode ]
 ]

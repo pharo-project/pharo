@@ -1,9 +1,8 @@
 "
-I represent a MetaclassForTrait.
-I am stored as a symbol.
+I represent the class side of a trait (a MetaclassForTraits) used as a literal.
+I am stored as a symbol: the name of the base trait.
 
-When serialized I get the name of the base trait.
-When deserialized I find the classTrait in the target environment
+When deserialized I find the class side of the trait in the target environment.
 "
 Class {
 	#name : 'HEClassTrait',
