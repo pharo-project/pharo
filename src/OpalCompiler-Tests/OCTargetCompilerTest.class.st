@@ -19,6 +19,9 @@ OCTargetCompilerTest >> testModifiedReturn [
 OCTargetCompilerTest >> testModifiedReturnFromClass [
 	" I test that the compilerClass method works for class-side "
 
+	"It is possible that the method was loaded before the plugin was active. We recompile to be sure the plugin was active."
+
+	OCTargetCompilerSample class recompile.
 	self assert: OCTargetCompilerSample returnExpected equals: #expectedReturn
 ]
 
