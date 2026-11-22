@@ -122,7 +122,7 @@ ClassDescription >> authors [
 { #category : 'accessing - comment' }
 ClassDescription >> classCommentBlank [
 
-	^ 'Write the comment in the first person, as the class speaking ("I represent…"). Keep the sections in this order, drop the last two (Internal representation, Implementation points) when they have nothing to say, and never leave a placeholder. Only include sections that provide information not readily available from the code. Omit irrelevant sections rather than filling them with generic statements.
+	^ 'Write the comment in the first person, as the class speaking ("I represent..."). Keep the sections in this order, drop the last two (Internal representation, Implementation points) when they have nothing to say, and never leave a placeholder. Only include sections that provide information not readily available from the code. Omit irrelevant sections rather than filling them with generic statements.
 
 Describe the concept represented by this class and the problem it addresses. Focus on its role in the design, rather than restating what its methods do. Describe me in a short paragraph, e.g. "I represent a paragraph of text." This paragraph can mention the main collaborators (not the tests) and one or two key messages.
 
