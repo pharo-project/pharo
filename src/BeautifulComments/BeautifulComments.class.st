@@ -74,8 +74,13 @@ BeautifulComments class >> renderComment: aString of: aClassOrPackage [
 	
 	| builder |
 	builder := Microdown builder.
-	aClassOrPackage buildMicroDownUsing: builder withComment: aString.
-	^ self render: builder contents
+	^ aString 
+		ifEmpty: [ self render: self classCommentBlank ]
+		ifNotEmpty: [  
+			aClassOrPackage 
+				buildMicroDownUsing: builder 
+				withComment: aString.
+			self render: builder contents ]
 ]
 
 { #category : 'settings' }
