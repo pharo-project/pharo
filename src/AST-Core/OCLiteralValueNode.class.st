@@ -57,18 +57,6 @@ OCLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
-{ #category : 'evaluating' }
-OCLiteralValueNode >> evaluateForContext: aContext [
-
-	^ value
-]
-
-{ #category : 'evaluating' }
-OCLiteralValueNode >> evaluateForReceiver: aReceicer [
-
-	^ value
-]
-
 { #category : 'testing' }
 OCLiteralValueNode >> isString [
 

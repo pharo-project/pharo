@@ -42,30 +42,6 @@ OCValueNode >> containedBy: anInterval [
 		and: [anInterval last >= self stopWithoutParentheses]
 ]
 
-{ #category : 'evaluating' }
-OCValueNode >> evaluate [
-	"evaluate the AST with a nil  receiver"
-	^ self evaluateForReceiver: nil
-]
-
-{ #category : 'evaluating' }
-OCValueNode >> evaluateForContext: aContext [
-	"evaluate the AST taking variables from the context"
-
-	^ OpalEvaluator new
-		  context: aContext;
-		  evaluate: self formattedCode
-]
-
-{ #category : 'evaluating' }
-OCValueNode >> evaluateForReceiver: aReceiver [
-	"evaluate the AST binding self to the receiver and taking its variables"
-
-	^ OpalEvaluator new
-		  receiver: aReceiver;
-		  evaluate: self formattedCode
-]
-
 { #category : 'testing' }
 OCValueNode >> hasParentheses [
 	^self parentheses notEmpty
