@@ -12,11 +12,6 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'testing' }
-SycMergeVariableCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isVariableSelected and: [ aToolContext isGlobalVariableSelected not ]
-]
-
 { #category : 'activation' }
 SycMergeVariableCommand class >> fullBrowserShortcutActivation [
 ]
@@ -38,6 +33,12 @@ SycMergeVariableCommand class >> sourceCodeShortcutActivation [
 SycMergeVariableCommand >> applyCommandResult [
 	super applyCommandResult.
 	self context showVariableNamed: newName
+]
+
+{ #category : 'testing' }
+SycMergeVariableCommand >> canBeExecuted [
+
+	^ self context isVariableSelected and: [ self context isGlobalVariableSelected not ]
 ]
 
 { #category : 'execution' }

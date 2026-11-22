@@ -19,9 +19,9 @@ ClyTraitUserHierarchy class >> hierarchyForMethodVisibility [
 
 { #category : 'method visibility' }
 ClyTraitUserHierarchy class >> methodVisibilityProvider [
-	<classAnnotation>
-	^ClyMethodVisibilityProviderAnnotation new
-		priority: 100 "We should override current default hierarchy in system"
+	"With traits, the method visibility hierarchy also shows the traits. See ClyMethodVisibilityGroupsResult class>>#methodVisibilityProvider."
+
+	<calypsoMethodVisibilityProvider: 100>
 ]
 
 { #category : 'building' }

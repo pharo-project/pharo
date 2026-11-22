@@ -1,5 +1,5 @@
 "
-I am a command to rename method protocol.
+Renames method protocol.
 
 My method group should be either ClyMethodsInProtocolGroup or ClyUnclassifiedMethodGroup.
  
@@ -22,28 +22,16 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'testing' }
-ClyRenameProtocolCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isProtocolSelected
-]
-
-{ #category : 'activation' }
-ClyRenameProtocolCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation renamingFor: ClyFullBrowserMethodGroupContext
-]
-
 { #category : 'execution' }
 ClyRenameProtocolCommand >> applyCommandResult [
 	super applyCommandResult.
 	self context showProtocol: newName
 ]
 
-{ #category : 'accessing' }
-ClyRenameProtocolCommand >> description [ 
+{ #category : 'testing' }
+ClyRenameProtocolCommand >> canBeExecuted [
 
-^'Renames method protocol.'
+	^ self context isProtocolSelected
 ]
 
 { #category : 'execution' }

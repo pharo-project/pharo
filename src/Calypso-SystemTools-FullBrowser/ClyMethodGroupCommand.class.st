@@ -18,8 +18,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyMethodGroupCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMethodGroupSelected
+ClyMethodGroupCommand >> canBeExecuted [
+
+	^ self context isMethodGroupSelected
 ]
 
 { #category : 'accessing' }

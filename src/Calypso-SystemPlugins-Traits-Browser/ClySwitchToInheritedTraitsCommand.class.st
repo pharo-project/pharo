@@ -9,10 +9,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClySwitchToInheritedTraitsCommand class >> canBeExecutedInContext: aToolContext [
-	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
+ClySwitchToInheritedTraitsCommand >> canBeExecuted [
 
-	^aToolContext isSelectedClassUsesTraits
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context isSelectedClassUsesTraits
 ]
 
 { #category : 'accessing' }

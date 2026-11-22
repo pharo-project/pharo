@@ -507,6 +507,9 @@ RBNamespace >> packageNamed: aSymbol [
 
 { #category : 'private - changes' }
 RBNamespace >> perform: aBlock onlyWithChange: aCompositeRefactoryChange [
+	"Add aCompositeRefactoryChange to the current changes, then record every change made while evaluating aBlock inside aCompositeRefactoryChange instead of next to it.
+	Use it when the changes made by aBlock only make sense as part of aCompositeRefactoryChange, as with ReRenameClassChange."
+
 	| oldChanges |
 	changes addChange: aCompositeRefactoryChange.
 	oldChanges := changes.
@@ -642,11 +645,10 @@ RBNamespace >> removeProtocolNamed: aString in: aClass [
 { #category : 'changes' }
 RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 
-	| change value dict oldChanges |
+	| change value dict |
 	change := changeFactory renameClass: aRBClass to: aSymbol.
-	changes addChange: change.
-	oldChanges := changes.
-	aBlock ensure: [ changes := oldChanges ].
+	"The reference changes must be recorded inside the rename change. See the ReRenameClassChange class comment."
+	self perform: aBlock onlyWithChange: change.
 	self flushCaches.
 
 	dict := (newClasses includesKey: aRBClass name)

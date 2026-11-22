@@ -30,6 +30,52 @@ RBRenameClassRefactoringTest >> testFailureMetaClassFailure [
 		(ReRenameClassRefactoring rename: self class class name to: #Foo)
 ]
 
+{ #category : 'running' }
+RBRenameClassRefactoringTest >> renameChangeFor: aClass to: aSymbol within: classes [
+	"Limit the model to classes, so that executing the change does not touch the rest of the image."
+
+	| refactoring |
+	refactoring := ReRenameClassRefactoring
+		               model: (RBNamespace onEnvironment: (RBClassEnvironment classes: classes))
+		               rename: aClass name
+		               to: aSymbol.
+	refactoring generateChanges.
+	^ refactoring model changes
+]
+
+{ #category : 'tests - execution' }
+RBRenameClassRefactoringTest >> testExecuteRenameClassReferencedFromAnotherClass [
+
+	| change |
+	change := self
+		          renameChangeFor: ReClassReferencedByAnother
+		          to: #ReRenamedClassForTest
+		          within: { ReClassReferencedByAnother. ReClassReferencingAnother }.
+
+	self performAndUndoChange: change do: [
+		self assert: ((ReClassReferencingAnother >> #use) sourceCode includesSubstring: 'ReRenamedClassForTest') ].
+
+	self deny: ((ReClassReferencingAnother >> #use) sourceCode includesSubstring: 'ReRenamedClassForTest')
+]
+
+{ #category : 'tests - execution' }
+RBRenameClassRefactoringTest >> testExecuteRenameClassReferencingItself [
+	"Methods of the renamed class are changed after the rename, so they must not point to the old class name."
+
+	| change |
+	change := self
+		          renameChangeFor: ReClassReferencingItself
+		          to: #ReRenamedClassForTest
+		          within: { ReClassReferencingItself }.
+
+	self performAndUndoChange: change do: [
+		self assert: ((ReClassReferencingItself >> #make) sourceCode includesSubstring: 'ReRenamedClassForTest').
+		self assert: ((ReClassReferencingItself class >> #build) sourceCode includesSubstring: 'ReRenamedClassForTest') ].
+
+	self deny: ((ReClassReferencingItself >> #make) sourceCode includesSubstring: 'ReRenamedClassForTest').
+	self deny: ((ReClassReferencingItself class >> #build) sourceCode includesSubstring: 'ReRenamedClassForTest')
+]
+
 { #category : 'tests' }
 RBRenameClassRefactoringTest >> testModelRenameSequenceClass [
 

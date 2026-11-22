@@ -18,10 +18,3 @@ Class {
 ClySwitchQueryResultCommand class >> isAbstract [
 	^self = ClySwitchQueryResultCommand
 ]
-
-{ #category : 'activation' }
-ClySwitchQueryResultCommand class >> queryBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup for: ClyQueryBrowserContext
-]

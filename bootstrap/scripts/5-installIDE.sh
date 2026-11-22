@@ -106,6 +106,9 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "MCCacheRepository uniqueInstance 
 ${VM} "${PHARO_IMAGE_NAME}.image" metacello install --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Monticello --groups RemoteRepositories
 ${VM} "${PHARO_IMAGE_NAME}.image" metacello install --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Pharo
 
+echo $(date -u) "[Pharo] Setting up Morphic and starting its UI"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "MorphicInitialization initializeEnvironment"
+
 #Storing the image version into the image header
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm saveImageVersionInImageHeader"
 

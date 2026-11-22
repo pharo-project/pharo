@@ -1,12 +1,12 @@
 "
-I am a command to show all message senders.
+Show all message senders.
 
 To show senders I ask the browser to spawn new query browser.
 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 "
 Class {
 	#name : 'ClyShowMessageSenderCommand',
@@ -23,20 +23,6 @@ Class {
 ClyShowMessageSenderCommand class >> forMethods: methods by: aBrowser [
 	^(self forMethods: methods)
 		browser: aBrowser
-]
-
-{ #category : 'activation' }
-ClyShowMessageSenderCommand class >> methodBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageSenderCommand class >> methodShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $n meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'activation' }
@@ -60,12 +46,6 @@ ClyShowMessageSenderCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : 'accessing' }
-ClyShowMessageSenderCommand >> description [
-
-	^ 'Show all message senders.'
-]
-
 { #category : 'execution' }
 ClyShowMessageSenderCommand >> executeRefactoring [
 
@@ -78,20 +58,8 @@ ClyShowMessageSenderCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageSenderCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> name [
 	^'Senders'
-]
-
-{ #category : 'accessing' }
-ClyShowMessageSenderCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'execution' }

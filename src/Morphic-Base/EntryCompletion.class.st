@@ -136,7 +136,8 @@ EntryCompletion >> keystroke: anEvent from: aMorph [
 			^ true ].
 	(chooser isNil and: [ anEvent keyCharacter = Character arrowDown ])
 		ifTrue: [ self openChooserWith: aMorph textMorph text string from: aMorph ].
-	^ chooser ifNil: [ false ] ifNotNil: [ chooser keyStroke: anEvent ]
+	"the chooser handles the arrows in keyDown: and the other keys in keyStroke:"
+	^ chooser ifNil: [ false ] ifNotNil: [ (chooser keyDown: anEvent) or: [ chooser keyStroke: anEvent ] ]
 ]
 
 { #category : 'event handling' }

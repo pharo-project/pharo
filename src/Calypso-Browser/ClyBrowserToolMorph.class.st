@@ -4,17 +4,16 @@ My subclasses should implement single method #build where they should create and
 
 The build is always executed in background due to the TabManagerMorph logic.
 
-Tab manager collects all subclasses which should be opened for current browser state.
-It lookups tools annotated with ClyTabActivationStrategy for current browser context.
+Tab manager collects the tools which should be opened for current browser state: the tabs declared for the current browser context (ClyCommandRegistry, interaction #tabs).
 
-So to enable any tool in the browser you should annotated it with еру strategy for appropriate context where tool should be opened.
+So to enable a tool in the browser, declare it in the tabs of the context or item type where it should be opened, with a class-side method marked with the <calypsoCommands> pragma (see ClyCommandMap>>#tabs and the guide doc/Calypso/Commands.md of the Pharo repository).
 For example:
 
-	ClyMethodCodeEditorTool class>>methodTabActivation
-		<classAnnotation>
-		^ClyTabActivationStrategy for: ClyMethod asCalypsoItemContext
+	ClyMethod class >> calypsoSystemToolsCoreCommandsIn: aCommandMap
+		<calypsoCommands>
+		aCommandMap tabs add: ClyMethodCodeEditorToolMorph
 
-It will open method editor when method is selected in the browser.	
+It will open method editor when method is selected in the browser.
 
 Subclasses can define extra condition to check that they can be opened in particular browser context instance.
 They should override class side method: 
@@ -23,12 +22,9 @@ They should override class side method:
 
 It returns true by default.
 
-Also abstract subclasses are never opened in the browser. By default the tool is abstract if it has subclasses.
-The class side method #isAbstact should be overridden if this default condition is not valid.
-
 Tab instances are created with browser context 
 
-	ClyBrowserTool for: aBrowser inContext: aBrowserContext
+	ClyBrowserToolMorph for: aBrowser inContext: aBrowserContext
 	
 Subclasses should implement initialization methods to retrieve required state from the given context:
 
@@ -38,9 +34,9 @@ Subclasses should implement initialization methods to retrieve required state fr
 Last method is also used to update tool when model is changed.
 
 Subclasses should override method #isSimilarTo: to compare with another tool which has same parameters.
-For example ClyMethodCodeEditorTool checks that other method editor is based on same method.
-#isSimilarTo: method is used by ClyTabManager to update existing tabs in new browser state. If similar tool is already opened in browser then it will be not replaced by new instance.
-Look ClyTabManager comments for details.
+For example ClyMethodCodeEditorToolMorph checks that other method editor is based on same method.
+#isSimilarTo: method is used by ClyNotebookManager to update existing tabs in new browser state. If similar tool is already opened in browser then it will be not replaced by new instance.
+Look ClyNotebookManager comments for details.
 
 Tab manager never close dirty tabs when browser selection is changed. Instead if ask the tool to indicate different browser context.
 To support this logic tools should implement following methods: 
@@ -84,7 +80,7 @@ In addition I provide method #update which subclasses should reuse in the update
 
 TabManager orders retrieved tools using method #tabOrder.
 Also manager chooses what tab should be selected first. It selects the tool with highest #activationPriority which is equal to #tabOrder by default.
-In general tab selection logic is more complex. Look at ClyTabManager comments for details.
+In general tab selection logic is more complex. Look at ClyNotebookManager comments for details.
 
 To specify tab title and icon subclasses can implement following methods: 
 
@@ -114,13 +110,13 @@ To remove the tool from browser just call #removeFromBrowser method.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 	containerTab:		<TabMorph>
 	context:		<ClyBrowserContext>
 	decorators:		<OrderedCollection of<ClyBrowserToolDecorator>>
 	isDirty:		<Boolean>
 	isManagedByUser:		<Boolean>
-	statusBar:		<ClyStatusBar>
+	statusBar:		<ClyStatusBarMorph>
 "
 Class {
 	#name : 'ClyBrowserToolMorph',
@@ -193,18 +189,14 @@ ClyBrowserToolMorph >> addDecorator: aBrowserToolDecorator [
 
 { #category : 'notebook' }
 ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [
+
 	| tree |
-	tree := ClyCommandGroupBuilder new buildToolbarFor: ClyBrowserTabCommandActivation contexts: { context }.
-	containerTab := ClyNotebookPageMorph
-		newLabel: self defaultTitle
-		icon: self defaultIcon
-		provider: [ self buildPageAndDecorate ].
+	tree := ClyCommandGroupBuilder new buildToolbarOf: [ :toolContext | ClyCommandRegistry default activationsOf: #tabActions inContext: toolContext ] contexts: { context }.
+	containerTab := ClyNotebookPageMorph newLabel: self defaultTitle icon: self defaultIcon provider: [ self buildPageAndDecorate ].
 	containerTab beCloseable.
 	containerTab actions: (ClyCommandGroupMenuRenderer new notebookActionsOf: tree).
 	containerTab model: self.
-	aNotebook
-		addPage: containerTab
-		label: containerTab labelMorph.
+	aNotebook addPage: containerTab label: containerTab labelMorph.
 	^ containerTab
 ]
 

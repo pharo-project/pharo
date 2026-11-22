@@ -19,6 +19,20 @@ MCRepository class >> createRepositoryFromSpec: aRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
+MCRepository >> fileFormat [
+	"The format my packages are written in, as Iceberg names it (#tonel, #filetree). #unknown when I cannot tell"
+
+	^ #unknown
+]
+
+{ #category : '*Metacello-Core' }
+MCRepository >> fileFormatAt: aVersionName [
+	"The format my packages are written in at the version named aVersionName, as Iceberg names it (#tonel, #filetree). #unknown when I cannot tell"
+
+	^ #unknown
+]
+
+{ #category : '*Metacello-Core' }
 MCRepository class >> findFiletreeAlternateFormat: aRepositorySpec ifFound: aBlock [
 	| repositoryClass |
 	repositoryClass := self allSubclasses detect: [ :each | each isFiletreeAlternateFormat: aRepositorySpec ] ifNone: [ nil ].
@@ -48,6 +62,13 @@ MCRepository class >> newRepositoryFromSpec: aRepositorySpec [
 		  detect: [ :each | each isAvailableFor: aRepositorySpec type ]
 		  ifFound: [ :repositoryClass | repositoryClass createRepositoryFromSpec: aRepositorySpec ]
 		  ifNone: [ self error: 'Unknown repository type: ' , aRepositorySpec description ]
+]
+
+{ #category : '*Metacello-Core' }
+MCRepository >> projectUrl [
+	"Where my project lives, without the version my description may name: what tells my project apart from the projects of other repositories. My whole description by default: a directory names no version"
+
+	^ self description
 ]
 
 { #category : '*Metacello-Core' }

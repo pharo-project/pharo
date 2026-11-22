@@ -1,5 +1,5 @@
 "
-I am a command to remove given packages
+Removes Packages.
 "
 Class {
 	#name : 'SycRemovePackageCommand',
@@ -27,12 +27,6 @@ SycRemovePackageCommand >> applyCommandResult [
 		updateWindowTitle;
 		updateMethodEditorAfterPackageRemoval.
 	
-]
-
-{ #category : 'accessing' }
-SycRemovePackageCommand >> description [
-
-	^ 'Removes Packages.'
 ]
 
 { #category : 'execution' }

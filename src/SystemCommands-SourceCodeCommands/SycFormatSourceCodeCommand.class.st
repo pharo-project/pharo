@@ -1,5 +1,5 @@
 "
-I am a command to format source code in given code editor.
+Formats source code in given code editor
  
 Internal Representation and Key Implementation Points.
 
@@ -8,27 +8,15 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycFormatSourceCodeCommand',
-	#superclass : 'SycSourceCodeCmCommand',
+	#superclass : 'SycSourceCodeCommand',
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }
-
-{ #category : 'testing' }
-SycFormatSourceCodeCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ true
-]
 
 { #category : 'execution' }
 SycFormatSourceCodeCommand >> applyCommandResult [
 
 	"Nothing"
-]
-
-{ #category : 'accessing' }
-SycFormatSourceCodeCommand >> description [
-
-	^ 'Formats source code in given code editor'
 ]
 
 { #category : 'execution' }
@@ -38,9 +26,9 @@ SycFormatSourceCodeCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycFormatSourceCodeCommand >> icon [
+SycFormatSourceCodeCommand >> iconName [
 
-	^ self iconNamed: #smallJustified
+	^ #smallJustified
 ]
 
 { #category : 'accessing' }

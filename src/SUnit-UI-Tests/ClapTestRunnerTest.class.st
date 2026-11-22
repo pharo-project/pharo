@@ -29,7 +29,7 @@ ClapTestRunnerTest >> testCanGetMixedPackagesAndRegex [
 	packages := command testPackages.
 	
 	self assert: (packages includes: 'Kernel').
-	self assert: packages size equals: 13 
+	self assert: packages size equals: 15 
 ]
 
 { #category : 'tests' }
@@ -72,7 +72,7 @@ ClapTestRunnerTest >> testCanGetPackagesFromRegex [
 	
 	self
 		assert: packages size
-		equals: 12.
+		equals: 14.
 	self assert: (packages allSatisfy: [ :pkgName | pkgName beginsWith: 'SUnit' ])
 ]
 

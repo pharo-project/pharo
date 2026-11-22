@@ -16,14 +16,6 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
-	<classAnnotation>
-
-	^(ClyDoubleClickActivation for: ClyFullBrowserMethodGroupContext)
-		priority: 10000
-]
-
 { #category : 'execution' }
 ClyShowGroupsInMethodBrowserCommand >> executeRefactoring [
 
@@ -36,18 +28,6 @@ ClyShowGroupsInMethodBrowserCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowGroupsInMethodBrowserCommand >> name [
 	^'Show in method browser'
-]
-
-{ #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> order [
-
-	^ 1000
 ]

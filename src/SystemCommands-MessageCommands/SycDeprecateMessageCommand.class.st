@@ -8,23 +8,19 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycDeprecateMessageCommand',
-	#superclass : 'SycChangeMessageMenuCmCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'accessing' }
-SycDeprecateMessageCommand class >> browserMenuOrder [
-	^ 2.5
+{ #category : 'execution' }
+SycDeprecateMessageCommand >> applyCommandResult [
 ]
 
 { #category : 'testing' }
-SycDeprecateMessageCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isMethodSelected
-]
+SycDeprecateMessageCommand >> canBeExecuted [
 
-{ #category : 'execution' }
-SycDeprecateMessageCommand >> applyCommandResult [
+	^ self context isMethodSelected
 ]
 
 { #category : 'execution' }
@@ -48,12 +44,4 @@ SycDeprecateMessageCommand >> name [
 SycDeprecateMessageCommand >> order [
 
 	^ 2.5
-]
-
-{ #category : 'accessing' }
-SycDeprecateMessageCommand >> orderInContext: aToolContext [
-
-	^ aToolContext isMethodSourceContext
-		ifTrue: [ 1.3 ]
-		ifFalse: [ self order ]
 ]

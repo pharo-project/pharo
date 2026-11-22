@@ -1,22 +1,12 @@
+"
+Removes methods.
+"
 Class {
 	#name : 'SycRemoveMethodCommand',
 	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'activation' }
-SycRemoveMethodCommand class >> methodShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation removalFor: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-SycRemoveMethodCommand >> description [
-
-	^ 'Removes methods.'
-]
 
 { #category : 'execution' }
 SycRemoveMethodCommand >> executeRefactoring [

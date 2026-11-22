@@ -20,13 +20,6 @@ Class {
 	#tag : 'Editors-Classes'
 }
 
-{ #category : 'activation' }
-ClyClassEditorToolMorph class >> classTabActivation [
-	<classAnnotation>
-
-	^ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
-]
-
 { #category : 'testing' }
 ClyClassEditorToolMorph class >> isAbstract [
 	^self = ClyClassEditorToolMorph

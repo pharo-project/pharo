@@ -43,12 +43,10 @@ ClyKMDispatcher >> commandProvider: someObjectWithCommandContext [
 { #category : 'dispatching' }
 ClyKMDispatcher >> dispatch: anEventBuffer [
 
-	| context executed |
+	| context |
 	context := self commandProvider createCommandContext.
 
-	ClyShortcutActivation visibleInstancesInContext: context do: [ :shortcut |
-		executed := shortcut tryExecuteCommandInContext: context byEvents: anEventBuffer.
-		executed ifTrue: [ ^self ] ].
+	(ClyCommandRegistry default activationsOf: #shortcuts inContext: context) do: [ :shortcut | (shortcut tryExecuteCommandInContext: context byEvents: anEventBuffer) ifTrue: [ ^ self ] ].
 
 	super dispatch: anEventBuffer
 ]

@@ -15,24 +15,24 @@ Class {
 
 { #category : 'reading' }
 MetacelloMVSRepositorySource >> baselineOf: aCandidate [
-	"The baseline of the version of aCandidate, as its repository reads it. Never signals: what cannot be read becomes a problem"
+	"The baseline of the version of aCandidate, as its repository reads it, with a warning when its packages are in FileTree format. Never signals: what cannot be read becomes a problem"
 
-	| findings definitions |
+	| findings definitions format |
 	findings := MetacelloMVSBaselineDefinitions none.
-	aCandidate path ifNotNil: [ :written |
-			findings
-				warning: #writtenPath
-				text: aCandidate repositoryDescription , ' writes the path ' , written , ', an internal detail of the repository' ].
-	definitions := [ (self repositoryAt: aCandidate repository) baselineOf: aCandidate project atVersion: aCandidate version string ]
-		               on: Error
-		               do: [ :error |
-				               findings error: #repositoryFailure text: aCandidate repository , ': ' , error description.
-				               ^ findings ].
+	[
+		definitions := aCandidate baselineFrom: self.
+		format := aCandidate fileFormatFrom: self ]
+		on: Error
+		do: [ :error |
+				findings error: #repositoryFailure text: aCandidate repository , ': ' , error description.
+				^ findings ].
 	definitions ifNil: [
 			findings error: #missingBaseline text: aCandidate printString , ' has no BaselineOf' , aCandidate project.
 			^ findings ].
+	format = #filetree ifTrue: [
+		findings warning: #fileTreeFormat text: aCandidate printString , ' is in FileTree format, to deprecate for Tonel' ].
 	^ findings
-		  setDefinitions: definitions repository: aCandidate repository , ':' , aCandidate version string;
+		  setDefinitions: definitions repository: aCandidate repositoryDescription;
 		  yourself
 ]
 

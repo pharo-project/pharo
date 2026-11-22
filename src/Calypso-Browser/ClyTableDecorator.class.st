@@ -3,11 +3,11 @@ I am a root of hierarchy of table decorators.
 My subclasses are responsible to decorate table rows/cells.
 Currently my subclasses are not supposed to be instantiated. All behaviour are on class side.
 
-To activate decorator it should be annotated with ClyTableDecorationStrategy with context of items where table should be decorated:
+To activate decorator it should be declared in the table decorators of the context or item type of the items where table should be decorated, with a class-side method marked with the <calypsoCommands> pragma (see ClyCommandMap>>#tableDecorators and the guide doc/Calypso/Commands.md of the Pharo repository):
 
-	ClyAbstractClassTableDecorator class>>classDecorationStrategy
-		<classAnnotation>
-		^ClyTableDecorationStrategy for: ClyClass asCalypsoItemContext
+	ClyClass class >> calypsoSystemPluginsInheritanceAnalysisBrowserCommandsIn: aCommandMap
+		<calypsoCommands>
+		aCommandMap tableDecorators add: ClyAbstractClassTableDecorator
 
 Also decorators can decide what exact items they want decorate. They should override the method:
 	 wantsDecorateTableCellOf: aDataSourceItem
@@ -36,10 +36,7 @@ Following methods should be overridden in such cases:
 By default they just call first pair of methods with selected item in context.
 
 When table is building multiple decorators can override same cell properties. To manage these overrides I introduce priority which specifies what decoration is more important. More important decoration is evaluated at last time which overrides equal properties from other decorations.
-Enumeration order is implemented on annotation level. ClyTableDecorationStrategy defines special sorted registry for this.
-
-Important notice. The actual priority is defined by my subclasses. But annotation extracts it and use it as own priority value in registry. 
-Also the annotation is forbidden for abstract classes. By default I define abstract decorators as a classes which has subclasses. But it can be redefined in method #isAbstract. 
+The priority is defined by my subclasses in the class-side method #priority, and ClyCommandRegistry applies the decorators by ascending priority (see ClyTableDecoratorEntry).
 
 To be able control set of decorators per browser instance subclasses can be attached to concrete browser plugins.
 Browser instance is created with specific set of plugins which restrict number of decorators which affect browser tables.
@@ -90,11 +87,9 @@ ClyTableDecorator class >> isAbstract [
 
 { #category : 'decoration' }
 ClyTableDecorator class >> priority [
-	"Decorators can override table cell properties. Priorities allow manage these overrides.
-	So developers can specify what decoration is more important.
-	Larger value increases level of importance"
-	<classAnnotationDependency>
-	^0
+	"Decorators can override the properties of table cells set by others: the ones of larger priority are applied last, so their changes win. See ClyTableDecoratorEntry."
+
+	^ 0
 ]
 
 { #category : 'testing' }

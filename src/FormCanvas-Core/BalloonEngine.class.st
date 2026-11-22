@@ -742,8 +742,7 @@ BalloonEngine >> registerFills: fills [
 BalloonEngine >> release [
 
 	self class recycleBuffer: workBuffer.
-	workBuffer := nil.
-	self releaseActionMap "we are not sure if we need it"
+	workBuffer := nil
 ]
 
 { #category : 'initialization' }

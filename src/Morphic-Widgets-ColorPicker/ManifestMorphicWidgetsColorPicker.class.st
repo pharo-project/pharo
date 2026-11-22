@@ -13,5 +13,5 @@ Class {
 ManifestMorphicWidgetsColorPicker class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'Graphics-Files' #'System-Object Events' #'System-Localization')
+	^ #(#'Graphics-Files' #'System-Localization')
 ]

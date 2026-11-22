@@ -6,7 +6,8 @@ Class {
 	#superclass : 'MCRepository',
 	#instVars : [
 		'versions',
-		'baselines'
+		'baselines',
+		'fileFormat'
 	],
 	#category : 'Metacello-MVS-Tests',
 	#package : 'Metacello-MVS-Tests'
@@ -24,12 +25,25 @@ MetacelloMVSTestRepository >> description [
 	^ 'test repository'
 ]
 
+{ #category : 'accessing' }
+MetacelloMVSTestRepository >> fileFormat: aSymbol [
+
+	fileFormat := aSymbol
+]
+
+{ #category : 'accessing' }
+MetacelloMVSTestRepository >> fileFormatAt: aVersionName [
+
+	^ fileFormat
+]
+
 { #category : 'initialization' }
 MetacelloMVSTestRepository >> initialize [
 
 	super initialize.
 	versions := OrderedCollection new.
-	baselines := Dictionary new
+	baselines := Dictionary new.
+	fileFormat := #tonel
 ]
 
 { #category : 'accessing' }

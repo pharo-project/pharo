@@ -1183,6 +1183,22 @@ OCProgramNode >> recurseIntoCharacter [
 	^$`
 ]
 
+{ #category : 'deprecation' }
+OCProgramNode >> references: aVariableName [
+
+	self
+		deprecated: 'Use #referencesVariableNamed: instead'
+		transformWith: '`@receiver references: `@argument' -> '`@receiver referencesVariableNamed: `@argument'.
+	^ self referencesVariableNamed: aVariableName
+]
+
+{ #category : 'testing' }
+OCProgramNode >> referencesVariableNamed: aVariableName [
+	"Return wether the variable named aVariable is accessed in read or write with the receiver."
+
+	^ self children anySatisfy: [:each | each referencesVariableNamed: aVariableName]
+]
+
 { #category : 'replacing' }
 OCProgramNode >> removeDeadCode [
 	self children do: [:each | each removeDeadCode]

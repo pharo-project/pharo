@@ -1,5 +1,5 @@
 "
-I am a Calypso activator: I bind a command to the context where it is executed and to the activation strategy which made it available. I execute the command with the Commander2 lifecycle, so the command prepares, executes and applies its own result. The context only provides the state and the failure notification.
+I am a Calypso activator: I bind a command to the context where it is executed and to the activation which made it available (a ClyCommandEntry). I execute the command with the Commander2 lifecycle, so the command prepares, executes and applies its own result. The context only provides the state and the failure notification.
 "
 Class {
 	#name : 'ClyCommandActivator',
@@ -109,7 +109,8 @@ ClyCommandActivator >> menuItemName [
 
 { #category : 'accessing' }
 ClyCommandActivator >> menuItemOrder [
-	^activationStrategy menuItemOrder
+
+	^ activationStrategy menuItemOrderFor: command
 ]
 
 { #category : 'accessing' }
@@ -133,8 +134,6 @@ ClyCommandActivator >> printOn: aStream [
 { #category : 'context menu' }
 ClyCommandActivator >> setUpShortcutTipForMenuItem: aMenuItemMorph [
 
-	ClyShortcutActivation
-		activeInstancesFor: self command class inContext: self context
-		do: [ :shortcut |
-			aMenuItemMorph keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter)]
+	(ClyCommandRegistry default shortcutsOf: self command class inContext: self context) do: [ :shortcut |
+		aMenuItemMorph keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter) ]
 ]

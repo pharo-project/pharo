@@ -17,21 +17,6 @@ Class {
 	#tag : 'Core'
 }
 
-{ #category : 'activation' }
-ClyPackageRichTextCommentEditorToolMorph class >> browserTabActivation [
-	"This declaration specifies that in any browser when packages are selected, a comment editor will be available in a tab."
-
-	<classAnnotation>
-	^ClyTabActivationStrategyAnnotation for: Package asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyPackageRichTextCommentEditorToolMorph class >> browserTabActivation2 [
-	<classAnnotation>
-	
-	^ClyTabActivationStrategyAnnotation for: ClyClassGroup asCalypsoItemContext
-]
-
 { #category : 'testing' }
 ClyPackageRichTextCommentEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext isPackageSelected and: [aBrowserContext isClassSelected not]

@@ -532,6 +532,13 @@ OCMethodNode >> printOn: aStream [
 	aStream nextPutAll: self formattedCode
 ]
 
+{ #category : 'testing' }
+OCMethodNode >> referencesVariableNamed: aVariableName [
+	"Return wether the variable named aVariable is accessed in read or write with the receiver."
+	
+	^ body referencesVariableNamed: aVariableName
+]
+
 { #category : 'private' }
 OCMethodNode >> reformatSource [
 	| stream newSource newTree |

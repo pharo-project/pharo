@@ -1,29 +1,17 @@
 "
-I am a command to move method to the class side of defining class
+Move method to the class side.
 "
 Class {
 	#name : 'SycMoveMethodsToClassSideCommand',
-	#superclass : 'SycMethodCmCommand',
+	#superclass : 'SycMethodRefactoringCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
 { #category : 'testing' }
-SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isMethodSelected and: [ aToolContext isInstanceSideMethodSelected ]
-]
-
-{ #category : 'testing' }
 SycMoveMethodsToClassSideCommand >> canBeExecuted [
 
-	^ self hasContext and: [ self class canBeExecutedInContext: self context ]
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToClassSideCommand >> description [
-
-	^ 'Move method to the class side.'
+	^ self hasContext and: [ self context isMethodSelected and: [ self context isInstanceSideMethodSelected ] ]
 ]
 
 { #category : 'execution' }
@@ -33,9 +21,9 @@ SycMoveMethodsToClassSideCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToClassSideCommand >> icon [
+SycMoveMethodsToClassSideCommand >> iconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }

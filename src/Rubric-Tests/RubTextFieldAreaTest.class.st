@@ -206,6 +206,20 @@ RubTextFieldAreaTest >> testReplacementWithMaxLength [
 ]
 
 { #category : 'tests' }
+RubTextFieldAreaTest >> testTextAreaInAScrollPaneStaysTransparentAfterThemeChange [
+	"The area of a text field is as wide as its text: an opaque area hides the beginning of the ghost text"
+
+	| textArea |
+	textArea := (RubTextFieldMorph new
+		             ghostText: 'Enter a filter ...';
+		             yourself) textArea.
+
+	textArea themeChanged.
+
+	self assert: textArea color isTransparent
+]
+
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testWhenWeHaveTheRubTextFieldAreaInsideOtherMorphHasToHonorTheExtentAssignedToIt [
 
 	| dropList widthOfButton |

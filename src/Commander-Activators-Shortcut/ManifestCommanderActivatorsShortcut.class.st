@@ -21,5 +21,5 @@ ManifestCommanderActivatorsShortcut class >> isDeprecated [
 ManifestCommanderActivatorsShortcut class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Object Events')
+	^ #()
 ]

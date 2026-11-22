@@ -31,20 +31,6 @@ ClyClassSideLinkTableDecorator class >> decorateTableCell: anItemCellMorph of: a
 ]
 
 { #category : 'decoration' }
-ClyClassSideLinkTableDecorator class >> methodDecorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodContext
-]
-
-{ #category : 'decoration' }
-ClyClassSideLinkTableDecorator class >> methodGroupDecorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClyMethodsInProtocolGroup asCalypsoItemContext
-]
-
-{ #category : 'decoration' }
 ClyClassSideLinkTableDecorator class >> priority [
 	^100000
 ]

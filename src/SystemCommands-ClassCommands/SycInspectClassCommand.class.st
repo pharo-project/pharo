@@ -1,0 +1,33 @@
+"
+Inspect current selected class in the browser.
+If there are multiple selection, the command will open an inspector on the selected list of classes. If there there is a single selection, it will open the inspector directly on the selected class.
+"
+Class {
+	#name : 'SycInspectClassCommand',
+	#superclass : 'SycSingleClassCommand',
+	#category : 'SystemCommands-ClassCommands-Extra',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Extra'
+}
+
+{ #category : 'execution' }
+SycInspectClassCommand >> execute [
+
+	| selectedItems |
+	selectedItems := context selectedObjects.
+	selectedItems size = 1
+		ifTrue: [ selectedItems first inspect ]
+		ifFalse: [ selectedItems inspect ]
+]
+
+{ #category : 'accessing' }
+SycInspectClassCommand >> iconName [
+
+	^ #smallInspectIt
+]
+
+{ #category : 'accessing' }
+SycInspectClassCommand >> name [
+
+	^ 'Inspect'
+]

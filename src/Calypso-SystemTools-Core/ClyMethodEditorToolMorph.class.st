@@ -74,7 +74,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 	  StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
 		  dialog title: 'Where to install new method?'.
 		  presenter items: ((self browser
-				    itemsForQuery: (ClyAllClassesQuery as: ClyMethodVisibilityProviderAnnotation defaultHierarchy asQueryResult)
+				    itemsForQuery: (ClyAllClassesQuery as: ClyMethodVisibilityGroupsResult defaultHierarchy asQueryResult)
 				    inScope: (ClyClassScope ofAll: targetClasses)) collect: [ :item | item actualObject ]) ] ]
 		  on: CmCommandAborted
 		  do: [ :err | aBlock value ]

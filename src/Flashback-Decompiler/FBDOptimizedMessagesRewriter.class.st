@@ -293,7 +293,7 @@ FBDOptimizedMessagesRewriter >> isTempReferencedElsewhereWithout: msgNode or: te
 	
 	withoutNodes := msgNode parent statements reject: [ :e | e == msgNode or: [ e == tempInit ] ].
 
-	^ withoutNodes anySatisfy: [ :e | e references: tempInit variable name ]
+	^ withoutNodes anySatisfy: [ :e | e referencesVariableNamed: tempInit variable name ]
 ]
 
 { #category : 'private' }

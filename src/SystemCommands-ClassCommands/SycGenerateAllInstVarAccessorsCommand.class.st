@@ -8,7 +8,7 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 
 	| refactorings |
@@ -55,7 +55,7 @@ SycGenerateAllInstVarAccessorsCommand >> order [
 	^ 2.1
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycGenerateAllInstVarAccessorsCommand >> prepareFullExecution [
 
 	super prepareFullExecution.

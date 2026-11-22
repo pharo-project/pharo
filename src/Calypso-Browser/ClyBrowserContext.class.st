@@ -30,6 +30,18 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyBrowserContext class >> calypsoBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap tabActions addAllConcreteSubclassesOf: ClyBrowserNavigationCommand.
+	aCommandMap shortcuts
+		add: ClyCloseBrowserCommand key: $w meta;
+		add: ClyNavigateBrowserBackCommand key: Character arrowLeft alt;
+		add: ClyNavigateBrowserForwardCommand key: Character arrowRight alt.
+	aCommandMap tableDecorators add: ClyCommandBasedTableDecorator
+]
+
 { #category : 'instance creation' }
 ClyBrowserContext class >> of: selectedItems for: aBrowser [
 	^(self for: aBrowser)
@@ -64,20 +76,6 @@ ClyBrowserContext >> asDraggableMorph [
 { #category : 'accessing' }
 ClyBrowserContext >> browser [
 	^tool
-]
-
-{ #category : 'accessing' }
-ClyBrowserContext >> commanderCommandClasses [
-
-	| roots |
-	roots := OrderedCollection new.
-	(self isAboutBrowserItemType: ClyClass) ifTrue: [ roots add: SycSingleClassCommand ].
-	(self isAboutBrowserItemType: ClyMethod) ifTrue: [
-			roots
-				add: SycChangeMessageMenuCmCommand;
-				add: SycMessageCommand;
-				add: SycMethodCommand ].
-	^ roots asArray
 ]
 
 { #category : 'copying' }
@@ -136,6 +134,13 @@ ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 	(selectedItems anySatisfy: [ :each | each name = aDataSourceItem name])
 		ifFalse: [ ^false ].
 	^selectedItems anySatisfy: [ :each | each isEqualTo: aDataSourceItem  ]
+]
+
+{ #category : 'testing' }
+ClyBrowserContext >> isDescribedByCommandAnchor: anAnchorClass [
+	"An anchor can also be the type of the selected items, such as ClyMethod or Package."
+
+	^ (super isDescribedByCommandAnchor: anAnchorClass) or: [ self isAboutBrowserItemType: anAnchorClass ]
 ]
 
 { #category : 'testing' }

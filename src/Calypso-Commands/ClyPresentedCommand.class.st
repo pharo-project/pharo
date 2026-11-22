@@ -1,5 +1,5 @@
 "
-I present one command in a Calypso menu tree built on Commander2. I wrap either an activator (a command reached through an activation of a tool context) or a command that is already prepared for its context (a pure Commander2 command). My #name is an identifier that is unique inside my group; my #dynamicName is the label the menu shows, so labels may repeat, as they do in Calypso menus. I answer activity, description and execution by delegating to my activator or my command, so a presented command behaves like the v1 activator items did.
+I present one command in a Calypso menu tree built on Commander2. I wrap either an activator (a command reached through an activation of a tool context) or a command that is already prepared for its context (a pure Commander2 command). My #name is an identifier that is unique inside my group; my #dynamicName is the label the menu shows, so labels may repeat, as they do in Calypso menus. I answer activity, description and execution by delegating to my activator or my command, so a presented command behaves like the menu item of its activator.
 "
 Class {
 	#name : 'ClyPresentedCommand',

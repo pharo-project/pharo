@@ -24,7 +24,7 @@ ClyTestCommand >> applyCommandResult [
 	self context activeQueryView dataSource runUpdate
 ]
 
-{ #category : 'context menu support' }
+{ #category : 'accessing' }
 ClyTestCommand >> iconName [
 
 	^self testResult iconName

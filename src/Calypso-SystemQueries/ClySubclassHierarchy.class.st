@@ -73,8 +73,9 @@ ClySubclassHierarchy class >> isDefaultHierarchyForVariables: aBool [
 
 { #category : 'method visibility' }
 ClySubclassHierarchy class >> methodVisibilityProvider [
-	<classAnnotation>
-	^ClyMethodVisibilityProviderAnnotation new
+	"I build the hierarchy of the method visibility groups, unless a provider of higher priority is loaded. See ClyMethodVisibilityGroupsResult class>>#methodVisibilityProvider."
+
+	<calypsoMethodVisibilityProvider: 0>
 ]
 
 { #category : 'class initialization' }

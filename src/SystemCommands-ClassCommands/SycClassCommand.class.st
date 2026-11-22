@@ -18,15 +18,16 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'testing' }
-SycClassCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected
-]
-
 { #category : 'instance creation' }
 SycClassCommand class >> for: classes [
 	^self new
 		classes: classes
+]
+
+{ #category : 'testing' }
+SycClassCommand >> canBeExecuted [
+
+	^ self context isClassSelected
 ]
 
 { #category : 'accessing' }
@@ -40,13 +41,6 @@ SycClassCommand >> classes: anObject [
 ]
 
 { #category : 'accessing' }
-SycClassCommand >> description [
-	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
-
-	^ self class comment.
-]
-
-{ #category : 'accessing' }
 SycClassCommand >> orderInContext: aToolContext [
 
 	^ aToolContext isFullBrowserClassContext
@@ -54,7 +48,7 @@ SycClassCommand >> orderInContext: aToolContext [
 		ifFalse: [ self order ]
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycClassCommand >> prepareFullExecution [
 
 	classes := self context selectedClasses

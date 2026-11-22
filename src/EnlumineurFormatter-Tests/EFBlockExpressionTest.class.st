@@ -491,9 +491,9 @@ EFBlockExpressionTest >> testFourSpaceIndent [
 		isFormattedAs:
 ' :i |
     i to: 10 do: [ :j |
-            Transcript
-                show: i;
-                show: j ] '
+        Transcript
+            show: i;
+            show: j ] '
 		with: #fourSpaceIndentConfiguration
 ]
 
@@ -621,9 +621,9 @@ EFBlockExpressionTest >> testOneSpaceIndent [
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	isFormattedAs: ' :i |
  i to: 10 do: [ :j |
-   Transcript
-    show: i;
-    show: j ] '
+  Transcript
+   show: i;
+   show: j ] '
 	with: #oneSpaceIndentConfiguration.
 ]
 
@@ -658,9 +658,9 @@ EFBlockExpressionTest >> testTabIndent [
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	isFormattedAs: ' :i |
 	i to: 10 do: [ :j |
-			Transcript
-				show: i;
-				show: j ] '
+		Transcript
+			show: i;
+			show: j ] '
 	 with: #tabIndentConfiguration
 ]
 
@@ -670,9 +670,9 @@ EFBlockExpressionTest >> testTabIndentIsNotAffectedByNumberOfSpace [
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	 isFormattedAs: ' :i |
 	i to: 10 do: [ :j |
-			Transcript
-				show: i;
-				show: j ] '
+		Transcript
+			show: i;
+			show: j ] '
 	 with: #tabIndentIsnotAffectedConfiguration
 ]
 
@@ -696,9 +696,9 @@ EFBlockExpressionTest >> testTwoSpaceIndent [
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	isFormattedAs: ' :i |
   i to: 10 do: [ :j |
-      Transcript
-        show: i;
-        show: j ] '
+    Transcript
+      show: i;
+      show: j ] '
 	with: #twoSpacesIndentConfiguration
 ]
 

@@ -77,7 +77,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames
-				select: [:each | (node whichUpNodeDefines: each) references: each].
+				select: [:each | (node whichUpNodeDefines: each) referencesVariableNamed: each].
 	outsideVars size == 1
 		ifTrue: [self checkSingleAssignment: outsideVars asArray first].
 	outsideVars size > 1
@@ -147,7 +147,7 @@ RBExtractMethodRefactoring >> checkSpecialExtractions [
 RBExtractMethodRefactoring >> checkTemporaries [
 	| temps accesses assigned |
 	temps := self remainingTemporaries.
-	accesses := temps select: [:each | extractedParseTree references: each].
+	accesses := temps select: [:each | extractedParseTree referencesVariableNamed: each].
 	assigned := accesses select: [:each | extractedParseTree assigns: each].
 	assigned ifNotEmpty: [self checkAssignments: assigned].
 	^parameters := (accesses asOrderedCollection)

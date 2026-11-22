@@ -13,5 +13,5 @@ Class {
 ManifestSystemSettingsCore class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Localization' #'System-Object Events')
+	^ #(#'System-Localization')
 ]

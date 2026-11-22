@@ -210,12 +210,12 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPool [
 	
 	| aClass materializedClass |	
 	aClass := self classFactory silentlyNewClass.
-	aClass addSharedPool: TextConstants.
+	aClass addSharedPool: FLTestSharedPool.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
 	self assert: 1 = (materializedClass sharedPools size).
-	self assert: TextConstants == materializedClass sharedPools first.
+	self assert: FLTestSharedPool == materializedClass sharedPools first.
 ]
 
 { #category : 'tests' }

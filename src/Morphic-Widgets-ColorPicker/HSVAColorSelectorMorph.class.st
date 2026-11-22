@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Morph',
 	#instVars : [
 		'hsvMorph',
-		'aMorph'
+		'aMorph',
+		'colorSelectedAction'
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'
@@ -66,9 +67,10 @@ HSVAColorSelectorMorph >> hsvMorph: anObject [
 HSVAColorSelectorMorph >> initialize [
 	"Initialize the receiver."
 
+	colorSelectedAction := [ :aColor |  ].
 	super initialize.
 	self
-		extent: 180@168;
+		extent: 180 @ 168;
 		changeTableLayout;
 		cellInset: 4;
 		aMorph: self newAColorMorph;
@@ -94,10 +96,11 @@ HSVAColorSelectorMorph >> newAColorMorph [
 HSVAColorSelectorMorph >> newHSVColorMorph [
 	"Answer a new hue/saturation/volume color morph."
 
-	^HSVColorSelectorMorph new
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		when: #colorSelected send: #colorSelected: to: self
+	^ HSVColorSelectorMorph new
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  whenColorSelectedDo: [ :aColor | self colorSelected: aColor ];
+		  yourself
 ]
 
 { #category : 'operations' }
@@ -117,7 +120,14 @@ HSVAColorSelectorMorph >> selectedColor: aColor [
 
 { #category : 'operations' }
 HSVAColorSelectorMorph >> triggerSelectedColor [
-	"Trigger the event for the selected colour"
+	"Tell the selected colour"
 
-	self triggerEvent: #selectedColor with: self selectedColor
+	colorSelectedAction value: self selectedColor
+]
+
+{ #category : 'accessing' }
+HSVAColorSelectorMorph >> whenColorSelectedDo: aBlock [
+	"aBlock receives each color selected, with its alpha"
+
+	colorSelectedAction := aBlock
 ]

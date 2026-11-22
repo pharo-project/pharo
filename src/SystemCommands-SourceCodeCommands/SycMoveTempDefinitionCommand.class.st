@@ -1,5 +1,5 @@
 "
-I am a command to rename temp variable in given method.
+Moves the definition of the temporary variable closed to its user.
  
 Internal Representation and Key Implementation Points.
 
@@ -16,13 +16,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycMoveTempDefinitionCommand class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isArgOrTempVariableSelected ]
-]
-
 { #category : 'execution' }
 SycMoveTempDefinitionCommand >> applyCommandResult [
 
@@ -30,10 +23,10 @@ SycMoveTempDefinitionCommand >> applyCommandResult [
 	self context showVariableNamed: newName
 ]
 
-{ #category : 'accessing' }
-SycMoveTempDefinitionCommand >> description [
+{ #category : 'testing' }
+SycMoveTempDefinitionCommand >> canBeExecuted [
 
-	^ 'Moves the definition of the temporary variable closed to its user.'
+	^ super canBeExecuted and: [ self context isArgOrTempVariableSelected ]
 ]
 
 { #category : 'execution' }

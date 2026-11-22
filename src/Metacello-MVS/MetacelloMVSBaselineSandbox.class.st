@@ -101,15 +101,6 @@ MetacelloMVSBaselineSandbox >> methodASTsDo: aBlock [
 ]
 
 { #category : 'reading' }
-MetacelloMVSBaselineSandbox >> pharoMinimum [
-	"The minimum Pharo major the baseline declares with spec pharo: N, or nil"
-
-	self messageNodesDo: [ :node |
-		(node selector = #pharo: and: [ node arguments first isLiteralNode ]) ifTrue: [ ^ node arguments first value ] ].
-	^ nil
-]
-
-{ #category : 'reading' }
 MetacelloMVSBaselineSandbox >> platformBlocks [
 	"The Pharo-specific attributes of for:do: blocks, such as #'pharo14.x'"
 
@@ -152,11 +143,11 @@ MetacelloMVSBaselineSandbox >> repositorySuperclass [
 ]
 
 { #category : 'reading' }
-MetacelloMVSBaselineSandbox >> requirementsInto: aReading [
-	"Give aReading the baseline class and its version spec on this platform, and answer the projects a load of the default groups requires, as project specs (see MetacelloMVSBaselineReading>>#referencesFor:into:)"
+MetacelloMVSBaselineSandbox >> requirementsInto: aProjectVersion [
+	"Give aProjectVersion the baseline class and its version spec on this platform, and answer the projects a load of the default groups requires, as project specs (see MetacelloMVSBaselineReading>>#referencesFor:into:)"
 
-	aReading baselineClass: self baselineClass.
-	^ aReading referencesFor: #(  ) into: aReading
+	aProjectVersion baselineClass: self baselineClass.
+	^ aProjectVersion referencesFor: #(  ) into: aProjectVersion
 ]
 
 { #category : 'reading' }
