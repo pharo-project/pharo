@@ -36,8 +36,9 @@ ClyNotebookPageRecycler class >> on: toolList contexts: aListOfClyBrowserContext
 
 { #category : 'private' }
 ClyNotebookPageRecycler >> activationStrategiesFor: aClyBrowserContext [
+	"The tabs declared for the context, see ClyCommandMap>>#tabs."
 
-	^ ClyTabActivationStrategyAnnotation activeInstancesInContext: aClyBrowserContext
+	^ ClyCommandRegistry default activeActivationsOf: #tabs inContext: aClyBrowserContext
 ]
 
 { #category : 'private' }

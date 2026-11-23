@@ -5,20 +5,15 @@ I am used to convert extension method to normal one
 "
 Class {
 	#name : 'SycMoveMethodsToTheDefiningClassCommand',
-	#superclass : 'SycMethodRepackagingCmCommand',
+	#superclass : 'SycMethodRepackagingCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
 { #category : 'testing' }
-SycMoveMethodsToTheDefiningClassCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isExtensionMethodSelected
-]
-
-{ #category : 'testing' }
 SycMoveMethodsToTheDefiningClassCommand >> canBeExecuted [
 
-	^ self hasContext and: [ self class canBeExecutedInContext: self context ]
+	^ self hasContext and: [ self context isExtensionMethodSelected ]
 ]
 
 { #category : 'execution' }
@@ -30,9 +25,9 @@ SycMoveMethodsToTheDefiningClassCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> icon [
+SycMoveMethodsToTheDefiningClassCommand >> iconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }

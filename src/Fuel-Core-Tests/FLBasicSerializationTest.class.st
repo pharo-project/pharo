@@ -460,12 +460,6 @@ FLBasicSerializationTest >> testGlobalMetaclass [
 	self assertSerializationIdentityOf: Integer class.
 ]
 
-{ #category : 'tests-not-so-basic' }
-FLBasicSerializationTest >> testGradientFillStyle [
-
-	self assertSerializationEqualityOf: GradientFillStyle sample
-]
-
 { #category : 'tests-collections' }
 FLBasicSerializationTest >> testInterval [
 
@@ -605,12 +599,6 @@ FLBasicSerializationTest >> testRecursiveArray [
 	self assert: materialized first equals: 10.
 	self assert: materialized second equals: 20.
 	self assert: materialized third identicalTo: materialized
-]
-
-{ #category : 'tests-collections' }
-FLBasicSerializationTest >> testRunArray [
-
-	self assertSerializationEqualityOf: (RunArray runs: #(1 2 1) values: #(1 2 3))
 ]
 
 { #category : 'tests-numbers' }

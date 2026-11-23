@@ -30,8 +30,11 @@ MetacelloPackageLoadDirective >> hash [
 
 { #category : 'printing' }
 MetacelloPackageLoadDirective >> label [
+	"A package read from a baseline already in the image has no repository"
 
-	^ spec name , ' -- ' , self repositorySpecs first fullDescription
+	^ self repositorySpecs
+		  ifEmpty: [ spec name ]
+		  ifNotEmpty: [ :specs | spec name , ' -- ' , specs first fullDescription ]
 ]
 
 { #category : 'enumerating' }

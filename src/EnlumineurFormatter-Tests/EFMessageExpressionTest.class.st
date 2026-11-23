@@ -11,8 +11,8 @@ EFMessageExpressionTest >> basicConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 70;
@@ -26,8 +26,8 @@ EFMessageExpressionTest >> blockAndCascadeInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -51,8 +51,8 @@ EFMessageExpressionTest >> blockAndParenthesesInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -76,8 +76,8 @@ EFMessageExpressionTest >> blockInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -98,8 +98,8 @@ EFMessageExpressionTest >> blockInMessageTooLongConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 20;
@@ -120,8 +120,8 @@ EFMessageExpressionTest >> dontKeepBlockInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -142,8 +142,8 @@ EFMessageExpressionTest >> extraIndentWithThreeSpacesInsideParenthesesConfigurat
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 0;
 		maxLineLength: 70;
@@ -168,8 +168,8 @@ EFMessageExpressionTest >> formatStatementsWithCommentsConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:true;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -182,8 +182,8 @@ EFMessageExpressionTest >> ifTrueIfFalseMutlilineMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages:#(#ifTrue:ifFalse:);
-		oneLineMessages: Array new;
+	 multiLineMessages: 'ifTrue:ifFalse:';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -207,8 +207,8 @@ EFMessageExpressionTest >> keepBlockInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -229,8 +229,8 @@ EFMessageExpressionTest >> littleMaxLineLengthConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 20;
@@ -251,8 +251,8 @@ EFMessageExpressionTest >> multiLineMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: #(#multi:line:);
-		oneLineMessages: Array new;
+		 multiLineMessages: 'multi:line:';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 50;
@@ -267,8 +267,8 @@ EFMessageExpressionTest >> newLineBeforeFirstKeywordConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -287,8 +287,8 @@ EFMessageExpressionTest >> noIdentsForKeyWordConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  maxLineLength: 50;
 		  newLineBeforeFirstKeyword: true;
 		  keepBlockInMessage: false;
@@ -307,8 +307,8 @@ EFMessageExpressionTest >> noTraditionalBinaryPrecedenceConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 10;
 		  indentsForKeywords: 0;
 		  maxLineLength: 50;
@@ -323,8 +323,8 @@ EFMessageExpressionTest >> oneArgumentPerLineConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 1;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -349,8 +349,9 @@ EFMessageExpressionTest >> oneLineMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:#(#one:line:message:);
+		 multiLineMessages: '';
+		  oneLineMessages: 'one:line:message:';
+	
 		numberOfArgumentsForMultiLine:2;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -364,8 +365,8 @@ EFMessageExpressionTest >> parentheseConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 0;
 		maxLineLength: 70;
@@ -381,8 +382,8 @@ EFMessageExpressionTest >> shortMaxLineLengthConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 1;
 		maxLineLength: 13;
@@ -401,8 +402,8 @@ EFMessageExpressionTest >> simpleConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 10;
 		  indentsForKeywords: 0;
 		  maxLineLength: 50;
@@ -504,9 +505,9 @@ EFMessageExpressionTest >> testBlockParameterOnTheMethodLineWhenMultiline [
 		assert: source
 		equals:
 '1 to: 10 do: [ :i |
-		Transcript show: i.
-		Transcript cr.
-		Transcript cr ]'
+	Transcript show: i.
+	Transcript cr.
+	Transcript cr ]'
 ]
 
 { #category : 'tests - block arg' }
@@ -649,8 +650,8 @@ EFMessageExpressionTest >> testKeepBlockInMessage [
 		assert: source
 		equals:
 'aBoolean ifTrue: [ :i |
-		i := i factorial.
-		Transcript show: i ]'
+	i := i factorial.
+	Transcript show: i ]'
 ]
 
 { #category : 'tests' }
@@ -663,9 +664,9 @@ EFMessageExpressionTest >> testKeepBlockInMessageMutlilineNewLine [
 		assert: source
 		equals:
 'aBoolean ifTrue: [
-		Transcript cr.
-		Transcript cr.
-		Transcript cr ]'
+	Transcript cr.
+	Transcript cr.
+	Transcript cr ]'
 ]
 
 { #category : 'tests' }
@@ -680,9 +681,9 @@ EFMessageExpressionTest >> testKeepBlockInMessageMutlilineSpace [
 		assert: source
 		equals:
 'aBoolean ifTrue: [
-		12 factorial.
-		12 factorial.
-		3 factorial ]'
+	12 factorial.
+	12 factorial.
+	3 factorial ]'
 ]
 
 { #category : 'tests' }
@@ -798,10 +799,10 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine [
 	source := self formatExpression: '1 to: 100 by: 2 do: [ :i | transcript show: i;cr; cr]'.
 	self assert: source equals:
 '1 to: 100 by: 2 do: [ :i |
-		transcript
-			show: i;
-			cr;
-			cr ]'
+	transcript
+		show: i;
+		cr;
+		cr ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -817,8 +818,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine10 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -832,8 +833,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine11 [
 	2 + 2 ]'.
 	self assert: source equals:
 'foo bar3: 5 bar2: [
-		1 + 1.
-		2 + 2 ]'
+	1 + 1.
+	2 + 2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -851,8 +852,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine12 [
 'foo
 	bar3: 5
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -866,8 +867,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine13 [
 	2 + 2 ]'.
 	self assert: source equals:
 'foo bar3: 5 bar3: 5 bar2: [
-		1 + 1.
-		2 + 2 ]'
+	1 + 1.
+	2 + 2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -884,8 +885,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine14 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5
 	bar3: 5'.
 ]
@@ -902,11 +903,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine15 [
 	self assert: source equals:
 'self
 	indent: (self do: [
-				 1.
-				 2 ])
+		 1.
+		 2 ])
 	around: [
-			1.
-			2 ]'
+		1.
+		2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -918,8 +919,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine2 [
 'aBoolean
 	ifTrue: [ ^1 ]
 	ifFalse: [
-			tmp := tmp + a.
-			^tmp ]'
+		tmp := tmp + a.
+		^tmp ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -930,8 +931,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine3 [
 	self assert: source equals:
 'aBoolean
 	ifTrue: [
-			tmp := tmp + a.
-			^ tmp ]
+		tmp := tmp + a.
+		^ tmp ]
 	ifFalse: [ ^ 0 ]'
 ]
 
@@ -943,11 +944,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine4 [
 	self assert: source equals:
 'aBoolean
 	ifTrue: [
-			tmp := tmp + a.
-			^ tmp ]
+		tmp := tmp + a.
+		^ tmp ]
 	ifFalse: [
-			tmp := tmp + a.
-			^ tmp ]'
+		tmp := tmp + a.
+		^ tmp ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -957,8 +958,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine5 [
 	source := self formatExpression: 'aBoolean ifTrue:[ ^ 1] ifFalse:[ tmp := tmp + a. ^tmp]'.
 	self assert: source equals:
 'aBoolean ifTrue: [ ^ 1 ] ifFalse: [
-		tmp := tmp + a.
-		^ tmp ]'
+	tmp := tmp + a.
+	^ tmp ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -977,11 +978,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine6 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar2: [
-			1 + 1.
-			2 + 2 ]
+		1 + 1.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -1002,11 +1003,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine7 [
 'foo
 	bar3: 5
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar2: [
-			1 + 1.
-			2 + 2 ]'
+		1 + 1.
+		2 + 2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -1025,12 +1026,12 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine8 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5
 	bar2: [
-			1 + 1.
-			2 + 2 ]'.
+		1 + 1.
+		2 + 2 ]'.
 ]
 
 { #category : 'tests - keyword' }
@@ -1051,11 +1052,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine9 [
 'foo
 	bar3: 5
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar2: [
-			1 + 1.
-			2 + 2 ]
+		1 + 1.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -1109,6 +1110,22 @@ EFMessageExpressionTest >> testMultiLineMessage [
 	line: 2'
 ]
 
+{ #category : 'tests - block arg' }
+EFMessageExpressionTest >> testNestedBlocksIndentOnceEach [
+	"A keyword message and its block argument open on the same line, so they share one level of indentation."
+
+	| source |
+	configurationSelector := #blockInMessageConfiguration.
+	source := self formatExpression:
+		          'aCollection do: [ :each | each foo ifTrue: [ self bar. self assert: firstArgumentValue + secondArgumentValue equals: thirdArgumentValue + fourthArgumentValue ] ]'.
+	self assert: source equals: 'aCollection do: [ :each |
+	each foo ifTrue: [
+		self bar.
+		self
+			assert: firstArgumentValue + secondArgumentValue
+			equals: thirdArgumentValue + fourthArgumentValue ] ]'
+]
+
 { #category : 'tests' }
 EFMessageExpressionTest >> testNewLineBeforeFirstKeyword [
 	| source |
@@ -1142,8 +1159,8 @@ EFMessageExpressionTest >> testNewLineBeforeStatementsWhenMultilineBlock [
 		assert: source
 		equals:
 'x = 0 ifFalse: [
-		tan := y asFloat / x asFloat.
-		theta := tan arcCos ]'
+	tan := y asFloat / x asFloat.
+	theta := tan arcCos ]'
 ]
 
 { #category : 'tests' }
@@ -1186,11 +1203,11 @@ EFMessageExpressionTest >> testNoNewLineBetweenVariableAndIfTrue [
 				  ungammaTable: gammaInverseTable ]'.
 	self assert: source equals: 
 'x ifTrue: [
-		aBitBlt
-			copyBitsColor: foreColorVal
-			alpha: foreColorAlpha
-			gammaTable: gammaTable
-			ungammaTable: gammaInverseTable ]'
+	aBitBlt
+		copyBitsColor: foreColorVal
+		alpha: foreColorAlpha
+		gammaTable: gammaTable
+		ungammaTable: gammaInverseTable ]'
 ]
 
 { #category : 'tests' }
@@ -1401,8 +1418,8 @@ EFMessageExpressionTest >> twoIdentsForKeyWordConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		  multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 1;
 		  indentsForKeywords: 2;
 		  maxLineLength: 50;
@@ -1418,8 +1435,8 @@ EFMessageExpressionTest >> twoSpacesInsideParenthesesConfiguration [
 		numberOfSpacesInsideParentheses: 2;
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 50;

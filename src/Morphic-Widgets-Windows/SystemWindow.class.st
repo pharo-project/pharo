@@ -1383,10 +1383,7 @@ SystemWindow >> deleteDiscardingChanges [
 	self isFlexed
 		ifTrue: [ owner delete ]
 		ifFalse: [ super delete ].
-	model ifNotNil: [
-		model
-			windowIsClosing;
-			releaseActionMap ].
+	model ifNotNil: [ model windowIsClosing ].
 	model := nil.
 	SystemWindow noteTopWindowIn: thisWorld.
 

@@ -26,18 +26,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyMoveMethodGroupToClassCommand class >> canBeExecutedInContext: aToolContext [
+ClyMoveMethodGroupToClassCommand >> canBeExecuted [
 
-	^aToolContext isSelectedMethodGroupEditable
-]
-
-{ #category : 'activation' }
-ClyMoveMethodGroupToClassCommand class >> fullBrowserDragAndDropActivation [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyMethodGroup asCalypsoItemContext
-		toDropIn: ClyClass asCalypsoItemContext
+	^ self context isSelectedMethodGroupEditable
 ]
 
 { #category : 'execution' }
@@ -49,7 +40,7 @@ ClyMoveMethodGroupToClassCommand >> executeRefactoring [
 			moveCommand execute ]
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveMethodGroupToClassCommand >> prepareFullExecution [
 	| toolContext |
 	super prepareFullExecution.

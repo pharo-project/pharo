@@ -184,7 +184,7 @@ ReCompositeExtractMethodRefactoring >> calculateArguments [
 	| allVariables accesses assigned |
 	allVariables := self sourceMethodTree allDefinedVariables difference: subtree allDefinedVariables.
 
-	accesses := allVariables select: [ :each | subtree references: each ].
+	accesses := allVariables select: [ :each | subtree referencesVariableNamed: each ].
 	assigned := allVariables select: [ :each | subtree assigns: each ].
 
 	^ accesses asOrderedCollection difference: assigned
@@ -204,7 +204,7 @@ ReCompositeExtractMethodRefactoring >> calculateAssignments [
 		assignments := temporaries select: [ :temp |
 			whoDefinesTemp := (sequenceNode whichUpNodeDefines: temp).
 			whoDefinesTemp statements anySatisfy: [ :statement |
-				(statement references: temp)
+				(statement referencesVariableNamed: temp)
 				and: [ (subtree withAllChildren includes: statement) not ] ] ] ]
 ]
 
@@ -240,7 +240,7 @@ ReCompositeExtractMethodRefactoring >> calculateTemporaries [
 	^ temporaries ifNil: [
 		| allVariables accesses |
 		allVariables := self sourceMethodTree allDefinedVariables difference: subtree allDefinedVariables.
-		accesses := allVariables select: [ :each | subtree references: each ].
+		accesses := allVariables select: [ :each | subtree referencesVariableNamed: each ].
 
 		temporaries := accesses select: [ :each | subtree assigns: each ] ]
 ]

@@ -8,14 +8,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isMethodSelected not and: [
-			  aSourceCodeContext isMessageSelected ] ]
-]
-
 { #category : 'converting' }
 SycInlineMethodCommand >> asRefactorings [
 
@@ -23,6 +15,12 @@ SycInlineMethodCommand >> asRefactorings [
 		   setOption: #shouldNotCreateExtraBindings toUse: [ :ref :aString |
 			   (self confirm: ('Do you want to inline the expression ''<1s>'' in the current method?' expandMacrosWith: aString)) not ];
 		   yourself) }
+]
+
+{ #category : 'testing' }
+SycInlineMethodCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isMethodSelected not and: [ self context isMessageSelected ] ]
 ]
 
 { #category : 'execution' }
@@ -36,9 +34,9 @@ SycInlineMethodCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycInlineMethodCommand >> icon [
+SycInlineMethodCommand >> iconName [
 
-	^ self iconNamed: #smallRightFlush
+	^ #smallRightFlush
 ]
 
 { #category : 'accessing' }

@@ -20,3 +20,10 @@ Package >> description [
 
 	^ stream contents
 ]
+
+{ #category : '*Extension-New-System' }
+Package class >> extensionNewSystemCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap tabs add: ClyPackageDefinitionTool
+]

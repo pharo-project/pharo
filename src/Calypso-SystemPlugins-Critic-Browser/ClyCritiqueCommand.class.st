@@ -21,20 +21,6 @@ Class {
 }
 
 { #category : 'testing' }
-ClyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
-
-	^aCriticContext hasSelectedItems and: [
-		(aCriticContext lastSelectedItem isMarkedWith: ClyBackgroundProcessingTag) not]
-]
-
-{ #category : 'activation' }
-ClyCritiqueCommand class >> criticTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation for: ReAbstractCritique asCalypsoItemContext
-]
-
-{ #category : 'testing' }
 ClyCritiqueCommand class >> isAbstract [
 	^self = ClyCritiqueCommand
 ]
@@ -47,6 +33,12 @@ ClyCritiqueCommand >> analyzedObject [
 { #category : 'accessing' }
 ClyCritiqueCommand >> analyzedObject: anObject [
 	analyzedObject := anObject
+]
+
+{ #category : 'testing' }
+ClyCritiqueCommand >> canBeExecuted [
+
+	^ self context hasSelectedItems and: [ (self context lastSelectedItem isMarkedWith: ClyBackgroundProcessingTag) not ]
 ]
 
 { #category : 'accessing' }
@@ -64,9 +56,4 @@ ClyCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 
 	aMorph setBalloonText: self description.
 	anItemCellMorph addExtraTool: aMorph
-]
-
-{ #category : 'table decoration' }
-ClyCritiqueCommand >> description [
-	^''
 ]

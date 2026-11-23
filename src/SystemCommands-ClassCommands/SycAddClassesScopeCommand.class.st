@@ -3,7 +3,7 @@ I am a command to add classes scope to listScopes
 "
 Class {
 	#name : 'SycAddClassesScopeCommand',
-	#superclass : 'SycScopesCmCommand',
+	#superclass : 'SycSingleClassCommand',
 	#category : 'SystemCommands-ClassCommands-Scope',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Scope'

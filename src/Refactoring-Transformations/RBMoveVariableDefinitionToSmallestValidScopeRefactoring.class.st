@@ -132,7 +132,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> subBlocksIn: aParseTr
 	searcher
 		matches: self blockPatternString 
 		do: [ :aNode :answer |
-			(aNode references: name)
+			(aNode referencesVariableNamed: name)
 				ifTrue: [ answer add: aNode ].
 			answer ].
 	^ searcher

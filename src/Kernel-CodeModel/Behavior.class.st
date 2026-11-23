@@ -12,7 +12,7 @@ Class {
 	],
 	#classVars : [
 		'ClassProperties',
-        'ObsoleteSubclasses'
+		'ObsoleteSubclasses'
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',

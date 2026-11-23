@@ -39,10 +39,10 @@ MenubarMorph class >> closeAll [
 
 { #category : 'class initialization' }
 MenubarMorph class >> initialize [
+	"Opening the menubar in the world is part of starting Morphic (see MorphicInitialization)"
 
-	self showMenubar: true.
-	self install.
-	self reset
+	ShowMenubar := true.
+	self install
 ]
 
 { #category : 'instance creation' }

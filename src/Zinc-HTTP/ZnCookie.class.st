@@ -94,6 +94,20 @@ ZnCookie >> extraAttributes [
 	^ attributes associationsSelect: [ :ea | (ea key = 'name' or: [ ea key = 'value' ]) not ]
 ]
 
+{ #category : 'converting' }
+ZnCookie >> fromNetscapeString: string [
+	| tokens |
+	tokens := string findTokens: { Character tab }.
+	self domain: tokens first.
+	"subdomains is always true"
+	self path: tokens third.
+	self secure: tokens fourth asUppercase = 'TRUE'.
+	tokens fifth = '0'
+		ifFalse: [ self expiresTimeStamp: (DateAndTime fromUnixTime: tokens fifth asInteger) ].
+	self name: tokens sixth.
+	self value: tokens seventh
+]
+
 { #category : 'initialization' }
 ZnCookie >> fromString: aString [
 	| tokens val data i |
@@ -152,7 +166,7 @@ ZnCookie >> isExpired [
 ZnCookie >> isInDomain: urlObject [
 	| domain |
 	domain := (self domain beginsWith: '.')
-		ifTrue: [ self domain copyFrom: 2 to: self domain size ]
+		ifTrue: [ self domain allButFirst ]
 		ifFalse: [ self domain ].
 	^ urlObject host includesSubstring: domain
 ]
@@ -188,6 +202,18 @@ ZnCookie >> name: aName [
 ZnCookie >> nameValueString [
 	^ String streamContents: [ :stream |
 		self writeNameAndValueOn: stream ]
+]
+
+{ #category : 'converting' }
+ZnCookie >> netscapeString [
+	^ String streamContents: [ :stream |
+		stream nextPutAll: self domain; tab.
+		stream nextPutAll: 'TRUE'; tab.
+		stream nextPutAll:  self path; tab.
+		stream nextPutAll: self secure printString asUppercase; tab.
+		stream print: ([ self expiresTimeStamp asUnixTime ] on: Error do: [ 0 ]); tab.
+		stream nextPutAll: self name; tab.
+		stream nextPutAll: self value ]
 ]
 
 { #category : 'accessing' }

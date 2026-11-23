@@ -10,12 +10,37 @@ Class {
 }
 
 { #category : 'private' }
+MetacelloInteractiveResolverTest >> devSpec: aName [
+	"A root putting the test baseline aName in dev mode at http://dev.com"
+
+	^ (MetacelloProjectSpec project: MetacelloProject new)
+		  name: aName;
+		  className: 'BaselineOf' , aName;
+		  repository: 'http://dev.com';
+		  loads: #(  );
+		  beDev;
+		  yourself
+]
+
+{ #category : 'private' }
 MetacelloInteractiveResolverTest >> lock2Registration [
 
 	^ MetacelloProjectRegistration projectSpec: ((MetacelloProjectSpec project: MetacelloProject new)
 			   name: 'TestToLock2';
 			   className: 'BaselineOfTestToLock2';
 			   yourself)
+]
+
+{ #category : 'private' }
+MetacelloInteractiveResolverTest >> lockSpec: aName [
+	"The project spec of the test baseline aName, loading its default groups"
+
+	^ (MetacelloProjectSpec project: MetacelloProject new)
+		  name: aName;
+		  className: 'BaselineOf' , aName;
+		  repository: 'http://repo.com';
+		  loads: #(  );
+		  yourself
 ]
 
 { #category : 'tests' }
@@ -32,27 +57,82 @@ MetacelloInteractiveResolverTest >> resolveDiamondOnConflict: aBlock [
 { #category : 'private' }
 MetacelloInteractiveResolverTest >> resolveLock1Loading: aCollection [
 
-	| spec |
-	spec := (MetacelloProjectSpec project: MetacelloProject new)
-		        name: 'TestToLock1';
-		        className: 'BaselineOfTestToLock1';
-		        repository: 'http://repo.com';
-		        yourself.
-	^ MetacelloInteractiveResolver new resolve: spec loads: aCollection engine: MetacelloScriptEngine new
+	^ MetacelloInteractiveResolver new
+		  resolveRoots: { ((self lockSpec: 'TestToLock1')
+				   loads: aCollection;
+				   yourself) }
+		  engine: MetacelloScriptEngine new
 ]
 
 { #category : 'tests' }
-MetacelloInteractiveResolverTest >> testAGroupAskedLaterIsRecordedWhereItIsAsked [
-	"TestGroups asks TestGroupsShared for Core, then TestGroupsLate asks it for Tests: its tests come after LatePackage, as Monticello's tests come after SUnit in Pharo's build"
+MetacelloInteractiveResolverTest >> testADependencyCycleIsAnErrorOfTheResolution [
+	"TestCycleA requires TestCycleB, which requires TestCycleA: there is no order to load them in"
+	self
+		should: [
+				Metacello new
+					baseline: 'TestCycleA';
+					repository: 'http://repo.com';
+					record ]
+		raise: MetacelloResolutionError
+		withExceptionDo: [ :error |
+				self
+					assert: (error resolution errors collect: [ :each | each text ]) asArray
+					equals: #( 'Dependency cycle: TestCycleA -> TestCycleB -> TestCycleA' ) ]
+]
 
-	| names |
-	names := OrderedCollection new.
-	(Metacello new
-		 baseline: 'TestGroups';
-		 repository: 'http://repo.com';
-		 record) packageDirectivesDo: [ :each | names add: each spec name ].
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testADevRootWinsOverTheRegisteredVersion [
 
-	self assert: names asArray equals: #( 'SharedCore' 'LatePackage' 'SharedTests' 'LateTests' )
+	| resolution lock2 |
+	Metacello new
+		baseline: 'TestToLock2';
+		repository: 'http://registered.com';
+		register.
+	resolution := MetacelloInteractiveResolver new
+		              resolveRoots: {
+				              (self lockSpec: 'TestToLock1').
+				              (self devSpec: 'TestToLock2') }
+		              engine: MetacelloScriptEngine new.
+
+	self deny: resolution hasErrors.
+	lock2 := resolution projects detect: [ :each | each name = 'TestToLock2' ].
+	self assert: lock2 projectSpec repositoryDescriptions asArray equals: #( 'http://dev.com' )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testADevRootWinsOverTheVersionAReferenceAsks [
+	"TestToLock1 asks for TestToLock2 at http://repo.com; TestToLock2 in dev mode at http://dev.com is taken instead"
+
+	| resolution lock2 |
+	resolution := MetacelloInteractiveResolver new
+		              resolveRoots: {
+				              (self lockSpec: 'TestToLock1').
+				              (self devSpec: 'TestToLock2') }
+		              engine: MetacelloScriptEngine new.
+	self deny: resolution hasErrors.
+	lock2 := resolution projects detect: [ :each | each name = 'TestToLock2' ].
+	self assert: lock2 projectSpec repositoryDescriptions asArray equals: #( 'http://dev.com' ).
+	self assert: (lock2 requests collect: [ :each | each requesterName ]) asArray equals: #( 'the script' 'TestToLock1' )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testALoadErrorListsEachErrorAfterItsKind [
+
+	| error |
+	error := [
+		         Metacello new
+			         baseline: 'TestToLock1';
+			         repository: 'http://repo.com';
+			         loader: MetacelloTestLoader new;
+			         resolver: MetacelloFailingResolver new;
+			         load.
+		         nil ]
+		         on: MetacelloResolutionError
+		         do: [ :e | e ].
+
+	self
+		assert: error messageText
+		equals: (String lf join: #( 'The resolution has errors, nothing was loaded:' '- cannotResolve: cannot resolve' ))
 ]
 
 { #category : 'tests' }
@@ -70,6 +150,22 @@ MetacelloInteractiveResolverTest >> testALoadInstallsTheBaselinesTheResolverDidN
 	self
 		assert: (loader loaded collect: [ :each | each key ]) asArray
 		equals: #( 'Package1' 'TestToLockPackage1' 'TestToLockPackage2' 'BaselineOfTestToLock2' )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testALoadKeepsItsResolution [
+
+	| metacello |
+	metacello := Metacello new
+		             baseline: 'TestToLock1';
+		             repository: 'http://repo.com';
+		             loader: MetacelloTestLoader new;
+		             resolver: MetacelloBaselineReadingResolver new;
+		             yourself.
+	metacello load.
+
+	self assert: (metacello resolution roots collect: [ :each | each projectSpec name ]) asArray equals: #( 'TestToLock1' ).
+	self deny: metacello resolution hasErrors
 ]
 
 { #category : 'tests' }
@@ -107,6 +203,21 @@ MetacelloInteractiveResolverTest >> testALoadRegistersTheGroupsLoaded [
 ]
 
 { #category : 'tests' }
+MetacelloInteractiveResolverTest >> testALoadThatFailsKeepsItsResolution [
+
+	| metacello |
+	metacello := Metacello new
+		             baseline: 'TestToLock1';
+		             repository: 'http://repo.com';
+		             loader: MetacelloTestLoader new;
+		             resolver: MetacelloFailingResolver new;
+		             yourself.
+	self should: [ metacello load ] raise: MetacelloResolutionError.
+
+	self assert: (metacello resolution errors collect: [ :each | each text ]) asArray equals: #( 'cannot resolve' )
+]
+
+{ #category : 'tests' }
 MetacelloInteractiveResolverTest >> testALoadWithResolutionErrorsLoadsNothing [
 
 	| loader error |
@@ -126,6 +237,31 @@ MetacelloInteractiveResolverTest >> testALoadWithResolutionErrorsLoadsNothing [
 	self assert: (error resolution errors collect: [ :each | each text ]) asArray equals: #( 'cannot resolve' ).
 	self assert: loader loaded isEmpty.
 	self assert: MetacelloProjectRegistry registry isEmpty
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testAProjectAskedTwiceRunsItsPreLoadAndPostLoadOnce [
+	"TestGroupsShared, asked by TestGroups for Core and by TestGroupsLate for Tests, has a preLoad and a postLoad: they go around its first packages only, so they never wrap the packages of another project"
+	| kinds |
+	kinds := (Metacello new
+		          baseline: 'TestGroups';
+		          repository: 'http://repo.com';
+		          record) loadDirectives collect: [ :each | each class name ].
+	self
+		assert: kinds asArray
+		equals: #( #MetacelloPreLoadDirective #MetacelloPackageLoadDirective #MetacelloPostLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testAProjectIsLoadedWhereEachGroupIsAsked [
+	"TestGroups asks TestGroupsShared for Core and TestGroupsLate asks it for Tests: each group is loaded where it is asked, once"
+	| names |
+	names := OrderedCollection new.
+	(Metacello new
+		 baseline: 'TestGroups';
+		 repository: 'http://repo.com';
+		 record) packageDirectivesDo: [ :each | names add: each spec name ].
+	self assert: names asArray equals: #( 'SharedCore' 'LatePackage' 'SharedTests' 'LateTests' )
 ]
 
 { #category : 'tests' }
@@ -149,6 +285,17 @@ MetacelloInteractiveResolverTest >> testAProjectRegisteredWithoutItsPackagesIsNo
 	"TestToLockPackage1 and TestToLockPackage2 are not in the image"
 
 	self deny: self lock2Registration isInstalled
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testAProjectWithoutPostLoadAskedTwiceIsRecorded [
+	"TestNoHooksShared, asked by TestNoHooks for Core and by TestNoHooksLate for Tests, has no preLoad nor postLoad: it is recorded where each group is asked, with no hook directive"
+	| directives |
+	directives := (Metacello new
+		          baseline: 'TestNoHooks';
+		          repository: 'http://repo.com';
+		          record) loadDirectives.
+	self assert: (directives collect: [ :each | each spec name ]) asArray equals: #( 'NoHooksCore' 'NoHooksTests' 'NoHooksLatePackage' )
 ]
 
 { #category : 'tests' }
@@ -254,12 +401,27 @@ MetacelloInteractiveResolverTest >> testResolveRegistersNothing [
 ]
 
 { #category : 'tests' }
+MetacelloInteractiveResolverTest >> testResolvesEveryRootInTheOrderAsked [
+
+	| resolution |
+	resolution := MetacelloInteractiveResolver new
+		              resolveRoots: {
+				              (self lockSpec: 'TestToLock2').
+				              (self lockSpec: 'TestToLock1') }
+		              engine: MetacelloScriptEngine new.
+
+	self assert: (resolution roots collect: [ :each | each name ]) asArray equals: #( 'TestToLock2' 'TestToLock1' ).
+	self assertCollection: (resolution projects collect: [ :each | each name ]) hasSameElements: #( 'TestToLock1' 'TestToLock2' ).
+	self deny: resolution hasErrors
+]
+
+{ #category : 'tests' }
 MetacelloInteractiveResolverTest >> testResolvesTheRootAndWhatItRequires [
 
 	| resolution |
 	resolution := self resolveLock1Loading: #(  ).
 
-	self assert: resolution root name equals: 'TestToLock1'.
+	self assert: (resolution roots collect: [ :each | each name ]) asArray equals: #( 'TestToLock1' ).
 	self assertCollection: (resolution projects collect: [ :each | each name ]) hasSameElements: #( 'TestToLock1' 'TestToLock2' ).
 	self deny: resolution hasErrors
 ]

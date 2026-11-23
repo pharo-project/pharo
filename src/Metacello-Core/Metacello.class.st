@@ -215,6 +215,23 @@ Metacello >> baseline: projectName [
 	self scriptExecutor baselineArg: projectName
 ]
 
+{ #category : 'api projectSpec' }
+Metacello >> baseline: aProjectName repository: aRepositoryDescription [
+	"Add aProjectName from aRepositoryDescription as a root of the script, loading its default groups (see baseline:repository:loads:)"
+
+	self baseline: aProjectName repository: aRepositoryDescription loads: #(  )
+]
+
+{ #category : 'api projectSpec' }
+Metacello >> baseline: aProjectName repository: aRepositoryDescription loads: aCollectionOfNames [
+	"Add aProjectName from aRepositoryDescription as a root of the script, loading aCollectionOfNames (empty for its default groups), after the root the baseline:, repository: and load: pieces build and the roots added before. A load resolves all its roots together"
+
+	self scriptExecutor addRoot: ((self scriptExecutor specNamed: aProjectName)
+			 repository: aRepositoryDescription;
+			 loads: aCollectionOfNames asArray;
+			 yourself)
+]
+
 { #category : 'api options' }
 Metacello >> beStrict [
 
@@ -241,20 +258,16 @@ Metacello >> className: className [
 
 { #category : 'private' }
 Metacello >> execute: aBlock [
-	"I'm doing a copy of the script executor so that we can execute different commands with the same setup of our Metacello instance.
-	
-	If the execution should be silent, disable Jobs."
+	"Run one command with my executor. A Metacello runs one command and is thrown away. If the execution should be silent, disable Jobs. My executor keeps the resolution, even when the command fails (see resolution)"
 
-	| executor |
-	executor := self scriptExecutor copy.
 	^ silently
 		  ifTrue: [
 				  Job disableDuring: [
-						  aBlock value: executor.
-						  executor execute ] ]
+						  aBlock value: self scriptExecutor.
+						  self scriptExecutor execute ] ]
 		  ifFalse: [
-				  aBlock value: executor.
-				  executor execute ]
+				  aBlock value: self scriptExecutor.
+				  self scriptExecutor execute ]
 ]
 
 { #category : 'api actions' }
@@ -472,6 +485,14 @@ Metacello >> register [
 Metacello >> repository: repositoryDescription [
 
 	self scriptExecutor repositoryArg: repositoryDescription
+]
+
+{ #category : 'api actions' }
+Metacello >> resolution [
+	"The MetacelloResolution of my command (load, resolve...), errors and warnings included, also after a load failed; nil before it resolved. For example:
+		Metacello new baseline: 'Foo'; repository: '...'; load; resolution"
+
+	^ self scriptExecutor resolution
 ]
 
 { #category : 'api actions' }

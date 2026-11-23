@@ -128,7 +128,7 @@ OCRengineTest >> testReferencesABlockArgInReturnRead [
 
 [ :each | ^ each ]	
 	'.
-	self assert: (ast references: 'each').
+	self assert: (ast referencesVariableNamed: 'each').
 
 	
 ]
@@ -141,7 +141,7 @@ OCRengineTest >> testReferencesABlockArgRead [
 
 [ :each | each ]	
 	'.
-	self assert: (ast references: 'each').
+	self assert: (ast referencesVariableNamed: 'each').
 
 	
 ]
@@ -155,7 +155,7 @@ OCRengineTest >> testReferencesABlockTmpAssignment [
 [ :each | | tmp |
 	tmp := 2 ]	
 	'.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -169,7 +169,7 @@ OCRengineTest >> testReferencesABlockTmpRead [
 [ :each | | tmp |
 	tmp ]	
 	'.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -183,7 +183,7 @@ OCRengineTest >> testReferencesABlockTmpReturn [
 [ :each | | tmp |
 	^ tmp ]	
 	'.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -193,7 +193,7 @@ OCRengineTest >> testReferencesATemporaryViaAssignment [
 
 	| ast |
 	ast := OCParser parseMethod: 'referencesTemp | tmp | tmp := 2'.
-	self assert: (ast references: 'tmp')
+	self assert: (ast referencesVariableNamed: 'tmp')
 
 	
 ]
@@ -203,7 +203,7 @@ OCRengineTest >> testReferencesATemporaryViaRead [
 
 	| ast |
 	ast := OCParser parseMethod: 'referencesTemp | tmp y | y := tmp'.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -213,7 +213,7 @@ OCRengineTest >> testReferencesATemporaryViaReadInBlock [
 
 	| ast |
 	ast := OCParser parseMethod: 'referencesTemp | tmp | [ :each |  tmp ]'.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -224,7 +224,7 @@ OCRengineTest >> testReferencesATemporaryViaReadInBlock2 [
 	| ast |
 	ast := OCParser parseMethod: 'referencesTemp | tmp |
 	2 isZero ifTrue: [ :each |  tmp ]'.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -235,7 +235,7 @@ OCRengineTest >> testReferencesATemporaryViaReadInDynamicArray [
 	| ast |
 	ast := OCParser parseMethod: 'referencesTemp | tmp |
 	{ tmp . 2 } '.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -245,7 +245,7 @@ OCRengineTest >> testReferencesATemporaryViaReadInReturn [
 
 	| ast |
 	ast := OCParser parseMethod: 'referencesTemp | tmp | ^ tmp'.
-	self assert: (ast references: 'tmp').
+	self assert: (ast referencesVariableNamed: 'tmp').
 
 	
 ]
@@ -255,7 +255,7 @@ OCRengineTest >> testReferencesAnArg [
 
 	| ast |
 	ast := OCParser parseMethod: 'references: arg  arg'.
-	self assert: (ast references: 'arg').
+	self assert: (ast referencesVariableNamed: 'arg').
 
 	
 ]
@@ -265,7 +265,7 @@ OCRengineTest >> testReferencesAnArgInReturn [
 
 	| ast |
 	ast := OCParser parseMethod: 'references: arg ^ arg'.
-	self assert: (ast references: 'arg').
+	self assert: (ast referencesVariableNamed: 'arg').
 
 	
 ]
@@ -275,7 +275,7 @@ OCRengineTest >> testReferencesToAnInstanceVariable [
 
 	| ast |
 	ast := (self class >> #usingTheUsedInstanceVariable) ast.
-	self assert: (ast references: 'usedInstanceVariable' ).
+	self assert: (ast referencesVariableNamed: 'usedInstanceVariable' ).
 
 	
 ]

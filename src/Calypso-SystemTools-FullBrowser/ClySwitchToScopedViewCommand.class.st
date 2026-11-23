@@ -1,3 +1,6 @@
+"
+Scope to selected packages
+"
 Class {
 	#name : 'ClySwitchToScopedViewCommand',
 	#superclass : 'ClySwitchPackageViewModeCommand',
@@ -5,17 +8,6 @@ Class {
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-Packages'
 }
-
-{ #category : 'activation' }
-ClySwitchToScopedViewCommand class >> toolbarOrder [
-	^1
-]
-
-{ #category : 'accessing' }
-ClySwitchToScopedViewCommand >> description [
-
-	^ 'Scope to selected packages'
-]
 
 { #category : 'execution' }
 ClySwitchToScopedViewCommand >> executeRefactoring [

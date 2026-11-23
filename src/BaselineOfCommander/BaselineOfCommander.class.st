@@ -44,6 +44,11 @@ BaselineOfCommander >> baseline: spec [
 				   #'Commander-Activators-Mouse' ) ];
 			package: #'Commander-Spec2-Compatibility'
 			with: [ spec requires: #( #'Commander-Core' ) ];
+			baseline: #Calypso with: [ spec repository: repository ];
+			package: #'Commander-Calypso-Compatibility'
+			with: [ spec requires: #( #Calypso #ClassAnnotation ) ];
+			package: #'Commander-Calypso-Compatibility-Tests'
+			with: [ spec requires: #( #'Commander-Calypso-Compatibility' ) ];
 			package: #'Commander-Examples'.
 		spec
 			group: 'Core' with: #( #'Commander-Core' );
@@ -55,8 +60,9 @@ BaselineOfCommander >> baseline: spec [
 				   #'Commander-Activators-WorldMenu'
 				   #'Commander-Activators-TextView'
 				   #'Commander-Activators-Mouse' );
-			group: 'Tests' with: #( #'Commander-Core-Tests' );
+			group: 'Tests' with: #( #'Commander-Core-Tests' #'Commander-Calypso-Compatibility-Tests' );
 			group: 'default'
 			with:
-				#( 'Core' 'AllActivators' 'Tests' 'Commander-Spec2-Compatibility' ) ]
+				#( 'Core' 'AllActivators' 'Tests' 'Commander-Spec2-Compatibility'
+				   #'Commander-Calypso-Compatibility' ) ]
 ]

@@ -66,14 +66,17 @@ ZnRequestLine >> isHttp11 [
 
 { #category : 'accessing' }
 ZnRequestLine >> method [
+	<return: #Symbol>
+
 	^ method
 ]
 
 { #category : 'accessing' }
-ZnRequestLine >> method: string [
-	method := ZnConstants knownHTTPMethods
-		detect: [ :each | each = string ]
-		ifNone: [ (ZnUnknownHttpMethod method: string) signal ]
+ZnRequestLine >> method: aSymbol [
+
+	method := (ZnCurrentOptions at: #allowedMethods)
+		detect: [ :each | each = aSymbol ]
+		ifNone: [ (ZnUnknownHttpMethod method: aSymbol) signal ]
 ]
 
 { #category : 'copying' }
@@ -101,12 +104,12 @@ ZnRequestLine >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialize-release' }
 ZnRequestLine >> readFrom: stream [
 	| line lineStream |
 	line := (ZnLineReader on: stream) nextLine.
 	lineStream := line readStream.
-	self method: (lineStream upTo: Character space).
+	self method: (lineStream upTo: Character space) asSymbol.
 	self uri: (lineStream upTo: Character space).
 	self version: (lineStream upToEnd)
 ]

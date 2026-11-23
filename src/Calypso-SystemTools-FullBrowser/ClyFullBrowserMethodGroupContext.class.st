@@ -9,19 +9,34 @@ Class {
 	#tag : 'Contexts'
 }
 
-{ #category : 'selection strategy' }
-ClyFullBrowserMethodGroupContext class >> selectionStrategy [
-	<classAnnotation>
+{ #category : 'commands' }
+ClyFullBrowserMethodGroupContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyMethodGroup
+	<calypsoCommands>
+	aCommandMap tabs add: ClyMethodCreationToolMorph.
+	aCommandMap shortcuts
+		add: ClyRemoveMethodGroupCommand key: $x meta;
+		add: ClyRenameProtocolCommand key: $r meta.
+	aCommandMap contextMenu
+		add: ClyConvertMethodGroupToProtocolCommand;
+		add: ClyMoveMethodGroupsToPackageCommand;
+		add: ClyRemoveMethodGroupCommand;
+		add: ClyRenameProtocolCommand;
+		add: SycAbstractAllInstVarAccessorsCommand;
+		add: SycAddNewProtocolCommand;
+		add: SycCategorizeAllUnclassifiedMethodsCommand;
+		add: SycGenerateAllInstVarAccessorsCommand;
+		add: SycRealizeClassCommand;
+		add: SycRemoveClassCommand;
+		add: SycRemoveEmptyMethodTagsCommand.
+	aCommandMap tableDecorators add: ClyClassSideBoldTableDecorator
 ]
 
-{ #category : 'accessing' }
-ClyFullBrowserMethodGroupContext >> commanderCommandClasses [
+{ #category : 'selection strategy' }
+ClyFullBrowserMethodGroupContext class >> selectionContextDeclaration [
 
-	^ super commanderCommandClasses , {
-		  SycClassCommand.
-		  ClyMethodGroupCommand }
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyMethodGroup
 ]
 
 { #category : 'testing' }

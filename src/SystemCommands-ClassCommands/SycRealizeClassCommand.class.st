@@ -8,7 +8,7 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycRealizeClassCommand >> asRefactorings [
 
 	^classes collect: [ :each | self refactoringClass className: each name]

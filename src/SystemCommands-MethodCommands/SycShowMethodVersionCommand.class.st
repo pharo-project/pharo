@@ -1,5 +1,5 @@
 "
-I am a command to show local method version.
+Show local method version.
 
 Local version has not relation to actual source code system. Versions are retrieved form changes file.
 
@@ -18,12 +18,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'accessing' }
-SycShowMethodVersionCommand >> description [
-
-	^ 'Show local method version.'
-]
-
 { #category : 'execution' }
 SycShowMethodVersionCommand >> executeRefactoring [
 
@@ -36,20 +30,8 @@ SycShowMethodVersionCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-SycShowMethodVersionCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 SycShowMethodVersionCommand >> name [
 	^'Versions'
-]
-
-{ #category : 'accessing' }
-SycShowMethodVersionCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'execution' }

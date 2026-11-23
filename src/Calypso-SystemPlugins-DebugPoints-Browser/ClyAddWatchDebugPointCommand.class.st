@@ -8,11 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'activation' }
-ClyAddWatchDebugPointCommand class >> contextMenuOrder [
-	^4
-]
-
 { #category : 'execution' }
 ClyAddWatchDebugPointCommand >> executeRefactoring [
 

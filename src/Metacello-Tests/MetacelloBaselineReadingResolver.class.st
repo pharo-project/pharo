@@ -10,10 +10,10 @@ Class {
 }
 
 { #category : 'resolving' }
-MetacelloBaselineReadingResolver >> resolve: aProjectSpec loads: aCollectionOfNames engine: anEngine [
+MetacelloBaselineReadingResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 
 	| answer |
-	answer := super resolve: aProjectSpec loads: aCollectionOfNames engine: anEngine.
-	answer projects do: [ :each | each == answer root ifFalse: [ each beInstallingBaseline ] ].
+	answer := super resolveRoots: someProjectSpecs engine: anEngine.
+	answer projects do: [ :each | (answer roots includes: each) ifFalse: [ each beInstallingBaseline ] ].
 	^ answer
 ]

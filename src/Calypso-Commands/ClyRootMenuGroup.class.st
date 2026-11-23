@@ -1,5 +1,5 @@
 "
-I am the root group of a Calypso context menu tree. A sub menu opener names me after its own item, so the items of the sub menu are registered under that item.
+I am the root group of a Calypso context menu tree. The commands declared without a menu group are in me.
 "
 Class {
 	#name : 'ClyRootMenuGroup',

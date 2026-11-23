@@ -37,7 +37,7 @@ MetacelloMVSScriptTest >> fooScript [
 { #category : 'running' }
 MetacelloMVSScriptTest >> resolver [
 
-	^ MetacelloMVSResolver on: (MetacelloMVSGraph new source: source)
+	^ MetacelloMVSResolver on: (MetacelloMVSGraph on: source)
 ]
 
 { #category : 'running' }
@@ -107,6 +107,22 @@ MetacelloMVSScriptTest >> testALoadWithErrorsLoadsNothing [
 ]
 
 { #category : 'tests' }
+MetacelloMVSScriptTest >> testAScriptResolvesEveryBaselineItNamesTogether [
+
+	| resolution |
+	resolution := self fooScript
+		              baseline: 'Bar' repository: 'github://acme/Bar:v1.2.0';
+		              resolve.
+
+	self assert: (resolution roots collect: [ :each | each name ]) asArray equals: #( 'Foo' 'Bar' ).
+	self
+		assert: (resolution projects collect: [ :each | each name -> each projectSpec repositoryDescriptions first ]) asDictionary
+		equals: {
+				('Foo' -> 'github://acme/Foo:v1.0.0').
+				('Bar' -> 'github://acme/Bar:v1.2.0') } asDictionary
+]
+
+{ #category : 'tests' }
 MetacelloMVSScriptTest >> testAVersionInstalledOnlyByTheLegacyRuleIsAWarning [
 	"The registry has Metacello at v1.0.0, not marked as loaded; Metacello's packages are in the image, so the legacy rule counts it, and the resolution says so"
 
@@ -171,7 +187,7 @@ MetacelloMVSScriptTest >> testResolveAnswersTheProjectsAtTheVersionsSelected [
 	| resolution |
 	resolution := self fooScript resolve.
 	self assert: resolution class equals: MetacelloMVSResolution.
-	self assert: resolution root name equals: 'Foo'.
+	self assert: (resolution roots collect: [ :each | each name ]) asArray equals: #( 'Foo' ).
 	self
 		assert: (resolution projects collect: [ :each | each name -> each projectSpec repositoryDescriptions first ]) asDictionary
 		equals: {

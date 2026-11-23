@@ -95,6 +95,15 @@ HermesClapCommandTest >> testNoFailOnUndeclaredWhenOptionSpecified [
 ]
 
 { #category : 'tests' }
+HermesClapCommandTest >> testRunningHermesWithAnUnknownDuplicationActionExitsWithErrorMessage [
+
+	context := HermesClapCommand commandSpecification activateWith: #( 'loadHermes' 'foo.hermes' '--on-duplication' 'merge' ).
+
+	self assertFailure.
+	self assert: context exitException messageText equals: 'Unknown action on duplication: merge'
+]
+
+{ #category : 'tests' }
 HermesClapCommandTest >> testRunningHermesWithoutFileExitsWithErrorMessage [
 	context := HermesClapCommand commandSpecification activateWith: #('loadHermes').
 	

@@ -5,17 +5,16 @@ For global variable I open browser of class of variable value
 "
 Class {
 	#name : 'SycBrowseVariableCommand',
-	#superclass : 'SycVariableNavigationCmCommand',
+	#superclass : 'SycVariableNavigationCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
 
 { #category : 'testing' }
-SycBrowseVariableCommand class >> canBeExecutedInContext: aToolContext [
-
+SycBrowseVariableCommand >> canBeExecuted [
 	"The full browser variables menu already has its own Browse entry."
-	^ aToolContext isFullBrowserVariableContext not
-		and: [ super canBeExecutedInContext: aToolContext ]
+
+	^ self context isFullBrowserVariableContext not and: [ super canBeExecuted ]
 ]
 
 { #category : 'execution' }
@@ -32,10 +31,4 @@ SycBrowseVariableCommand >> iconName [
 { #category : 'accessing' }
 SycBrowseVariableCommand >> name [
 	^'Browse'
-]
-
-{ #category : 'accessing' }
-SycBrowseVariableCommand >> order [
-
-	^ 1000
 ]

@@ -18,8 +18,8 @@ EFBlockExpressionOnlyTest >> basicConfiguration [
 		retainBlankLinesBetweenStatements:false;
 		retainBlankLinesBeforeComments:false;
 		minimumNewLinesBetweenStatements:1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		multiLineMessages: '';
+		oneLineMessages: '';
 		numberOfArgumentsForMultiLine:5;
 		indentsForKeywords:1;
 		newLineBeforeFirstKeyword:false;
@@ -41,8 +41,8 @@ EFBlockExpressionOnlyTest >> dontFormatCommentWithStatementConfiguration [
 		keepBlockInMessage:false;
 		retainBlankLinesBetweenStatements:false;
 		minimumNewLinesBetweenStatements:1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		multiLineMessages: '';
+		oneLineMessages: '';
 		numberOfArgumentsForMultiLine:5;
 		indentsForKeywords:1;
 		newLineBeforeFirstKeyword:false;

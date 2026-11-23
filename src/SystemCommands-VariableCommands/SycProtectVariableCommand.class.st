@@ -27,9 +27,9 @@ SycProtectVariableCommand >> fullBrowserOrder [
 ]
 
 { #category : 'accessing' }
-SycProtectVariableCommand >> icon [
+SycProtectVariableCommand >> iconName [
 
-	^ self iconNamed: #group
+	^ #group
 ]
 
 { #category : 'accessing' }

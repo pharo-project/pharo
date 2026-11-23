@@ -22,6 +22,8 @@ MetacelloResolutionError class >> signalFor: aResolution [
 
 { #category : 'accessing' }
 MetacelloResolutionError >> messageText [
+	"The errors, each after what kind of error it is"
+
 
 	^ String streamContents: [ :stream |
 			  stream nextPutAll: 'The resolution has errors, nothing was loaded:'.
@@ -29,6 +31,8 @@ MetacelloResolutionError >> messageText [
 					  stream
 						  lf;
 						  nextPutAll: '- ';
+						  nextPutAll: (resolution descriptionOfKind: each kind);
+						  nextPutAll: ': ';
 						  nextPutAll: each text ] ]
 ]
 

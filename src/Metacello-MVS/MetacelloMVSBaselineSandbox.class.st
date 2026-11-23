@@ -48,7 +48,7 @@ MetacelloMVSBaselineSandbox >> anonymousSubclassOf: aClass named: aSymbol with: 
 
 { #category : 'reading' }
 MetacelloMVSBaselineSandbox >> baselineClass [
-	"An anonymous subclass of BaselineOf with the variables and methods of my definitions, installed nowhere: a class of the same name in the image is neither used nor changed"
+	"An anonymous subclass of BaselineOf with the variables and methods of my definitions, installed nowhere: a class of the same name in the image is neither used nor changed. The extensions the baseline package makes to other classes are left out: compiled here they would land in the wrong class, and in a package of the image"
 
 	| classDefinition baselineClass |
 	classDefinition := definitions detect: [ :each | each isClassDefinition ].
@@ -58,7 +58,7 @@ MetacelloMVSBaselineSandbox >> baselineClass [
 				                 classSlots: (classDefinition classInstVarNames collect: [ :each | each asSymbol asSlot ]);
 				                 sharedVariablesFromString: (' ' join: classDefinition classVarNames) ].
 	definitions do: [ :each |
-			each isMethodDefinition ifTrue: [
+			(each isMethodDefinition and: [ each className = classDefinition className ]) ifTrue: [
 					(each classIsMeta
 						 ifTrue: [ baselineClass class ]
 						 ifFalse: [ baselineClass ]) compile: each source classified: each category ] ].
@@ -98,15 +98,6 @@ MetacelloMVSBaselineSandbox >> messageNodesDo: aBlock [
 MetacelloMVSBaselineSandbox >> methodASTsDo: aBlock [
 
 	definitions do: [ :each | each isMethodDefinition ifTrue: [ aBlock value: (OCParser parseMethod: each source) ] ]
-]
-
-{ #category : 'reading' }
-MetacelloMVSBaselineSandbox >> pharoMinimum [
-	"The minimum Pharo major the baseline declares with spec pharo: N, or nil"
-
-	self messageNodesDo: [ :node |
-		(node selector = #pharo: and: [ node arguments first isLiteralNode ]) ifTrue: [ ^ node arguments first value ] ].
-	^ nil
 ]
 
 { #category : 'reading' }
@@ -152,11 +143,11 @@ MetacelloMVSBaselineSandbox >> repositorySuperclass [
 ]
 
 { #category : 'reading' }
-MetacelloMVSBaselineSandbox >> requirementsInto: aReading [
-	"Give aReading the baseline class and its version spec on this platform, and answer the projects a load of the default groups requires, as project specs (see MetacelloMVSBaselineReading>>#referencesFor:into:)"
+MetacelloMVSBaselineSandbox >> requirementsInto: aProjectVersion [
+	"Give aProjectVersion the baseline class and its version spec on this platform, and answer the projects a load of the default groups requires, as project specs (see MetacelloMVSBaselineReading>>#referencesFor:into:)"
 
-	aReading baselineClass: self baselineClass.
-	^ aReading referencesFor: #(  ) into: aReading
+	aProjectVersion baselineClass: self baselineClass.
+	^ aProjectVersion referencesFor: #(  ) into: aProjectVersion
 ]
 
 { #category : 'reading' }

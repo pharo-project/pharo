@@ -797,7 +797,7 @@ PBAbstractImageBuilder >> installExtensionMethods [
 	self logger
 		execute: [
 			| definitions total |
-			definitions := self systemDefinition packages sorted: [ :a :b | a name < b name ].
+			definitions := self systemDefinition ask packages sorted: [ :a :b | a name < b name ].
 			total := definitions size.
 			definitions withIndexDo: [ :aPackageDefinition :index |
 				self installExtensionMethodsOf: aPackageDefinition prefixed: (index printPaddedWith: $0 to: 3) , '/' , total asString ] ]

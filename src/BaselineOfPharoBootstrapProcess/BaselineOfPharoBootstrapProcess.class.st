@@ -10,13 +10,13 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfPharoBootstrapProcess >> baseline: spec [
+
 	<baseline>
-	
 	spec for: #common do: [
 		spec blessing: #baseline.
-		spec baseline: 'Hermes' with: [ spec
-			repository: 'github://pharo-project/hermes:v3.0.1';
-  			loads: 'core' ].
-		spec
-			 package: 'PharoBootstrap' ]
+		spec baseline: 'Hermes' with: [
+			spec
+				repository: 'github://pharo-project/hermes:v3.1.0';
+				loads: 'core' ].
+		spec package: 'PharoBootstrap' ]
 ]

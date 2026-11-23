@@ -55,53 +55,6 @@ MetacelloVersionSpec >> defaultPackageNames [
 	^ #( 'default' )
 ]
 
-{ #category : 'private' }
-MetacelloVersionSpec >> doFetchRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self fetchRequiredFromArray: anArray withEngine: anEngine ] label: 'Fetching'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doLoadRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self loadRequiredFromArray: anArray withEngine: anEngine ] label: 'Loading'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doRecordRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self recordRequiredFromArray: anArray withEngine: anEngine ] label: 'Recording'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doWithProgress: aBlock label: aLabel [
-
-	| displayString result startTime |
-	startTime := Time millisecondClockValue.
-	displayString := aLabel , ' baseline of ' , self projectLabel.
-	MetacelloNotification signal: displayString , '...'.
-
-	displayString displayProgressFrom: 0 to: 2 during: [ :bar |
-			bar value: 1.
-			result := aBlock value.
-			bar value: 2 ].
-
-	MetacelloNotification 
-		signal: '...finished to load the baseline' 
-		milliSeconds: (Time millisecondClockValue - startTime).
-	^ result
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> fetchRequiredFromArray: anArray withEngine: anEngine [
-
-	| directive |
-	directive := self recordRequiredFromArray: (anArray ifEmpty: [ self defaultPackageNames ]) withEngine: anEngine.
-
-	directive acceptVisitor: (MetacelloFetchTarget on: anEngine).
-	^ directive
-]
-
 { #category : 'accessing' }
 MetacelloVersionSpec >> groups [
 	"Answers the list of groups associated with this version"
@@ -144,16 +97,6 @@ MetacelloVersionSpec >> importArray [
 MetacelloVersionSpec >> label [
 
 	^ 'baseline [' , self projectLabel , ']'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> loadRequiredFromArray: anArray withEngine: anEngine [
-
-	| directive |
-	directive := self fetchRequiredFromArray: (anArray ifEmpty: [ self defaultPackageNames ]) withEngine: anEngine.
-
-	(MetacelloLoadTarget on: anEngine) load: directive.
-	^ directive
 ]
 
 { #category : 'querying' }
@@ -359,22 +302,6 @@ MetacelloVersionSpec >> projects [
 	^ self packageSpecsInLoadOrder
 		  select: [ :spec | spec isProjectReferenceSpec ]
 		  thenCollect: [ :spec | spec projectReference ]
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> recordRequiredFromArray: anArray withEngine: anEngine [
-
-	| target |
-	target := MetacelloRecordTarget on: anEngine.
-	target required: anArray.
-
-	^ target record: self
-]
-
-{ #category : 'actions' }
-MetacelloVersionSpec >> recordWithEngine: anEngine [
-
-	^ self doRecordRequiredFromArray: self defaultPackageNames withEngine: anEngine
 ]
 
 { #category : 'accessing' }

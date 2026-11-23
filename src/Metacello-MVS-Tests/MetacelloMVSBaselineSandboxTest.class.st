@@ -28,7 +28,7 @@ MetacelloMVSBaselineSandboxTest >> projectOf: aProjectSpec [
 { #category : 'tests' }
 MetacelloMVSBaselineSandboxTest >> requirementsOf: bodyLines [
 
-	^ (self sandboxOnTonel: (self tonelOf: { (self baselineMethod: bodyLines) })) requirementsInto: MetacelloMVSBaselineReading new
+	^ (self sandboxOnTonel: (self tonelOf: { (self baselineMethod: bodyLines) })) requirementsInto: MetacelloMVSProjectVersion new
 ]
 
 { #category : 'running' }
@@ -51,7 +51,7 @@ MetacelloMVSBaselineSandboxTest >> testABaselineOfTheSameRepositoryStaysAtTheRea
 	| tonel requirements |
 	tonel := self tonelOf: { (self baselineMethod:
 			          #( 'spec for: #common do: [ spec baseline: ''Core'' with: [ spec repository: ((self packageRepositoryURLForSpec: spec) ifEmpty: [ ''github://o/foo:main/src'' ]) ] ]' )) }.
-	requirements := (self sandboxOnTonel: tonel repository: 'github://o/foo:v2.0.6/src') requirementsInto: MetacelloMVSBaselineReading new.
+	requirements := (self sandboxOnTonel: tonel repository: 'github://o/foo:v2.0.6/src') requirementsInto: MetacelloMVSProjectVersion new.
 	self assert: (self descriptionOf: requirements first) equals: 'github://o/foo:v2.0.6/src'
 ]
 
@@ -67,42 +67,44 @@ MetacelloMVSBaselineSandboxTest >> testABaselineOverridingPackageRepositoryURLCa
 				          #( '' '{ #category : ''accessing'' }' 'BaselineOfFoo >> packageRepositoryURL ['
 				             '^ super packageRepositoryURL ifEmpty: [ ''tonel://elsewhere'' ]'
 				             ']' )) }.
-	requirements := (self sandboxOnTonel: tonel repository: 'github://o/foo:v2.0.6/src') requirementsInto: MetacelloMVSBaselineReading new.
+	requirements := (self sandboxOnTonel: tonel repository: 'github://o/foo:v2.0.6/src') requirementsInto: MetacelloMVSProjectVersion new.
 	self assert: (self descriptionOf: requirements first) equals: 'github://o/foo:v2.0.6/src'
 ]
 
 { #category : 'tests' }
 MetacelloMVSBaselineSandboxTest >> testAGroupRequiresWhatItReaches [
 
-	| reading |
-	reading := MetacelloMVSBaselineReading new.
+	| projectVersion |
+	projectVersion := MetacelloMVSProjectVersion new.
 	(self sandboxOnTonel: (self tonelOf: { (self baselineMethod:
 				   #( 'spec for: #common do: [' 'spec baseline: ''Bar'' with: [ spec repository: ''github://o/bar:v1.2.0/src'' ].'
 				      'spec baseline: ''Tester'' with: [ spec repository: ''github://o/tester:v1.0.0/src'' ].'
 				      'spec package: ''Foo-Core'' with: [ spec requires: #(''Bar'') ].'
 				      'spec package: ''Foo-Tests'' with: [ spec requires: #(''Foo-Core'' ''Tester'') ].'
 				      'spec group: ''default'' with: #(''Foo-Core'').' 'spec group: ''Tests'' with: #(''Foo-Tests'') ]' )) }))
-		requirementsInto: reading.
+		requirementsInto: projectVersion.
 
 	self
-		assertCollection: ((reading referencesFor: #( 'Tests' ) into: reading) collect: [ :each | self projectOf: each ])
+		assertCollection: ((projectVersion referencesFor: #( 'Tests' ) into: projectVersion) collect: [ :each | self projectOf: each ])
 		hasSameElements: #( 'Bar' 'Tester' ).
-	self assert: ((reading referencesFor: #(  ) into: reading) collect: [ :each | self projectOf: each ]) asArray equals: #( 'Bar' )
+	self assert: ((projectVersion referencesFor: #(  ) into: projectVersion) collect: [ :each | self projectOf: each ]) asArray equals: #( 'Bar' )
 ]
 
 { #category : 'tests' }
 MetacelloMVSBaselineSandboxTest >> testAGroupTheBaselineDoesNotDeclareIsAnError [
 
-	| reading found |
-	reading := MetacelloMVSBaselineReading new.
+	| projectVersion found |
+	projectVersion := MetacelloMVSProjectVersion new.
 	(self sandboxOnTonel: (self tonelOf: { (self baselineMethod: #( 'spec for: #common do: [ spec package: ''Foo-Core'' ]' )) }))
-		requirementsInto: reading.
-	found := MetacelloMVSBaselineReading new.
+		requirementsInto: projectVersion.
+	found := MetacelloMVSProjectVersion new
+		         request: MetacelloUserRequest new;
+		         yourself.
 
-	self assert: (reading referencesFor: #( 'Missing' ) into: found) isEmpty.
+	self assert: (projectVersion referencesFor: #( 'Missing' ) into: found) isEmpty.
 	self assert: (found findings anySatisfy: [ :each |
 			 (each kind = #missingGroup) and: [ each isError and: [ each text includesSubstring: 'Missing' ] ] ]).
-	self assert: reading findings isEmpty
+	self assert: projectVersion findings isEmpty
 ]
 
 { #category : 'tests' }
@@ -167,7 +169,7 @@ MetacelloMVSBaselineSandboxTest >> testHelperMethodsOfTheBaselineAreCompiledToo 
 				          #( '' '{ #category : ''baselines'' }' 'BaselineOfFoo >> declareBarOn: spec ['
 				             'spec baseline: ''Bar'' with: [ spec repository: ''github://o/bar:v1.2.0/src'' ]'
 				             ']' )) }.
-	requirements := (self sandboxOnTonel: tonel) requirementsInto: MetacelloMVSBaselineReading new.
+	requirements := (self sandboxOnTonel: tonel) requirementsInto: MetacelloMVSProjectVersion new.
 	self assert: (requirements collect: [ :each | self projectOf: each ]) asArray equals: #( 'Bar' )
 ]
 
@@ -199,6 +201,25 @@ MetacelloMVSBaselineSandboxTest >> testLeavesAClassOfTheSameNameUntouched [
 	self assert: BaselineOfTestToLock2 superclass identicalTo: superclassBefore.
 	self assert: (BaselineOfTestToLock2 >> #baseline:) sourceCode equals: sourceBefore.
 	self assert: sandboxClass version spec packageNames asArray equals: #( 'Other' )
+]
+
+{ #category : 'tests' }
+MetacelloMVSBaselineSandboxTest >> testLeavesTheExtensionsOfTheBaselinePackageOut [
+	"A baseline package may extend other classes (BaselineOfAlexandrie extends SDL_Version with versionString): the sandbox compiles only the methods of the baseline class, so it neither gets the extension nor puts it in a package of the image"
+	| extension sandboxClass |
+	extension := MCMethodDefinition
+		             className: 'Object'
+		             classIsMeta: false
+		             selector: #metacelloSandboxExtension
+		             category: '*BaselineOfFoo'
+		             timeStamp: ''
+		             source: 'metacelloSandboxExtension ^ 1'.
+	sandboxClass := (MetacelloMVSBaselineSandbox onDefinitions:
+		                 (TonelParser parseString: (self tonelOf: { (self baselineMethod: #( 'spec for: #common do: [ spec package: ''Foo'' ]' )) })) , { extension })
+		                baselineClass.
+	self deny: (sandboxClass includesSelector: #metacelloSandboxExtension).
+	self deny: (Object includesSelector: #metacelloSandboxExtension).
+	self deny: (PackageOrganizer default hasPackage: 'BaselineOfFoo')
 ]
 
 { #category : 'tests' }
@@ -258,7 +279,7 @@ MetacelloMVSBaselineSandboxTest >> testTheClassVariablesOfTheBaselineAreDeclared
 			         'BaselineOfFoo >> postLoad ['.
 			         'Initialized := true. loaded := true'.
 			         ']' }.
-	requirements := (self sandboxOnTonel: tonel) requirementsInto: MetacelloMVSBaselineReading new.
+	requirements := (self sandboxOnTonel: tonel) requirementsInto: MetacelloMVSProjectVersion new.
 	self assert: requirements size equals: 1
 ]
 
@@ -268,7 +289,7 @@ MetacelloMVSBaselineSandboxTest >> testTheOldPackageRepositoryURLAnswersTheReadV
 	| tonel requirements |
 	tonel := self tonelOf: { (self baselineMethod:
 			          #( 'spec for: #common do: [ spec baseline: ''Core'' with: [ spec repository: self packageRepositoryURL ] ]' )) }.
-	requirements := (self sandboxOnTonel: tonel repository: 'github://o/foo:v2.0.6/src') requirementsInto: MetacelloMVSBaselineReading new.
+	requirements := (self sandboxOnTonel: tonel repository: 'github://o/foo:v2.0.6/src') requirementsInto: MetacelloMVSProjectVersion new.
 	self assert: (self descriptionOf: requirements first) equals: 'github://o/foo:v2.0.6/src'
 ]
 

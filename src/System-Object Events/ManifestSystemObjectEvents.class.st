@@ -9,6 +9,19 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'testing' }
+ManifestSystemObjectEvents class >> deprecatedIn [
+
+	^ #Pharo15
+]
+
+{ #category : 'testing' }
+ManifestSystemObjectEvents class >> isDeprecated [
+	"Symbol-keyed object events. Use announcements instead"
+
+	^ true
+]
+
 { #category : 'meta-data - dependency analyser' }
 ManifestSystemObjectEvents class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Abstract')

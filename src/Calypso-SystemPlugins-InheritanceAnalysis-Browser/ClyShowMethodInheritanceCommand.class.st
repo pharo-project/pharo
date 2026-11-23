@@ -1,5 +1,6 @@
 "
-I am a command to show all method implementors in full hierarchy of selected method classes.
+Show all method implementors in full hierarchy of selected method classes.
+
 I select current method in spawned browser by default.
 "
 Class {
@@ -9,13 +10,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : 'activation' }
-ClyShowMethodInheritanceCommand class >> browserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 
@@ -23,12 +17,6 @@ ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 	classScope := ClyClassScope ofAll: classes in: browser navigationEnvironment.
 
 	^classScope asFullHierarchyScope
-]
-
-{ #category : 'accessing' }
-ClyShowMethodInheritanceCommand >> description [
-
-	^ 'Show all method implementors in full hierarchy of selected method classes.'
 ]
 
 { #category : 'accessing' }

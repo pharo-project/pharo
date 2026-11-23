@@ -18,17 +18,17 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'testing' }
-ClyConvertMethodGroupToProtocolCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isExtensionMethodGroupSelected
-]
-
 { #category : 'execution' }
 ClyConvertMethodGroupToProtocolCommand >> applyCommandResult [
 
 	super applyCommandResult.
 	self context showProtocol: protocol
+]
+
+{ #category : 'testing' }
+ClyConvertMethodGroupToProtocolCommand >> canBeExecuted [
+
+	^ self context isExtensionMethodGroupSelected
 ]
 
 { #category : 'execution' }
@@ -41,12 +41,6 @@ ClyConvertMethodGroupToProtocolCommand >> executeRefactoring [
 ClyConvertMethodGroupToProtocolCommand >> name [
 
 	^ 'Convert to protocol'
-]
-
-{ #category : 'accessing' }
-ClyConvertMethodGroupToProtocolCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'execution' }

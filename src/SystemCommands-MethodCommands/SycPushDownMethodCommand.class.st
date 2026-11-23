@@ -1,23 +1,17 @@
 "
-I am a command to push down given methods
+Push down methods.
 "
 Class {
 	#name : 'SycPushDownMethodCommand',
-	#superclass : 'SycMethodCmCommand',
+	#superclass : 'SycMethodRefactoringCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycPushDownMethodCommand >> asRefactorings [
 
 	^ self shouldNotImplement
-]
-
-{ #category : 'accessing' }
-SycPushDownMethodCommand >> description [
-
-	^ 'Push down methods.'
 ]
 
 { #category : 'execution' }
@@ -27,9 +21,9 @@ SycPushDownMethodCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycPushDownMethodCommand >> icon [
+SycPushDownMethodCommand >> iconName [
 
-	^ self iconNamed: #down
+	^ #down
 ]
 
 { #category : 'accessing' }

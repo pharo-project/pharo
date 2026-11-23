@@ -29,11 +29,12 @@ ClapNamedMatch >> completeMatchOn: aStream [
 
 { #category : 'testing' }
 ClapNamedMatch >> isFullMatch [
+	"A flag matches fully when it got its positionals, but the optional ones"
 
 	^ (self specification isFlag and: [ self specification hasPositional ])
-		ifTrue: [ "When positional is multiple, there is only one positional spec but potentially many positionals" 
-					children size >= self specification positionals size ]
-		ifFalse: [ true ]
+		  ifTrue: [ "When positional is multiple, there is only one positional spec but potentially many positionals"
+			  children size >= (self specification positionals reject: [ :each | each isOptional ]) size ]
+		  ifFalse: [ true ]
 ]
 
 { #category : 'testing' }

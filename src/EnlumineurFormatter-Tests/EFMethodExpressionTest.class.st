@@ -56,8 +56,8 @@ EFMethodExpressionTest >> bigMethodeConfiguration [
 		  maxLineLength: 50;
 		  periodAtEndOfBlock: false;
 		  periodAtEndOfMethod: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  indentsForKeywords: 1;
 		  keepBlockInMessage: true;
 		  retainBlankLinesBetweenStatements: false;
@@ -92,8 +92,8 @@ EFMethodExpressionTest >> cascadeConfiguration [
 		  periodAtEndOfMethod: false;
 		  newLineBeforeFirstCascade: true;
 		  newLineAfterCascade: true;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 10;
 		  keepBlockInMessage: true;
 		  retainBlankLinesBetweenStatements: false;
@@ -337,11 +337,11 @@ EFMethodExpressionTest >> testBigMethod [
 	| tmp |
 	tmp := 1.
 	tmp to: 10 do: [:i |
-			Transcript
-				show: i;
-				cr;
-				cr
-			]'
+		Transcript
+			show: i;
+			cr;
+			cr
+		]'
 ]
 
 { #category : 'tests' }
@@ -409,11 +409,11 @@ EFMethodExpressionTest >> testMethodWithMessageArgument [
 	self assert: source equals:
 'aMethod
 	1 to: 10 do: [:i |
-			Transcript
-				show: i;
-				cr;
-				cr
-			]'
+		Transcript
+			show: i;
+			cr;
+			cr
+		]'
 ]
 
 { #category : 'tests' }

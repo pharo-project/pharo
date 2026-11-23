@@ -9,13 +9,6 @@ Class {
 	#tag : 'Commands-Hierarchy'
 }
 
-{ #category : 'activation' }
-ClySwitchToFullHierarchyCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $h meta for: ClyFullBrowserClassContext
-]
-
 { #category : 'execution' }
 ClySwitchToFullHierarchyCommand >> executeRefactoring [
 

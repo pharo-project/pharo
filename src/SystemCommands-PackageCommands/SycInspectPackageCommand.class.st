@@ -3,7 +3,7 @@ Opens an inspector on the last selected package.
 "
 Class {
 	#name : 'SycInspectPackageCommand',
-	#superclass : 'SycPackageExtraCmCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
@@ -21,9 +21,9 @@ SycInspectPackageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycInspectPackageCommand >> icon [
+SycInspectPackageCommand >> iconName [
 
-	^ self iconNamed: #inspect
+	^ #inspect
 ]
 
 { #category : 'accessing' }

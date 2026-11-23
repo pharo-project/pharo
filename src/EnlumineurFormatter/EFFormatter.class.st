@@ -41,7 +41,8 @@ Class {
 		'lookAheadCode',
 		'mustSkip',
 		'doNotFormatMessageSelectors',
-		'doNotFormatMethodSelectors'
+		'doNotFormatMethodSelectors',
+		'lineIndent'
 	],
 	#classVars : [
 		'DefaultPrettyPrintContext',
@@ -205,12 +206,12 @@ EFFormatter class >> minimumNewLinesBetweenStatements: anInteger [
 
 { #category : 'accessing' }
 EFFormatter class >> multiLineMessages [
-	^ DefaultPrettyPrintContext multiLineMessages printString
+	^ DefaultPrettyPrintContext multiLineMessages
 ]
 
 { #category : 'accessing' }
 EFFormatter class >> multiLineMessages: aString [
-	DefaultPrettyPrintContext multiLineMessages: (self compiler evaluate: aString).
+	DefaultPrettyPrintContext multiLineMessages: aString.
 	self announceASettingChange
 ]
 
@@ -364,12 +365,12 @@ EFFormatter class >> numberOfSpacesInsideParentheses: anInteger [
 
 { #category : 'accessing' }
 EFFormatter class >> oneLineMessages [
-	^ DefaultPrettyPrintContext oneLineMessages printString
+	^ DefaultPrettyPrintContext oneLineMessages
 ]
 
 { #category : 'accessing' }
 EFFormatter class >> oneLineMessages: aString [
-	DefaultPrettyPrintContext oneLineMessages: (self compiler evaluate: aString).
+	DefaultPrettyPrintContext oneLineMessages: aString.
 	self announceASettingChange
 ]
 
@@ -579,14 +580,14 @@ EFFormatter class >> settingsMultiLineMessages: aBuilder [
 
 	(aBuilder setting: #multiLineMessages)
 		label: 'Multi line messages';
-		defaultValue: '#(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)';
-		description: 'An array containing all the messages that should be written on multiple lines.
+		defaultValue: 'ifTrue:ifFalse: ifFalse:ifTrue: ifTrue: ifFalse: on:do: ensure: ifCurtailed:';
+		description: 'A string containing all the selector names that should be written on multiple lines.
 		
 Example:
 aBoolean
 	ifTrue: [ 1 ]
 	ifFalse: [ 0 ]
-is the result if #ifTrue:ifFalse is in the array'
+is the result if ifTrue:ifFalse is in the string'
 ]
 
 { #category : 'settings' }
@@ -799,10 +800,10 @@ EFFormatter class >> settingsOneLineMessages: aBuilder [
 
 	(aBuilder setting: #oneLineMessages)
 		label: 'One line messages';
-		defaultValue: '#(#to: #to:do: #to:by: #to:by:do:)';
+		defaultValue: 'to: to:do: to:by: to:by:do:)';
 		description: 'All the messages listed in this setting will be formatted on one single line. 
 		
-If we include #todo: in the oneLineMessages we get 
+If we include todo: in the oneLineMessages we get 
 
 1 to: 4 do: [ :i | Transcript show: i ]'
 ]
@@ -1083,12 +1084,6 @@ EFFormatter >> currentLineLength [
 ]
 
 { #category : 'private - formatting' }
-EFFormatter >> decrementIdentation [
-
-	 indent := indent - 1
-]
-
-{ #category : 'private - formatting' }
 EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 	"predicate that tells if the keyword should be forced to be on the same line."
 
@@ -1101,6 +1096,7 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 EFFormatter >> format: aParseTree [
 
 	self initializeCodeStream.
+	lineIndent ifNil: [ lineIndent := indent ].
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
 	mustSkip ifTrue: [ ^ originalSource ].
@@ -1188,26 +1184,27 @@ EFFormatter >> formatBlock2: aBlockNode [
 { #category : 'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
 	" see formatBlock2: for a possible alternate and faster definition."
+
 	| isMultiline |
-	
 	isMultiline := self willBeMultiline: aBlockNode body.
-	isMultiline ifTrue: [ self incrementIdentation ].
+	self
+		indent: (isMultiline
+			 ifTrue: [ 1 ]
+			 ifFalse: [ 0 ])
+		around: [
+			(self isEmptyBlock: aBlockNode) ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
 
-	(self isEmptyBlock: aBlockNode) ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
+			self formatBlockArgumentsFor: aBlockNode.
+			self formatBlockCommentFor: aBlockNode.
 
-	self formatBlockArgumentsFor: aBlockNode.
-	self formatBlockCommentFor: aBlockNode.
+			((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ]) and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
+				ifTrue: [ self newLine ].
 
-	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ])
-		 and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
-		ifTrue: [ self newLine ].
+			self visitSequenceNode: aBlockNode body.
 
-	self visitSequenceNode: aBlockNode body.
-
-	(self lineUpBlockBrackets and: [ isMultiline ])
-		ifTrue: [ self newLine ]
-		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
-	isMultiline ifTrue: [ self decrementIdentation ].
+			(self lineUpBlockBrackets and: [ isMultiline ])
+				ifTrue: [ self newLine ]
+				ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ] ]
 ]
 
 { #category : 'private - formatting' }
@@ -1420,6 +1417,7 @@ EFFormatter >> formattedSourceFor: aNode [
 	^ lookAheadCode at: aNode ifAbsentPut: [ 
 		  self class new
 			indent: self indent;
+			lineIndent: self lineIndent;
 			installNewContext: context;
 			lookAheadCode: lookAheadCode;
 			format: aNode ]
@@ -1451,12 +1449,6 @@ EFFormatter >> headOfBlockNotEmpty: aBlockNode [
 	^ aBlockNode arguments isNotEmpty or: [aBlockNode comments isNotEmpty]
 ]
 
-{ #category : 'private - formatting' }
-EFFormatter >> incrementIdentation [
-
-	 indent := indent + 1
-]
-
 { #category : 'accessing' }
 EFFormatter >> indent [
 	^ indent
@@ -1469,9 +1461,16 @@ EFFormatter >> indent: anInteger [
 ]
 
 { #category : 'private' }
-EFFormatter >> indent: anInteger around: aBlock [ 
-	self indent: self indent + anInteger.
-	^aBlock ensure: [self indent: self indent - anInteger]
+EFFormatter >> indent: anInteger around: aBlock [
+	"Indent the lines started in aBlock by anInteger levels from the line being written, not from the enclosing constructs.
+	Constructs that open on the same line, such as a keyword message and its block argument, share their levels, so a line is never indented more than anInteger levels deeper than the line its construct starts on."
+
+	| previousIndent |
+	previousIndent := indent.
+	indent := indent < lineIndent
+		ifTrue: [ indent + anInteger ]
+		ifFalse: [ indent max: lineIndent + anInteger ].
+	^ aBlock ensure: [ indent := previousIndent ]
 ]
 
 { #category : 'private' }
@@ -1614,9 +1613,10 @@ EFFormatter >> isLineTooLongWithString: aString [
 
 { #category : 'private' }
 EFFormatter >> isMultiLineMessage: aMessageNode [
-	(self multiLineMessages includes: aMessageNode selector)
+	
+	(self multiLineMessages includes: aMessageNode selector asString)
 		ifTrue: [ ^ true ].
-	(self oneLineMessages includes: aMessageNode selector)
+	(self oneLineMessages includes: aMessageNode selector asString)
 		ifTrue: [ ^ false ].
 	self numberOfArgumentsForMultiLine <= aMessageNode arguments size
 		ifTrue: [ ^ true ].
@@ -1646,6 +1646,18 @@ EFFormatter >> keepBlockInMessage [
 { #category : 'accessing' }
 EFFormatter >> keepBlockInMessage: aBoolean [
 	context keepBlockInMessage: aBoolean
+]
+
+{ #category : 'accessing' }
+EFFormatter >> lineIndent [
+
+	^ lineIndent
+]
+
+{ #category : 'accessing' }
+EFFormatter >> lineIndent: anInteger [
+
+	lineIndent := anInteger
 ]
 
 { #category : 'accessing' }
@@ -1726,8 +1738,8 @@ EFFormatter >> multiLineMessages [
 ]
 
 { #category : 'accessing' }
-EFFormatter >> multiLineMessages: anArray [
-	context multiLineMessages: anArray
+EFFormatter >> multiLineMessages: aString [
+	context multiLineMessages: aString
 ]
 
 { #category : 'private' }
@@ -1832,6 +1844,7 @@ EFFormatter >> newLines: anInteger [
 	anInteger > 0 ifTrue: [ self cleanSpacesAtTheEnd ].
 	anInteger timesRepeat: [ codeStream cr ].
 	lineStart := codeStream position.
+	lineIndent := self indent.
 	self indentTimesRepeat: self indent
 ]
 
@@ -1964,8 +1977,8 @@ EFFormatter >> oneLineMessages [
 ]
 
 { #category : 'accessing' }
-EFFormatter >> oneLineMessages: anArray [
-	context oneLineMessages: anArray
+EFFormatter >> oneLineMessages: aString [
+	context oneLineMessages: aString
 ]
 
 { #category : 'accessing' }

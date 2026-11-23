@@ -4,7 +4,7 @@ By default variables are ordered from superclass to subclass. And I allow to tog
 "
 Class {
 	#name : 'ClyInvertVariableOrderCommand',
-	#superclass : 'SycMethodGroupExtraCmCommand',
+	#superclass : 'ClyCommand',
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-MethodGroups'
@@ -27,10 +27,4 @@ ClyInvertVariableOrderCommand >> executeRefactoring [
 ClyInvertVariableOrderCommand >> name [
 
 	^ 'Invert hierarchy'
-]
-
-{ #category : 'accessing' }
-ClyInvertVariableOrderCommand >> order [
-
-	^ 1000
 ]

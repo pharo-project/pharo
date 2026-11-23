@@ -151,6 +151,15 @@ ZnLoggingReadStream >> peek [
 ]
 
 { #category : 'accessing' }
+ZnLoggingReadStream >> rawStream [
+	"Answer the innermost stream wrapped by the receiver, e.g. a raw binary file stream,
+	socket stream, or regular Read/WriteStream.
+	Defer to the wrappedStream."
+
+	^ self wrappedStream rawStream
+]
+
+{ #category : 'accessing' }
 ZnLoggingReadStream >> readInto: collection startingAt: offset count: count [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."

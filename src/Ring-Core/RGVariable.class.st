@@ -78,6 +78,19 @@ RGVariable >> isPseudoVariable [
 ]
 
 { #category : 'testing' }
+RGVariable >> isSelfOrSuperVariable [
+
+	^ self isSelfVariable or: [ self isSuperVariable ]
+]
+
+{ #category : 'testing' }
+RGVariable >> isSelfVariable [
+	"Ring2 does not model self, super, thisContext, thisProcess"
+
+	^ false
+]
+
+{ #category : 'testing' }
 RGVariable >> isSuperVariable [
 
 	^ false
@@ -86,6 +99,20 @@ RGVariable >> isSuperVariable [
 { #category : 'testing' }
 RGVariable >> isTempVariable [
 	^false
+]
+
+{ #category : 'testing' }
+RGVariable >> isThisContextVariable [
+	"Ring2 does not model self, super, thisContext, thisProcess"
+
+	^ false
+]
+
+{ #category : 'testing' }
+RGVariable >> isThisProcessVariable [
+	"Ring2 does not model self, super, thisContext, thisProcess"
+
+	^ false
 ]
 
 { #category : 'testing' }

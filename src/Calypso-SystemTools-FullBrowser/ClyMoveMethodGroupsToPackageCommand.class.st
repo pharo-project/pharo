@@ -18,18 +18,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyMoveMethodGroupsToPackageCommand class >> canBeExecutedInContext: aToolContext [
+ClyMoveMethodGroupsToPackageCommand >> canBeExecuted [
 
-	^ aToolContext isProtocolSelected
-]
-
-{ #category : 'activation' }
-ClyMoveMethodGroupsToPackageCommand class >> fullBrowserDragAndDropActivation [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyMethodGroup asCalypsoItemContext
-		toDropIn: Package asCalypsoItemContext
+	^ self context isProtocolSelected
 ]
 
 { #category : 'execution' }
@@ -49,12 +40,6 @@ ClyMoveMethodGroupsToPackageCommand >> name [
 ]
 
 { #category : 'accessing' }
-ClyMoveMethodGroupsToPackageCommand >> order [
-
-	^ 1000
-]
-
-{ #category : 'accessing' }
 ClyMoveMethodGroupsToPackageCommand >> package [
 	^ package
 ]
@@ -64,7 +49,7 @@ ClyMoveMethodGroupsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveMethodGroupsToPackageCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	package := self dropContext

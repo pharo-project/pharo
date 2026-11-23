@@ -11,7 +11,7 @@ BaselineOfSortFunctions >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			package: 'SortFunctions-Core';
-			package: 'SortFunctions-Tests'.
+			package: 'SortFunctions-Tests' with: [ spec requires: #( 'SortFunctions-Core') ].
 		spec 
 			group: 'Core' with: #('SortFunctions-Core');
 			group: 'Tests' with: #('SortFunctions-Tests');
