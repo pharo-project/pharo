@@ -67,7 +67,7 @@ Extension >> extendedClass: anObject [
 { #category : 'initialization' }
 Extension >> hasUserPackages [
 
-	^ userPackages notNil and: [ userPackages notEmpty ]
+	^ userPackages isNotNil and: [ userPackages notEmpty ]
 ]
 
 { #category : 'testing - method dictionary' }

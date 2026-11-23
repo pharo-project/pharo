@@ -45,6 +45,6 @@ MetacelloMVSRecordingSource >> versionsOf: aRepository ifFail: aBlock [
 	recorded
 		repository: aRepository versions: (answer collect: [ :each | each name ]);
 		repository: aRepository
-		dates: ((answer select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
+		dates: ((answer select: [ :each | each date isNotNil ]) collect: [ :each | each name -> each date ]) asDictionary.
 	^ answer
 ]

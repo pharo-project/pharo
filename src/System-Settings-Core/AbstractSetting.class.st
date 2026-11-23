@@ -101,7 +101,7 @@ AbstractSetting >> dialog: anObject [
 { #category : 'testing' }
 AbstractSetting >> hasDefault [
 	
-	^ self defaultValue notNil
+	^ self defaultValue isNotNil
 ]
 
 { #category : 'testing' }
