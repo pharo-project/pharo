@@ -680,32 +680,6 @@ Morph >> assureTableProperties [
 ]
 
 { #category : 'halos and balloon help' }
-Morph >> balloonColor [
-	^ self
-		valueOfProperty: #balloonColor
-		ifAbsent: [self defaultBalloonColor]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonColor: aColor [
-	^ self
-		setProperty: #balloonColor
-		toValue: aColor
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonFont [
-	^ self
-		valueOfProperty: #balloonFont
-		ifAbsent: [self defaultBalloonFont]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonFont: aFont [
-	^ self setProperty: #balloonFont toValue: aFont
-]
-
-{ #category : 'halos and balloon help' }
 Morph >> balloonHelpAligner [
 	"Answer the morph to which the receiver's balloon help should point"
 	^ (self valueOfProperty: #balloonTarget) ifNil: [self]

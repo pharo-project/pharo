@@ -44,6 +44,30 @@ Morph >> attachKeymapCategory: aCategoryName targetting: anObject [
 ]
 
 { #category : '*Morphic-Widgets' }
+Morph >> balloonColor [
+
+	^ self valueOfProperty: #balloonColor ifAbsent: [ self defaultBalloonColor ]
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> balloonColor: aColor [
+
+	^ self setProperty: #balloonColor toValue: aColor
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> balloonFont [
+
+	^ self valueOfProperty: #balloonFont ifAbsent: [ self defaultBalloonFont ]
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> balloonFont: aFont [
+
+	^ self setProperty: #balloonFont toValue: aFont
+]
+
+{ #category : '*Morphic-Widgets' }
 Morph >> basicTheme: aUITheme [
 	"Set the current theme for the receiver without notification of change."
 

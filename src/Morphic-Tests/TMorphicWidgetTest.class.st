@@ -19,6 +19,15 @@ TMorphicWidgetTest >> testCoreMorphsAreNotStyled [
 ]
 
 { #category : 'tests' }
+TMorphicWidgetTest >> testMorphicCoreDefinesNoBalloonStyle [
+
+	| core |
+	core := 'Morphic-Core' asPackage.
+	#( #balloonColor #balloonColor: #balloonFont #balloonFont: ) do: [ :selector |
+		self deny: (Morph >> selector) package equals: core ]
+]
+
+{ #category : 'tests' }
 TMorphicWidgetTest >> testMorphicCoreDefinesNoThemeAccess [
 
 	| core |
