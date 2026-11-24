@@ -21,6 +21,7 @@ BaselineOfAthens >> baseline: spec [
 			"Dependencies"
 			self
 				display: spec;
+				morphic: spec;
 				unifiedFFI: spec.
 
 			"Packages"
@@ -29,7 +30,7 @@ BaselineOfAthens >> baseline: spec [
 				package: 'Athens-Core-Tests' with: [ spec requires: 'Athens-Core' ];
 				package: 'Athens-Text' with: [ spec requires: 'Athens-Core' ];
 				package: 'Athens-Morphic' with: [ spec requires: #('Athens-Core' 'Athens-Text' 'Athens-Cairo') ];
-				package: 'Athens-Morphic-Tests' with: [ spec requires: 'Athens-Morphic' ];
+				package: 'Athens-Morphic-Tests' with: [ spec requires: #('Athens-Morphic' 'Morphic') ];
 				package: 'Athens-Cairo' with: [ spec requires: #('Athens-Core' 'UnifiedFFI') ];
 				package: 'Athens-Examples' with: [ spec requires: #('Athens-Morphic' 'Athens-Text' 'Athens-Cairo') ];
 				package: 'Athens-Cairo-Tests' with: [ spec requires: 'Athens-Cairo' ].
@@ -48,6 +49,15 @@ BaselineOfAthens >> display: spec [
 	spec
 		baseline: 'Display'
 		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
+]
+
+{ #category : 'baseline' }
+BaselineOfAthens >> morphic: spec [
+
+	spec baseline: 'Morphic' with: [
+		spec
+			loads: 'Morphic-Desktop';
+			repository: (self packageRepositoryURLForSpec: spec) ]
 ]
 
 { #category : 'baseline' }
