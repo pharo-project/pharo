@@ -108,21 +108,22 @@ MorphicEventHandlerTest >> testKeyUpFromMorph [
 
 { #category : 'tests - events' }
 MorphicEventHandlerTest >> testMiddleButtonOpenHalos [
-	| event |
 
+	| event |
 	morph openInWorld.
 
-	event := (MouseButtonEvent new
-		setType: #mouseDown
-		position: 0@0
-		which: MouseButtonEvent blueButton
-		buttons: MouseButtonEvent blueButton
-		hand: morph world activeHand
-		stamp: Time millisecondClockValue).
+	event := MouseButtonEvent new
+		         setType: #mouseDown
+		         position: 0 @ 0
+		         which: MouseButtonEvent blueButton
+		         buttons: MouseButtonEvent blueButton
+		         hand: morph world activeHand
+		         stamp: Time millisecondClockValue.
 
-	event sentTo: morph.
+	"Halos open from the world's root event handlers"
+	morph world processEvent: event.
 
-	self assert: (morph halo) isNotNil
+	self assert: morph halo isNotNil
 ]
 
 { #category : 'tests - events' }

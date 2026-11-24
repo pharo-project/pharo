@@ -49,14 +49,16 @@ HaloRootEventHandler >> moveHaloMorph: aKeyboardEvent [
 { #category : 'private' }
 HaloRootEventHandler >> openHalo: mouseDownEvent in: aWorld [
 	"Allow a mouse-sensitive morph to be moved, or bring up its halo.
-	A special gesture on a halo transfers it. Morphs that handle the blue button themselves keep the gesture."
+	A special gesture inside the hand's halo transfers it. Morphs that handle the blue button themselves keep the gesture."
 
 	| under aMorph h doNotDrag |
+	mouseDownEvent hand halo ifNotNil: [ :halo |
+		(halo containsPoint: mouseDownEvent position event: mouseDownEvent) ifTrue: [ "The halo gets the click that transfers it"
+			mouseDownEvent hand newMouseFocus: halo event: mouseDownEvent.
+			halo handleSpecialGesture: mouseDownEvent.
+			^ true ] ].
 	under := self morphsUnder: mouseDownEvent in: aWorld.
 	(under anySatisfy: [ :each | (each handlerForBlueButtonDown: mouseDownEvent) isNotNil ]) ifTrue: [ ^ false ].
-	under detect: [ :each | each isKindOf: HaloMorph ] ifFound: [ :halo |
-		halo handleSpecialGesture: mouseDownEvent.
-		^ true ].
 	aMorph := under detect: [ :each | each wantsHaloFromClick ] ifNone: [ ^ false ].
 	h := mouseDownEvent hand halo.
 	"Prevent wrap around halo transfers originating from throwing the event back in"

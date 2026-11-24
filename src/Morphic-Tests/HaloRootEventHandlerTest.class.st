@@ -13,6 +13,22 @@ Class {
 	#tag : 'Event'
 }
 
+{ #category : 'private' }
+HaloRootEventHandlerTest >> click: aHand at: aPoint stamp: aStamp [
+	"Special gesture click through aHand. Shift makes a second gesture pass the halo outwards"
+
+	| buttons |
+	buttons := MouseEvent redButton | UserInputEvent altKeyMask | UserInputEvent shiftKeyMask.
+	#( #mouseDown #mouseUp ) do: [ :type |
+		aHand handleEvent: (MouseButtonEvent new
+			 setType: type
+			 position: aPoint
+			 which: buttons
+			 buttons: buttons
+			 hand: aHand
+			 stamp: aStamp) ]
+]
+
 { #category : 'running' }
 HaloRootEventHandlerTest >> setUp [
 
@@ -75,6 +91,32 @@ HaloRootEventHandlerTest >> testADropRemovesTheHalo [
 
 	self deny: (handler handleEvent: drop in: root).
 	self assert: hand halo isNil
+]
+
+{ #category : 'tests' }
+HaloRootEventHandlerTest >> testASecondGestureMovesTheHaloToTheOuterMorph [
+
+	| hand outer inner |
+	root extent: 300 @ 300.
+	root addRootEventHandler: handler.
+	hand := HandMorph new.
+	root addHand: hand.
+	outer := Morph new
+		         extent: 100 @ 100;
+		         yourself.
+	inner := Morph new
+		         extent: 50 @ 50;
+		         yourself.
+	outer addMorph: inner.
+	inner position: 10 @ 10.
+	root addMorph: outer.
+
+	self click: hand at: inner center stamp: 0.
+	self assert: hand halo target identicalTo: inner.
+	"Far enough in time not to be a double click"
+	self click: hand at: inner center stamp: 10000.
+	self assert: hand halo target identicalTo: outer.
+	hand halo delete
 ]
 
 { #category : 'tests' }
