@@ -18,33 +18,6 @@ Class {
 	#package : 'Morphic-Widgets-Taskbar'
 }
 
-{ #category : 'menus' }
-TaskbarMorph >> addTaskItemsFor: aMorph to: aMenu [
-	"Add to the menu of aMorph's taskbar button the items that move its task"
-
-	| moveSubmenu |
-	moveSubmenu := self theme newMenuIn: self for: self.
-	aMenu addLine.
-	aMenu
-		add: 'Move' translated
-		iconFormSet: (self iconFormSetNamed: #blank)
-		subMenu: moveSubmenu.
-	moveSubmenu
-		addToggle: 'Move left' translated
-		target: self
-		selector: #moveTaskLeftOf:
-		getStateSelector: nil
-		enablementSelector: [ self canMoveLeft: aMorph ]
-		argumentList: { aMorph }.
-	moveSubmenu
-		addToggle: 'Move right' translated
-		target: self
-		selector: #moveTaskRightOf:
-		getStateSelector: nil
-		enablementSelector: [ self canMoveRight: aMorph ]
-		argumentList: { aMorph }
-]
-
 { #category : 'setting' }
 TaskbarMorph class >> maximumButtons [
 	^ MaximumButtons ifNil: [MaximumButtons := self maximumButtonsDefault]
@@ -122,6 +95,33 @@ TaskbarMorph class >> taskbarSettingOn: aBuilder [
 					label: 'Maximum number of tasks to show';
 					defaultValue: 100;
 					description: 'By default, the value is ' , self maximumButtonsDefault printString ]
+]
+
+{ #category : 'menus' }
+TaskbarMorph >> addTaskItemsFor: aMorph to: aMenu [
+	"Add to the menu of aMorph's taskbar button the items that move its task"
+
+	| moveSubmenu |
+	moveSubmenu := self theme newMenuIn: self for: self.
+	aMenu addLine.
+	aMenu
+		add: 'Move' translated
+		iconFormSet: (self iconFormSetNamed: #blank)
+		subMenu: moveSubmenu.
+	moveSubmenu
+		addToggle: 'Move left' translated
+		target: self
+		selector: #moveTaskLeftOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveLeft: aMorph ]
+		argumentList: { aMorph }.
+	moveSubmenu
+		addToggle: 'Move right' translated
+		target: self
+		selector: #moveTaskRightOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveRight: aMorph ]
+		argumentList: { aMorph }
 ]
 
 { #category : 'taskbar' }

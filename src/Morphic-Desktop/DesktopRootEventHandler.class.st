@@ -10,6 +10,23 @@ Class {
 	#package : 'Morphic-Desktop'
 }
 
+{ #category : 'clicking' }
+DesktopRootEventHandler >> contentsMenuClick: evt [
+	"Sent by the hand when the click on the background turned out to be a click"
+
+	self openContentsMenu: evt in: evt hand world
+]
+
+{ #category : 'private' }
+DesktopRootEventHandler >> dragThrough: evt in: aWorld [
+	"Draw out a selection rectangle"
+	| selection |
+	selection := SelectionMorph newBounds: (evt cursorPoint extent: 8@8).
+	aWorld addMorph: selection.
+	selection extendByHand: evt hand.
+	^ true
+]
+
 { #category : 'event handling' }
 DesktopRootEventHandler >> handleEvent: anEvent in: aWorld [
 	"Take the clicks and drags on the background of aWorld, Escape when no morph has the keyboard focus, and the close of aWorld's window"
@@ -40,20 +57,16 @@ DesktopRootEventHandler >> openContentsMenu: evt in: aWorld [
 	^ true
 ]
 
-{ #category : 'clicking' }
-DesktopRootEventHandler >> contentsMenuClick: evt [
-	"Sent by the hand when the click on the background turned out to be a click"
-
-	self openContentsMenu: evt in: evt hand world
-]
-
 { #category : 'private' }
-DesktopRootEventHandler >> dragThrough: evt in: aWorld [
-	"Draw out a selection rectangle"
-	| selection |
-	selection := SelectionMorph newBounds: (evt cursorPoint extent: 8@8).
-	aWorld addMorph: selection.
-	selection extendByHand: evt hand.
+DesktopRootEventHandler >> openWorldMenu: evt in: aWorld [
+	"Put up the world menu, triggered by the passed-in event."
+
+	"If the user does not want a world menu, do not invoke it."
+	aWorld class shouldShowWorldMenu ifFalse: [ ^ false ].
+
+	aWorld bringTopmostsToFront.
+	"put up screen menu"
+	aWorld worldMenu popUpEvent: evt in: aWorld.
 	^ true
 ]
 
@@ -68,17 +81,11 @@ DesktopRootEventHandler >> quitOnWindowClose: anEvent in: aWorld [
 	^ true
 ]
 
-{ #category : 'private' }
-DesktopRootEventHandler >> openWorldMenu: evt in: aWorld [
-	"Put up the world menu, triggered by the passed-in event."
+{ #category : 'clicking' }
+DesktopRootEventHandler >> selectionDrag: evt [
+	"Sent by the hand when the click on the background turned out to be a drag"
 
-	"If the user does not want a world menu, do not invoke it."
-	aWorld class shouldShowWorldMenu ifFalse: [ ^ false ].
-
-	aWorld bringTopmostsToFront.
-	"put up screen menu"
-	aWorld worldMenu popUpEvent: evt in: aWorld.
-	^ true
+	self dragThrough: evt in: evt hand world
 ]
 
 { #category : 'private' }
@@ -126,13 +133,6 @@ DesktopRootEventHandler >> takeWindowEvent: anEvent in: aWorld [
 	(anEvent type == #windowClose and: [ aWorld windowEventHandler isNil ]) ifFalse: [ ^ false ].
 	self quitOnWindowClose: anEvent in: aWorld.
 	^ true
-]
-
-{ #category : 'clicking' }
-DesktopRootEventHandler >> selectionDrag: evt [
-	"Sent by the hand when the click on the background turned out to be a drag"
-
-	self dragThrough: evt in: evt hand world
 ]
 
 { #category : 'clicking' }

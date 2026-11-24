@@ -67,5 +67,3 @@ TaskbarRootEventHandlerTest >> testMovesTheTaskOfTheFocusedWindow [
 
 	self assert: (taskbar orderedTasks collect: [ :task | task morph ] as: Array) equals: order reversed
 ]
-
-

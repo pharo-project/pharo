@@ -42,11 +42,6 @@ PasteUpMorph >> findWindow: evt [
 ]
 
 { #category : '*Morphic-Desktop' }
-PasteUpMorph >> worldMenu [
-	^ owner worldMenu
-]
-
-{ #category : '*Morphic-Desktop' }
 PasteUpMorph >> invokeWorldMenu: evt [
 	"Put up the world menu, triggered by the passed-in event"
 
@@ -56,4 +51,9 @@ PasteUpMorph >> invokeWorldMenu: evt [
 { #category : '*Morphic-Desktop' }
 PasteUpMorph >> invokeWorldMenuFromEscapeKey [
 	self invokeWorldMenu: self activeHand lastEvent
+]
+
+{ #category : '*Morphic-Desktop' }
+PasteUpMorph >> worldMenu [
+	^ owner worldMenu
 ]

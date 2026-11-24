@@ -17,4 +17,3 @@ MorphRootEventHandler >> handleEvent: anEvent in: aWorld [
 
 	^ false
 ]
-
