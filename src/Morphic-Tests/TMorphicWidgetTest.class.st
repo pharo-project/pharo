@@ -19,6 +19,19 @@ TMorphicWidgetTest >> testCoreMorphsAreNotStyled [
 ]
 
 { #category : 'tests' }
+TMorphicWidgetTest >> testMorphicCoreDefinesNoThemeAccess [
+
+	| core |
+	core := 'Morphic-Core' asPackage.
+	{
+		(Morph >> #theme).
+		(Morph >> #theme:).
+		(Morph >> #basicTheme:).
+		(Morph class >> #theme).
+		(WorldState class >> #theme) } do: [ :method | self deny: method package equals: core ]
+]
+
+{ #category : 'tests' }
 TMorphicWidgetTest >> testThemeComesFromOwner [
 
 	| theme owner widget |

@@ -191,6 +191,12 @@ WorldState class >> systemStartupFolderMenuOn: aBuilder [
 ]
 
 { #category : '*Morphic-Widgets' }
+WorldState class >> theme [
+
+	^ Smalltalk ui theme
+]
+
+{ #category : '*Morphic-Widgets' }
 WorldState class >> windowsOn: aBuilder [
 
 	<worldMenu>

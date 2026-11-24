@@ -173,13 +173,6 @@ Morph class >> shortcutsHandler: anObject [
 	ShortcutsHandler := anObject
 ]
 
-{ #category : 'accessing' }
-Morph class >> theme [
-	"Answer the ui theme that provides controls."
-
-	^ Smalltalk ui theme
-]
-
 { #category : 'dropping/grabbing' }
 Morph >> aboutToBeGrabbedBy: aHand [
 	"The receiver is being grabbed by a hand.
@@ -740,14 +733,6 @@ Morph >> balloonText [
 	a Viewer"
 
 	^ extension ifNotNil: [ :ext | ext balloonText ifNotNil: [ :text | text withNoLineLongerThan: self maxBalloonHelpLineLength ] ]
-]
-
-{ #category : 'theme' }
-Morph >> basicTheme: aUITheme [
-	"Set the current theme for the receiver without notification of change."
-
-	self theme = aUITheme ifFalse: [
-		self setProperty: #theme toValue: aUITheme]
 ]
 
 { #category : 'accessing' }
@@ -5330,24 +5315,6 @@ Morph >> textEdition: aTextEditionEvent [
 
 { #category : 'event handling' }
 Morph >> textInput: aTextInputEvent [
-]
-
-{ #category : 'theme' }
-Morph >> theme [
-	"Answer the current theme for the receiver."
-
-	(self valueOfProperty: #theme) ifNotNil: [:t | ^ t].
-	^(self owner ifNil: [self class]) theme
-]
-
-{ #category : 'theme' }
-Morph >> theme: aUITheme [
-	"Set the current theme for the receiver and propagate theme changed to submorphs."
-
-	self theme = aUITheme ifFalse: [
-		self setProperty: #theme toValue: aUITheme.
-		"we do not invoke basicTheme: to avoid checking twice if the theme changed or not"
-		self themeChanged]
 ]
 
 { #category : 'theme' }

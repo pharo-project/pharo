@@ -199,11 +199,6 @@ WorldState class >> showUpdateOptionInWorldMenu: aBoolean [
 	ShowUpdateOptionInWorldMenu := aBoolean
 ]
 
-{ #category : 'accessing' }
-WorldState class >> theme [
-	^ Smalltalk ui theme
-]
-
 { #category : 'settings' }
 WorldState class >> worldMenuSettingOn: aBuilder [
 

@@ -10,6 +10,13 @@ Trait {
 	#tag : 'Theme'
 }
 
+{ #category : 'theme' }
+TMorphicWidget classSide >> theme [
+	"Answer the current theme"
+
+	^ UITheme current
+]
+
 { #category : 'balloon help' }
 TMorphicWidget >> balloonHelpDelayTime [
 
