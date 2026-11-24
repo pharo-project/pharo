@@ -93,7 +93,7 @@ ZnConstants class >> maximumLineLength [
 	Used by ZnLineReader and thus for reading request/status lines as well as headers.
 	This helps to protect us from malicious content."
 
-	^ 8192 "4096*2"
+	^ 32 * 1024
 ]
 
 { #category : 'accessing' }
