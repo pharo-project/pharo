@@ -97,6 +97,33 @@ TaskbarMorph class >> taskbarSettingOn: aBuilder [
 					description: 'By default, the value is ' , self maximumButtonsDefault printString ]
 ]
 
+{ #category : 'menus' }
+TaskbarMorph >> addTaskItemsFor: aMorph to: aMenu [
+	"Add to the menu of aMorph's taskbar button the items that move its task"
+
+	| moveSubmenu |
+	moveSubmenu := self theme newMenuIn: self for: self.
+	aMenu addLine.
+	aMenu
+		add: 'Move' translated
+		iconFormSet: (self iconFormSetNamed: #blank)
+		subMenu: moveSubmenu.
+	moveSubmenu
+		addToggle: 'Move left' translated
+		target: self
+		selector: #moveTaskLeftOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveLeft: aMorph ]
+		argumentList: { aMorph }.
+	moveSubmenu
+		addToggle: 'Move right' translated
+		target: self
+		selector: #moveTaskRightOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveRight: aMorph ]
+		argumentList: { aMorph }
+]
+
 { #category : 'taskbar' }
 TaskbarMorph >> buttonForMorph: aMorph [
 	"Answer the button corresonding to the given
@@ -269,6 +296,26 @@ TaskbarMorph >> move: task withOffset: offset [
 	newOrderedTasks add: task beforeIndex: newTaskIndex.
 	self orderedTasks: newOrderedTasks.
 	^ self updateTaskButtons
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskLeftOf: aMorph [
+
+	self moveTaskOf: aMorph by: -1
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskOf: aMorph by: offset [
+	"Move the task of aMorph by offset positions (negative: to the left)"
+
+	self updateTasks.
+	(self taskOf: aMorph) ifNotNil: [ :task | self move: task withOffset: offset ]
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskRightOf: aMorph [
+
+	self moveTaskOf: aMorph by: 1
 ]
 
 { #category : 'accessing' }

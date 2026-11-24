@@ -362,41 +362,6 @@ WorldMorph >> cleanseStepList [
 	worldState cleanseStepListForWorld: self
 ]
 
-{ #category : 'menu & halo' }
-WorldMorph >> contentsMenu: aMenu [
-	"Build the menu used from PopUpContentsMenu:"
-
-	| expanded collapsed |
-	expanded := self windowsSatisfying: [ :w | w isCollapsed not ].
-	collapsed := self windowsSatisfying: [ :w | w isCollapsed ].
-	(expanded asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
-		do: [ :w |
-			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #activateAndForceLabelToShow.
-			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName).
-			w model canDiscardEdits
-				ifFalse: [ aMenu lastItem color: Color red ] ].
-	aMenu addLine.
-	(collapsed asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
-		do: [ :w |
-			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #collapseOrExpand.
-			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName).
-			w model canDiscardEdits
-				ifFalse: [ aMenu lastItem color: Color red ] ].
-	aMenu addLine.
-	((self submorphs reject: [ :sm | (expanded includes: sm) or: [ collapsed includes: sm ] ])
-		asSortedCollection: [ :w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name ])
-		do: [ :w |
-			aMenu add: (self truncatedMenuLabelFor: w class name) target: w selector: #comeToFront.
-			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName) ].
-
-	^ aMenu
-]
-
-{ #category : 'menu & halo' }
-WorldMorph >> contentsMenuTitle [
-	^ 'World contents' translated
-]
-
 { #category : 'screenshot' }
 WorldMorph >> copyRectangle: aRectangle into: aForm [
 
@@ -437,20 +402,9 @@ WorldMorph >> depth [
 	^ self worldState worldRenderer depth
 ]
 
-{ #category : 'world menu' }
-WorldMorph >> discoveredWorldMenu [
-	^ worldState discoveredWorldMenu
-]
-
 { #category : 'menu & halo' }
 WorldMorph >> dispatchKeystroke: anEvent [
 	"A keystroke was hit when no keyboard focus was set, so it is sent here to the world instead."
-
-	| aChar ascii |
-	aChar := anEvent keyCharacter.
-	(ascii := aChar asciiValue) = 27 ifTrue: [ "escape key" ^ self invokeWorldMenuFromEscapeKey ].
-
-	(self navigationKey: anEvent) ifTrue: [ ^ self ].
 
 	"It was unhandled. Remember the keystroke."
 	self lastKeystroke: anEvent keyString.
@@ -760,11 +714,6 @@ WorldMorph >> taskbarTasks [
 		  thenSelect: [ :m | m isNotNil ]
 ]
 
-{ #category : 'menu & halo' }
-WorldMorph >> truncatedMenuLabelFor: aWindowLabel [
-	^ aWindowLabel truncateWithElipsisTo: 47
-]
-
 { #category : 'copying' }
 WorldMorph >> veryDeepCopyWith: deepCopier [
 	"never copy the World"
@@ -812,11 +761,6 @@ WorldMorph >> wantsWindowEvent: anEvent [
 WorldMorph >> world [
 
 	^self
-]
-
-{ #category : 'world menu' }
-WorldMorph >> worldMenu [
-	^ worldState worldMenu
 ]
 
 { #category : 'accessing' }

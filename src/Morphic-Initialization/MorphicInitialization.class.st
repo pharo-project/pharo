@@ -30,7 +30,7 @@ MorphicInitialization class >> initializeEnvironment [
 		startUIProcess;
 		cleanUp;
 		initializeFontsAndDesktop;
-		installHalos;
+		installRootEventHandlers;
 		openWorldBars
 ]
 
@@ -46,10 +46,13 @@ MorphicInitialization class >> initializeFontsAndDesktop [
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> installHalos [
-	"Meta gestures on the world (cmd/alt-click, meta menu, yellow button menu) open halos and morph menus"
+MorphicInitialization class >> installRootEventHandlers [
+	"The world gets its desktop (world menu, quit dialog), Alt+Tab between windows, and halos on meta gestures"
 
-	World addRootEventHandler: HaloRootEventHandler new
+	World
+		addRootEventHandler: DesktopRootEventHandler new;
+		addRootEventHandler: TaskbarRootEventHandler new;
+		addRootEventHandler: HaloRootEventHandler new
 ]
 
 { #category : 'initialization' }
