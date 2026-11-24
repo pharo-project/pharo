@@ -331,6 +331,13 @@ MorphicNativeWindow >> taskbarIcon [
 ]
 
 { #category : 'taskbar-required' }
+MorphicNativeWindow >> taskbarLabel [
+	"Answer the label to use for a taskbar button for the receiver."
+	
+	^ self attributs title
+]
+
+{ #category : 'taskbar-required' }
 MorphicNativeWindow >> taskbarState [
 	"Answer one of #minimized, #restored, #maximized or #active."
 	
