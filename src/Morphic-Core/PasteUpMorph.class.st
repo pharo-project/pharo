@@ -291,6 +291,13 @@ PasteUpMorph >> dispatchKeystroke: anEvent [
 				ifTrue: [ ^ self tabHitWithEvent: anEvent ] ]
 ]
 
+{ #category : 'event handling' }
+PasteUpMorph >> dragThroughOnDesktop: evt [
+	"Dragging on my background is handled by my root's handlers (e.g. a selection rectangle)"
+
+	^ self rootEventHandlers anySatisfy: [ :handler | handler handleDragThrough: evt for: self ]
+]
+
 { #category : 'drawing' }
 PasteUpMorph >> drawBackgroundSketchOn: aCanvas [
 	backgroundMorph ifNil: [ ^ self ].
@@ -342,6 +349,13 @@ PasteUpMorph >> drawSubmorphsOn: aCanvas [
 	self clipSubmorphs
 		ifTrue: [ aCanvas clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone: [ ^ self ]) during: drawBlock ]
 		ifFalse: [ drawBlock value: aCanvas ]
+]
+
+{ #category : 'events - root handler' }
+PasteUpMorph >> rootEventHandlers [
+	"Only worlds have root event handlers"
+
+	^ #(  )
 ]
 
 { #category : 'dropping/grabbing' }
@@ -525,16 +539,9 @@ PasteUpMorph >> initialize [
 
 { #category : 'world menu' }
 PasteUpMorph >> invokeWorldMenu: evt [
-	"Put up the world menu, triggered by the passed-in event."
-	| menu |
+	"The world menu is opened by my root's handlers"
 
-	"If the user does not want a world menu, do not invoke it."
-	self class shouldShowWorldMenu ifFalse: [ ^ self ].
-
-	self bringTopmostsToFront.
-	"put up screen menu"
-	(menu := self worldMenu) popUpEvent: evt in: self.
-	^ menu
+	^ self rootEventHandlers anySatisfy: [ :handler | handler handleWorldMenu: evt for: self ]
 ]
 
 { #category : 'world menu' }
@@ -688,14 +695,9 @@ PasteUpMorph >> osWindow [
 
 { #category : 'menu & halo' }
 PasteUpMorph >> popUpContentsMenu: evt [
-	"Present a menu names of windows and naked morphs, and activate the one that gets chosen.  Collapsed windows appear below line, expand if chosen; naked morphs appear below second line; if any of them has been given an explicit name, that is what's shown, else the class-name of the morph shows; if a naked morph is chosen, bring it to front and have it don a halo."
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	self contentsMenu: menu.
-	menu buildTitle: [ :titleMorph |
-		titleMorph bigTitle: self contentsMenuTitle
-	];
-	popUpEvent: evt in: (self world ifNil: [self])
+	"The menu of my windows and morphs is opened by my root's handlers"
+
+	^ self rootEventHandlers anySatisfy: [ :handler | handler handleContentsMenu: evt for: self ]
 ]
 
 { #category : 'dropping/grabbing' }
@@ -795,12 +797,8 @@ PasteUpMorph >> wantsWindowEvent: anEvent [
 { #category : 'event handling' }
 PasteUpMorph >> windowEvent: anEvent [
 	self windowEventHandler ifNotNil: [ ^ self windowEventHandler windowEvent: anEvent ].
-	"The window close dialog is modal, since the windowClose event originates from the system window button, we need to protect against opening multiple, otherwise we end up with the world in a locked state when one of them is cancelled"
-	(anEvent type == #windowClose and: [ self valueOfProperty: #canOpenCloseDialog ifAbsent: true ])
-		ifTrue: [
-			self setProperty: #canOpenCloseDialog toValue: false.
-			WorldState quitSession.
-			self removeProperty: #canOpenCloseDialog ]
+	anEvent type == #windowClose ifTrue: [
+		self rootEventHandlers anySatisfy: [ :handler | handler handleWindowClose: anEvent for: self ] ]
 ]
 
 { #category : 'event handling' }

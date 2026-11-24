@@ -47,9 +47,10 @@ MorphicInitialization class >> initializeFontsAndDesktop [
 
 { #category : 'initialization' }
 MorphicInitialization class >> installRootEventHandlers [
-	"Meta gestures on the world open halos and morph menus; Alt+Tab switches between windows"
+	"The world gets its desktop (world menu, quit dialog), Alt+Tab between windows, and halos on meta gestures"
 
 	World
+		addRootEventHandler: DesktopRootEventHandler new;
 		addRootEventHandler: TaskListRootEventHandler new;
 		addRootEventHandler: HaloRootEventHandler new
 ]

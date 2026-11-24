@@ -21,6 +21,20 @@ MorphRootEventHandlerStub >> decline [
 ]
 
 { #category : 'event handling' }
+MorphRootEventHandlerStub >> handleContentsMenu: anEvent for: aWorld [
+
+	handled add: #contentsMenu -> aWorld.
+	^ handles
+]
+
+{ #category : 'event handling' }
+MorphRootEventHandlerStub >> handleDragThrough: anEvent for: aWorld [
+
+	handled add: #dragThrough -> aWorld.
+	^ handles
+]
+
+{ #category : 'event handling' }
 MorphRootEventHandlerStub >> handleEvent: anEvent in: aWorld [
 
 	handled add: anEvent type -> aWorld.
@@ -31,6 +45,20 @@ MorphRootEventHandlerStub >> handleEvent: anEvent in: aWorld [
 MorphRootEventHandlerStub >> handleNavigationKey: aKeyboardEvent for: aWorld [
 
 	handled add: #navigationKey -> aWorld.
+	^ handles
+]
+
+{ #category : 'event handling' }
+MorphRootEventHandlerStub >> handleWindowClose: anEvent for: aWorld [
+
+	handled add: #windowClose -> aWorld.
+	^ handles
+]
+
+{ #category : 'event handling' }
+MorphRootEventHandlerStub >> handleWorldMenu: anEvent for: aWorld [
+
+	handled add: #worldMenu -> aWorld.
 	^ handles
 ]
 

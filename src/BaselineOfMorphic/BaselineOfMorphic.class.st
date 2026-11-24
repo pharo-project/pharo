@@ -62,6 +62,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Regex' ) ].
 		"Halos plug into the world's root event handler, and open menus"
 		spec package: 'Morphic-Halos'.
+		"The world menu, the windows menu, the selection rectangle and the quit dialog"
+		spec package: 'Morphic-Desktop' with: [ spec requires: #( 'Morphic-Halos' ) ].
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
 		spec package: 'Morphic-Widgets-MissionControl-Tests'.
@@ -97,7 +99,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec
 			package: 'Morphic-Initialization'
 			with: [
-			spec requires: #( 'Morphic-Base' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' ) ] ]
+			spec requires: #( 'Morphic-Base' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ] ]
 ]
 
 { #category : 'baseline' }
