@@ -13,6 +13,13 @@ Class {
 	#package : 'Athens-Morphic'
 }
 
+{ #category : 'testing' }
+AthensWorldState class >> isDeprecated [
+	"Embedded worlds use a plain WorldState with an AthensWrappedWorldRenderer"
+
+	^ true
+]
+
 { #category : 'accessing' }
 AthensWorldState >> display [
 	^ display
