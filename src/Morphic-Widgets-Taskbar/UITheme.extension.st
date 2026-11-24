@@ -68,17 +68,3 @@ UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
 		cornerStyle: (self taskbarThumbnailCornerStyleFor: answer).
 	^answer
 ]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
-UITheme >> openTaskListIn: world from: event [
-
-	(tasklistMorph isNil or: [ (tasklistMorph hasCurrentWindows: world taskbarTasks) not ]) ifTrue: [
-		tasklistMorph := TaskListMorph new
-	].
-
-	event shiftPressed
-		ifTrue: [ tasklistMorph selectPreviousTask ]
-		ifFalse: [ tasklistMorph selectNextTask ].
-
-	tasklistMorph openInWorld: world
-]
