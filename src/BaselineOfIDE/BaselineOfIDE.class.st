@@ -266,7 +266,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.
 
-	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
 	OCProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ OCSimpleFormatter ]).

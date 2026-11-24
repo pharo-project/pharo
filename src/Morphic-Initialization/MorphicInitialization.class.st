@@ -45,6 +45,7 @@ MorphicInitialization class >> initializeEnvironment [
 
 	self
 		createWorld;
+		resetKeymaps;
 		startUIProcess;
 		cleanUp;
 		useDefaultTheme;
@@ -75,6 +76,13 @@ MorphicInitialization class >> openWorldBars [
 
 	MenubarMorph reset.
 	TaskbarMorph showTaskbarPreferenceChanged
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> resetKeymaps [
+	"Start the new world with a fresh keymap repository"
+
+	KMRepository reset
 ]
 
 { #category : 'initialization' }
