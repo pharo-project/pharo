@@ -64,6 +64,13 @@ WorldMorph class >> cursorOwnerWorld: aWorld [
 	CursorOwnerWorld := aWorld
 ]
 
+{ #category : 'class initialization' }
+WorldMorph class >> declareWorldGlobals [
+	"Declare the World and ActiveWorld globals, empty until Morphic's initialization installs a world (installNewWorld). Code that names them then compiles before any world exists"
+
+	#( #World #ActiveWorld ) do: [ :global | self environment at: global ifAbsentPut: [ nil ] ]
+]
+
 { #category : 'setting' }
 WorldMorph class >> defaultWorldColor [
 
@@ -172,7 +179,8 @@ WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion.
 	dropActionBlock := nil.
 	dragActionBlock := nil.
-	resizeActionBlock := nil
+	resizeActionBlock := nil.
+	self declareWorldGlobals
 ]
 
 { #category : 'instance creation' }
