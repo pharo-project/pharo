@@ -30,18 +30,6 @@ MorphicInitialization class >> createWorld [
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> initializeDesktop [
-	"The desktop logo and color, once the menubar is open, and where windows and notifications open"
-
-	PolymorphSystemSettings showDesktopLogo: false.
-	PolymorphSystemSettings showDesktopLogo: true.
-	PolymorphSystemSettings desktopColor: Color white.
-	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
-	GrowlMorph position: #bottomLeft.
-	ShortcutReminder enabled: true
-]
-
-{ #category : 'initialization' }
 MorphicInitialization class >> initializeEnvironment [
 	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it.
 	The bars are sized with the fonts"
@@ -52,8 +40,9 @@ MorphicInitialization class >> initializeEnvironment [
 		startUIProcess;
 		cleanUp;
 		useDefaultTheme;
-		initializeFonts;
-		initializeWorld
+		initializeFonts.
+	PolymorphSystemSettings desktopLogo: (self initializeWorld: self currentWorld).
+	self initializePreferences
 ]
 
 { #category : 'initialization' }
@@ -67,20 +56,24 @@ MorphicInitialization class >> initializeFonts [
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> initializeWorld [
-	"Open the bars of the current world, then its desktop: the desktop logo goes below the menubar"
+MorphicInitialization class >> initializePreferences [
+	"The desktop color, and where windows and notifications open"
 
-	self
-		openWorldBars;
-		initializeDesktop
+	PolymorphSystemSettings desktopColor: Color white.
+	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
+	GrowlMorph position: #bottomLeft.
+	ShortcutReminder enabled: true
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> openWorldBars [
-	"Open the menubar and the taskbar in the world, as their preferences say"
+MorphicInitialization class >> initializeWorld: aWorld [
+	"Open the bars of aWorld, then put the desktop logo below its menubar. Answer the logo, nil when it is not shown"
 
-	MenubarMorph reset.
-	TaskbarMorph showTaskbarPreferenceChanged
+	MenubarMorph openIn: aWorld.
+	aWorld showWorldTaskbar: TaskbarMorph showTaskbar.
+	^ PolymorphSystemSettings newDesktopLogo ifNotNil: [ :logo |
+		PolymorphSystemSettings placeDesktopLogo: logo in: aWorld.
+		logo ]
 ]
 
 { #category : 'initialization' }

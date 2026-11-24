@@ -76,11 +76,18 @@ MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 MenubarMorph class >> open [
 	<script>
 
+	self openIn: self currentWorld
+]
+
+{ #category : 'instance creation' }
+MenubarMorph class >> openIn: aWorld [
+	"Open a menubar at the top of aWorld, with the items of its world menu"
+
 	self showMenubar ifFalse: [ ^ self ].
 
 	self new
-		menuBarItems: self currentWorld worldState menuBuilder menuSpec items;
-		open
+		menuBarItems: aWorld worldState menuBuilder menuSpec items;
+		openIn: aWorld
 ]
 
 { #category : 'class initialization' }
@@ -154,6 +161,12 @@ MenubarMorph >> newMenuItem [
 
 { #category : 'accessing' }
 MenubarMorph >> open [
+
+	self openIn: self currentWorld
+]
+
+{ #category : 'accessing' }
+MenubarMorph >> openIn: aWorld [
 	self menuBarItems
 		do: [ :each |
 			self
@@ -167,7 +180,7 @@ MenubarMorph >> open [
 				ifTrue: [ self addSeparator ] ].
 	self
 		adhereToTop;
-		openInWorld
+		openInWorld: aWorld
 ]
 
 { #category : 'recategorized' }
