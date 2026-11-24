@@ -23,44 +23,65 @@ MorphicInitialization class >> cleanUp [
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> initializeEnvironment [
-	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it."
+MorphicInitialization class >> createWorld [
+	"Loading Morphic never creates a world: this is where Pharo's desktop world is born"
 
-	self
-		startUIProcess;
-		cleanUp;
-		initializeFontsAndDesktop;
-		installRootEventHandlers;
-		openWorldBars
+	DesktopWorldMorph installNewWorld
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> initializeFontsAndDesktop [
+MorphicInitialization class >> initializeEnvironment [
+	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it.
+	The bars are sized with the fonts"
 
+	self
+		createWorld;
+		resetKeymaps;
+		startUIProcess;
+		cleanUp;
+		useDefaultTheme;
+		initializeFonts.
+	PolymorphSystemSettings desktopLogo: (self initializeWorld: self currentWorld).
+	self initializePreferences
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> initializeFonts [
+
+	SourceCodeFonts setSourceCodeFonts: 10.
+	FreeTypeSystemSettings loadFt2Library: true.
 	GraphicFontSettings setFontsToStyleNamed: #small.
-	PolymorphSystemSettings showDesktopLogo: false.
-	PolymorphSystemSettings showDesktopLogo: true.
-	PolymorphSystemSettings desktopColor: Color white.
 	"The balloon font is taken from the fonts just set"
 	BalloonMorph initialize
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> installRootEventHandlers [
-	"The world gets its desktop (world menu, quit dialog), Alt+Tab between windows, and halos on meta gestures"
+MorphicInitialization class >> initializePreferences [
+	"The desktop color, and where windows and notifications open"
 
-	World
-		addRootEventHandler: DesktopRootEventHandler new;
-		addRootEventHandler: TaskbarRootEventHandler new;
-		addRootEventHandler: HaloRootEventHandler new
+	PolymorphSystemSettings desktopColor: Color white.
+	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
+	GrowlMorph position: #bottomLeft.
+	ShortcutReminder enabled: true
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> openWorldBars [
-	"Open the menubar and the taskbar in the world, as their preferences say"
+MorphicInitialization class >> initializeWorld: aWorld [
+	"Open the bars of aWorld, then put the desktop logo below its menubar. Answer the logo, nil when it is not shown"
 
-	MenubarMorph reset.
-	TaskbarMorph showTaskbarPreferenceChanged
+	MenubarMorph openIn: aWorld.
+	aWorld showWorldTaskbar: TaskbarMorph showTaskbar.
+	^ PolymorphSystemSettings newDesktopLogo ifNotNil: [ :logo |
+		PolymorphSystemSettings placeDesktopLogo: logo in: aWorld.
+		logo ]
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> resetKeymaps [
+	"Start the new world with a fresh keymap repository, and let morphs handle their shortcuts with it"
+
+	KMRepository reset.
+	Morph shortcutsHandler: KMShortcutHandler new
 ]
 
 { #category : 'initialization' }
@@ -72,4 +93,10 @@ MorphicInitialization class >> startUIProcess [
 	ErrorHandler default: ErrorHandler forCurrentSystemConfiguration.
 	"Back to the UI manager this session runs with (non interactive from the command line)"
 	UIManager default: UIManager forCurrentSystemConfiguration
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> useDefaultTheme [
+
+	PolymorphSystemSettings defaultTheme beCurrent
 ]

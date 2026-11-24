@@ -25,8 +25,10 @@ CmdWorldMenuRegistration class >> createCommandContext [
 
 { #category : 'world menu' }
 CmdWorldMenuRegistration class >> enableWorldShortcuts [
+	"Before Morphic's initialization installs a world there is no world to give shortcuts to"
 	<script>
-	CmdKMDispatcher attachedTo: self currentWorld withCommandsFrom: self
+	self currentWorld ifNotNil: [ :world |
+		CmdKMDispatcher attachedTo: world withCommandsFrom: self ]
 ]
 
 { #category : 'class initialization' }

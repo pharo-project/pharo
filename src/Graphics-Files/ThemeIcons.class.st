@@ -119,7 +119,7 @@ ThemeIcons >> basicIconFormSetNamed: aSymbol [
 	| displayScaleFactor |
 
 	^ ((formSetsCache ifNil: [ formSetsCache := Dictionary new ])
-		at: (displayScaleFactor := self currentWorld displayScaleFactor)
+		at: (displayScaleFactor := self displayScaleFactor)
 		ifAbsentPut: [ IdentityDictionary new ])
 			at: aSymbol ifAbsentPut: [
 				self icons at: aSymbol
@@ -162,6 +162,15 @@ ThemeIcons >> blankIconFormSet [
 { #category : 'private' }
 ThemeIcons >> defaultUrl [
 	^ self class baseUrl / (self name, '.zip')
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> displayScaleFactor [
+	"Answer the scale of the world the icons are shown in. Before Morphic's initialization installs a world, icons are at scale 1"
+
+	^ self currentWorld
+		ifNil: [ 1 ]
+		ifNotNil: [ :world | world displayScaleFactor ]
 ]
 
 { #category : 'reflective operations' }
