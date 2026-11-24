@@ -21,30 +21,6 @@ Morph >> asText [
     ^ Text string: embedMorphSignal attribute: anchor
 ]
 
-{ #category : '*Morphic-Base' }
-Morph >> assureLayoutProperties [
-	| props |
-	props := self layoutProperties.
-	props == self ifTrue:[props := nil].
-	props ifNil:[
-		props := LayoutProperties new initializeFrom: self.
-		self layoutProperties: props].
-	^props
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> assureTableProperties [
-	| props |
-	props := self layoutProperties.
-	props == self ifTrue:[props := nil].
-	props ifNil:[
-		props := TableLayoutProperties new initializeFrom: self.
-		self layoutProperties: props].
-	props includesTableProperties
-		ifFalse:[self layoutProperties: (props := props asTableLayoutProperties)].
-	^props
-]
-
 { #category : '*Morphic-Base-keymapping' }
 Morph >> attachKeymapCategory: aCategory [
 	self kmDispatcher attachCategory: aCategory
@@ -118,15 +94,6 @@ Morph >> changeProportionalLayout [
 	((layout := self layoutPolicy) isNotNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
-	self layoutChanged
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> changeTableLayout [
-	| layout |
-	((layout := self layoutPolicy) isNotNil and:[layout isTableLayout])
-		ifTrue:[^self]. "already table layout"
-	self layoutPolicy: TableLayout new.
 	self layoutChanged
 ]
 
@@ -313,33 +280,6 @@ Morph >> on: eventName send: selector to: recipient withValue: value [
 Morph >> removeKeyCombination: aShortcut [
 
 	self kmDispatcher removeKeyCombination: aShortcut
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> rowMorphForNode: aNode inColumn: aColumn [
-	| rm |
-	rm := Morph new color: Color transparent;
-			layoutPolicy: RowLayout new;
-			hResizing: #shrinkWrap;
-			vResizing: #shrinkWrap;
-			layoutInset: aColumn container columnInset @ aColumn container rowInset;
-			listDirection: #leftToRight;
-			cellPositioning: #leftCenter;
-			cellInset: 4@0;
-			yourself.
-
-	rm addMorph: self.
-	rm computeBounds.
-
-	aColumn isFirstColumn
-		ifTrue: [ | icon |
-			icon := aColumn container iconBlock value: aNode.
-			icon ifNotNil: [ rm addMorph: icon asMorph ].
-			"for first column we don't use horizontal inset"
-			rm  layoutInset: 0 @ aColumn container rowInset.
-		].
-
-	^ rm
 ]
 
 { #category : '*Morphic-Base' }

@@ -48,6 +48,11 @@ BorderStyle class >> default [
 ]
 
 { #category : 'instance creation' }
+BorderStyle class >> inset [
+	^InsetBorderStyle new
+]
+
+{ #category : 'instance creation' }
 BorderStyle class >> thinGray [
 	^ self width: 1 * self currentWorld displayScaleFactor color: Color gray
 ]
@@ -55,6 +60,11 @@ BorderStyle class >> thinGray [
 { #category : 'instance creation' }
 BorderStyle class >> width: aNumber [
 	^self width: aNumber color: Smalltalk ui theme borderColor
+]
+
+{ #category : 'instance creation' }
+BorderStyle class >> width: aNumber color: aColor [
+	^SimpleBorderStyle new color: aColor; width: aNumber; yourself
 ]
 
 { #category : 'comparing' }

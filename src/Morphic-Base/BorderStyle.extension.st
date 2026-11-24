@@ -31,11 +31,6 @@ BorderStyle class >> complexRaised [
 ]
 
 { #category : '*Morphic-Base' }
-BorderStyle class >> inset [
-	^InsetBorderStyle new
-]
-
-{ #category : '*Morphic-Base' }
 BorderStyle class >> raised [
 	^RaisedBorderStyle new
 ]
@@ -45,9 +40,4 @@ BorderStyle class >> simple [
 	"Answer a simple border style"
 
 	^ SimpleBorderStyle new
-]
-
-{ #category : '*Morphic-Base' }
-BorderStyle class >> width: aNumber color: aColor [
-	^SimpleBorderStyle new color: aColor; width: aNumber; yourself
 ]

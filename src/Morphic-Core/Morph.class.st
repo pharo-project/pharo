@@ -630,6 +630,30 @@ Morph >> assureExtension [
 	^ extension ifNil: [extension := MorphExtension new]
 ]
 
+{ #category : 'layout-properties' }
+Morph >> assureLayoutProperties [
+	| props |
+	props := self layoutProperties.
+	props == self ifTrue:[props := nil].
+	props ifNil:[
+		props := LayoutProperties new initializeFrom: self.
+		self layoutProperties: props].
+	^props
+]
+
+{ #category : 'layout-properties' }
+Morph >> assureTableProperties [
+	| props |
+	props := self layoutProperties.
+	props == self ifTrue:[props := nil].
+	props ifNil:[
+		props := TableLayoutProperties new initializeFrom: self.
+		self layoutProperties: props].
+	props includesTableProperties
+		ifFalse:[self layoutProperties: (props := props asTableLayoutProperties)].
+	^props
+]
+
 { #category : 'halos and balloon help' }
 Morph >> balloonColor [
 	^ self
@@ -984,6 +1008,15 @@ Morph >> center: aPoint [
 { #category : 'drawing' }
 Morph >> changeClipSubmorphs [
 	self clipSubmorphs: self clipSubmorphs not
+]
+
+{ #category : 'layout' }
+Morph >> changeTableLayout [
+	| layout |
+	((layout := self layoutPolicy) isNotNil and:[layout isTableLayout])
+		ifTrue:[^self]. "already table layout"
+	self layoutPolicy: TableLayout new.
+	self layoutChanged
 ]
 
 { #category : 'recategorized' }
