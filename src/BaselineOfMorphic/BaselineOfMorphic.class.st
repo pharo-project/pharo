@@ -46,7 +46,7 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: #( 'Core' ) ].
 
-		spec package: 'Morphic-Base'.
+		spec package: 'Morphic-Widgets'.
 		spec package: 'Morphic-Widgets-Basic'.
 		spec package: 'Morphic-Widgets-ColorPicker'.
 		spec package: 'Morphic-Widgets-Extra'.
@@ -100,7 +100,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec
 			package: 'Morphic-Initialization'
 			with: [
-			spec requires: #( 'Morphic-Base' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ] ]
+			spec requires: #( 'Morphic-Widgets' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ] ]
 ]
 
 { #category : 'baseline' }

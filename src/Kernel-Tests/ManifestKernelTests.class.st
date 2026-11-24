@@ -12,7 +12,7 @@ Class {
 { #category : 'meta data' }
 ManifestKernelTests class >> dependencies [
 
-	^ #( #'Graphics-Primitives' #'System-Announcements' #'Morphic-Core' #'Morphic-Base' #'System-Changes' #'Collections-Strings' #'Collections-Unordered'
+	^ #( #'Graphics-Primitives' #'System-Announcements' #'Morphic-Core' #'Morphic-Widgets' #'System-Changes' #'Collections-Strings' #'Collections-Unordered'
 	   #Jobs #'Collections-Streams' #'FileSystem-Disk' #'System-Support' #'Text-Core' #'Collections-Abstract' #CollectionsTests #'Collections-Support'
 	     #'Collections-Sequenceable' #'SUnit-Core' #Tests #'OpalCompiler-Core' #Traits #Kernel #'Collections-Weak' #UIManager )
 ]

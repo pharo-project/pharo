@@ -186,14 +186,14 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 		ifTrue: [ self newLineTrace: delta asString , ' morphs removed from steplist' ]
 ]
 
-{ #category : 'Morphic-Base-Windows' }
+{ #category : 'windows' }
 PasteUpMorph >> closeAllUnchangedWindows [
 
 	(ConfirmationRequest signal: 'Do you really want to close all unchanged windows ?') ifFalse: [ ^ self ].
 	(self windowsSatisfying: [ :w | w model canDiscardEdits ]) do: [ :w | w delete ]
 ]
 
-{ #category : 'Morphic-Base-Windows' }
+{ #category : 'windows' }
 PasteUpMorph >> closeUnchangedWindows [
 	"Present a menu of window titles for all windows with changes,
 	and activate the one that gets chosen."
@@ -517,7 +517,7 @@ PasteUpMorph >> modalWindow: aMorph [
 	self setProperty: #modalWindow toValue: aMorph
 ]
 
-{ #category : 'Morphic-Base-Basic' }
+{ #category : 'dropping/grabbing' }
 PasteUpMorph >> morphToDropFrom: aMorph [
 	"Given a morph being carried by the hand, which the hand is about to drop, answer the actual morph to be deposited.  Normally this would be just the morph itself, but several unusual cases arise, which this method is designed to service."
 

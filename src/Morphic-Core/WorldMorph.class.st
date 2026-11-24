@@ -479,7 +479,7 @@ WorldMorph >> fullContainsPoint: pt [
 	^bounds containsPoint: pt
 ]
 
-{ #category : 'Morphic-Base-Windows' }
+{ #category : 'drawing' }
 WorldMorph >> fullRepaintNeeded [
 
 	worldState doFullRepaint.
