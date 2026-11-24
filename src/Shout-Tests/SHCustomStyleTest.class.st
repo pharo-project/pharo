@@ -16,7 +16,8 @@ Class {
 SHCustomStyleTest >> setUp [
 
 	super setUp.
-	savedGroups := SHCustomStyle groups deepCopy
+	"The tests change the entries of the groups: keep a copy of each entry"
+	savedGroups := Dictionary newFrom: (SHCustomStyle groups associations collect: [ :each | each key -> each value copy ])
 ]
 
 { #category : 'running' }

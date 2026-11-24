@@ -5,6 +5,7 @@ ReChangeManager >> performChange: aRefactoringChange [
 
 	self
 		deprecated: 'Use `performCompositeChange:` if you have CompositeChange or use `performChanges:` if you have a list of changes instead of current one'
+		in: #Pharo14
 		transformWith: '`@rec performChange: `@arg' -> '`@rec performCompositeChange: `@arg'.
 
 	self performCompositeChange: aRefactoringChange.
@@ -13,7 +14,9 @@ ReChangeManager >> performChange: aRefactoringChange [
 { #category : '*Deprecated14' }
 ReChangeManager class >> undoLastRefactoring [
 
-	self deprecated: 'Use instance side method instead'
+	self
+		deprecated: 'Use instance side method instead'
+		in: #Pharo14
 		transformWith: '`@rec undoLastRefactoring' -> '`@rec instance undoLastRefactoring'.
 	^ self instance undoLastRefactoring 
 ]

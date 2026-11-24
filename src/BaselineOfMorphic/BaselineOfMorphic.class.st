@@ -60,8 +60,13 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Regex' ) ].
+		"Halos plug into the world's root event handler, and open menus"
+		spec package: 'Morphic-Halos'.
+		"The world menu, the windows menu, the selection rectangle and the quit dialog"
+		spec package: 'Morphic-Desktop' with: [ spec requires: #( 'Morphic-Halos' 'Morphic-Widgets-Taskbar' 'Growl' ) ].
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
+		spec package: 'Morphic-Desktop-Tests' with: [ spec requires: #( 'Morphic-Desktop' ) ].
 		spec package: 'Morphic-Widgets-MissionControl-Tests'.
 
 		"Several packages depend on Rubric as a basic Morphic component"
@@ -95,7 +100,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec
 			package: 'Morphic-Initialization'
 			with: [
-			spec requires: #( 'Morphic-Base' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' ) ] ]
+			spec requires: #( 'Morphic-Base' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ] ]
 ]
 
 { #category : 'baseline' }

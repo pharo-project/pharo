@@ -6,6 +6,7 @@ Dictionary >> removeUnreferencedKeys [
 
 	self
 		deprecated: 'Use "Smalltalk image cleanOutUndeclared" instead'
+		in: #Pharo14
 		transformWith: '`@rcv removeUnreferencedKeys' -> 'Smalltalk image cleanOutUndeclared'.
 	Smalltalk image cleanOutUndeclared
 ]

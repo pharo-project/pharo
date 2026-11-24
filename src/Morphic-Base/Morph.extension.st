@@ -1,43 +1,5 @@
 Extension { #name : 'Morph' }
 
-{ #category : '*Morphic-Base' }
-Morph >> addHalo: evt [
-	| halo |
-
-	self halosEnabled
-		ifFalse: [ ^ self ].
-
-	halo := (Smalltalk globals at: self haloClass ifAbsent: [ HaloMorph ]) new.
-	halo bounds: (halo worldBoundsForMorph: self).
-	halo popUpFor: self event: evt.
-	^ halo
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> addHandlesTo: aHaloMorph box: box [
-	"Add halo handles to the halo.  Apply the halo filter if appropriate"
-
-
-	aHaloMorph haloBox: box.
-	HaloMorph  currentHaloSpecifications do:
-		[:aSpec | | wantsIt aSelector |
-			aSelector := aSpec addHandleSelector.
-			(wantsIt := self wantsHaloHandleWithSelector: aSelector inHalo: aHaloMorph)
-				ifTrue: [(#(addDupHandle:) includes: aSelector)
-					ifTrue: [wantsIt := self preferredDuplicationHandleSelector = aSelector]].
-			wantsIt
-				ifTrue: [aHaloMorph perform: aSelector with: aSpec]].
-	aHaloMorph innerTarget addOptionalHandlesTo: aHaloMorph box: box
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> addWorldHandlesTo: aHaloMorph box: box [
-	aHaloMorph haloBox: box.
-	HaloMorph haloSpecificationsForWorld
-		do: [:aSpec | aHaloMorph perform: aSpec addHandleSelector with: aSpec].
-	aHaloMorph innerTarget addOptionalHandlesTo: aHaloMorph box: box
-]
-
 { #category : '*Morphic-Base-keymapping' }
 Morph >> allowsKeymapping [
 
@@ -148,42 +110,6 @@ Morph >> borderWidth: aNumber [
 	style style = #none
 		ifTrue: [ self borderStyle: (SimpleBorderStyle width: aNumber color: Color transparent) ]
 		ifFalse: [ style width: aNumber. self changed ]
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> changeCellInset: evt [
-	| handle |
-	handle := HandleMorph new forEachPointDo:[:newPoint |
-		self cellInset: (newPoint - evt cursorPoint) asIntegerPoint // 5].
-	evt hand attachMorph: handle.
-	handle startStepping
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> changeLayoutInset: evt [
-	| handle |
-	handle := HandleMorph new forEachPointDo:[:newPoint |
-		self layoutInset: (newPoint - evt cursorPoint) asIntegerPoint // 5].
-	evt hand attachMorph: handle.
-	handle startStepping
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> changeMaxCellSize: evt [
-	| handle |
-	handle := HandleMorph new forEachPointDo:[:newPoint |
-		self maxCellSize: (newPoint - evt cursorPoint) asIntegerPoint].
-	evt hand attachMorph: handle.
-	handle startStepping
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> changeMinCellSize: evt [
-	| handle |
-	handle := HandleMorph new forEachPointDo:[:newPoint |
-		self minCellSize: (newPoint - evt cursorPoint) asIntegerPoint].
-	evt hand attachMorph: handle.
-	handle startStepping
 ]
 
 { #category : '*Morphic-Base' }
@@ -340,19 +266,14 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 	"This message is sent to a dropped morph after it has been dropped on -- and been accepted by -- a drop-sensitive morph"
 
 	| aWindow |
-	(self formerOwner isNotNil and: [self formerOwner ~~ aMorph])
-		ifTrue: [self removeHalo].
 	self formerOwner: nil.
 	self formerPosition: nil.
-	(aWindow := aMorph ownerThatIsA: SystemWindow)
-		ifNotNil: [aWindow isActive
-			ifFalse: [aWindow activate]].
+	(aWindow := aMorph ownerThatIsA: SystemWindow) ifNotNil: [ aWindow isActive ifFalse: [ aWindow activate ] ].
 
 	"An object launched by certain parts-launcher mechanisms should end up fully visible..."
-	(self hasProperty: #beFullyVisibleAfterDrop)
-		ifTrue: [aMorph == self world
-			ifTrue: [self goHome].
-			self removeProperty: #beFullyVisibleAfterDrop]
+	(self hasProperty: #beFullyVisibleAfterDrop) ifTrue: [
+		aMorph == self world ifTrue: [ self goHome ].
+		self removeProperty: #beFullyVisibleAfterDrop ]
 ]
 
 { #category : '*Morphic-Base-keymapping' }
@@ -389,14 +310,6 @@ Morph >> removeKeyCombination: aShortcut [
 ]
 
 { #category : '*Morphic-Base' }
-Morph >> resizeMorph: evt [
-	| handle |
-	handle := HandleMorph new forEachPointDo: [ :newPoint | self extent: newPoint - self bounds topLeft ].
-	evt hand attachMorph: handle.
-	handle startStepping
-]
-
-{ #category : '*Morphic-Base' }
 Morph >> rowMorphForNode: aNode inColumn: aColumn [
 	| rm |
 	rm := Morph new color: Color transparent;
@@ -421,15 +334,6 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 		].
 
 	^ rm
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> setShadowOffset: evt [
-	| handle |
-	handle := HandleMorph new forEachPointDo:
-		[:newPoint | self shadowPoint: newPoint].
-	evt hand attachMorph: handle.
-	handle startStepping
 ]
 
 { #category : '*Morphic-Base' }

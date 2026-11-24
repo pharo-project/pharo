@@ -30,6 +30,7 @@ MorphicInitialization class >> initializeEnvironment [
 		startUIProcess;
 		cleanUp;
 		initializeFontsAndDesktop;
+		installRootEventHandlers;
 		openWorldBars
 ]
 
@@ -42,6 +43,16 @@ MorphicInitialization class >> initializeFontsAndDesktop [
 	PolymorphSystemSettings desktopColor: Color white.
 	"The balloon font is taken from the fonts just set"
 	BalloonMorph initialize
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> installRootEventHandlers [
+	"The world gets its desktop (world menu, quit dialog), Alt+Tab between windows, and halos on meta gestures"
+
+	World
+		addRootEventHandler: DesktopRootEventHandler new;
+		addRootEventHandler: TaskbarRootEventHandler new;
+		addRootEventHandler: HaloRootEventHandler new
 ]
 
 { #category : 'initialization' }

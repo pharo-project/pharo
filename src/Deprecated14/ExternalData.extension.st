@@ -6,8 +6,9 @@ ExternalData >> readString [
 	 it to a Smalltalk string."
 
 	self
-		deprecated:  'Please use #bytesFromCString instead'
-		transformWith:  '`@receiver readString'
+		deprecated: 'Please use #bytesFromCString instead'
+		in: #Pharo14
+		transformWith: '`@receiver readString'
 						-> '`@receiver bytesFromCString asString'.
 
 	self isNull ifTrue: [ ^ nil ].
@@ -21,8 +22,9 @@ ExternalData >> readStringUTF8 [
 	 it to a Smalltalk string."
 
 	self
-		deprecated:  'Please use #utf8StringFromCString instead'
-		transformWith:  '`@receiver readStringUTF8'
+		deprecated: 'Please use #utf8StringFromCString instead'
+		in: #Pharo14
+		transformWith: '`@receiver readStringUTF8'
 						-> '`@receiver utf8StringFromCString'.
 
 	^ self bytesFromCString utf8Decoded

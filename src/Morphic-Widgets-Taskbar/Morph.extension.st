@@ -15,6 +15,23 @@ Morph >> isTaskbar [
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
+Morph class >> morphWindowNavigationShortcutsOn: aBuilder [
+	"Navigation between the windows of the world, with the task list"
+
+	<keymap>
+	(aBuilder shortcut: #navigateWindowsForwardCtrl)
+		category: #MorphCtrlNavigation
+		default: Character tab ctrl asKeyCombination
+		do: [ :target :morph :event |
+			morph world theme openTaskListIn: morph world from: event ].
+	(aBuilder shortcut: #navigateWindowsBackwardCtrl)
+		category: #MorphCtrlNavigation
+		default: Character tab shift ctrl asKeyCombination
+		do: [ :target :morph :event |
+			morph world theme openTaskListIn: morph world from: event ]
+]
+
+{ #category : '*Morphic-Widgets-Taskbar' }
 Morph >> taskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
 

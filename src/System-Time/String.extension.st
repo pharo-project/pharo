@@ -6,7 +6,10 @@ String >> asDateAndTime [
 	
 	"self deprecated: 'Use DateAndTime fromString: ' transformWith: '`@rec asDateAndTime' -> 'DateAndTime fromString: `@rec'.
 	"
-	self  deprecated:  'Use DateAndTime fromString: instead'.
+	self
+		deprecated: 'Use DateAndTime fromString: instead'
+		on: '2026-03-27'
+		in: #Pharo14.
 	^ DateAndTime fromString: self
 ]
 
@@ -14,7 +17,10 @@ String >> asDateAndTime [
 String >> asDuration [
 	"Convert from [-]D:HH:MM:SS[.S] format. What is between [] implies optional elements"
 
-	self deprecated: 'Rewrite `aString asDuration` as `Duration fromString: aString`'.
+	self
+		deprecated: 'Rewrite `aString asDuration` as `Duration fromString: aString`'
+		on: '2026-03-27'
+		in: #Pharo14.
 	^ Duration fromString: self
 ]
 

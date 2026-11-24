@@ -151,22 +151,6 @@ PolygonMorph class >> vertices: verts color: c borderWidth: bw borderColor: bc [
 	^ self basicNew beStraightSegments vertices: verts color: c borderWidth: bw borderColor: bc
 ]
 
-{ #category : 'menu' }
-PolygonMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
-	| |
-	super addCustomMenuItems: aMenu hand: aHandMorph.
-	aMenu
-		addUpdating: #handlesShowingPhrase
-		target: self
-		selector: #showOrHideHandles.
-	vertices size > 2
-		ifTrue: [ self addPolyLIneCurveMenuItems: aMenu hand: aHandMorph ].
-	aMenu add: 'specify dashed line' selector: #specifyDashedLine.
-	self isOpen
-		ifTrue: [self addPolyArrowMenuItems: aMenu hand: aHandMorph]
-			ifFalse: [self addPolyShapingMenuItems: aMenu hand: aHandMorph]
-]
-
 { #category : 'editing' }
 PolygonMorph >> addHandles [
 	"Put moving handles at the vertices. Put adding handles at
@@ -226,39 +210,6 @@ PolygonMorph >> addHandles [
 	self changed
 ]
 
-{ #category : 'menu' }
-PolygonMorph >> addPolyArrowMenuItems: aMenu hand: aHandMorph [
-	aMenu addLine.
-	aMenu addWithLabel: '---' enablement: [ self isOpen and: [ arrows ~~ #none ] ] action: #makeNoArrows.
-	aMenu addWithLabel: '-->' enablement: [ self isOpen and: [ arrows ~~ #forward ] ] action: #makeForwardArrow.
-	aMenu addWithLabel: '<--' enablement: [ self isOpen and: [ arrows ~~ #back ] ] action: #makeBackArrow.
-	aMenu addWithLabel: '<->' enablement: [ self isOpen and: [ arrows ~~ #both ] ] action: #makeBothArrows.
-	aMenu add: 'customize arrows' selector: #customizeArrows:.
-	(self hasProperty: #arrowSpec)
-		ifTrue: [ aMenu add: 'standard arrows' selector: #standardArrows ]
-]
-
-{ #category : 'menu' }
-PolygonMorph >> addPolyLIneCurveMenuItems: aMenu hand: aHandMorph [
-
-	aMenu addLine;
-				addUpdating: #openOrClosePhrase
-				target: self
-				selector: #toggleOpenOrClosed.
-
-			aMenu
-				addUpdating: #smoothOrSegmentedPhrase
-				target: self
-				selector: #toggleSmoothing
-]
-
-{ #category : 'menu' }
-PolygonMorph >> addPolyShapingMenuItems: aMenu hand: aHandMorph [
-	aMenu addLine.
-	aMenu addWithLabel: 'make inscribed diamondOval' enablement: [ self isClosed ] action: #diamondOval.
-	aMenu addWithLabel: 'make enclosing rectangleOval' enablement: [ self isClosed ] action: #rectangleOval
-]
-
 { #category : 'drawing' }
 PolygonMorph >> areasRemainingToFill: aRectangle [
 	"Could be improved by quick check of inner rectangle"
@@ -301,37 +252,6 @@ PolygonMorph >> arrowForms [
 		ifTrue: [arrowForms := arrowForms
 						copyWith: (self computeArrowFormAt: vertices first from: self nextToFirstPoint)].
 	^ arrowForms
-]
-
-{ #category : 'menu' }
-PolygonMorph >> arrowLength: aLength [
-	"Assumes that I have exactly two vertices"
-
-	| theta horizontalOffset verticalOffset newTip delta |
-	delta := vertices second - vertices first.
-	theta := delta theta.
-	horizontalOffset := aLength * (theta cos).
-	verticalOffset := aLength * (theta sin).
-	newTip := vertices first + (horizontalOffset @ verticalOffset).
-	self verticesAt: 2 put: newTip
-]
-
-{ #category : 'menu' }
-PolygonMorph >> arrowSpec: specPt [
-	"Specify a custom arrow for this line.
-	specPt x abs gives the length of the arrow (point to base) in terms of borderWidth.
-	If specPt x is negative, then the base of the arrow will be concave.
-	specPt y abs gives the width of the arrow.
-	The standard arrow is equivalent to arrowSpec: PolygonMorph defaultArrowSpec.
-	See arrowBoundsAt:From: for details."
-
-	self setProperty: #arrowSpec toValue: specPt.
-	self computeBounds
-]
-
-{ #category : 'menu' }
-PolygonMorph >> arrows [
-	^arrows
 ]
 
 { #category : 'geometry' }
@@ -718,29 +638,6 @@ PolygonMorph >> curveBounds [
 	curveState at: 2 put: pointAfterFirst.
 	curveState at: 3 put: pointBeforeLast.
 	^ ( oX @ oY corner: cX @ cY ) expandBy: borderWidth * 0.5
-]
-
-{ #category : 'menu' }
-PolygonMorph >> customizeArrows: evt [
-	| handle origin aHand |
-	aHand := evt ifNil: [self primaryHand] ifNotNil: [evt hand].
-	origin := aHand position.
-	handle := HandleMorph new
-		forEachPointDo:
-			[:newPoint | handle removeAllMorphs.
-			handle addMorph:
-				(LineMorph from: origin to: newPoint color: Color black width: 1).
-			self arrowSpec: (newPoint - origin) / 5.0]
-		lastPointDo:
-			[:newPoint | handle deleteBalloon.
-			self halo ifNotNil: [:halo | halo addHandles].].
-	aHand attachMorph: handle.
-	handle showBalloon:
-'Move cursor left and right
-to change arrow length and style.
-Move it up and down to change width.
-Click when done.' hand: evt hand.
-	handle startStepping
 ]
 
 { #category : 'dashes' }
@@ -1216,13 +1113,6 @@ PolygonMorph >> handlesMouseDown: evt [
 	^ (super handlesMouseDown: evt) or: [evt shiftPressed]
 ]
 
-{ #category : 'menu' }
-PolygonMorph >> handlesShowingPhrase [
-	^ (self showingHandles
-		ifTrue: ['hide handles']
-		ifFalse: ['show handles']) translated
-]
-
 { #category : 'testing' }
 PolygonMorph >> hasArrows [
 	"Are all the conditions meet for having arrows?"
@@ -1453,18 +1343,6 @@ PolygonMorph >> lineWidth: anInteger [
 ]
 
 { #category : 'menu' }
-PolygonMorph >> makeBackArrow [
-	arrows := #back.
-	self computeBounds
-]
-
-{ #category : 'menu' }
-PolygonMorph >> makeBothArrows [
-	arrows := #both.
-	self computeBounds
-]
-
-{ #category : 'menu' }
 PolygonMorph >> makeClosed [
 	closed := true.
 	handles ifNotNil: [self removeHandles; addHandles].
@@ -1474,12 +1352,6 @@ PolygonMorph >> makeClosed [
 { #category : 'menu' }
 PolygonMorph >> makeForwardArrow [
 	arrows := #forward.
-	self computeBounds
-]
-
-{ #category : 'menu' }
-PolygonMorph >> makeNoArrows [
-	arrows := #none.
 	self computeBounds
 ]
 
@@ -1950,19 +1822,6 @@ PolygonMorph >> setVertices: newVertices [
 	self computeBounds
 ]
 
-{ #category : 'menu' }
-PolygonMorph >> showOrHideHandles [
-	self showingHandles
-		ifTrue:	[self removeHandles]
-		ifFalse:	[self addHandles]
-]
-
-{ #category : 'menu' }
-PolygonMorph >> showingHandles [
-
-	^ handles isNotNil
-]
-
 { #category : 'smoothing' }
 PolygonMorph >> slopes: knots [
 	"Choose slopes according to state of polygon"
@@ -1981,39 +1840,6 @@ PolygonMorph >> smoothOrSegmentedPhrase [
 	^ self isCurve
 		ifTrue: [ 'make segmented {1}' translated format: {lineName} ]
 		ifFalse: [ 'make smooth {1}' translated format: {lineName} ]
-]
-
-{ #category : 'menu' }
-PolygonMorph >> specifyDashedLine [
-
-	| executableSpec newSpec |
-	executableSpec := self morphicUIManager
-		request:
-'Enter a dash specification as
-{ major dash length. minor dash length. minor dash color }
-The major dash will have the normal border color.
-A blank response will remove the dash specification.
-[Note: You may give 5 items as, eg, {10. 5. Color white. 0. 3}
-where the 4th ityem is zero, and the 5th is the number of pixels
-by which the dashes will move in each step of animation]' translated
-		initialAnswer: '{ 10. 5. Color red }'.
-	executableSpec isEmptyOrNil ifTrue:
-		[^ self stopStepping; dashedBorder: nil].
-	newSpec := [self class compiler evaluate: executableSpec] onErrorDo:
-		[^ self stopStepping; dashedBorder: nil].
-	(newSpec first isNumber and: [newSpec second isNumber and: [newSpec third isColor]]) ifFalse:
-		[^ self stopStepping; dashedBorder: nil].
-	newSpec size = 3 ifTrue:
-		[^ self stopStepping; dashedBorder: newSpec].
-	(newSpec size = 5 and: [newSpec fourth isNumber and: [newSpec fifth isNumber]]) ifTrue:
-		[^ self dashedBorder: newSpec; startStepping]
-]
-
-{ #category : 'menu' }
-PolygonMorph >> standardArrows [
-
-	self removeProperty: #arrowSpec.
-	self computeBounds
 ]
 
 { #category : 'stepping' }
@@ -2066,14 +1892,6 @@ PolygonMorph >> toggleOpenOrClosed [
 	closed ifTrue: [ self makeOpen ] ifFalse: [ self makeClosed ]
 ]
 
-{ #category : 'menu' }
-PolygonMorph >> toggleSmoothing [
-
-	smoothCurve := smoothCurve not.
-	handles ifNotNil: [self removeHandles; addHandles].
-	self computeBounds
-]
-
 { #category : 'attachments' }
 PolygonMorph >> totalLength [
 	"Answer the full length of my segments. Can take a long time if I'm curved."
@@ -2110,40 +1928,6 @@ PolygonMorph >> transformVerticesFrom: oldOwner to: newOwner [
 { #category : 'geometry' }
 PolygonMorph >> transformedBy: aTransform [
 	self setVertices: (self vertices collect:[:v| aTransform localPointToGlobal: v])
-]
-
-{ #category : 'menu' }
-PolygonMorph >> unrotatedLength [
-	"If the receiver bears rotation without a transformation morph, answer what its length in the direction it is headed is"
-
-	vertices size = 2 ifTrue:
-		[^ (vertices second - vertices first) r].
-
-	^ ((PolygonMorph new setVertices: vertices) rotationDegrees: self rotationDegrees negated) height
-]
-
-{ #category : 'menu' }
-PolygonMorph >> unrotatedLength: aLength [
-	"If the receiver bears rotation without a transformation morph, answer what its length in the direction it is headed is"
-
-	vertices size = 2 ifTrue: [^ self arrowLength: aLength].
-
-	self setVertices: ((((PolygonMorph new setVertices: vertices) rotationDegrees: self rotationDegrees negated) height: aLength) rotationDegrees: 0) vertices
-]
-
-{ #category : 'menu' }
-PolygonMorph >> unrotatedWidth [
-	"If the receiver bears rotation without a transformation morph, answer what its length in the direction it is headed is"
-
-	vertices size = 2 ifTrue: [^ self borderWidth].
-	^ ((PolygonMorph new setVertices: vertices) rotationDegrees: self rotationDegrees negated) width
-]
-
-{ #category : 'menu' }
-PolygonMorph >> unrotatedWidth: aWidth [
-	"If the receiver bears rotation without a transformation morph, answer what its length in the direction it is headed is"
-
-	self borderWidth: aWidth
 ]
 
 { #category : 'editing' }

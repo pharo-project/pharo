@@ -67,7 +67,7 @@ MorphTest >> testForTiltedStickyness [
 	self assert: m topRendererOrSelf isSticky not.
 	m beSticky.
 	self assert: m topRendererOrSelf isSticky.
-	m addFlexShell.
+	TransformationMorph flexing: m.
 	m topRendererOrSelf rotationDegrees: 45.0.
 	self assert: m topRendererOrSelf isSticky.
 	m beUnsticky.

@@ -866,12 +866,6 @@ MenuMorph >> invokeAt: aPoint in: aWorld allowKeyboard: aBoolean [
 	^ selection ifNil: [ selectedItem ifNotNil: [selectedItem target] ]
 ]
 
-{ #category : 'private' }
-MenuMorph >> invokeMetaMenu: evt [
-	stayUp ifFalse:[^self]. "Don't allow this"
-	^super invokeMetaMenu: evt
-]
-
 { #category : 'invoking' }
 MenuMorph >> invokeModal [
 	"Invoke this menu and don't return until the user has chosen a value.
@@ -906,14 +900,9 @@ MenuMorph >> items [
 
 { #category : 'dropping/grabbing' }
 MenuMorph >> justDroppedInto: aMorph event: evt [
-	| halo |
+
 	super justDroppedInto: aMorph event: evt.
-	halo := evt hand halo.
-	(halo isNotNil and:[halo target hasOwner: self]) ifTrue:[
-		"Grabbed single menu item"
-		self addHalo: evt.
-	].
-	stayUp ifFalse:[evt hand newMouseFocus: self]
+	stayUp ifFalse: [ evt hand newMouseFocus: self ]
 ]
 
 { #category : 'events' }

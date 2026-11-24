@@ -109,14 +109,6 @@ StringMorph >> acceptValue: aValue [
 	^ val
 ]
 
-{ #category : 'menu' }
-StringMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
-
-	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
-	aCustomMenu add: 'change font' selector: #changeFont.
-	aCustomMenu add: 'change emphasis' selector: #changeEmphasis
-]
-
 { #category : 'accessing' }
 StringMorph >> addEmphasis: aCodeOrTextEmphasis [
 	self emphasis: (emphasis bitOr: aCodeOrTextEmphasis value)
@@ -157,16 +149,6 @@ StringMorph >> boundsForBalloon [
 StringMorph >> cancelEdits [
 
 	self doneWithEdits
-]
-
-{ #category : 'menu' }
-StringMorph >> changeEmphasis [
-
-	| reply |
-	reply := self morphicUIManager
-				chooseFrom: (self emphasisChoices collect: [:t | t translated])
-				values: self emphasisChoices.
-	reply ifNotNil: [ self emphasis: (TextEmphasis perform: reply) emphasisCode ]
 ]
 
 { #category : 'accessing' }
@@ -260,13 +242,6 @@ StringMorph >> emphasis: aCodeOrTextEmphasis [
 
 	emphasis := aCodeOrTextEmphasis value.
 	^ self font: font emphasis: emphasis
-]
-
-{ #category : 'menu' }
-StringMorph >> emphasisChoices [
-	"Returns the emphasis selectors that are sent to a TextEmphasis."
-
-	^ #(normal bold italic narrow underlined struckOut)
 ]
 
 { #category : 'accessing' }

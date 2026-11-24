@@ -7,7 +7,9 @@ usually strings.
 	 Useful for labels for PopUpMenus."
 	| labelStream |
 	
-	self deprecated: 'Use #join: instead'.
+	self
+		deprecated: 'Use #join: instead'
+		in: #Pharo13.
 	
 	labelStream := (String new: 200) writeStream.
 	self do: [:each |

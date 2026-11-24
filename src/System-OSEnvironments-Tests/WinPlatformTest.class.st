@@ -1,7 +1,7 @@
 Class {
 	#name : 'WinPlatformTest',
 	#superclass : 'TestCase',
-	#category : 'System-Platforms-Tests-Windows',
+	#category : 'System-OSEnvironments-Tests-Windows',
 	#package : 'System-OSEnvironments-Tests',
 	#tag : 'Windows'
 }

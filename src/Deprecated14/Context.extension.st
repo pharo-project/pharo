@@ -4,7 +4,10 @@ Extension { #name : 'Context' }
 Context >> debugStackOn: aStream [
 	"print the top contexts on my sender chain."
 
-	self deprecated: 'Use printStackTraceOn: instead' transformWith: '`@rcv printDebugStackOn: `@arg' -> '`@rcv printStackTraceOn: `@arg'.
+	self
+		deprecated: 'Use printStackTraceOn: instead'
+		in: #Pharo14
+		transformWith: '`@rcv printDebugStackOn: `@arg' -> '`@rcv printStackTraceOn: `@arg'.
 	
 	self printStackTraceOn: aStream
 ]
@@ -13,7 +16,9 @@ Context >> debugStackOn: aStream [
 Context >> longStack [
 	"Answer a String showing the top 100 contexts on my sender chain."
 
-	self deprecated: 'Use stackTraceString instead'
+	self
+		deprecated: 'Use stackTraceString instead'
+		in: #Pharo14
 		transformWith: '`@rcvr longStack' -> '`@rcvr stackTraceString'.
 	^ self stackTraceString
 ]
@@ -24,7 +29,10 @@ Context >> printDebugStackOn: aStream [
 	"print the top 30 contexts on my sender chain."
 	<reflection: 'Stack Manipulation - Context'>
 	
-	self deprecated: 'Use printStackTraceOn: instead' transformWith: '`@rcv printDebugStackOn: `@arg' -> '`@rcv printStackTraceOn: `@arg'.
+	self
+		deprecated: 'Use printStackTraceOn: instead'
+		in: #Pharo14
+		transformWith: '`@rcv printDebugStackOn: `@arg' -> '`@rcv printStackTraceOn: `@arg'.
 	
 	self printStackTraceOn: aStream
 ]
@@ -35,6 +43,7 @@ Context >> shortDebugStack [
 
 	self
 		deprecated: 'Use #stackTraceString instead'
+		in: #Pharo14
 		transformWith: '`@rcv shortDebugStack' -> '`@rcv stackTraceString'.
 
 	^ self stackTraceString
@@ -46,7 +55,10 @@ Context >> shortDebugStackOn: aStream [
 	"print the top 30 contexts on my sender chain."
 	<reflection: 'Stack Manipulation - Context'>
 	
-	self deprecated: 'Use printStackTraceOn: instead' transformWith: '`@rcv shortDebugStackOn: `@arg' -> '`@rcv printStackTraceOn: `@arg'.
+	self
+		deprecated: 'Use printStackTraceOn: instead'
+		in: #Pharo14
+		transformWith: '`@rcv shortDebugStackOn: `@arg' -> '`@rcv printStackTraceOn: `@arg'.
 	
 	self printStackTraceOn: aStream
 ]
@@ -55,7 +67,9 @@ Context >> shortDebugStackOn: aStream [
 Context >> shortStack [
 	"Answer a String showing the top ten contexts on my sender chain."
 
-	self deprecated: 'Use stackTraceString instead'
+	self
+		deprecated: 'Use stackTraceString instead'
+		in: #Pharo14
 		transformWith: '`@rcvr shortStack' -> '`@rcvr stackTraceString'.
 	^ self stackTraceString
 ]

@@ -109,20 +109,18 @@ FileVersionner >> nextVersion [
 	If a version number is not found, return just the file"
 
 	| parent basename nameWithoutExtension extension max index |
-
 	parent := self fileReference parent.
 	extension := self fileReference extension.
 	basename := self fileReference basename.
 	nameWithoutExtension := self fileReference basenameWithoutExtension.
-	
+
 	"At this stage nameWithoutExtension may still include a version number.  Remove it if necessary"
 	index := nameWithoutExtension size.
-	[ index > 0 and: [ (nameWithoutExtension at: index) isDigit ] ] whileTrue:
-		[ index := index - 1 ].
-	((index between: 1 and: nameWithoutExtension size - 1) and: [ (nameWithoutExtension at: index) = $. ]) ifTrue:
-		[ nameWithoutExtension := nameWithoutExtension copyFrom: 1 to: index-1 ].
+	[ index > 0 and: [ (nameWithoutExtension at: index) isDigit ] ] whileTrue: [ index := index - 1 ].
+	((index between: 1 and: nameWithoutExtension size - 1) and: [ (nameWithoutExtension at: index) = $. ]) ifTrue: [
+		nameWithoutExtension := nameWithoutExtension copyFrom: 1 to: index - 1 ].
 
-	max := parent versionNumberFor: nameWithoutExtension extension: extension.
+	max := (FileVersionner from: parent) versionNumberFor: nameWithoutExtension extension: extension.
 	^ parent / (nameWithoutExtension , '.' , (max + 1) asString , '.' , self fileReference extension)
 ]
 
