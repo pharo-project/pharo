@@ -240,10 +240,13 @@ DeprecationTest >> testIgnoreReactionNotifiesNothing [
 
 { #category : 'tests - compatibility period' }
 DeprecationTest >> testKernelIsDecidedByThePackageOfTheMethod [
-	"An extension method belongs to the package that extends the class: this test method's package is not kernel, while Object's is."
+	"The name of a DeprecatedN package decides alone, so this holds with or without the bootstrap baseline."
 
-	self deny: (self deprecationIn: DeprecationTest >> #testDeprecatedPackageNames) isKernel.
-	self assert: (self deprecationIn: Object >> #printString) isKernel
+	| deprecation |
+	deprecation := self deprecationIn: Object >> #printString.
+	self deny: (deprecation isKernelPackageNamed: 'Deprecated15').
+	self assert: (deprecation isKernelPackageNamed: 'Deprecated15-Kernel').
+	self assert: deprecation isKernel
 ]
 
 { #category : 'tests - strategies' }

@@ -258,13 +258,19 @@ AutomaticRewriting >> isDeprecatedPackageName: aString [
 
 { #category : 'compatibility period' }
 AutomaticRewriting >> isKernel [
-	"PHEP-0004: whether the deprecated API belongs to the kernel, decided by the package of the deprecated method, not of its class: an extension method belongs to the package that extends the class. A method moved to a DeprecatedN package keeps its kind in the name of that package: DeprecatedN-Kernel holds kernel methods, DeprecatedN the others. Without the bootstrap baseline, assume kernel, which keeps the longer period."
+	"PHEP-0004: whether the deprecated API belongs to the kernel, decided by the package of the deprecated method, not of its class: an extension method belongs to the package that extends the class."
 
-	| packageName baseline |
-	packageName := self deprecatedMethod package name.
-	(self isDeprecatedPackageName: packageName) ifTrue: [ ^ packageName endsWith: '-Kernel' ].
+	^ self isKernelPackageNamed: self deprecatedMethod package name
+]
+
+{ #category : 'compatibility period' }
+AutomaticRewriting >> isKernelPackageNamed: aString [
+	"A method moved to a DeprecatedN package keeps its kind in the name of that package: DeprecatedN-Kernel holds kernel methods, DeprecatedN the others. Without the bootstrap baseline, assume kernel, which keeps the longer period."
+
+	| baseline |
+	(self isDeprecatedPackageName: aString) ifTrue: [ ^ aString endsWith: '-Kernel' ].
 	baseline := self class environment at: #BaselineOfPharoBootstrap ifAbsent: [ ^ true ].
-	^ baseline kernelPackageNames includes: packageName
+	^ baseline kernelPackageNames includes: aString
 ]
 
 { #category : 'private' }
