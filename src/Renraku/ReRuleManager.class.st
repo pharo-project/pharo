@@ -315,19 +315,6 @@ ReRuleManager >> classRules [
 	^ self allRules select: [ :rule | rule class checksClass ]
 ]
 
-{ #category : 'accessing' }
-ReRuleManager >> groupedRules [
-
-	| rulesByGroup |
-	(self visibleRuleClasses collect: [ :aClass |
-		          aClass new ]) sorted: [ :a :b | a ruleName < b ruleName ].
-	rulesByGroup := (rules groupedBy: [:each | each group]) associations collect: [ :as |
-		                CBCritiquesRuleGroup
-			                named: as key
-			                rules: as value ].
-	^ rulesByGroup
-]
-
 { #category : 'initialization' }
 ReRuleManager >> initializeRules: aCollection [
 
@@ -350,12 +337,6 @@ ReRuleManager >> nodeRules [
 ReRuleManager >> packageRules [
 
 	^ self allRules select: [ :rule | rule class checksPackage ]
-]
-
-{ #category : 'accessing' }
-ReRuleManager >> sortedGroupedRules [
-
-	^ self groupedRules sort: [ :a :b | a name < b name ]
 ]
 
 { #category : 'accessing' }
