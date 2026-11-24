@@ -178,16 +178,19 @@ ReRuleManager class >> resetWithInform [
 
 { #category : 'accessing' }
 ReRuleManager class >> ruleProfileSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder pickOne: #rulesProfile)
 		order: 1;
 		label: 'Select a quality rules profile ';
-		description: 'Select a profile according to your experience with Pharo. This will allow the QualityAssistant to show the rules that are appropiate to your level.';
+		description:
+			'Select a profile according to your experience with Pharo. This will allow the QualityAssistant to show the rules that are appropiate to your level.';
 		parentName: #qualityAssistant;
 		target: self;
 		defaultValue: #setDefaultProfile;
-		domainValues: {'Default' translated -> #setDefaultProfile .
-							'Beginner' translated -> #setBeginnerProfile }
+		domainValues: {
+			('Default' -> #setDefaultProfile).
+			('Beginner' -> #setBeginnerProfile) }
 ]
 
 { #category : 'settings' }
