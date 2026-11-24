@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : 'helpers' }
-TaskbarRootEventHandlerTest >> cmdShiftAlt: aCharacter hand: aHand [
-	"A key down of aCharacter with command, shift and alt pressed"
+TaskbarRootEventHandlerTest >> metaShiftAlt: aCharacter hand: aHand [
+	"A key down of aCharacter with meta (command on macOS, control elsewhere), shift and alt pressed"
 
 	^ (KeyboardEvent new
 		   setType: #keyDown
-		   buttons: (UserInputEvent classVarNamed: #CMD_KEY_MASK)
+		   buttons: KMModifier meta eventCode
 			   | (UserInputEvent classVarNamed: #SHIFT_KEY_MASK)
 			   | (UserInputEvent classVarNamed: #ALT_KEY_MASK)
 		   position: 0 @ 0
@@ -63,7 +63,7 @@ TaskbarRootEventHandlerTest >> testMovesTheTaskOfTheFocusedWindow [
 	world addHand: hand.
 	hand newKeyboardFocus: order first.
 
-	self assert: (TaskbarRootEventHandler new handleEvent: (self cmdShiftAlt: $l hand: hand) in: world).
+	self assert: (TaskbarRootEventHandler new handleEvent: (self metaShiftAlt: $l hand: hand) in: world).
 
 	self assert: (taskbar orderedTasks collect: [ :task | task morph ] as: Array) equals: order reversed
 ]
