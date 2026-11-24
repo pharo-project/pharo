@@ -96,12 +96,6 @@ ReAbstractCritique >> description [
 	^ rule rationale
 ]
 
-{ #category : 'actions' }
-ReAbstractCritique >> guidedBan [
-
-	ReCriticEngine guidedBy: self entity  ban: self
-]
-
 { #category : 'accessing' }
 ReAbstractCritique >> icon [
 

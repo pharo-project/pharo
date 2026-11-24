@@ -77,16 +77,6 @@ ReMethodSourceCleaner class >> keepFinalDotInMethodBody: aBoolean [
 	KeepFinalDotInMethodBody := aBoolean
 ]
 
-{ #category : 'utilities' }
-ReMethodSourceCleaner class >> showCleaningOf: aString [
-
-	SpDiffPresenter new
- 		showOptions: false;
-		leftText: aString;
-		rightText: (self clean: aString);
-		open
-]
-
 { #category : 'operating' }
 ReMethodSourceCleaner >> clean [
 

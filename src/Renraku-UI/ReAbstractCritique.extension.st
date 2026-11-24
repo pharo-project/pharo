@@ -44,6 +44,12 @@ ReAbstractCritique >> actions [
 ]
 
 { #category : '*Renraku-UI' }
+ReAbstractCritique >> guidedBan [
+
+	ReCriticEngine guidedBy: self entity  ban: self
+]
+
+{ #category : '*Renraku-UI' }
 ReAbstractCritique >> popDescriptionUp [
 
 	MorphicUIManager new longMessage: self description title: self title
