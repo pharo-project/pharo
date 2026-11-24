@@ -74,6 +74,13 @@ LabelMorph class >> newLabelFor: aModel label: aString getEnabled: enabledSel [
 LabelMorph >> adoptPaneColor: aColor [
 ]
 
+{ #category : 'initialization' }
+LabelMorph >> defaultColor [
+	"answer the default color/fill style for the receiver"
+
+	^ self theme textColor
+]
+
 { #category : 'protocol' }
 LabelMorph >> disable [
 	"Disable the receiver."

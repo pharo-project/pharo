@@ -29,3 +29,13 @@ DesktopWorldMorph >> notifyUser: aStringOrText [
 
 	(GrowlMorph label: 'Information' translated contents: aStringOrText) openInWorld: self
 ]
+
+{ #category : 'theme' }
+DesktopWorldMorph >> themeChanged [
+	"Update the desktop wallpaper if the theme has one"
+
+	(self theme desktopImageFor: self) ifNotNil: [ :aForm |
+		self color: Color white.
+		self backgroundImage: aForm layout: self theme desktopImageLayout ].
+	super themeChanged
+]

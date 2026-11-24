@@ -214,6 +214,13 @@ MenuItemMorph >> defaultBounds [
 ]
 
 { #category : 'initialization' }
+MenuItemMorph >> defaultColor [
+	"answer the default color/fill style for the receiver"
+
+	^ self theme textColor
+]
+
+{ #category : 'initialization' }
 MenuItemMorph >> deleteIfPopUp: evt [
 	"Recurse up for nested pop ups"
 	owner ifNotNil:[owner deleteIfPopUp: evt]

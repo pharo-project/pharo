@@ -622,17 +622,6 @@ PasteUpMorph >> shouldGetStepsFrom: aWorld [
 	^ super shouldGetStepsFrom: aWorld
 ]
 
-{ #category : 'theme' }
-PasteUpMorph >> themeChanged [
-	"The theme has changed.
-	Update the desktop wallpaper if appropriate."
-
-	(self theme desktopImageFor: self) ifNotNil: [:aForm |
-		self color: Color white.
-		self backgroundImage: aForm layout: self theme desktopImageLayout].
-	super themeChanged
-]
-
 { #category : 'project state' }
 PasteUpMorph >> viewBox: newViewBox [
 	"I am now displayed within newViewBox; react."

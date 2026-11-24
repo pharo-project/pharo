@@ -10,6 +10,15 @@ Class {
 }
 
 { #category : 'tests' }
+TMorphicWidgetTest >> testCoreMorphsAreNotStyled [
+
+	self deny: Morph new balloonHelpEnabled.
+	self assert: BorderedMorph new borderWidth equals: 1.
+	self assert: StringMorph new color equals: Color black.
+	self deny: Morph new tabAmongFields
+]
+
+{ #category : 'tests' }
 TMorphicWidgetTest >> testThemeComesFromOwner [
 
 	| theme owner widget |
@@ -35,4 +44,14 @@ TMorphicWidgetTest >> testThemeSetOnWidget [
 	widget := LabelMorph new.
 	widget basicTheme: theme.
 	self assert: widget theme identicalTo: theme
+]
+
+{ #category : 'tests' }
+TMorphicWidgetTest >> testWidgetsTakeTheThemeStyle [
+
+	| theme |
+	theme := UITheme current.
+	self assert: LabelMorph new color equals: theme textColor.
+	self assert: MenuItemMorph new color equals: theme textColor.
+	self assert: LabelMorph new balloonHelpEnabled equals: theme settings balloonHelpEnabled
 ]

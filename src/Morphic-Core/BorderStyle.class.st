@@ -59,7 +59,8 @@ BorderStyle class >> thinGray [
 
 { #category : 'instance creation' }
 BorderStyle class >> width: aNumber [
-	^self width: aNumber color: Smalltalk ui theme borderColor
+
+	^ self width: aNumber color: Color black
 ]
 
 { #category : 'instance creation' }
