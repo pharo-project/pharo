@@ -150,8 +150,10 @@ CoEntry >> fetcher [
 
 { #category : 'accessing' }
 CoEntry >> fetcher: anObject [
-	self 
-		deprecated: 'Use fetcherName: instead' 
+	self
+		deprecated: 'Use fetcherName: instead'
+		on: '2026-04-11'
+		in: #Pharo14
 		transformWith: '`@rec fetcher: `@arg' -> '`@rec fetcherName: `@arg class name'.
 	self fetcherName: anObject class name
 ]

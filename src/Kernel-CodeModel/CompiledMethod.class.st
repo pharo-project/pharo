@@ -273,9 +273,9 @@ CompiledMethod >> isConflict [
 CompiledMethod >> isDeprecated [
 
 	^ (self sendsAnySelectorOf:
-		   #( #deprecated: #deprecated:transformWith: #deprecated:transformWith:when: #deprecated:on:in: #deprecated:on:in:transformWith:
-		      #deprecated:on:in:transformWith:when: )) or: [
-		  self methodClass isDeprecated or: [ self package isNotNil and: [ self package isDeprecated ] ] ]
+		   #( #deprecated: #deprecated:transformWith: #deprecated:transformWith:when: #deprecated:in: #deprecated:in:transformWith:
+		      #deprecated:in:transformWith:when: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:on:in:transformWith:when: ))
+		  or: [ self methodClass isDeprecated or: [ self package isNotNil and: [ self package isDeprecated ] ] ]
 ]
 
 { #category : 'testing' }

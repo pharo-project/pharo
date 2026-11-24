@@ -162,8 +162,10 @@ AbstractSetting >> isTransient: aBoolean [
 { #category : 'old setting builder compatibility' }
 AbstractSetting >> item [
 
-	self 
-		deprecated: 'Use self instead. #Pharo14'
+	self
+		deprecated: 'Use self instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver item' -> '`@receiver'.
 		
 	^ self
@@ -223,7 +225,9 @@ AbstractSetting >> parent [
 AbstractSetting >> parent: aSymbol [
 	
 	self
-		deprecated: 'Use #parentName: instead. #Pharo14'
+		deprecated: 'Use #parentName: instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver parent: `@aSymbol' -> '`@receiver parentName: `@aSymbol'.
 
 	self parentName: aSymbol
@@ -295,8 +299,10 @@ AbstractSetting >> settingIdentifierOn: aWriteStream [
 { #category : 'old setting builder compatibility' }
 AbstractSetting >> settingNodeIdentifier [
 	
-	self 
-		deprecated: 'Use #defaultValue: instead. #Pharo14'
+	self
+		deprecated: 'Use #defaultValue: instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver settingNodeIdentifier' -> '`@receiver settingIdentifier'.
 		
 	^ self settingIdentifier
@@ -305,8 +311,10 @@ AbstractSetting >> settingNodeIdentifier [
 { #category : 'old setting builder compatibility' }
 AbstractSetting >> settingNodeIdentifierOn: aWriteStream [ 
 
-	self 
-		deprecated: 'Use #settingIdentifierOn: instead. #Pharo14'
+	self
+		deprecated: 'Use #settingIdentifierOn: instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver settingNodeIdentifierOn: `@aWriteStream' -> '`@receiver settingIdentifierOn: `@aWriteStream'
 ]
 

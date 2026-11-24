@@ -3,5 +3,7 @@ Extension { #name : 'MetacelloBaselineConstructor' }
 { #category : '*Deprecated14' }
 MetacelloBaselineConstructor >> value: anObject [
 
-	self deprecated: 'Metacello value holder are removed.'
+	self
+		deprecated: 'Metacello value holder are removed.'
+		in: #Pharo14
 ]

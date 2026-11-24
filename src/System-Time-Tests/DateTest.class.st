@@ -626,7 +626,25 @@ DateTest >> testStarting [
 
 { #category : 'tests' }
 DateTest >> testStoreOn [
-	self assert: (String streamContents: [ :str | january23rd2004 storeOn: str ]) equals: '''23 January 2004'' asDate'
+
+	self
+		assert: (String streamContents: [ :str | january23rd2004 storeOn: str ])
+		equals: '(Date readFrom: ''2004-01-23'' pattern: ''yyyy-mm-dd'')'
+]
+
+{ #category : 'tests' }
+DateTest >> testStringAsDateReadsNumericForms [
+	"String>>#asDate is deprecated: run it without a deprecation reaching the test runner"
+
+	| read |
+	read := [ :aString |
+		        [ aString asDate ]
+			        on: Deprecation
+			        do: [ :deprecation | deprecation resume ] ].
+	#( '1982-04-15' '4/15/1982' '15/4/1982' '15.4.1982' '4/15/82' '15.4.82' ) do: [ :each |
+		self assert: (read value: each) equals: (Date year: 1982 month: 4 day: 15) ].
+	self assert: (read value: '1/2/18') equals: (Date year: 2018 month: 1 day: 2).
+	self should: [ read value: '15 April 1982' ] raise: DateError
 ]
 
 { #category : 'tests' }
