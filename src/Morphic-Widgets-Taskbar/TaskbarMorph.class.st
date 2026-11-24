@@ -234,27 +234,6 @@ TaskbarMorph >> isAdheringToBottom [
 ]
 
 { #category : 'testing' }
-TaskbarMorph >> isAdheringToLeft [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
-TaskbarMorph >> isAdheringToRight [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
-TaskbarMorph >> isAdheringToTop [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
 TaskbarMorph >> isDockingBar [
 	"Answer yes so we get updated when the Display is resized."
 

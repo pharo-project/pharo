@@ -7,6 +7,11 @@ Canvas >> allocateSavedPatch: extent [
 ]
 
 { #category : '*Morphic-Core' }
+Canvas >> asAlphaBlendingCanvas: alpha [
+	^(AlphaBlendingCanvas on: self) alpha: alpha
+]
+
+{ #category : '*Morphic-Core' }
 Canvas >> contentsOfArea: aRectangle intoSavedPatch: aForm [
 
 	self contentsOfArea: aRectangle into: aForm
