@@ -12,43 +12,9 @@ Class {
 }
 
 { #category : 'event handling' }
-MorphRootEventHandler >> handleContentsMenu: anEvent for: aWorld [
-	"aWorld wants the menu of its windows and morphs. Answer whether I opened it: no"
-
-	^ false
-]
-
-{ #category : 'event handling' }
-MorphRootEventHandler >> handleDragThrough: anEvent for: aWorld [
-	"The hand drags on the background of aWorld. Answer whether I handled it (e.g. a selection rectangle): no"
-
-	^ false
-]
-
-{ #category : 'event handling' }
 MorphRootEventHandler >> handleEvent: anEvent in: aWorld [
 	"aWorld got anEvent and is about to dispatch it. Answer whether I took it instead: no"
 
 	^ false
 ]
 
-{ #category : 'event handling' }
-MorphRootEventHandler >> handleNavigationKey: aKeyboardEvent for: aWorld [
-	"aKeyboardEvent may navigate between the windows of aWorld. Answer whether I handled it: no"
-
-	^ false
-]
-
-{ #category : 'event handling' }
-MorphRootEventHandler >> handleWindowClose: anEvent for: aWorld [
-	"The window that shows aWorld is asked to close. Answer whether I handled it: no"
-
-	^ false
-]
-
-{ #category : 'event handling' }
-MorphRootEventHandler >> handleWorldMenu: anEvent for: aWorld [
-	"aWorld wants its world menu. Answer whether I opened it: no"
-
-	^ false
-]

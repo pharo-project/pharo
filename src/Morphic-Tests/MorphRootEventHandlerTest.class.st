@@ -120,21 +120,6 @@ MorphRootEventHandlerTest >> testKeyDownsFromTheHandGoToTheHandlersBeforeTheFocu
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testNavigationKeyGoesToTheRootHandler [
-
-	root addRootEventHandler: handler.
-
-	self assert: (root navigationKey: (self keyDown: $a)).
-	self assert: handler handled asArray equals: { (#navigationKey -> root) }
-]
-
-{ #category : 'tests' }
-MorphRootEventHandlerTest >> testNavigationKeyWithoutHandlerIsIgnored [
-
-	self deny: (root navigationKey: (self keyDown: $a))
-]
-
-{ #category : 'tests' }
 MorphRootEventHandlerTest >> testRemovedHandlerIsNoLongerAsked [
 
 	root addRootEventHandler: handler.
@@ -166,34 +151,4 @@ MorphRootEventHandlerTest >> testSubmorphsDoNotAskTheHandlers [
 	child processEvent: self mouseDown.
 
 	self assertEmpty: handler handled
-]
-
-{ #category : 'tests' }
-MorphRootEventHandlerTest >> testWindowCloseGoesToTheRootHandler [
-
-	| close |
-	root addRootEventHandler: handler.
-	close := WindowEvent new
-		         action: 2;
-		         yourself. "#windowClose"
-
-	root windowEvent: close.
-
-	self assert: handler handled asArray equals: { (#windowClose -> root) }
-]
-
-{ #category : 'tests' }
-MorphRootEventHandlerTest >> testWorldMenusAndDragsGoToTheRootHandler [
-
-	root addRootEventHandler: handler.
-
-	root
-		invokeWorldMenu: self mouseDown;
-		popUpContentsMenu: self mouseDown;
-		dragThroughOnDesktop: self mouseDown.
-
-	self assert: handler handled asArray equals: {
-			(#worldMenu -> root).
-			(#contentsMenu -> root).
-			(#dragThrough -> root) }
 ]

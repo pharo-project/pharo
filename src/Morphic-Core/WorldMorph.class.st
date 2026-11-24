@@ -406,12 +406,6 @@ WorldMorph >> depth [
 WorldMorph >> dispatchKeystroke: anEvent [
 	"A keystroke was hit when no keyboard focus was set, so it is sent here to the world instead."
 
-	| aChar ascii |
-	aChar := anEvent keyCharacter.
-	(ascii := aChar asciiValue) = 27 ifTrue: [ "escape key" ^ self invokeWorldMenuFromEscapeKey ].
-
-	(self navigationKey: anEvent) ifTrue: [ ^ self ].
-
 	"It was unhandled. Remember the keystroke."
 	self lastKeystroke: anEvent keyString.
 	super dispatchKeystroke: anEvent
@@ -558,13 +552,6 @@ WorldMorph >> listOfSteppingMorphs [
 	^ worldState listOfSteppingMorphs
 
 "self currentWorld listOfSteppingMorphs"
-]
-
-{ #category : 'navigation' }
-WorldMorph >> navigationKey: aKeyboardEvent [
-	"Navigation between my windows is done by my root event handlers"
-
-	^ self rootEventHandlers anySatisfy: [ :handler | handler handleNavigationKey: aKeyboardEvent for: self ]
 ]
 
 { #category : 'printing' }

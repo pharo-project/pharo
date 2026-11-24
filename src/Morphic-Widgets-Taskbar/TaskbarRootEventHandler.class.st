@@ -23,12 +23,6 @@ TaskbarRootEventHandler >> handleEvent: anEvent in: aWorld [
 	^ true
 ]
 
-{ #category : 'event handling' }
-TaskbarRootEventHandler >> handleNavigationKey: aKeyboardEvent for: aWorld [
-
-	^ aWorld taskList handleEvent: aKeyboardEvent
-]
-
 { #category : 'private' }
 TaskbarRootEventHandler >> moveTaskOfFocusedWindowBy: offset for: aKeyboardEvent [
 	"Move the task of the window that has the keyboard focus. Answer whether there was one to move"
@@ -45,7 +39,7 @@ TaskbarRootEventHandler >> takeKeyDown: aKeyboardEvent in: aWorld [
 	"Answer whether aKeyboardEvent is a taskbar key, after acting on it"
 
 	(TaskListMorph isNavigationEvent: aKeyboardEvent) ifTrue: [
-		aWorld navigationKey: aKeyboardEvent.
+		aWorld taskList handleEvent: aKeyboardEvent.
 		^ true ].
 	aKeyboardEvent asKeyCombination = $k meta shift alt ifTrue: [ ^ self moveTaskOfFocusedWindowBy: -1 for: aKeyboardEvent ].
 	aKeyboardEvent asKeyCombination = $l meta shift alt ifTrue: [ ^ self moveTaskOfFocusedWindowBy: 1 for: aKeyboardEvent ].

@@ -66,6 +66,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Desktop' with: [ spec requires: #( 'Morphic-Halos' 'Morphic-Widgets-Taskbar' 'Growl' ) ].
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
+		spec package: 'Morphic-Desktop-Tests' with: [ spec requires: #( 'Morphic-Desktop' ) ].
 		spec package: 'Morphic-Widgets-MissionControl-Tests'.
 
 		"Several packages depend on Rubric as a basic Morphic component"

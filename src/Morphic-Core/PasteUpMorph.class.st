@@ -261,13 +261,6 @@ PasteUpMorph >> dispatchKeystroke: anEvent [
 				ifTrue: [ ^ self tabHitWithEvent: anEvent ] ]
 ]
 
-{ #category : 'event handling' }
-PasteUpMorph >> dragThroughOnDesktop: evt [
-	"Dragging on my background is handled by my root's handlers (e.g. a selection rectangle)"
-
-	^ self rootEventHandlers anySatisfy: [ :handler | handler handleDragThrough: evt for: self ]
-]
-
 { #category : 'drawing' }
 PasteUpMorph >> drawBackgroundSketchOn: aCanvas [
 	backgroundMorph ifNil: [ ^ self ].
@@ -319,13 +312,6 @@ PasteUpMorph >> drawSubmorphsOn: aCanvas [
 	self clipSubmorphs
 		ifTrue: [ aCanvas clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone: [ ^ self ]) during: drawBlock ]
 		ifFalse: [ drawBlock value: aCanvas ]
-]
-
-{ #category : 'events - root handler' }
-PasteUpMorph >> rootEventHandlers [
-	"Only worlds have root event handlers"
-
-	^ #(  )
 ]
 
 { #category : 'dropping/grabbing' }
@@ -484,18 +470,6 @@ PasteUpMorph >> initialize [
 	self clipSubmorphs: true
 ]
 
-{ #category : 'world menu' }
-PasteUpMorph >> invokeWorldMenu: evt [
-	"The world menu is opened by my root's handlers"
-
-	^ self rootEventHandlers anySatisfy: [ :handler | handler handleWorldMenu: evt for: self ]
-]
-
-{ #category : 'world menu' }
-PasteUpMorph >> invokeWorldMenuFromEscapeKey [
-	self invokeWorldMenu: self activeHand lastEvent
-]
-
 { #category : 'cursor' }
 PasteUpMorph >> isCursorOwner [
 	^ false
@@ -597,36 +571,14 @@ PasteUpMorph >> mouseDown: evt [
 	"Handle a mouse down event."
 
 	| grabbedMorph |
-	(self class isMenuOpenByLeftClick
-		 ifTrue: [ evt yellowButtonPressed "left click" ]
-		 ifFalse: [ evt redButtonPressed "right click" ]) ifTrue: [ ^ self popUpContentsMenu: evt ].
 	grabbedMorph := self morphToGrab: evt.
 	grabbedMorph ifNotNil: [
 		grabbedMorph isSticky ifTrue: [ ^ self ].
 		^ evt hand grabMorph: grabbedMorph ].
 	(super handlesMouseDown: evt) ifTrue: [ ^ super mouseDown: evt ].
 	evt hand releaseKeyboardFocus. "shake of keyboard foci"
-	(evt shiftPressed not and: [ self isWorldMorph not and: [ self isEasySelecting not ] ]) ifTrue: [
-		evt wasHandled: false.
-		^ self ]. "explicitly ignore the event if we're not the world and we'll not select,
-		so that we could be picked up if need be"
-	(evt shiftPressed or: [ self isEasySelecting ])
-		ifTrue: [
-			| clickSelector |
-			evt shiftPressed
-				ifTrue: [ clickSelector := #popUpContentsMenu: ]
-				ifFalse: [ clickSelector := #invokeWorldMenu: ].
-			evt hand
-				waitForClicksOrDrag: self
-				event: evt
-				selectors: {
-					clickSelector.
-					nil.
-					nil.
-					#dragThroughOnDesktop: }
-				threshold: 5 ]
-		ifFalse: [ "We'll select on drag, let's decide what to do on click" "We wont select, just bring world menu if I'm the world"
-			self invokeWorldMenu: evt ]
+	"Menus and selections on my background are done by the desktop, from a root event handler"
+	evt wasHandled: false
 ]
 
 { #category : 'world menu' }
@@ -638,13 +590,6 @@ PasteUpMorph >> nonWindows [
 PasteUpMorph >> osWindow [
 
 	^ nil
-]
-
-{ #category : 'menu & halo' }
-PasteUpMorph >> popUpContentsMenu: evt [
-	"The menu of my windows and morphs is opened by my root's handlers"
-
-	^ self rootEventHandlers anySatisfy: [ :handler | handler handleContentsMenu: evt for: self ]
 ]
 
 { #category : 'dropping/grabbing' }
@@ -743,9 +688,7 @@ PasteUpMorph >> wantsWindowEvent: anEvent [
 
 { #category : 'event handling' }
 PasteUpMorph >> windowEvent: anEvent [
-	self windowEventHandler ifNotNil: [ ^ self windowEventHandler windowEvent: anEvent ].
-	anEvent type == #windowClose ifTrue: [
-		self rootEventHandlers anySatisfy: [ :handler | handler handleWindowClose: anEvent for: self ] ]
+	self windowEventHandler ifNotNil: [ ^ self windowEventHandler windowEvent: anEvent ]
 ]
 
 { #category : 'event handling' }

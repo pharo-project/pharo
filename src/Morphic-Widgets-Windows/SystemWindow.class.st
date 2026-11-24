@@ -2375,10 +2375,8 @@ SystemWindow >> navigateFocusForward [
 
 { #category : 'navigation' }
 SystemWindow >> navigationKey: event [
-	"Check for tab key activity and change focus as appropriate.
-	Check for active window naviagation."
+	"Check for tab key activity and change focus as appropriate"
 
-	(self world navigationKey: event) ifTrue: [ ^ true ].
 	(self tabKey: event) ifTrue: [ ^ true ].
 	^ false
 ]

@@ -68,8 +68,4 @@ TaskbarRootEventHandlerTest >> testMovesTheTaskOfTheFocusedWindow [
 	self assert: (taskbar orderedTasks collect: [ :task | task morph ] as: Array) equals: order reversed
 ]
 
-{ #category : 'tests' }
-TaskbarRootEventHandlerTest >> testOtherKeysDoNotNavigate [
 
-	self deny: (TaskbarRootEventHandler new handleNavigationKey: (self keyDown: $a) for: PasteUpMorph new)
-]
