@@ -153,7 +153,11 @@ Examples:
 
 Describe the intended usage and lifecycle of instances. Who creates me and who uses me. Do not mention tests. 
 
-A few numbered steps telling the story of my instances: who creates them (which class and method), who keeps them, who uses them and how (which messages they send me), and how they change or go away. Name the collaborating classes and methods (`MyCreator>>createSomething`), checked against the senders and references in the image. For a hierarchy, write this section once in the root class ("who creates … and who uses them"); subclasses only add what is specific to them.
+A few numbered steps telling the story of my instances: who creates them (which class and method), 
+who keeps them, who uses them and how (which messages they send me), and how they change or go away. 
+Name the collaborating classes and methods (`MyCreator>>createSomething`), checked against the senders and references in the image. 
+For a hierarchy, write this section once in the root class ("who creates and who uses them"); subclasses only add what is 
+specific to them.
 
 ## Usage 
 
