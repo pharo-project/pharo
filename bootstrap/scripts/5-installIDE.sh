@@ -113,7 +113,7 @@ echo $(date -u) "[Pharo] Setting up what needs the world"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "CmdWorldMenuRegistration enableWorldShortcuts"
 
 echo $(date -u) "[Pharo] Opening the welcome browser"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "(Smalltalk classNamed: #StWelcomeBrowser) ifNotNil: [ :aClass | aClass openForRelease ]"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "StWelcomeBrowser openForRelease"
 
 #Storing the image version into the image header
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm saveImageVersionInImageHeader"
