@@ -1055,14 +1055,17 @@ Cursor >> scaledToSize: newExtent [
 { #category : 'displaying' }
 Cursor >> show [
 	"Make the hardware's mouse cursor look like the receiver"
-	self currentWorld activeHand ifNotNil: [:aHand | aHand currentCursor: self ]
+	self currentWorld ifNotNil: [ :world |
+		world activeHand ifNotNil: [:aHand | aHand currentCursor: self ] ]
 ]
 
 { #category : 'displaying' }
 Cursor >> showWhile: aBlock [
-	"While evaluating the argument, aBlock, make the receiver be the cursor shape."
-	| oldcursor |
-	oldcursor := self currentWorld currentCursor.
+	"While evaluating the argument, aBlock, make the receiver be the cursor shape. Before Morphic's initialization installs a world there is no cursor to change"
+	| world oldcursor |
+	world := self currentWorld.
+	world ifNil: [ ^ aBlock value ].
+	oldcursor := world currentCursor.
 	self show.
 	^aBlock ensure: [oldcursor show]
 ]
