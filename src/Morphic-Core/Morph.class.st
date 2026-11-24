@@ -405,6 +405,24 @@ Morph >> addedMorph: aMorph [
 ]
 
 { #category : 'layout' }
+Morph >> adhereToEdge: edgeSymbol [
+	| edgeMessage |
+	(owner isNil or: [owner isHandMorph]) ifTrue: [^self].
+
+	"these are implemented in Morph, no need to use perform:"
+	edgeSymbol == #bottomLeft ifTrue: [ ^ self bottomLeft: owner bottomLeft ].
+	edgeSymbol == #bottomRight ifTrue: [ ^ self bottomRight: owner bottomRight ].
+	edgeSymbol == #adjustedCenter ifTrue: [ ^ self adjustedCenter: owner adjustedCenter ].
+
+	(owner class canUnderstand:  edgeSymbol) ifFalse:  [^self].
+	(self class canUnderstand: ( edgeMessage := (edgeSymbol , ':') asSymbol ))
+		 ifFalse:  [^self].
+
+	self perform: edgeMessage
+		withArguments: (Array with: (owner perform: edgeSymbol))
+]
+
+{ #category : 'layout' }
 Morph >> adjustLayoutBounds [
 	"Adjust the receivers bounds depending on the resizing strategy imposed"
 
@@ -425,6 +443,20 @@ Morph >> adjustLayoutBounds [
 	myExtent y < self minHeight
 		ifTrue: [ myExtent := myExtent x @ (myExtent y max: self minHeight - self bounds height + self layoutBounds height) ].
 	self layoutBounds: (box origin extent: myExtent)
+]
+
+{ #category : 'geometry' }
+Morph >> adjustedCenter [
+	"Provides a hook for objects to provide a reference point other than the receiver's center,for the purpose of centering a submorph under special circumstances, such as BalloonMorph"
+
+	^ self center
+]
+
+{ #category : 'geometry' }
+Morph >> adjustedCenter: c [
+	"Set the receiver's position based on the #adjustedCenter protocol for adhereToEdge.  By default this simply sets the receiver's center.   Though there are (at its inception anyway) no other implementors of this method, it is required in use with the #adhereToEdge when the centering of a submorph is to be with reference to a rectangle  other than the receiver's center."
+
+	self center: c
 ]
 
 { #category : 'accessing' }
@@ -2703,6 +2735,34 @@ Morph >> invalidRect: aRectangle from: aMorph [
 	owner ifNotNil: [owner invalidRect: damageRect from: self]
 ]
 
+{ #category : 'testing' }
+Morph >> isAdheringToBottom [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
+{ #category : 'testing' }
+Morph >> isAdheringToLeft [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
+{ #category : 'testing' }
+Morph >> isAdheringToRight [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
+{ #category : 'testing' }
+Morph >> isAdheringToTop [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
 { #category : 'classification' }
 Morph >> isAlignmentMorph [
 
@@ -2752,6 +2812,12 @@ Morph >> isHandMorph [
 Morph >> isInDockingBar [
 	"answer if the receiver is in a menu bar"
 	^ (owner isNotNil) and: [owner isDockingBar]
+]
+
+{ #category : 'structure' }
+Morph >> isInSystemWindow [
+	"answer if the receiver is in a system window"
+	^ owner isMorph and:[owner isSystemWindow or:[owner isInSystemWindow]]
 ]
 
 { #category : 'structure' }
@@ -2876,6 +2942,15 @@ Morph >> keyboardFocusChange: gotFocus [
 { #category : 'submorphs - accessing' }
 Morph >> lastSubmorph [
 	^submorphs last
+]
+
+{ #category : 'structure' }
+Morph >> lastSubmorphRecursive [
+	"Answer recursive last submorph of the receiver."
+
+	^self hasSubmorphs
+		ifTrue: [self lastSubmorph lastSubmorphRecursive]
+		ifFalse: [self]
 ]
 
 { #category : 'layout' }
@@ -3132,6 +3207,11 @@ Morph >> mainDockingBars [
 	"Answer the receiver's main dockingBars"
 	^ self dockingBars
 		select: [:each | each hasProperty: #mainDockingBarTimeStamp]
+]
+
+{ #category : 'geometry' }
+Morph >> makeMeVisible [
+	"Move into the visible area of my world. Most morphs stay where they are; windows move back on screen"
 ]
 
 { #category : 'layout - properties' }
@@ -3519,6 +3599,37 @@ Morph >> nearestOwnerThat: conditionBlock [
 	^ self firstOwnerSuchThat: conditionBlock
 ]
 
+{ #category : 'focus handling' }
+Morph >> nextMorphAcrossInWindow [
+	"Answer the next morph in the window. Traverse
+	from the receiver to its next sibling or owner's next sibling etc."
+
+	^self submorphAfter ifNil: [
+		(self owner ifNil: [^self]) nextMorphAcrossInWindow]
+]
+
+{ #category : 'focus handling' }
+Morph >> nextMorphInWindow [
+	"Answer the next morph in the window. Traverse
+	from the receiver to its first child or next sibling or owner's next sibling etc."
+
+	^self hasSubmorphs
+		ifTrue: [self submorphs first]
+		ifFalse: [self nextMorphAcrossInWindow]
+]
+
+{ #category : 'focus handling' }
+Morph >> nextMorphWantingFocus [
+	"Answer the next morph that wants keyboard focus."
+
+	|m|
+	m := self nextMorphInWindow ifNil: [^nil].
+	[m = self or: [m wantsKeyboardFocusNavigation]]
+		whileFalse: [m := m nextMorphInWindow].
+	^m wantsKeyboardFocusNavigation
+		ifTrue: [m]
+]
+
 { #category : 'halos and balloon help' }
 Morph >> noHelpString [
 	^ 'Help not yet supplied' translated
@@ -3862,6 +3973,29 @@ Morph >> prepareToBeSaved [
 	self formerOwner: nil.
 	self formerPosition: nil.
 	fullBounds := nil
+]
+
+{ #category : 'focus handling' }
+Morph >> previousMorphInWindow [
+	"Answer the next morph in the window. Traverse
+	from the receiver to its previous sibling's last submorph (recursive)
+	or owner's previous sibling's last submorph (recursive) etc."
+
+	^ self submorphBefore
+		  ifNotNil: [ self submorphBefore lastSubmorphRecursive ]
+		  ifNil: [ self owner ]
+]
+
+{ #category : 'focus handling' }
+Morph >> previousMorphWantingFocus [
+	"Answer the previous morph that wants keyboard focus."
+
+	|m|
+	m := self previousMorphInWindow ifNil: [^nil].
+	[m = self or: [m wantsKeyboardFocusNavigation]]
+		whileFalse: [m := m previousMorphInWindow ifNil: [^nil]].
+	^m wantsKeyboardFocusNavigation
+		ifTrue: [m]
 ]
 
 { #category : 'structure' }
@@ -4649,6 +4783,16 @@ Morph >> shadowColor: aColor [
 ]
 
 { #category : 'drop shadows' }
+Morph >> shadowMargins [
+	"Answer the margins of my shadow"
+	|left right top bottom deltaX deltaY|
+	left := right := top := bottom := 0.
+	(deltaX := self shadowOffset x) < 0 ifTrue: [ left := deltaX] ifFalse: [right := deltaX ].
+	(deltaY := self shadowOffset x) < 0 ifTrue: [ top := deltaY] ifFalse: [bottom := deltaY ].
+	^Margin left: left right: right top: top bottom: bottom
+]
+
+{ #category : 'drop shadows' }
 Morph >> shadowOffset [
 	"Return the current shadow offset"
 
@@ -4870,6 +5014,16 @@ Morph >> simulateRightMouseDown [
 Morph >> simulateRightMouseUp [
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseUpWith: MouseEvent yellowButton
+]
+
+{ #category : 'layout' }
+Morph >> snapToEdgeIfAppropriate [
+	| edgeSymbol oldBounds aWorld |
+	(edgeSymbol := self valueOfProperty: #edgeToAdhereTo) ifNotNil:
+		[oldBounds := bounds.
+		self adhereToEdge: edgeSymbol.
+		bounds ~= oldBounds ifTrue: [(aWorld := self world) ifNotNil: [aWorld viewBox ifNotNil:
+			[aWorld displayWorld]]]]
 ]
 
 { #category : 'layout - properties' }

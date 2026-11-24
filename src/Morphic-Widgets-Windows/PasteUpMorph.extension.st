@@ -1,6 +1,26 @@
 Extension { #name : 'PasteUpMorph' }
 
 { #category : '*Morphic-Widgets-Windows' }
+PasteUpMorph >> closeAllWindowsDiscardingChanges [
+	self world systemWindows do: [:w | w delete ]
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+PasteUpMorph >> collapseAll [
+	"Collapse all windows"
+	(self windowsSatisfying: [:w | w isCollapsed not])
+		reverseDo: [:w | w collapseOrExpand.  self displayWorld].
+	self collapseNonWindows
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+PasteUpMorph >> expandAll [
+	"Expand all windows"
+	(self  windowsSatisfying: [:w | w isCollapsed])
+		reverseDo: [:w | w collapseOrExpand.  self displayWorld]
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> fitAllVisibleWindows [
 	"Fit all windows as visible"
 	|allowedArea|

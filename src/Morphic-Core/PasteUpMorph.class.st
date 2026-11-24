@@ -129,12 +129,13 @@ PasteUpMorph >> backgroundImage: aForm layout: aSymbol [
 	"Set a background image, replacing the current background morph, if any,
 	with the given layout (see AlphaImageMorph layoutSymbols). "
 
-	self backgroundMorph: (
-		(self theme builder
-			newAlphaImage: aForm help: nil)
-			autoSize: false;
-			layout: aSymbol;
-			lock)
+	self backgroundMorph: (AlphaImageMorph new
+			 hResizing: #rigid;
+			 vResizing: #rigid;
+			 image: aForm;
+			 autoSize: false;
+			 layout: aSymbol;
+			 lock)
 ]
 
 { #category : 'accessing' }
@@ -193,11 +194,6 @@ PasteUpMorph >> closeAllUnchangedWindows [
 ]
 
 { #category : 'Morphic-Base-Windows' }
-PasteUpMorph >> closeAllWindowsDiscardingChanges [
-	self world systemWindows do: [:w | w delete ]
-]
-
-{ #category : 'Morphic-Base-Windows' }
 PasteUpMorph >> closeUnchangedWindows [
 	"Present a menu of window titles for all windows with changes,
 	and activate the one that gets chosen."
@@ -206,14 +202,6 @@ PasteUpMorph >> closeUnchangedWindows [
 except those with unaccepted edits?') ifFalse: [ ^ self ].
 
 	self closeAllUnchangedWindows
-]
-
-{ #category : 'Morphic-Base-Windows' }
-PasteUpMorph >> collapseAll [
-	"Collapse all windows"
-	(self windowsSatisfying: [:w | w isCollapsed not])
-		reverseDo: [:w | w collapseOrExpand.  self displayWorld].
-	self collapseNonWindows
 ]
 
 { #category : 'world menu' }
@@ -337,13 +325,6 @@ PasteUpMorph >> dropFiles: anEvent [
 			lookupExternalDropHandler: aFileReference.
 		handler
 			ifNotNil: [ handler handle: aFileReference in: self dropEvent: anEvent ] ]
-]
-
-{ #category : 'Morphic-Base-Windows' }
-PasteUpMorph >> expandAll [
-	"Expand all windows"
-	(self  windowsSatisfying: [:w | w isCollapsed])
-		reverseDo: [:w | w collapseOrExpand.  self displayWorld]
 ]
 
 { #category : 'drawing' }
