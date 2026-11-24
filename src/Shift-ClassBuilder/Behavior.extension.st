@@ -18,7 +18,11 @@ Behavior >> <<< aClassNameSymbol [
 	Return a class.
 	Use this message for scripting and not for the class browser and other tools so that the tools can manipulate the class definition before installing it if they have to"
 	
-	^ (self << aClassNameSymbol) install
+	^ ScriptingShiftClassBuilder new
+		  superclass: self;
+		  name: aClassNameSymbol;
+		  fillClassSideFromEnvironment: self environment;
+		  yourself
 ]
 
 { #category : '*Shift-ClassBuilder' }
