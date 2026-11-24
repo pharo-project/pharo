@@ -327,7 +327,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 { #category : 'icons' }
 MorphicNativeWindow >> taskbarIcon [
 
- ^ window class taskbarIcon
+	^ window class iconNamed: window class taskbarIconName
 ]
 
 { #category : 'taskbar-required' }
