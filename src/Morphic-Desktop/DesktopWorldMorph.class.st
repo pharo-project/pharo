@@ -25,7 +25,5 @@ DesktopWorldMorph >> initialize [
 DesktopWorldMorph >> notifyUser: aStringOrText [
 	"Tell the user aStringOrText, with a notification that fades away"
 
-	GrowlMorph
-		openWithLabel: 'Information' translated
-		contents: aStringOrText
+	(GrowlMorph label: 'Information' translated contents: aStringOrText) openInWorld: self
 ]

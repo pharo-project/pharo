@@ -54,3 +54,15 @@ DesktopWorldMorphTest >> testHasTheDesktopHandlers [
 		TaskbarRootEventHandler.
 		HaloRootEventHandler }
 ]
+
+{ #category : 'tests' }
+DesktopWorldMorphTest >> testNotifiesTheUserInItself [
+
+	| desktop |
+	desktop := DesktopWorldMorph new.
+	desktop extent: 800 @ 600.
+
+	desktop notifyUser: 'hello'.
+
+	self assert: (desktop submorphs anySatisfy: [ :morph | morph isKindOf: GrowlMorph ])
+]
