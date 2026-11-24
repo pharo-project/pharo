@@ -120,6 +120,21 @@ MorphRootEventHandlerTest >> testKeyDownsFromTheHandGoToTheHandlersBeforeTheFocu
 ]
 
 { #category : 'tests' }
+MorphRootEventHandlerTest >> testNavigationKeyGoesToTheRootHandler [
+
+	root addRootEventHandler: handler.
+
+	self assert: (root navigationKey: (self keyDown: $a)).
+	self assert: handler handled asArray equals: { (#navigationKey -> root) }
+]
+
+{ #category : 'tests' }
+MorphRootEventHandlerTest >> testNavigationKeyWithoutHandlerIsIgnored [
+
+	self deny: (root navigationKey: (self keyDown: $a))
+]
+
+{ #category : 'tests' }
 MorphRootEventHandlerTest >> testRemovedHandlerIsNoLongerAsked [
 
 	root addRootEventHandler: handler.

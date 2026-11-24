@@ -675,12 +675,6 @@ PasteUpMorph >> mouseDown: evt [
 			self invokeWorldMenu: evt ]
 ]
 
-{ #category : 'navigation' }
-PasteUpMorph >> navigationKey: aKeyboardEvent [
-
-	^ self taskList handleEvent: aKeyboardEvent
-]
-
 { #category : 'world menu' }
 PasteUpMorph >> nonWindows [
 	^ (self submorphs select: [:m | (m isSystemWindow) not and: [m wantsToBeTopmost not]])

@@ -17,3 +17,10 @@ MorphRootEventHandler >> handleEvent: anEvent in: aWorld [
 
 	^ false
 ]
+
+{ #category : 'event handling' }
+MorphRootEventHandler >> handleNavigationKey: aKeyboardEvent for: aWorld [
+	"aKeyboardEvent may navigate between the windows of aWorld. Answer whether I handled it: no"
+
+	^ false
+]

@@ -27,6 +27,13 @@ MorphRootEventHandlerStub >> handleEvent: anEvent in: aWorld [
 	^ handles
 ]
 
+{ #category : 'event handling' }
+MorphRootEventHandlerStub >> handleNavigationKey: aKeyboardEvent for: aWorld [
+
+	handled add: #navigationKey -> aWorld.
+	^ handles
+]
+
 { #category : 'accessing' }
 MorphRootEventHandlerStub >> handled [
 

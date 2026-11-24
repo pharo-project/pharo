@@ -600,6 +600,13 @@ WorldMorph >> listOfSteppingMorphs [
 "self currentWorld listOfSteppingMorphs"
 ]
 
+{ #category : 'navigation' }
+WorldMorph >> navigationKey: aKeyboardEvent [
+	"Navigation between my windows is done by my root event handlers"
+
+	^ self rootEventHandlers anySatisfy: [ :handler | handler handleNavigationKey: aKeyboardEvent for: self ]
+]
+
 { #category : 'printing' }
 WorldMorph >> printOn: aStream [
 	"Reimplemented to add a tag showing that the receiver is currently functioning as a 'world', if it is"
