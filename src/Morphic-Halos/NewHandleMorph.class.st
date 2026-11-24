@@ -8,9 +8,8 @@ Class {
 		'hand',
 		'waitingForClickInside'
 	],
-	#category : 'Morphic-Base-Widgets',
-	#package : 'Morphic-Base',
-	#tag : 'Widgets'
+	#category : 'Morphic-Halos',
+	#package : 'Morphic-Halos'
 }
 
 { #category : 'submorphs - add/remove' }

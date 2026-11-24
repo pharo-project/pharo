@@ -23,6 +23,18 @@ TransformationMorph class >> example1 [
 	transformationMorph openInWorld
 ]
 
+{ #category : 'instance creation' }
+TransformationMorph class >> flexing: aMorph [
+	"Wrap a rotating and scaling shell around aMorph, in its place in its owner. Answer the shell"
+
+	| flexMorph anIndex |
+	anIndex := aMorph owner submorphIndexOf: aMorph.
+	aMorph owner addMorph: (flexMorph := self new asFlexOf: aMorph) asElementNumber: anIndex.
+	aMorph transferStateToRenderer: flexMorph.
+	flexMorph world ifNotNil: [ flexMorph startSteppingSubmorphs ].
+	^ flexMorph
+]
+
 { #category : 'private' }
 TransformationMorph >> adjustAfter: changeBlock [
 	"Cause this morph to remain cetered where it was before, and
@@ -181,28 +193,6 @@ TransformationMorph >> referencePosition [
 			[super referencePosition]
 		ifFalse:
 			[transform localPointToGlobal: rendered referencePosition]
-]
-
-{ #category : 'menu' }
-TransformationMorph >> removeFlexShell [
-
-	"Remove the shell used to make a morph rotatable and scalable."
-
-	| oldHalo unflexed myWorld refPos aPosition |
-	refPos := self referencePosition.
-	myWorld := self world.
-	oldHalo := self halo.
-	submorphs isEmpty ifTrue: [ ^ self delete ].
-	aPosition := (owner submorphIndexOf: self) ifNil: [ 1 ].
-	unflexed := self firstSubmorph.
-	self submorphs do: [ :m |
-		m position: self center - (m extent // 2).
-		owner addMorph: m asElementNumber: aPosition ].
-	oldHalo ifNotNil: [ oldHalo setTarget: unflexed ].
-	myWorld ifNotNil: [ unflexed startSteppingSubmorphs ].
-	self delete.
-	unflexed referencePosition: refPos.
-	^ unflexed
 ]
 
 { #category : 'classification' }

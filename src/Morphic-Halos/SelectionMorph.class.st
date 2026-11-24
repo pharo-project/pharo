@@ -25,9 +25,8 @@ Class {
 		'otherSelection',
 		'undoProperties'
 	],
-	#category : 'Morphic-Base-Basic',
-	#package : 'Morphic-Base',
-	#tag : 'Basic'
+	#category : 'Morphic-Halos',
+	#package : 'Morphic-Halos'
 }
 
 { #category : 'dropping/grabbing' }

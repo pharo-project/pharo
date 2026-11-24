@@ -35,24 +35,6 @@ BorderedMorph >> acquireBorderWidth: aBorderWidth [
 	self layoutChanged
 ]
 
-{ #category : 'menu' }
-BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
-	"Add border-style menu items"
-
-	| subMenu |
-	subMenu := self morphicUIManager newMenuIn: self for: self.
-	subMenu
-		add: 'border width...' selector: #changeBorderWidth:;
-		add: 'border color...' selector: #changeBorderColor:;
-		addLine.
-
-	BorderStyle borderStyleChoices do:
-		[:sym | (self borderStyleForSymbol: sym)
-			ifNotNil:
-				[subMenu add: sym target: self selector: #setBorderStyle: argument: sym]].
-	aMenu add: 'border style' subMenu: subMenu
-]
-
 { #category : 'private' }
 BorderedMorph >> basicBorderColor: aColor [
 	borderColor := aColor

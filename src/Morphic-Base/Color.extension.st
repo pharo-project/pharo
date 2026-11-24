@@ -6,9 +6,3 @@ Color >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 
 	aMenu add: 'change color...' target: self selector: #changeColorIn:event: argument: aMorph
 ]
-
-{ #category : '*Morphic-Base' }
-Color >> changeColorIn: aMorph event: evt [
-	"Note: This is just a workaround to make sure we don't use the old color inst var"
-	aMorph changeColorTarget: aMorph selector: #fillStyle: originalColor: self hand: evt hand
-]
