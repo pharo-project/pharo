@@ -8,8 +8,8 @@ Try:
 Class {
 	#name : 'GroupWindowMorph',
 	#superclass : 'Morph',
-	#traits : 'TEasilyThemed',
-	#classTraits : 'TEasilyThemed classTrait',
+	#traits : 'TEasilyThemed - {#theme} + TMorphicWidget',
+	#classTraits : 'TEasilyThemed classTrait + TMorphicWidget classTrait',
 	#instVars : [
 		'tabGroup'
 	],

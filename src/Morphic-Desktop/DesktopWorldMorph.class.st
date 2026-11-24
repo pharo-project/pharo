@@ -6,6 +6,8 @@ Morphic's initialization installs me as the world: DesktopWorldMorph installNewW
 Class {
 	#name : 'DesktopWorldMorph',
 	#superclass : 'WorldMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#category : 'Morphic-Desktop',
 	#package : 'Morphic-Desktop'
 }

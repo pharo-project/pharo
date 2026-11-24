@@ -4,6 +4,8 @@ A scroll pane that handles its contents accurately.
 Class {
 	#name : 'GeneralScrollPaneMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'scroller',
 		'hScrollbar',

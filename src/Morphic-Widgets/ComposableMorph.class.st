@@ -4,8 +4,8 @@ Morph with an inset border by default and theme access.
 Class {
 	#name : 'ComposableMorph',
 	#superclass : 'ModelMorph',
-	#traits : 'TEasilyThemed',
-	#classTraits : 'TEasilyThemed classTrait',
+	#traits : 'TEasilyThemed - {#theme} + TMorphicWidget',
+	#classTraits : 'TEasilyThemed classTrait + TMorphicWidget classTrait',
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets',
 	#tag : 'Basic'

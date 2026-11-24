@@ -32,8 +32,8 @@ Make a comprehensive control for the eyedropper, with border width and color, in
 Class {
 	#name : 'TextMorph',
 	#superclass : 'BorderedMorph',
-	#traits : 'TAbleToRotate',
-	#classTraits : 'TAbleToRotate classTrait',
+	#traits : 'TAbleToRotate + TMorphicWidget',
+	#classTraits : 'TAbleToRotate classTrait + TMorphicWidget classTrait',
 	#instVars : [
 		'textStyle',
 		'text',

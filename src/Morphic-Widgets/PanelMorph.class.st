@@ -4,6 +4,8 @@ A container morph that tracks the owner's pane colour unless an explicit fillSty
 Class {
 	#name : 'PanelMorph',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#category : 'Morphic-Widgets-Windows',
 	#package : 'Morphic-Widgets',
 	#tag : 'Windows'

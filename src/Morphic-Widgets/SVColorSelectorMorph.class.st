@@ -5,6 +5,8 @@ Setting the color will specify the hue and setting the selectedColor will specif
 Class {
 	#name : 'SVColorSelectorMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'selectedColor',
 		'locationMorph',

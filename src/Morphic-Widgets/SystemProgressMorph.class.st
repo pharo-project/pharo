@@ -21,8 +21,8 @@ self show: 'Doing...' from: 0 to: 50 during: [ :bar |
 Class {
 	#name : 'SystemProgressMorph',
 	#superclass : 'BorderedMorph',
-	#traits : 'TAbleToRotate',
-	#classTraits : 'TAbleToRotate classTrait',
+	#traits : 'TAbleToRotate + TMorphicWidget',
+	#classTraits : 'TAbleToRotate classTrait + TMorphicWidget classTrait',
 	#instVars : [
 		'lock',
 		'lastRefresh'

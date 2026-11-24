@@ -4,6 +4,8 @@ Morph displaying opposing arrows.
 Class {
 	#name : 'BracketMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'orientation'
 	],

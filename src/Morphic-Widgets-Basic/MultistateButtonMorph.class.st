@@ -9,6 +9,8 @@ with variants being a combination of passive/active and enabled/disabled.
 Class {
 	#name : 'MultistateButtonMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'enabled',
 		'active',

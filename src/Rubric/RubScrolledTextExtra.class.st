@@ -14,6 +14,8 @@ Subinstances are the graphical representation of the associated decorators defin
 Class {
 	#name : 'RubScrolledTextExtra',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',
 	#tag : 'Editing-Widgets'

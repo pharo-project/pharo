@@ -23,6 +23,8 @@ touchPoints
 Class {
 	#name : 'CalendarMorph',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'date',
 		'days',

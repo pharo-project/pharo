@@ -28,6 +28,8 @@ Horizontal scrolling being a new feature is not enabled by default. Use #newWith
 Class {
 	#name : 'FTTableMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'container',
 		'verticalScrollBar',

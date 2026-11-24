@@ -10,6 +10,8 @@ You get a triangle. See below how to manipulate these objects...
 Class {
 	#name : 'RubSegmentMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'vertices',
 		'filledForm',

@@ -9,6 +9,8 @@ Instance variables:
 Class {
 	#name : 'MenuMorph',
 	#superclass : 'AlignmentMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'defaultTarget',
 		'selectedItem',

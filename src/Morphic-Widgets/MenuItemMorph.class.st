@@ -17,6 +17,8 @@ Instance variables:
 Class {
 	#name : 'MenuItemMorph',
 	#superclass : 'StringMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'isEnabled',
 		'subMenu',

@@ -6,6 +6,8 @@ The attribute onlyActiveOnTop, if set to true (and any call to activate will set
 Class {
 	#name : 'SystemWindow',
 	#superclass : 'ModelMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'labelString',
 		'stripes',

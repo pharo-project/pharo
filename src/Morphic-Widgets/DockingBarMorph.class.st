@@ -20,6 +20,8 @@ DockingBarMorph new
 Class {
 	#name : 'DockingBarMorph',
 	#superclass : 'AlignmentMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'originalColor',
 		'gradientRamp',

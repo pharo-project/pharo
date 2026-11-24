@@ -11,6 +11,8 @@ Balloons should not be duplicated with veryDeepCopy unless their target is also 
 Class {
 	#name : 'BalloonMorph',
 	#superclass : 'PolygonMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'target',
 		'offsetFromTarget',

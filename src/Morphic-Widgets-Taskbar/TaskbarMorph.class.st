@@ -5,6 +5,8 @@ Themed synchronous taskbar (not using #step to poll windows). The buttons provid
 Class {
 	#name : 'TaskbarMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'tasks',
 		'orderedTasks'

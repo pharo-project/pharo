@@ -1,6 +1,8 @@
 Class {
 	#name : 'RubTextSegmentIconBox',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'previouslyIn'
 	],

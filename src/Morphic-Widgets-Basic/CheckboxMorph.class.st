@@ -4,8 +4,8 @@ Checkbox with box button and label with enablement support.
 Class {
 	#name : 'CheckboxMorph',
 	#superclass : 'ModelMorph',
-	#traits : 'TEnableOnHaloMenu',
-	#classTraits : 'TEnableOnHaloMenu classTrait',
+	#traits : 'TEnableOnHaloMenu + TMorphicWidget',
+	#classTraits : 'TEnableOnHaloMenu classTrait + TMorphicWidget classTrait',
 	#instVars : [
 		'buttonMorph',
 		'labelMorph',

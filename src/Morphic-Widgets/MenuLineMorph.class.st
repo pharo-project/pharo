@@ -5,6 +5,8 @@ A MenuLineMorph is a item separator in menu.
 Class {
 	#name : 'MenuLineMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#category : 'Morphic-Widgets-Menus',
 	#package : 'Morphic-Widgets',
 	#tag : 'Menus'

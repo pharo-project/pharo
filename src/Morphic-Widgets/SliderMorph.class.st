@@ -1,6 +1,8 @@
 Class {
 	#name : 'SliderMorph',
 	#superclass : 'ModelMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'slider',
 		'value',

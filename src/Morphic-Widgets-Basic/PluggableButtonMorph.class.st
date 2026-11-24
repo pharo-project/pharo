@@ -24,6 +24,8 @@ Options:
 Class {
 	#name : 'PluggableButtonMorph',
 	#superclass : 'AlignmentMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'model',
 		'label',
