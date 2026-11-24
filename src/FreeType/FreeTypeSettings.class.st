@@ -216,7 +216,7 @@ FreeTypeSettings >> monitorType [
 FreeTypeSettings >> monitorType: aSymbol [
 	"#LCD or #CRT"
 	subPixelAntiAliasing := aSymbol = #LCD.
-	self redisplayWorld
+	self currentWorld restoreMorphicDisplay
 ]
 
 { #category : 'accessing' }
@@ -248,13 +248,6 @@ FreeTypeSettings >> pretendBitBltSubPixelUnavailableDuring: aBlock [
 		FreeTypeCache current removeAll.]
 ]
 
-{ #category : 'private' }
-FreeTypeSettings >> redisplayWorld [
-	"Redraw the world with the new settings. Before Morphic's initialization installs a world there is nothing to redraw"
-
-	self currentWorld ifNotNil: [ :world | world restoreMorphicDisplay ]
-]
-
 { #category : 'accessing' }
 FreeTypeSettings >> setGamma: aFloat [
 
@@ -274,7 +267,7 @@ FreeTypeSettings >> setGamma: aFloat [
 						ug := (ug rounded min: 255) max: 0 .
 						gammaTable at: i + 1 put: g.
 						gammaInverseTable at: i + 1 put: ug]].
-				self redisplayWorld]
+				self currentWorld restoreMorphicDisplay]
 ]
 
 { #category : 'accessing' }
@@ -293,12 +286,13 @@ FreeTypeSettings >> setSubPixelFilter: ratiosArray [
 		ifFalse:[
 			subPixelFilters := newFilters.
 			FreeTypeCache current removeAllForType: FreeTypeCacheGlyphLCD.
-			self redisplayWorld]
+			self currentWorld restoreMorphicDisplay]
 ]
 
 { #category : 'accessing' }
 FreeTypeSettings >> subPixelAntiAliasing [
-	^ self useSubPixelAntiAliasing and: [ subPixelAntiAliasing ifNil: [ false ] ]
+	"Sub-pixel anti-aliasing (an LCD monitor) is on unless set off, when the platform can draw it"
+	^ self useSubPixelAntiAliasing and: [ subPixelAntiAliasing ifNil: [ true ] ]
 ]
 
 { #category : 'accessing' }
