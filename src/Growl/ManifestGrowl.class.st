@@ -20,10 +20,10 @@ ManifestGrowl class >> manuallyResolvedDependencies [
 
 { #category : 'code-critics' }
 ManifestGrowl class >> ruleRBBadMessageRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#GrowlMorph #activeGrowlMorphs #false)) #'2018-06-27T18:15:09.571924+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#GrowlMorph #activeGrowlMorphsIn: #false)) #'2018-06-27T18:15:09.571924+02:00') )
 ]
 
 { #category : 'code-critics' }
 ManifestGrowl class >> ruleRBRefersToClassRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#GrowlMorph #activeGrowlMorphs #false)) #'2018-06-27T18:15:02.892206+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#GrowlMorph #activeGrowlMorphsIn: #false)) #'2018-06-27T18:15:02.892206+02:00') )
 ]

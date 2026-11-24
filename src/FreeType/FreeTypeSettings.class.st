@@ -291,7 +291,8 @@ FreeTypeSettings >> setSubPixelFilter: ratiosArray [
 
 { #category : 'accessing' }
 FreeTypeSettings >> subPixelAntiAliasing [
-	^ self useSubPixelAntiAliasing and: [ subPixelAntiAliasing ifNil: [ false ] ]
+	"Sub-pixel anti-aliasing (an LCD monitor) is on unless set off, when the platform can draw it"
+	^ self useSubPixelAntiAliasing and: [ subPixelAntiAliasing ifNil: [ true ] ]
 ]
 
 { #category : 'accessing' }

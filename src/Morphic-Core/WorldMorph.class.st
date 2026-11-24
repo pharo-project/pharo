@@ -64,6 +64,13 @@ WorldMorph class >> cursorOwnerWorld: aWorld [
 	CursorOwnerWorld := aWorld
 ]
 
+{ #category : 'class initialization' }
+WorldMorph class >> declareWorldGlobals [
+	"Declare the World and ActiveWorld globals, empty until Morphic's initialization installs a world (installNewWorld). Code that names them then compiles before any world exists"
+
+	#( #World #ActiveWorld ) do: [ :global | self environment at: global ifAbsentPut: [ nil ] ]
+]
+
 { #category : 'setting' }
 WorldMorph class >> defaultWorldColor [
 
@@ -173,19 +180,15 @@ WorldMorph class >> initialize [
 	dropActionBlock := nil.
 	dragActionBlock := nil.
 	resizeActionBlock := nil.
-	
-	self initializeWorldAndActiveWorld
+	self declareWorldGlobals
 ]
 
-{ #category : 'class initialization' }
-WorldMorph class >> initializeWorldAndActiveWorld [
-	"This method is creating the World and ActiveWorld global variables.
-	Waybe some of the initialization code could go directly in WorldMorph and other classes normal initialization?"
+{ #category : 'instance creation' }
+WorldMorph class >> installNewWorld [
+	"Create a world of my kind with its hand, and install it as World and ActiveWorld.
+	Morphic's initialization does it once all of Pharo is loaded; loading Morphic never creates a world"
 
 	| world hand |
-	"Ensure Morph is initialized."
-	Morph initialize.
-	
 	world := self new.
 	hand := HandMorph new.
 	world addHand: hand.
@@ -200,13 +203,13 @@ WorldMorph class >> initializeWorldAndActiveWorld [
 	world borderWidth: 0.
 
 	world displayWorldSafely.
-	MorphicCoreUIManager new spawnNewProcess.
 
 	world cleanseOtherworldlySteppers.
 
 	world worldState invalidate.
 
-	hand targetOffset: 0 @ 0
+	hand targetOffset: 0 @ 0.
+	^ world
 ]
 
 { #category : 'settings' }
@@ -451,6 +454,14 @@ WorldMorph >> doOneCycleNow [
 	worldState doOneCycleFor: self
 ]
 
+{ #category : 'events - root handler' }
+WorldMorph >> embedsWorldUnder: anEvent [
+	"Answer whether anEvent is a mouse event over a world embedded in me"
+
+	anEvent isMouse ifFalse: [ ^ false ].
+	^ (self morphsAt: anEvent position) anySatisfy: [ :each | each isWorldMorph and: [ each ~~ self ] ]
+]
+
 { #category : 'geometry' }
 WorldMorph >> extent: aPoint [
 	super extent: aPoint.
@@ -569,19 +580,19 @@ WorldMorph >> privateMoveBy: delta [
 
 { #category : 'events - processing' }
 WorldMorph >> processEvent: anEvent focus: focusHolder clear: aBlock [
-	"My hand gives me its events. Offer them to my root event handlers, then send them to the hand's focus holder, or dispatch them to my morphs"
+	"My hand gives me its events. Offer them to the root event handlers of the focus holder's world (me, or a world embedded in me), then send them to the focus holder, or dispatch them to my morphs"
 
 	focusHolder ifNil: [ ^ self processEvent: anEvent ].
-	(self rootEventHandlersTake: anEvent) ifTrue: [ ^ self ].
+	((focusHolder world ifNil: [ self ]) rootEventHandlersTake: anEvent) ifTrue: [ ^ self ].
 	^ anEvent hand sendFocusEvent: anEvent to: focusHolder clear: aBlock
 ]
 
 { #category : 'events - processing' }
 WorldMorph >> processEvent: anEvent using: defaultDispatcher [
-	"Offer anEvent to my root event handlers before dispatching it to my morphs"
+	"Offer anEvent to my root event handlers before dispatching it to my morphs. A mouse event over a world embedded in me is that world's: dispatching takes it there, and it offers it to its own handlers"
 
 	(self rejectsEvent: anEvent) ifTrue: [ ^ #rejected ].
-	(self rootEventHandlersTake: anEvent) ifTrue: [ ^ self ].
+	((self embedsWorldUnder: anEvent) not and: [ self rootEventHandlersTake: anEvent ]) ifTrue: [ ^ self ].
 	^ super processEvent: anEvent using: defaultDispatcher
 ]
 

@@ -329,11 +329,9 @@ MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: lines
 
 { #category : 'ui requests' }
 MorphicUIManager >> inform: aStringOrText [
-	"Display a message for the user to read and then dismiss."
+	"Display a message for the user to read and then dismiss. The world decides how: a desktop notifies, a plain world opens a dialog"
 
-	GrowlMorph
-		openWithLabel: 'Information' translated
-		contents: aStringOrText
+	self currentWorld notifyUser: aStringOrText
 ]
 
 { #category : 'debug' }
