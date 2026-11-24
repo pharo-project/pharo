@@ -36,7 +36,8 @@ KMRepository class >> reset [
 
 	"TODO: a better reset, allowing the KMDispatcher instances to reload all named, updated, keymaps from the resetted KMRepository."
 
-	self currentWorld setProperty: #kmDispatcher toValue: nil.
+	"Before Morphic's initialization installs a world there is no world dispatcher to reset"
+	self currentWorld ifNotNil: [ :world | world setProperty: #kmDispatcher toValue: nil ].
 	self default: self new.
 	KMCategory allSubclasses
 		select: [ :c | c isGlobalCategory ]
