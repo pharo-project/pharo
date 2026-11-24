@@ -31,11 +31,14 @@ MorphicInitialization class >> createWorld [
 
 { #category : 'initialization' }
 MorphicInitialization class >> initializeDesktop [
-	"The desktop logo and color, once the menubar is open"
+	"The desktop logo and color, once the menubar is open, and where windows and notifications open"
 
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
-	PolymorphSystemSettings desktopColor: Color white
+	PolymorphSystemSettings desktopColor: Color white.
+	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
+	GrowlMorph position: #bottomLeft.
+	ShortcutReminder enabled: true
 ]
 
 { #category : 'initialization' }
@@ -56,6 +59,8 @@ MorphicInitialization class >> initializeEnvironment [
 { #category : 'initialization' }
 MorphicInitialization class >> initializeFonts [
 
+	SourceCodeFonts setSourceCodeFonts: 10.
+	FreeTypeSystemSettings loadFt2Library: true.
 	GraphicFontSettings setFontsToStyleNamed: #small.
 	"The balloon font is taken from the fonts just set"
 	BalloonMorph initialize
@@ -80,9 +85,10 @@ MorphicInitialization class >> openWorldBars [
 
 { #category : 'initialization' }
 MorphicInitialization class >> resetKeymaps [
-	"Start the new world with a fresh keymap repository"
+	"Start the new world with a fresh keymap repository, and let morphs handle their shortcuts with it"
 
-	KMRepository reset
+	KMRepository reset.
+	Morph shortcutsHandler: KMShortcutHandler new
 ]
 
 { #category : 'initialization' }

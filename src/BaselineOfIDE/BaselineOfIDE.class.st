@@ -260,14 +260,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		register: StFinderPresenter as: #finder;
 		register: StProcessBrowser as: #processBrowser.
 
-	SourceCodeFonts setSourceCodeFonts: 10.
-	FreeTypeSystemSettings loadFt2Library: true.
-	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
-	GrowlMorph position: #bottomLeft.
-	ShortcutReminder enabled: true.
-
-	Morph shortcutsHandler: KMShortcutHandler new.
-
 	OCProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ OCSimpleFormatter ]).
 
 	Color flushCache.
