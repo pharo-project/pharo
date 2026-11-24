@@ -12,6 +12,13 @@ Class {
 	#package : 'Athens-Morphic'
 }
 
+{ #category : 'testing' }
+AthensWrappedWorldRenderer class >> isApplicableFor: aWorld [
+	"Only AthensWrapWorldMorph creates me, for the world it embeds. Never pick me for the main world"
+
+	^ false
+]
+
 { #category : 'accessing' }
 AthensWrappedWorldRenderer >> actualScreenSize [
 

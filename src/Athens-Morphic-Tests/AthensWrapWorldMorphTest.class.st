@@ -50,3 +50,9 @@ AthensWrapWorldMorphTest >> testReplacingTheWorldRemovesTheOldOne [
 	self assert: old owner isNil.
 	self deny: (wrapper submorphs includes: old)
 ]
+
+{ #category : 'tests' }
+AthensWrapWorldMorphTest >> testWrappedRendererIsNeverPickedForAWorld [
+
+	self deny: (AthensWrappedWorldRenderer isApplicableFor: WorldMorph new)
+]
