@@ -85,8 +85,10 @@ MenubarMorph class >> open [
 
 { #category : 'class initialization' }
 MenubarMorph class >> reset [
+	"Reopen the menubar, to show a changed world menu. Before Morphic's initialization installs a world there is no menubar to reset"
 
 	<script>
+	self currentWorld ifNil: [ ^ self ].
 	self closeAll.
 	self open
 ]
