@@ -66,3 +66,14 @@ DesktopWorldMorphTest >> testNotifiesTheUserInItself [
 
 	self assert: (desktop submorphs anySatisfy: [ :morph | morph isKindOf: GrowlMorph ])
 ]
+
+{ #category : 'tests' }
+DesktopWorldMorphTest >> testTakesTheDesktopColorOfItsTheme [
+
+	| world theme |
+	world := DesktopWorldMorph new.
+	world color: Color red.
+	theme := UITheme current class new.
+	world theme: theme.
+	self assert: world color equals: theme desktopColor
+]

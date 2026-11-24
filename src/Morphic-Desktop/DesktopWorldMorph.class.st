@@ -32,10 +32,11 @@ DesktopWorldMorph >> notifyUser: aStringOrText [
 
 { #category : 'theme' }
 DesktopWorldMorph >> themeChanged [
-	"Update the desktop wallpaper if the theme has one"
+	"Take the theme's desktop color, and its wallpaper if it has one"
 
-	(self theme desktopImageFor: self) ifNotNil: [ :aForm |
+	self color: self theme desktopColor.
+	(self theme desktopImageFor: self) ifNotNil: [:aForm |
 		self color: Color white.
-		self backgroundImage: aForm layout: self theme desktopImageLayout ].
+		self backgroundImage: aForm layout: self theme desktopImageLayout].
 	super themeChanged
 ]
