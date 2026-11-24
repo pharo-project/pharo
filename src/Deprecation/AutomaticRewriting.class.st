@@ -269,7 +269,12 @@ AutomaticRewriting >> isKernelPackageNamed: aString [
 
 	| baseline |
 	(self isDeprecatedPackageName: aString) ifTrue: [ ^ aString endsWith: '-Kernel' ].
-	baseline := self class environment at: #BaselineOfPharoBootstrap ifAbsent: [ ^ true ].
+	
+	"Look for the baseline class using reflection in case it's not loaded..."
+	baseline := self class environment
+		at: #BaselineOfPharoBootstrap
+		ifAbsent: [ ^ true ].
+
 	^ baseline kernelPackageNames includes: aString
 ]
 
