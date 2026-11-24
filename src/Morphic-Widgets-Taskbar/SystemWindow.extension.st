@@ -111,9 +111,8 @@ SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 SystemWindow >> taskbarButtonMenu: aMenu [
 	"Answer the menu for the task bar button."
 
-	| menu theme submenu moveSubmenu taskbar |
+	| menu theme submenu |
 	theme :=  self theme.
-	taskbar := self worldTaskbar.
 	menu := theme newMenuIn: self for: self.
 
 	menu
@@ -146,33 +145,6 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		iconFormSet: self theme windowMaximizeFormSet;
 		font: theme menuFont.
 
-	menu addLine.
-
-	moveSubmenu := theme newMenuIn: self for: self.
-	menu
-		add: 'Move'
-		iconFormSet: (self iconFormSetNamed: #blank)
-		subMenu: moveSubmenu.
-	moveSubmenu
-		addToggle: 'Move left' translated
-		target: taskbar
-		selector: #moveTaskLeftOf:
-		getStateSelector: nil
-		enablementSelector: [ taskbar canMoveLeft: self ]
-		argumentList: { self }.
-	moveSubmenu
-		addToggle: 'Move right' translated
-		target: taskbar
-		selector: #moveTaskRightOf:
-		getStateSelector: nil
-		enablementSelector: [ taskbar canMoveRight: self ]
-		argumentList: { self }.
-	moveSubmenu
-		addToggle: 'Move to...' translated
-		target: taskbar
-		selector: #askPositionAndMoveTaskOf:
-		getStateSelector: nil
-		argumentList: { self }.
 	menu addLine.
 
 	submenu := theme newMenuIn: self for: self.

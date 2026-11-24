@@ -18,6 +18,33 @@ Class {
 	#package : 'Morphic-Widgets-Taskbar'
 }
 
+{ #category : 'menus' }
+TaskbarMorph >> addTaskItemsFor: aMorph to: aMenu [
+	"Add to the menu of aMorph's taskbar button the items that move its task"
+
+	| moveSubmenu |
+	moveSubmenu := self theme newMenuIn: self for: self.
+	aMenu addLine.
+	aMenu
+		add: 'Move' translated
+		iconFormSet: (self iconFormSetNamed: #blank)
+		subMenu: moveSubmenu.
+	moveSubmenu
+		addToggle: 'Move left' translated
+		target: self
+		selector: #moveTaskLeftOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveLeft: aMorph ]
+		argumentList: { aMorph }.
+	moveSubmenu
+		addToggle: 'Move right' translated
+		target: self
+		selector: #moveTaskRightOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveRight: aMorph ]
+		argumentList: { aMorph }
+]
+
 { #category : 'setting' }
 TaskbarMorph class >> maximumButtons [
 	^ MaximumButtons ifNil: [MaximumButtons := self maximumButtonsDefault]
@@ -95,27 +122,6 @@ TaskbarMorph class >> taskbarSettingOn: aBuilder [
 					label: 'Maximum number of tasks to show';
 					defaultValue: 100;
 					description: 'By default, the value is ' , self maximumButtonsDefault printString ]
-]
-
-{ #category : 'taskbar' }
-TaskbarMorph >> askPositionAndMoveTaskOf: aMorph [
-	"Ask where to move the task of aMorph, and move it there"
-
-	| taskBarSize taskLocation desiredLocation answer |
-	taskBarSize := self orderedTasks size.
-	taskLocation := self orderedTasks indexOf: (self taskOf: aMorph).
-
-	answer := UIManager default request: 'Enter new task location: 1..' , taskBarSize printString initialAnswer: taskLocation asString title: 'Move Task'.
-
-	answer ifNil: [ ^ self ].
-
-	[
-		desiredLocation := answer asNumber.
-		((1 to: taskBarSize) includes: desiredLocation) ifFalse: [ self error: 'incorrect location' ] ] onErrorDo: [
-			InformativeNotification signal: 'Location must be a number between 1 and ' , taskBarSize printString.
-			^ self ].
-
-	self moveTaskOf: aMorph by: desiredLocation - taskLocation
 ]
 
 { #category : 'taskbar' }

@@ -20,6 +20,17 @@ Class {
 	#package : 'Morphic-Widgets-Taskbar'
 }
 
+{ #category : 'menus' }
+TaskbarItemMorph >> getMenu: shiftPressed [
+	"The window gives its items, then the taskbar adds its own"
+
+	| menu |
+	menu := super getMenu: shiftPressed.
+	menu ifNil: [ ^ nil ].
+	(self ownerThatIsA: TaskbarMorph) ifNotNil: [ :taskbar | taskbar addTaskItemsFor: model to: menu ].
+	^ menu
+]
+
 { #category : 'customization' }
 TaskbarItemMorph >> addEmphaseTo: lab [
 	"1 -> bold"
