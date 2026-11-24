@@ -48,6 +48,19 @@ WorldMorphOnItsOwnTest >> setUp [
 ]
 
 { #category : 'tests' }
+WorldMorphOnItsOwnTest >> testDeclaringTheWorldGlobalsKeepsTheirValues [
+
+	| world activeWorld |
+	world := Smalltalk globals at: #World.
+	activeWorld := Smalltalk globals at: #ActiveWorld.
+
+	WorldMorph declareWorldGlobals.
+
+	self assert: (Smalltalk globals at: #World) identicalTo: world.
+	self assert: (Smalltalk globals at: #ActiveWorld) identicalTo: activeWorld
+]
+
+{ #category : 'tests' }
 WorldMorphOnItsOwnTest >> testDrawsItsMorphsOnAForm [
 
 	| world box form |
