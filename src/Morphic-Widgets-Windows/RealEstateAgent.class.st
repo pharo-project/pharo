@@ -9,9 +9,9 @@ Class {
 		'StandardSize',
 		'UsedStrategy'
 	],
-	#category : 'Morphic-Core-Worlds',
-	#package : 'Morphic-Core',
-	#tag : 'Worlds'
+	#category : 'Morphic-Widgets-Windows-Support',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Support'
 }
 
 { #category : 'utilities' }

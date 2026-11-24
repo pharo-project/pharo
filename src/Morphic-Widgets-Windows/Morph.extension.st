@@ -81,6 +81,87 @@ Morph >> openInWindowLabeled: aString inWorld: aWorld [
 ]
 
 { #category : '*Morphic-Widgets-Windows' }
+Morph >> tileBottom [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max leftCenter corner: max corner)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileBottomLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max leftCenter corner: max bottomCenter)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileBottomRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max center corner: max corner)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileCenter [
+
+	| max initial |
+	max := RealEstateAgent maximumUsableArea.
+	initial := self initialExtent.
+	self bounds: ((max center - (initial/2)) extent: initial)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileFull [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: max
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max bottomCenter)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topCenter corner: max corner)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileTop [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max rightCenter)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileTopLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max center)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
+Morph >> tileTopRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topCenter corner: max rightCenter)
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> window [
 	"Answer the receiver's window."
 
