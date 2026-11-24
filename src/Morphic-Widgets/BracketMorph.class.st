@@ -8,7 +8,8 @@ Class {
 		'orientation'
 	],
 	#category : 'Morphic-Widgets-Scrolling',
-	#package : 'Morphic-Widgets-Scrolling'
+	#package : 'Morphic-Widgets',
+	#tag : 'Scrolling'
 }
 
 { #category : 'drawing' }

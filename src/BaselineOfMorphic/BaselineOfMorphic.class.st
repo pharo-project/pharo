@@ -49,13 +49,12 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: #( 'Core' ) ].
 
-		spec package: 'Morphic-Widgets-Scrolling' with: [ spec requires: #( 'MorphicCore' ) ].
-		spec package: 'Morphic-Widgets' with: [ spec requires: #( 'MorphicCore' 'Morphic-Widgets-Scrolling' ) ].
+		spec package: 'Morphic-Widgets' with: [ spec requires: #( 'MorphicCore' ) ].
 		spec package: 'Morphic-Widgets-Basic' with: [ spec requires: #( 'Morphic-Widgets' ) ].
-		spec package: 'Morphic-Widgets-Pluggable' with: [ spec requires: #( 'MorphicCore' 'Morphic-Widgets-Scrolling' ) ].
+		spec package: 'Morphic-Widgets-Pluggable' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-PolyTabs' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-Taskbar' with: [ spec requires: #( 'Morphic-Widgets-Basic' ) ].
-		spec package: 'Morphic-Widgets-MissionControl' with: [ spec requires: #( 'MorphicCore' ) ].
+		spec package: 'Morphic-Widgets-MissionControl' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 
 		spec package: 'Morphic-Widgets-Menubar' with: [ spec requires: #( 'Morphic-Widgets-Basic' ) ].
 		spec package: 'Morphic-Widgets-Tree' with: [ spec requires: #( 'Morphic-Widgets-Basic' ) ].
