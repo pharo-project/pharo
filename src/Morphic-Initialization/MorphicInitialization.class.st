@@ -30,27 +30,43 @@ MorphicInitialization class >> createWorld [
 ]
 
 { #category : 'initialization' }
+MorphicInitialization class >> initializeDesktop [
+	"The desktop logo and color, once the menubar is open"
+
+	PolymorphSystemSettings showDesktopLogo: false.
+	PolymorphSystemSettings showDesktopLogo: true.
+	PolymorphSystemSettings desktopColor: Color white
+]
+
+{ #category : 'initialization' }
 MorphicInitialization class >> initializeEnvironment [
-	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it."
+	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it.
+	The bars are sized with the fonts"
 
 	self
 		createWorld;
 		startUIProcess;
 		cleanUp;
 		useDefaultTheme;
-		initializeFontsAndDesktop;
-		openWorldBars
+		initializeFonts;
+		initializeWorld
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> initializeFontsAndDesktop [
+MorphicInitialization class >> initializeFonts [
 
 	GraphicFontSettings setFontsToStyleNamed: #small.
-	PolymorphSystemSettings showDesktopLogo: false.
-	PolymorphSystemSettings showDesktopLogo: true.
-	PolymorphSystemSettings desktopColor: Color white.
 	"The balloon font is taken from the fonts just set"
 	BalloonMorph initialize
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> initializeWorld [
+	"Open the bars of the current world, then its desktop: the desktop logo goes below the menubar"
+
+	self
+		openWorldBars;
+		initializeDesktop
 ]
 
 { #category : 'initialization' }
