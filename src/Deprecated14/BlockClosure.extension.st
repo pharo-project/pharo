@@ -6,6 +6,7 @@ BlockClosure >> durationToRun [
 
 	self
 		deprecated: 'Use #timeToRun instead'
+		in: #Pharo14
 		transformWith: '`@x durationToRun' -> '`@x timeToRun'.
 	^ self timeToRun
 ]

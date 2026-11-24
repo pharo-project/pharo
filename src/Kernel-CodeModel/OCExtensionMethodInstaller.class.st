@@ -44,7 +44,7 @@ OCExtensionMethodInstaller >> install: method into: extension compiler: compiler
 	
 	
 	existingMethod := extension extendedClass methodDict at: selectorSymbol ifAbsent: [ nil ].
-	isLegacyExtension := Extension allowMigration and: [existingMethod notNil and: [ existingMethod isExtension ]].
+	isLegacyExtension := Extension allowMigration and: [existingMethod isNotNil and: [ existingMethod isExtension ]].
 
 	methodCopyInExtendedClass := ((extension extendedClass methodDictionary includesKey: selectorSymbol) and: [ isLegacyExtension not ])
     										ifTrue: [ 

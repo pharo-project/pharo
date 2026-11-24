@@ -163,7 +163,8 @@ def defineIsoTestStage(projectName, testPackages=""){
                 In that case, take the packages specified by the user instead of the project packages.
                 */
                 def testPackageArguments = testPackages == "" ? "--project-name ${projectName}" : testPackages
-                shell "bash -c './pharo metacello.image test --junit-xml-output --stage-name ${env.STAGE_NAME} ${testPackageArguments}'"
+                // As runTests.sh does: tests know they run on the CI, and a deprecation they run is an error
+                shell "bash -c 'PHARO_CI_TESTING_ENVIRONMENT=1 ./pharo metacello.image test --junit-xml-output --deprecations-as-errors --stage-name ${env.STAGE_NAME} ${testPackageArguments}'"
                 junit allowEmptyResults: false, testResults: "${env.STAGE_NAME}*.xml"
             }
         }

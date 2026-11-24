@@ -13,5 +13,5 @@ Class {
 ManifestDebuggerModel class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Object Events' #'Tool-Base' #'Morphic-Core' #DebugInfo #'OpalCompiler-Core')
+	^ #( #'Tool-Base' #DebugInfo #'OpalCompiler-Core' )
 ]

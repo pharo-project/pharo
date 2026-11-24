@@ -9,6 +9,7 @@ CompiledCode >> accessesRef: literalVariable [
 
 	self
 		deprecated: 'Use #hasLiteral: instead since the name it more accurate'
+		in: #Pharo14
 		transformWith: '`@rcv accessesRef: `@arg' -> '`@rcv hasLiteral: `@arg'.
 	^ self hasLiteral: literalVariable 
 ]
@@ -16,8 +17,9 @@ CompiledCode >> accessesRef: literalVariable [
 { #category : '*Deprecated14-Kernel' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 
-	self 
-		deprecated: 'Use #basicNew:header: instead.' 
+	self
+		deprecated: 'Use #basicNew:header: instead.'
+		in: #Pharo14
 		transformWith: '`@rcv newMethod: `@numberOfBytes header: `@headerWord' -> '`@rcv basicNew: `@numberOfBytes header: `@headerWord'.
 	
 	^ self basicNew: numberOfBytes header: headerWord

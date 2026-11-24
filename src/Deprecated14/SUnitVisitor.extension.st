@@ -3,7 +3,10 @@ Extension { #name : 'SUnitVisitor' }
 { #category : '*Deprecated14' }
 SUnitVisitor >> visitRPackage: aPackage [
 
-	self deprecated: 'Use #visitPackage: instead.' transformWith: '`@rcv visitRPackage: `@arg' -> '`@rcv visitPackage: `@arg'.
+	self
+		deprecated: 'Use #visitPackage: instead.'
+		in: #Pharo14
+		transformWith: '`@rcv visitRPackage: `@arg' -> '`@rcv visitPackage: `@arg'.
 	^ self visitPackage: aPackage
 ]
 
@@ -13,6 +16,8 @@ SUnitVisitor >> visitRPackageSet: aRRPackageSet [
 	 The default implementation below is to visit all RPackages contained in the package set.
 	"
 
-	self deprecated: 'RPAckageSet are now removed from Pharo.'.
+	self
+		deprecated: 'RPAckageSet are now removed from Pharo.'
+		in: #Pharo14.
 	^ aRRPackageSet packages collect: [ :package | package acceptSUnitVisitor: self ]
 ]

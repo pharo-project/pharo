@@ -5,7 +5,8 @@ Class {
 	#name : 'DiffMapMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'mappings'
+		'mappings',
+		'clickAction'
 	],
 	#category : 'Tool-Diff-Morphs',
 	#package : 'Tool-Diff',
@@ -90,8 +91,8 @@ DiffMapMorph >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
-	self
-		mappings: #()
+	clickAction := [ :position |  ].
+	self mappings: #(  )
 ]
 
 { #category : 'accessing' }
@@ -121,10 +122,14 @@ DiffMapMorph >> mappingsHeight [
 DiffMapMorph >> mouseDown: event [
 	"Trigger a 0..1 range based on location."
 
-	|b|
+	| b |
 	b := self innerBounds insetBy: 2.
-	self
-		triggerEvent: #mapClicked
-		with: (((event cursorPoint y asFloat - b top / b height)
-				min: 1) max: 0)
+	clickAction value: ((event cursorPoint y asFloat - b top / b height min: 1) max: 0)
+]
+
+{ #category : 'event handling' }
+DiffMapMorph >> whenClickedDo: aBlock [
+	"aBlock receives where the map was clicked, from 0 (top) to 1 (bottom)"
+
+	clickAction := aBlock
 ]

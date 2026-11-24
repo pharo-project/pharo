@@ -94,12 +94,10 @@ TabBarMorph >> addTab: aTab [
 
 	tabs add: aTab.
 
-	self registerActionsFor: aTab.
 	self selectedTab ifNil: [ aTab selected: true ].
 	self addFirstInHistory: aTab.
 	self adjustLayout.
-	self changed.
-	self triggerEvent: #tabAdded with: aTab
+	self changed
 ]
 
 { #category : 'drawing' }
@@ -203,13 +201,6 @@ TabBarMorph >> createMenuButton [
 		extent: 16@16.
 
 	^ msb
-]
-
-{ #category : 'protocol' }
-TabBarMorph >> delete [
-
-	super delete.
-	self triggerEvent: #barDeleted with: self
 ]
 
 { #category : 'private - actions' }
@@ -334,23 +325,6 @@ TabBarMorph >> popUpMenu [
 	menu popUpAt: menuButton bottomRight forHand: self activeHand in: self currentWorld
 ]
 
-{ #category : 'private' }
-TabBarMorph >> registerActionsFor: aTab [
-
-	aTab
-		when: #tabSelected send: #tabSelected: to: self;
-		when: #tabDeleted send: #tabDeleted: to: self;
-		when: #rightKeyPressed send: #rightKeyPressed: to: self;
-		when: #leftKeyPressed send: #leftKeyPressed: to: self;
-		when: #tabRefreshed send: #tabRefreshed: to: self;
-		when: #actionsChanged send: #actionsChanged: to: self;
-		when: #tabResetSelection send: #tabResetSelection: to: self;
-		when: #tabAddedToSelection send: #tabAddedToSelection: to: self;
-		when: #tabRemovedFromSelection send: #tabRemovedFromSelection: to: self;
-		when: #tabSelectTo send: #tabSelectTo: to: self;
-		when: #tabEmptyContents send: #tabEmptyContents: to: self
-]
-
 { #category : 'private - history' }
 TabBarMorph >> removeFromHistory: aTab [
 
@@ -437,9 +411,7 @@ TabBarMorph >> tabAddedToSelection: aTab [
 	numberOfSelectedTabs := numberOfSelectedTabs + 1.
 	self addInHistory: aTab.
 	aTab silentlySelected: true.
-	self adjustLayout.
-
-	self triggerEvent: #tabAddedToSelection with: aTab
+	self adjustLayout
 ]
 
 { #category : 'private - actions' }
@@ -455,17 +427,7 @@ TabBarMorph >> tabEmptyContents: aTab [
 
 	(selectionHistory last: numberOfSelectedTabs) do: [ :each | each == aTab ifFalse: [ each silentlySelected: false ] ].
 	numberOfSelectedTabs := 1.
-	self adjustLayout.
-
-	self triggerEvent: #tabEmptyContents with: aTab
-]
-
-{ #category : 'private - actions' }
-TabBarMorph >> tabRefreshed: aTab [
-
-	self selectedTab = aTab ifFalse: [ ^ self ].
-
-	self triggerEvent: #tabRefreshed with: aTab
+	self adjustLayout
 ]
 
 { #category : 'private - actions' }
@@ -479,9 +441,7 @@ TabBarMorph >> tabRemovedFromSelection: aTab [
 	selectionHistory add: aTab afterIndex: (selectionHistory size - numberOfSelectedTabs).
 
 	aTab silentlySelected: false.
-	self adjustLayout.
-
-	self triggerEvent: #tabRemovedFromSelection with: aTab
+	self adjustLayout
 ]
 
 { #category : 'private - actions' }
@@ -494,9 +454,7 @@ TabBarMorph >> tabResetSelection: aTab [
 	numberOfSelectedTabs := 1.
 
 	self addInHistory: aTab.
-	self adjustLayout.
-
-	self triggerEvent: #tabResetSelection with: aTab
+	self adjustLayout
 ]
 
 { #category : 'private - actions' }
@@ -527,8 +485,7 @@ TabBarMorph >> tabSelected: aTab [
 		ifFalse: [
 			self selectedTab ifNotNil: [ self selectedTab selected: false ].
 			self addInHistory: aTab.
-			self adjustLayout.
-			self triggerEvent: #tabSelected with: aTab ]
+			self adjustLayout ]
 ]
 
 { #category : 'accessing' }
@@ -544,13 +501,11 @@ TabBarMorph >> tabs: aCollection [
 	selectionHistory removeAll.
 
 	aCollection do: [ :aTab |
-		self registerActionsFor: aTab.
 		self selectedTab ifNil: [ aTab selected: true ].
 		self addFirstInHistory: aTab ].
 
 	self adjustLayout.
-	self changed.
-	self triggerEvent: #tabsChanged
+	self changed
 ]
 
 { #category : 'initialization' }

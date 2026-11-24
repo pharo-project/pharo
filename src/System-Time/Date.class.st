@@ -388,13 +388,17 @@ Date >> species [
 { #category : 'storing' }
 Date >> storeOn: aStream [
 
- 	aStream print: self printString; nextPutAll: ' asDate'
+	aStream
+		nextPutAll: '(Date readFrom: ';
+		print: self yyyymmdd;
+		nextPutAll: ' pattern: ''yyyy-mm-dd'')'
 ]
 
 { #category : 'adding' }
 Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
-	"((Date year: 2018 month: 9 day: 28) subtractDate: (Date fromString: '2018-09-27')) >>> 1"
+
+	"((Date year: 2018 month: 9 day: 28) subtractDate: (Date readFrom: '2018-09-27' pattern: 'yyyy-mm-dd')) >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]

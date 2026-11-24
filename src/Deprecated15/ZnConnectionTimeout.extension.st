@@ -7,6 +7,7 @@ ZnConnectionTimeout class >> value [
 
 	self
 		deprecated: 'Use the #socketStreamTimeout ZnOption instead'
+		in: #Pharo15
 		transformWith: '`@rcv value' -> '(ZnCurrentOptions at: #socketStreamTimeout)'.
 	^ ZnCurrentOptions at: #socketStreamTimeout
 ]

@@ -1,6 +1,12 @@
 "
 I am a refactory change for a class-rename refactoring. I hold the old and new name.
 Executing this change will rename the (global) defined ""oldName"" class to ""newName"".
+
+I also hold the changes that update the references to the class. The model records them with the old class name, so they must stay inside me:
+- when executing, I rename the class first, then move each change to the new name (`renameChangesForClass:to:`) and execute it;
+- my undo renames the class back first, then restores the old sources.
+
+If these changes are executed on their own, next to me, they point to a class name that no longer exists. Renaming then fails (see issue #20238), and undo fails to compile the old sources.
 "
 Class {
 	#name : 'ReRenameClassChange',

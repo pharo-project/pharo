@@ -3,7 +3,10 @@ Extension { #name : 'Number' }
 { #category : '*System-Time' }
 Number >> asDuration [
 
-	self deprecated: 'Rewrite `aNumber asDuration` as `Duration seconds: aNumber`'.
+	self
+		deprecated: 'Rewrite `aNumber asDuration` as `Duration seconds: aNumber`'
+		on: '2026-04-03'
+		in: #Pharo14.
 	^ Duration seconds: self asInteger
 ]
 

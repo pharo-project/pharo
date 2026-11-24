@@ -66,6 +66,7 @@ RTFMethodTracer class >> methodsBlackList [
 		SequenceableCollection. #first.
 		SmallInteger. #=.
 		UndefinedObject. #notNil.
+		UndefinedObject. #isNotNil.
 	}
 ]
 

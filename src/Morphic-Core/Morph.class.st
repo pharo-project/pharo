@@ -211,13 +211,6 @@ Morph >> acceptDroppingMorph: aMorph event: evt [
 		atIndex: (layout indexForInserting: aMorph at: evt position in: self)
 ]
 
-{ #category : 'events - accessing' }
-Morph >> actionMap [
-	"Answer an action map"
-
-	^self updateableActionMap
-]
-
 { #category : 'structure' }
 Morph >> activeHand [
 	| world |
@@ -4182,13 +4175,6 @@ Morph >> relativeTextAnchorPosition: aPoint [
 	^self setProperty: #relativeTextAnchorPosition toValue: aPoint
 ]
 
-{ #category : 'events - removing' }
-Morph >> releaseActionMap [
-	"Release the action map"
-
- 	self removeProperty: #actionMap
-]
-
 { #category : 'caching' }
 Morph >> releaseCachedState [
 	"Release any state that can be recomputed on demand, such as the pixel values for a color gradient or the editor state for a TextMorph. This method may be called to save space when a morph becomes inaccessible. Implementations of this method should do 'super releaseCachedState'."
@@ -5460,19 +5446,6 @@ Morph >> unlockContents [
 Morph >> update: anAspect [
 
 	^ self
-]
-
-{ #category : 'events - accessing' }
-Morph >> updateableActionMap [
-	"Answer an updateable action map, saving it in my #actionMap property"
-
-	| actionMap |
-	self assureExtension.
-	actionMap := extension actionMap.
-	actionMap ifNil:
-		[actionMap := self createActionMap.
-		extension actionMap: actionMap].
-	^actionMap
 ]
 
 { #category : 'visual properties' }

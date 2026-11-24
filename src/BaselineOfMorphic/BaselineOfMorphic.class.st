@@ -53,7 +53,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Pluggable'.
 		spec package: 'Morphic-Widgets-PolyTabs'.
 		spec package: 'Morphic-Widgets-Scrolling'.
-		spec package: 'Morphic-Widgets-Tabs'.
 		spec package: 'Morphic-Widgets-Taskbar'.
 		spec package: 'Morphic-Widgets-MissionControl'.
 

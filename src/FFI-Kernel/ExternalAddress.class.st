@@ -257,7 +257,10 @@ ExternalAddress >> char8AtOffset: zeroBasedOffset put: value [
 ExternalAddress >> clone [
 	
 	<primitive: 148>
-	self deprecated: 'Use shallowCopy'.
+	self
+		deprecated: 'Use shallowCopy'
+		on: '2026-06-19'
+		in: #Pharo15.
 	self primitiveFailed.
 	
 ]

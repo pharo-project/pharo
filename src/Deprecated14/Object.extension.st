@@ -3,14 +3,20 @@ Extension { #name : 'Object' }
 { #category : '*Deprecated14' }
 Object >> basicInspect [
 
-	self deprecated: 'Basic inspector does not exist anymore, you should use the inpector.' transformWith: '`@rcv basicInspect' -> '`@rcv inspect'.
+	self
+		deprecated: 'Basic inspector does not exist anymore, you should use the inpector.'
+		in: #Pharo14
+		transformWith: '`@rcv basicInspect' -> '`@rcv inspect'.
 	^ self inspect
 ]
 
 { #category : '*Deprecated14' }
 Object >> basicInspector [
 
-	self deprecated: 'Basic inspector does not exist anymore, you should use the inpector.' transformWith: '`@rcv basicInspector' -> '`@rcv inspector'.
+	self
+		deprecated: 'Basic inspector does not exist anymore, you should use the inpector.'
+		in: #Pharo14
+		transformWith: '`@rcv basicInspector' -> '`@rcv inspector'.
 	^ self inspector
 ]
 
@@ -20,7 +26,10 @@ Object >> confirm: queryString [
 	response is yes, false if no. This is a modal question--the user must
 	respond yes or no."
 
-	self deprecated: 'Use the ConfirmationRequest instead.' transformWith: '`@rcv confirm: `@arg' -> 'ConfirmationRequest signal: `@arg'.
+	self
+		deprecated: 'Use the ConfirmationRequest instead.'
+		in: #Pharo14
+		transformWith: '`@rcv confirm: `@arg' -> 'ConfirmationRequest signal: `@arg'.
 	^ ConfirmationRequest signal: queryString
 ]
 
@@ -152,6 +161,7 @@ Object >> inform: aString [
 		deprecated: 'This method will be removed of Object because the API should not hold UI interactions.
 	The most simple way to replace the usage of #inform: is to use `InformativeNotification signal: aString`. 
 	But if you have access to a spec application or presenter you can use the #inform: implemented on those instead.'
+		in: #Pharo14
 		transformWith: '`@rcv inform: `@arg' -> 'InformativeNotification signal: `@arg'.
 	InformativeNotification signal: aString
 ]
@@ -165,7 +175,8 @@ Object >> taskbarIcon [
 		deprecated: 'The direct usage of #taskbarIcon is not recommended anymore since it
 	introduces a dependency with UI layer we do not want to have here. Instead, our UI
 	components should us #taskbarIconName to get the icon to use, and then user can resolve it
-	as their want (since different applications can have different iconpacks, etc.) #Pharo11'
+	as their want (since different applications can have different iconpacks, etc.)'
+		in: #Pharo14
 		transformWith: '`@receiver taskbarIcon' -> '`@receiver iconNamed: `@receiver taskbarIconName'.
 
 	^ self iconNamed: self taskbarIconName

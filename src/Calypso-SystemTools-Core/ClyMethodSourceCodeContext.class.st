@@ -39,7 +39,7 @@ ClyMethodSourceCodeContext >> isTestMethodSelected [
 
 	| method |
 	method := self selectedMethod.
-	^ method notNil and: [ method selector isTestSelector ]
+	^ method isNotNil and: [ method selector isTestSelector ]
 ]
 
 { #category : 'tool controlling' }

@@ -41,7 +41,7 @@ The minimal image contains the basic Pharo packages without the graphical user i
 
 ## Bootstrapping Pharo from sources
 
-To bootstrap a new Pharo image you need the latest stable version of Pharo. For more information about bootstrapping, refer to [guillep/PharoBootstrap](https://github.com/guillep/PharoBootstrap).
+The bootstrap builds a Pharo image from the sources of this repository. The scripts download the VMs and the image running the bootstrap. To learn how it works, step by step, and how the CI runs it, read the [bootstrap documentation](bootstrap/README.md).
 
 The bootstrapping can be done on a properly-named branch using the following script:
 
@@ -49,7 +49,7 @@ The bootstrapping can be done on a properly-named branch using the following scr
 ./bootstrap/scripts/bootstrap.sh
 ```
 
-This will generate and archive images at various stages of the bootstrap process up to the full image in `Pharo12.0-64bit-hhhhhhh.zip` where hhhhhhh is the hash of the current checkout. Additional information on the stages of the bootstrap and how to snapshot during the process are provided as comments in bootstrap.sh.
+This will generate and archive images at various stages of the bootstrap process up to the full image in `Pharo12.0-64bit-hhhhhhh.zip` where hhhhhhh is the hash of the current checkout. The stages of the bootstrap are described in the [bootstrap documentation](bootstrap/README.md), and how to snapshot during the process in the comments of bootstrap.sh.
 
 * You can set the `BUILD_NUMBER` environment variable to a unique integer (this is typically used only for the [official builds](https://files.pharo.org/image/120/) and will default to `0` if not specified).
 * You can set the `BOOTSTRAP_ARCH` environment variable to either `64` (the default) or `32`.

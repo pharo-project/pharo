@@ -603,9 +603,9 @@ PasteUpMorph >> lastKeystroke: aString [
 
 { #category : 'accessing' }
 PasteUpMorph >> modalWindow: aMorph [
+
 	(self valueOfProperty: #modalWindow) ifNotNil: [ :morph | morph delete ].
-	self setProperty: #modalWindow toValue: aMorph.
-	aMorph ifNotNil: [ self when: #aboutToLeaveWorld send: #removeModalWindow to: self ]
+	self setProperty: #modalWindow toValue: aMorph
 ]
 
 { #category : 'Morphic-Base-Basic' }

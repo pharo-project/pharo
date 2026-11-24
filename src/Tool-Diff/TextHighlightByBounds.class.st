@@ -73,13 +73,6 @@ TextHighlightByBounds >> bounds: anObject [
 	bounds := anObject
 ]
 
-{ #category : 'drawing' }
-TextHighlightByBounds >> clicked: evt [
-	"The receiver has had a mouse down."
-
-	self triggerEvent: #clicked
-]
-
 { #category : 'accessing' }
 TextHighlightByBounds >> color [
 	"Answer the value of color"

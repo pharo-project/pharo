@@ -24,5 +24,7 @@ Class {
 NoChangesLog class >> install [
 
 	self flag: #todoSource. "Add the deprecation message"
-	self deprecated: ''
+	self
+		deprecated: ''
+		in: #Pharo14
 ]
