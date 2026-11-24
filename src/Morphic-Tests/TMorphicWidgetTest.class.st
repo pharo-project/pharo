@@ -19,6 +19,13 @@ TMorphicWidgetTest >> testCoreMorphsAreNotStyled [
 ]
 
 { #category : 'tests' }
+TMorphicWidgetTest >> testFormCanvasCoreDrawsNoParagraphs [
+
+	#( #paragraph:bounds:color: #paragraph:bounds:color:scale: ) do: [ :selector |
+		self assert: (FormCanvas >> selector) package equals: 'Morphic-Widgets' asPackage ]
+]
+
+{ #category : 'tests' }
 TMorphicWidgetTest >> testMorphicCoreDefinesNoBalloonStyle [
 
 	| core |
