@@ -48,8 +48,6 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Morphic-Widgets'.
 		spec package: 'Morphic-Widgets-Basic'.
-		spec package: 'Morphic-Widgets-ColorPicker'.
-		spec package: 'Morphic-Widgets-Extra'.
 		spec package: 'Morphic-Widgets-Pluggable'.
 		spec package: 'Morphic-Widgets-PolyTabs'.
 		spec package: 'Morphic-Widgets-Scrolling'.
@@ -58,7 +56,6 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
-		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Regex' ) ].
 		"Halos plug into the world's root event handler, and open menus"
 		spec package: 'Morphic-Halos'.

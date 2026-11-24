@@ -1,5 +1,12 @@
 Extension { #name : 'Morph' }
 
+{ #category : '*Morphic-Widgets' }
+Morph >> activate [
+	"Mark the receiver and submorphs as active (foreground)."
+
+	self submorphsDo: [:m | m activate]
+]
+
 { #category : '*Morphic-Widgets-keymapping' }
 Morph >> allowsKeymapping [
 
@@ -98,6 +105,18 @@ Morph >> changeProportionalLayout [
 ]
 
 { #category : '*Morphic-Widgets' }
+Morph >> collapse [
+	CollapsedMorph new beReplacementFor: self
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> containingWindow [
+	"Answer a window that contains the receiver"
+
+	^ self ownerThatIsA: SystemWindow
+]
+
+{ #category : '*Morphic-Widgets' }
 Morph >> defaultBalloonColor [
 
 	^ BalloonMorph balloonColor
@@ -137,9 +156,40 @@ Morph >> detachKeymapCategory: aCategoryName targetting: anObject [
 	self kmDispatcher detachKeymapCategory: aCategoryName targetting: anObject
 ]
 
+{ #category : '*Morphic-Widgets' }
+Morph >> dialogWindow [
+	"Answer the receiver's dialog window."
+
+	^self ownerThatIsA: DialogWindowMorph
+]
+
 { #category : '*Morphic-Widgets-keymapping' }
 Morph >> dispatchKeystrokeForEvent: evt [
 	self kmDispatcher dispatchKeystroke: evt
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> embedInWindow [
+
+	| window worldToUse |
+
+	worldToUse := self world.		"I'm assuming we are already in a world"
+	window := (SystemWindow labelled: self defaultLabel) model: nil.
+	window bounds: ((self position - ((0@window labelHeight) + window borderWidth))
+						corner: self bottomRight + window borderWidth).
+	window addMorph: self frame: (0@0 extent: 1@1).
+	window updatePaneColors.
+	worldToUse addMorph: window.
+	window activate
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> embeddedInMorphicWindowLabeled: labelString [
+	| window |
+	window := (SystemWindow labelled: labelString) model: nil.
+	window setStripeColorsFrom:  (self theme windowColorFor: self).
+	window addMorph: self frame: (0@0 extent: 1@1).
+	^ window
 ]
 
 { #category : '*Morphic-Widgets' }
@@ -229,6 +279,15 @@ Morph >> isMenuMorph [
 ]
 
 { #category : '*Morphic-Widgets' }
+Morph >> isWindowActive: aSystemWindow [
+	"Answer whether the given window is active.
+	Implement in morphs that are designed to embed system windows.
+	Delegate to owner."
+
+	^self owner ifNil: [true] ifNotNil: [:o | o isWindowActive: aSystemWindow]
+]
+
+{ #category : '*Morphic-Widgets' }
 Morph >> justDroppedInto: aMorph event: anEvent [
 	"This message is sent to a dropped morph after it has been dropped on -- and been accepted by -- a drop-sensitive morph"
 
@@ -276,6 +335,27 @@ Morph >> on: eventName send: selector to: recipient withValue: value [
 	self eventHandler on: eventName send: selector to: recipient withValue: value
 ]
 
+{ #category : '*Morphic-Widgets' }
+Morph >> openInWindow [
+
+	^self openInWindowLabeled: self defaultLabel
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> openInWindowLabeled: aString [
+
+	^self openInWindowLabeled: aString inWorld: self currentWorld
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> openInWindowLabeled: aString inWorld: aWorld [
+	"Changed to include the inset margin in the bound calculation."
+
+	^ self wrappedInWindow
+		setLabel: aString;
+		openInWorld: aWorld
+]
+
 { #category : '*Morphic-Widgets-keymapping' }
 Morph >> removeKeyCombination: aShortcut [
 
@@ -286,6 +366,87 @@ Morph >> removeKeyCombination: aShortcut [
 Morph class >> systemIconName [
 
 	^ #morph
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileBottom [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max leftCenter corner: max corner)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileBottomLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max leftCenter corner: max bottomCenter)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileBottomRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max center corner: max corner)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileCenter [
+
+	| max initial |
+	max := RealEstateAgent maximumUsableArea.
+	initial := self initialExtent.
+	self bounds: ((max center - (initial/2)) extent: initial)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileFull [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: max
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max bottomCenter)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topCenter corner: max corner)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileTop [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max rightCenter)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileTopLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max center)
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> tileTopRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topCenter corner: max rightCenter)
 ]
 
 { #category : '*Morphic-Widgets' }
@@ -312,4 +473,29 @@ Morph >> useGradientFill [
 	fill normal: self bounds extent x @ 0.
 	fill radial: false.
 	self fillStyle: fill
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> window [
+	"Answer the receiver's window."
+
+	^self ownerThatIsA: SystemWindow
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> wrappedInWindow [
+	"Changed to include the inset margin in the bound calculation."
+
+	| window extent |
+	window := SystemWindow new.
+	window
+		addMorph: self frame: (0@0 extent: 1@1);
+		updatePaneColors.
+	" calculate extent after adding in case any size related attributes were changed.  Use
+	fullBounds in order to trigger re-layout of layout morphs"
+	extent := self fullBounds extent +
+			(window borderWidth@window labelHeight) + window borderWidth +
+			(window class borderWidth * 2 @ (window class borderWidth + 1)). "include inset margin"
+	window extent: extent.
+	^ window
 ]

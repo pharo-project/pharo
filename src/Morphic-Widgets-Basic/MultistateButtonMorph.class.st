@@ -22,6 +22,14 @@ Class {
 	#tag : 'Buttons'
 }
 
+{ #category : 'activate' }
+MultistateButtonMorph >> activate [
+	"Make active."
+
+	super activate.
+	self active: true
+]
+
 { #category : 'accessing' }
 MultistateButtonMorph >> active [
 	"Answer the value of active"
