@@ -30,9 +30,9 @@ BaselineOfGeneralTests >> baseline: spec [
 					className: 'BaselineOfSystemSupport';
 					repository: repository;
 					loads: #( 'Tests' ) ];
+			baseline: 'MorphicCore' with: [ spec loads: #Tests from: repository ];
 			package: 'NumberParser-Tests';
 			package: 'Fuel-Core-Tests';
-			package: 'FormCanvas-Tests';
 			package: 'Collections-Arithmetic-Tests';
 			package: 'Metacello-CommandLine-Tests';
 			baseline: 'Epicea' with: [ spec loads: #Tests from: repository ];
@@ -51,9 +51,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'ScriptingExtensions-Tests';
 			package: 'StartupPreferences-Tests';
 			package: 'STON-Tests';
-			package: 'System-Object Events-Tests';
-			package: 'System-Model-Tests';
-			package: 'System-Caching-Tests';
 			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';
 			package: 'System-History-Tests';

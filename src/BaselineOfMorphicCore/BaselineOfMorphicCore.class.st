@@ -39,5 +39,14 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec package: 'System-Model'.
 			spec package: 'FileSystem-Zip'.
 			spec package: 'Morphic-Core' with: [
-				spec requires: #( 'System-Object Events' 'System-Caching' 'FormCanvas-Core' 'System-Model' 'FileSystem-Zip' 'FreeType' 'Keymapping' 'UIManager' ) ] ]
+				spec requires: #( 'System-Object Events' 'System-Caching' 'FormCanvas-Core' 'System-Model' 'FileSystem-Zip' 'FreeType' 'Keymapping' 'UIManager' ) ].
+
+			spec package: 'System-Object Events-Tests' with: [ spec requires: #( 'System-Object Events' ) ].
+			spec package: 'System-Caching-Tests' with: [ spec requires: #( 'System-Caching' ) ].
+			spec package: 'FormCanvas-Tests' with: [ spec requires: #( 'FormCanvas-Core' ) ].
+			spec package: 'System-Model-Tests' with: [ spec requires: #( 'System-Model' ) ].
+
+			spec
+				group: 'default' with: #( 'Morphic-Core' );
+				group: 'Tests' with: #( 'default' 'System-Object Events-Tests' 'System-Caching-Tests' 'FormCanvas-Tests' 'System-Model-Tests' ) ]
 ]
