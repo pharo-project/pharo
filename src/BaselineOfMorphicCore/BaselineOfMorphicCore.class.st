@@ -25,6 +25,8 @@ BaselineOfMorphicCore >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
+			spec preLoadDoIt: #declareWorld:package:.
+
 			spec
 				baseline: 'Display' with: [ spec repository: repository ];
 				baseline: 'Fonts' with: [ spec loads: #Core from: repository ];
@@ -55,4 +57,12 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec
 				group: 'default' with: #( 'Morphic-Core' );
 				group: 'Tests' with: #( 'default' 'System-Object Events-Tests' 'System-Caching-Tests' 'FormCanvas-Tests' 'System-Model-Tests' 'Keymapping-Morphic-Tests' ) ]
+]
+
+{ #category : 'actions' }
+BaselineOfMorphicCore >> declareWorld: loader package: packageSpec [
+	"Morphic-Core names the global World, which exists only once a world is installed.
+	Declare it before loading, so a strict load compiles. Never replace a world already there"
+
+	self class environment at: #World ifAbsentPut: [ nil ]
 ]
