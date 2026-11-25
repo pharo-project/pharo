@@ -61,8 +61,9 @@ BaselineOfMorphicCore >> baseline: spec [
 
 { #category : 'actions' }
 BaselineOfMorphicCore >> declareWorld: loader package: packageSpec [
-	"Morphic-Core names the global World, which exists only once a world is installed.
-	Declare it before loading, so a strict load compiles. Never replace a world already there"
+	"Morphic-Core names the globals World and ActiveWorld, which exist only once a world is installed.
+	Declare them before loading, so a strict load compiles. Never replace a world already there"
 
-	self class environment at: #World ifAbsentPut: [ nil ]
+	#( #World #ActiveWorld ) do: [ :name |
+		self class environment at: name ifAbsentPut: [ nil ] ]
 ]
