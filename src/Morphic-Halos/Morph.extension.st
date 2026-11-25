@@ -629,7 +629,7 @@ Morph >> changeColor [
 Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor hand: aHand [
 	"Put up a color picker for changing some kind of color."
 
-	(self morphicUIManager chooseColor: aColor)
+	(MorphicWidgetFactory new chooseColor: aColor)
 		ifNotNil: [:nc | anObject perform: aSymbol with: nc]
 ]
 
@@ -762,7 +762,7 @@ Morph >> changeRubberBandCells [
 Morph >> changeShadowColor [
 	"Change the shadow color of the receiver -- triggered, e.g. from a menu"
 
-	(self morphicUIManager chooseColor: self shadowColor)
+	(MorphicWidgetFactory new chooseColor: self shadowColor)
 		ifNotNil: [:nc | self shadowColor: nc]
 ]
 
