@@ -9,6 +9,13 @@ Class {
 	#package : 'Athens-Morphic'
 }
 
+{ #category : 'testing' }
+AthensWorldMorph class >> isDeprecated [
+	"Use AthensWrapWorldMorph on: aWorld, which embeds any world"
+
+	^ true
+]
+
 { #category : 'world state' }
 AthensWorldMorph >> display [
 	worldState display

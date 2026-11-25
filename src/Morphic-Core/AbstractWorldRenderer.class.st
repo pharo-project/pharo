@@ -324,9 +324,9 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 		extent: self actualScreenSize;
 		viewBox: self viewBox;
 		handsDo: [ :h |
-				h
-					visible: true;
-					showTemporaryCursor: nil ];
+			h
+				visible: true;
+				showTemporaryCursor: nil ];
 		resizeBackgroundMorph;
 		submorphsDo: [ :each | each displayExtentChanged ];
 		fullRepaintNeeded.
@@ -334,7 +334,7 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	world defer: [ Cursor normal show ].
 
 	world layoutChanged.
-	WorldMorph executeResizeBlock
+	self worldResized
 ]
 
 { #category : 'system startup' }
@@ -391,4 +391,11 @@ AbstractWorldRenderer >> world [
 { #category : 'accessing' }
 AbstractWorldRenderer >> world: anObject [
 	world := anObject
+]
+
+{ #category : 'operations' }
+AbstractWorldRenderer >> worldResized [
+	"Run the image's resize action, set for the main world"
+
+	WorldMorph executeResizeBlock
 ]
