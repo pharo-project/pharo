@@ -101,12 +101,21 @@ TestCommandLineHandler >> informResults: results [
 
 { #category : 'accessing' }
 TestCommandLineHandler >> packages [
-	| packages |
-	packages := Set new.
-	self arguments 
-		reject: [ :arg| arg beginsWith: '-']
-		thenDo: [ :arg| self addPackagesMatching: arg to: packages ].
-	^ packages
+
+	| packageNames releasePackageNames |
+	packageNames := Set new.
+	self arguments
+		reject: [ :arg | arg beginsWith: '-' ]
+		thenDo: [ :arg | self addPackagesMatching: arg to: packageNames ].
+
+	"Releases tests should be run last because the previous tests might miss some tear downs and let the system in a bad state.
+	Thus, if a release package is present in the list of packages, we move it last in the testing order."
+	packageNames := packageNames asArray.
+	releasePackageNames := packageNames select: [ :packageName | packageName beginsWith: 'Release' ].
+	packageNames := packageNames copyWithoutAll: releasePackageNames.
+	packageNames := packageNames copyWithAll: releasePackageNames.
+
+	^ packageNames
 ]
 
 { #category : 'private' }
