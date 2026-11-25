@@ -4,6 +4,8 @@ I represent a cursor for the mouse
 Class {
 	#name : 'RubCursor',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'stayVisible',
 		'invisibleCursorColor',

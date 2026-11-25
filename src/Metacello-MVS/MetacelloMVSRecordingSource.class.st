@@ -17,7 +17,7 @@ MetacelloMVSRecordingSource >> baselineOf: aCandidate [
 
 	| baseline |
 	baseline := source baselineOf: aCandidate.
-	recorded repository: aCandidate repository at: aCandidate version string baseline: baseline.
+	recorded readFrom: aCandidate repositoryDescription baseline: baseline.
 	^ baseline
 ]
 
@@ -45,6 +45,6 @@ MetacelloMVSRecordingSource >> versionsOf: aRepository ifFail: aBlock [
 	recorded
 		repository: aRepository versions: (answer collect: [ :each | each name ]);
 		repository: aRepository
-		dates: ((answer select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
+		dates: ((answer select: [ :each | each date isNotNil ]) collect: [ :each | each name -> each date ]) asDictionary.
 	^ answer
 ]

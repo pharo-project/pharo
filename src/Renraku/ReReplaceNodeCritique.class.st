@@ -25,19 +25,30 @@ ReReplaceNodeCritique class >> rule: aRule achor: anAnchor oldNode: aNode newNod
 
 { #category : 'accessing' }
 ReReplaceNodeCritique >> change [
-	"creates new AST by replacing the node. Then the 'add method' change is generated from new AST"
+    "Parse a fresh AST, then remove or replace the matched node.
+    Generate an add-method change from the updated AST."
 
-	| newTree newTreeNode |
-	newTree := self entity  parseTree.
-	newTreeNode := newTree nodeAtTraversalIndex: (
-		oldNode methodNode traversalIndexOf: oldNode).
-	self assert: newTreeNode = oldNode.
+    | newTree newTreeNode parent |
+    newTree := self entity parseTree.
+    newTreeNode := newTree nodeAtTraversalIndex: (
+        oldNode methodNode traversalIndexOf: oldNode).
+    self assert: newTreeNode = oldNode.
 
-	newTreeNode replaceMethodSource: newNode.
-	newTreeNode becomeForward: newNode.
-	^ ReChangeFactory instance
-		addMethodSource: newTree methodNode newSource
-		in: self entity  methodClass
+    parent := newTreeNode parent.
+    (newNode isSequence and: [
+        newNode statements isEmpty and: [
+            newNode temporaries isEmpty and: [
+                parent isNotNil and: [
+                    parent isSequence and: [
+                        parent statements identityIncludes: newTreeNode ] ] ] ] ])
+        ifTrue: [ parent removeNode: newTreeNode ]
+        ifFalse: [
+            newTreeNode replaceMethodSource: newNode.
+            newTreeNode becomeForward: newNode ].
+
+    ^ ReChangeFactory instance
+        addMethodSource: newTree methodNode newSource
+        in: self entity methodClass
 ]
 
 { #category : 'initialization' }

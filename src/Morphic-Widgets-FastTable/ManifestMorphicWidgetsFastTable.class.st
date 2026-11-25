@@ -13,5 +13,5 @@ Class {
 ManifestMorphicWidgetsFastTable class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Object Events' #'Transcript-NonInteractive')
+	^ #(#'Transcript-NonInteractive')
 ]

@@ -77,6 +77,8 @@ wrapped
 Class {
 	#name : 'RubAbstractTextArea',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'model',
 		'paragraph',
@@ -428,7 +430,6 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 					with: [
 							(aBuilder setting: #lineNumbersFont)
 								target: self;
-								defaultValue: (TextStyle default fontOfPointSize: 7);
 								description: 'Font used for line numbers';
 								label: 'Line numbers font'.
 							(aBuilder setting: #lineNumbersTextColor)
@@ -2101,7 +2102,10 @@ RubAbstractTextArea >> themeChanged [
 	].
 
 	self class backgroundColor: self theme backgroundColor.
-	self color: self defaultColor.
+	"In a scroll pane, the scroll pane draws the background (see #scrollPane:)"
+	self color: (scrollPane
+			 ifNil: [ self defaultColor ]
+			 ifNotNil: [ Color transparent ]).
 	super themeChanged
 ]
 

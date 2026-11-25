@@ -39,7 +39,9 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
 	echo "Target VM: $(${VM} --version)"
 fi
 
-if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
+# On a bootstrap cache hit (see bootstrap-cache.sh), 3-prepare.sh is skipped,
+# so neither the bootstrap VM nor the bootstrap image are needed
+if [ "${BOOTSTRAP_CACHE_HIT}" != "1" ] && [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
 
 	rm -rf "${BOOTSTRAP_DOWNLOADS}/vmBootstrap"
 	mkdir ${BOOTSTRAP_DOWNLOADS}/vmBootstrap
@@ -50,7 +52,7 @@ if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
 	echo "Bootstrap VM: $(${VM_BOOTSTRAP} --version)"
 fi 
 
-if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
+if [ "${BOOTSTRAP_CACHE_HIT}" != "1" ] && [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
 	download_to https://github.com/pharo-project/PharoBootstrap/releases/download/v1.7.10/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip
 fi 
 
@@ -65,7 +67,7 @@ fi
 ##
 
 # bootstrap image
-if [ ! -e "./Pharo.image" ]; then
+if [ "${BOOTSTRAP_CACHE_HIT}" != "1" ] && [ ! -e "./Pharo.image" ]; then
     cd ${BOOTSTRAP_CACHE}
 	unzip -u ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip -d .
 fi

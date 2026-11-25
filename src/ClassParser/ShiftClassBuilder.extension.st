@@ -5,9 +5,9 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 
 	self name: aCDClassDefinitionNode className.
 
-	aCDClassDefinitionNode superclassName = #nil
-		ifFalse: [ self superclass: (superclassResolver resolve: aCDClassDefinitionNode superclassName inEnv: buildEnvironment) ]
-		ifTrue: [ self superclass: nil ].
+	self superclass: (aCDClassDefinitionNode superclassName = #nil
+			 ifTrue: [ nil ]
+			 ifFalse: [ superclassResolver resolve: aCDClassDefinitionNode superclassName inEnv: buildEnvironment ]).
 
 	self layoutClass: aCDClassDefinitionNode layoutClass.
 
@@ -21,9 +21,5 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 
 	self sharedPools: (aCDClassDefinitionNode sharedPools collect: [ :e | e name ]).
 
-	aCDClassDefinitionNode traitDefinition ifNotNil: [ :traitDef |
-		traitDef originalNode formattedCode.
-		self traitComposition: (self class compiler
-				 source: traitDef originalNode formattedCode;
-				 evaluate) ]
+	aCDClassDefinitionNode traitDefinition ifNotNil: [ :traitDef | self traitComposition: traitDef originalNode evaluate ]
 ]

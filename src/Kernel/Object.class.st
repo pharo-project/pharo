@@ -542,7 +542,10 @@ Object >> clone [
 	
 	ec == #'insufficient object memory' ifFalse:
 		[^self primitiveFailed].
-	self deprecated: 'Use shallowCopy'.
+	self
+		deprecated: 'Use shallowCopy'
+		on: '2026-06-19'
+		in: #Pharo15.
 	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke the garbage collector before retrying, and use copyFrom: to copy state."
 	newObject := (class := self class) isVariable
 					ifTrue: [class basicNew: self basicSize]
@@ -590,7 +593,10 @@ Object >> copySameFrom: otherObject [
 
 { #category : 'copying' }
 Object >> deepCopy [
-	self deprecated: 'Use copy instead and migrate to copy/postCopy logic. Remember deep copy did NOT handle cycles'.
+	self
+		deprecated: 'Use copy instead and migrate to copy/postCopy logic. Remember deep copy did NOT handle cycles'
+		on: '2026-06-22'
+		in: #Pharo15.
 	^ self shallowCopy postCopy
 ]
 

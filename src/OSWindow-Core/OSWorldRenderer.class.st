@@ -257,7 +257,8 @@ OSWorldRenderer >> doActivate [
 	driver
 		afterSetWindowTitle: self defaultWindowTitle
 		onWindow: osWindow.
-	driver startUp: true.
+	"Keep the running event loop: it is shared by all windows"
+	driver startUp: false.
 
 	world worldState doFullRepaint.
 	world displayWorld.

@@ -82,7 +82,7 @@ ClyTextLineNumbersSwitchMorph >> isRuleActive [
 
 	self class showLineNumbers ifTrue: [ textMorph withLineNumbers ].
 
-	^ self class showLineNumbers or: [ textMorph lineNumbersRuler notNil ]
+	^ self class showLineNumbers or: [ textMorph lineNumbersRuler isNotNil ]
 ]
 
 { #category : 'operations' }

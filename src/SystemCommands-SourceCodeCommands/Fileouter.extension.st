@@ -4,6 +4,8 @@ Extension { #name : 'Fileouter' }
 Fileouter class >> fileoutNamed: filename cofigureWith: aBlock [
 	self
 		deprecated: 'Use #fileoutNamed:configureWith: instead'
+		on: '2026-09-10'
+		in: #Pharo14
 		transformWith: '`@rec fileoutNamed: `@arg1 cofigureWith: `@arg2'
 			-> '`@rec fileoutNamed: `@arg1 configureWith: `@arg2'.
 	^ self fileoutNamed: filename configureWith: aBlock

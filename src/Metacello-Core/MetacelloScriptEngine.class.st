@@ -21,7 +21,10 @@ Class {
 MetacelloScriptEngine >> doLoad [
 	"The directive, loaded, fetching first if needed"
 
-	(MetacelloLoadTarget on: self) load: self ensureFetched.
+	| fetchedDirective |
+	fetchedDirective := self ensureFetched.
+	MetacelloNotification signal: 'Loading the packages'.
+	(MetacelloLoadTarget on: self) load: fetchedDirective.
 	^ directive
 ]
 
@@ -52,11 +55,13 @@ MetacelloScriptEngine >> ensureFetched [
 
 { #category : 'private' }
 MetacelloScriptEngine >> ensureRecorded [
-	"The directive loading the resolution, recorded once, resolving first if needed. A resolution with errors is never recorded: it signals MetacelloResolutionError"
+	"The directive loading the resolution, recorded once, resolving first if needed. A resolution with errors is never recorded: it signals MetacelloResolutionError. The plan is said before anything loads"
 
 	directive ifNotNil: [ ^ directive ].
 	self ensureResolved hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
-	^ directive := self recordDirective
+	directive := self recordDirective.
+	MetacelloNotification signal: 'Load plan:' , String cr , directive printString.
+	^ directive
 ]
 
 { #category : 'private' }
@@ -64,6 +69,7 @@ MetacelloScriptEngine >> ensureResolved [
 	"The resolution of the roots, each with the names its project spec loads, resolved together once"
 
 	resolution ifNotNil: [ ^ resolution ].
+	MetacelloNotification signal: 'Resolving the projects'.
 	self resolution: ((MetacelloResolveTarget on: self) resolveRoots: self roots).
 	^ resolution
 ]

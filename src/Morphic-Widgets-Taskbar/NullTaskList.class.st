@@ -23,7 +23,7 @@ NullTaskList class >> in: world [
 NullTaskList >> handleEvent: aKeyboardEvent [
 
 	(TaskListMorph isNavigationEvent: aKeyboardEvent) ifFalse: [ ^ false ].
-	world theme openTaskListIn: world from: aKeyboardEvent.
+	world openTaskListFrom: aKeyboardEvent.
 	^ true
 ]
 

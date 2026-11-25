@@ -4,6 +4,8 @@ I draw the node part of a tree.
 Class {
 	#name : 'MorphTreeNodeMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'parent',
 		'index',

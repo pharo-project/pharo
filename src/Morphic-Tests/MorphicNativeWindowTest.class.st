@@ -70,6 +70,16 @@ MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMinimized [
 ]
 
 { #category : 'tests' }
+MorphicNativeWindowTest >> testOpenKeepsTheEventLoop [
+
+	| loop |
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
+	loop := OSWindowDriver current eventLoopProcess.
+	window open.
+	self assert: OSWindowDriver current eventLoopProcess identicalTo: loop
+]
+
+{ #category : 'tests' }
 MorphicNativeWindowTest >> testRestoreWindow [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 

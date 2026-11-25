@@ -14,10 +14,11 @@ Class {
 { #category : 'baseline' }
 BaselineOfMenuRegistration >> baseline: spec [ 
 	<baseline>
-	
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
-	
-		spec package: 'MenuRegistration'.
-		
+		"Menu item icons are form sets"
+		spec baseline: 'Display' with: [ spec loads: #Core from: repository ].
+		spec package: 'MenuRegistration' with: [ spec requires: #( 'Display' ) ].
 	].
 ]

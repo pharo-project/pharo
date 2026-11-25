@@ -44,12 +44,6 @@ DrTests class >> defaultPreferredExtent [
 	^  800@600
 ]
 
-{ #category : 'class initialization' }
-DrTests class >> initialize [
-
-	self currentApplication register: self as: #testRunner
-]
-
 { #category : 'world menu' }
 DrTests class >> menuCommandOn: aBuilder [
 

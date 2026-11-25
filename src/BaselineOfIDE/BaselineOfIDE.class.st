@@ -79,6 +79,7 @@ BaselineOfIDE >> baseline: spec [
 
 		self load: 'Monticello' group: 'Tests' spec: spec.
 		self load: 'Metacello' group: 'Tests' spec: spec.
+		self load: 'Regex' group: 'Tests' spec: spec.
 
 		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
@@ -259,21 +260,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		register: StFinderPresenter as: #finder;
 		register: StProcessBrowser as: #processBrowser.
 
-	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
-	MorphicCoreUIManager writeClassVariableNamed: #UIProcess value: nil.
-
-	PolymorphSystemSettings desktopColor: Color veryVeryLightGray lighter.
-	SourceCodeFonts setSourceCodeFonts: 10.
-	FreeTypeSystemSettings loadFt2Library: true.
-	FreeTypeSettings current monitorType: #LCD.
-	FreeTypeSettings current glyphContrast: 50.
-	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
-	GrowlMorph position: #bottomLeft.
-	ShortcutReminder enabled: true.
-
-	KMRepository reset.
-	Morph shortcutsHandler: KMShortcutHandler new.
-
 	OCProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ OCSimpleFormatter ]).
 
 	Color flushCache.
@@ -284,8 +270,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	RubCharacterScanner initialize.
 
 	RubAbstractTextArea highlightMessageSend: true.
-
-	(self class environment at: #PolymorphSystemSettings) defaultTheme beCurrent.
 
 	SDL_Event initialize.
 

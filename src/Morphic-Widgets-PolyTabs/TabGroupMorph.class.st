@@ -4,6 +4,8 @@ Organises a set of pages sharing the same space and selected through the use of 
 Class {
 	#name : 'TabGroupMorph',
 	#superclass : 'ModelMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'tabSelectorMorph',
 		'contentMorph',

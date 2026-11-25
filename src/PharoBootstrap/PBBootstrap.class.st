@@ -110,6 +110,14 @@ PBBootstrap >> bootstrap [
 		logged: 'Bootstrap process'
 ]
 
+{ #category : 'package-names' }
+PBBootstrap >> bootstrapBaselineNames [
+	"The baselines loaded into this image to compute the package lists of the bootstrap"
+
+	^ #( #BaselineOfKernel #BaselineOfCompiler #BaselineOfTraits #BaselineOfFileSystem #BaselineOfMonticello #BaselineOfPharoBootstrap
+	     #BaselineOfMetacello )
+]
+
 { #category : 'accessing' }
 PBBootstrap >> bootstrapCacheDirectory [
 
@@ -172,11 +180,10 @@ PBBootstrap >> ensureBaselineOfPharoBootstrap [
 	self updateMonticello.
 
 	logger log: '[+] Loading new Metacello'.
-	#( 'Metacello-Core' ) do: [ :p | self updateBootstrapPackage: p ].
+	self updatedMetacelloPackageNames do: [ :p | self updateBootstrapPackage: p ].
 
 	logger log: '[+] Loading Baselines to Bootstrap'.
-	#( #BaselineOfKernel #BaselineOfCompiler #BaselineOfTraits #BaselineOfFileSystem #BaselineOfMonticello #BaselineOfPharoBootstrap
-	   #BaselineOfMetacello ) do: [ :baselineName | self updateBootstrapPackage: baselineName ]
+	self bootstrapBaselineNames do: [ :baselineName | self updateBootstrapPackage: baselineName ]
 ]
 
 { #category : 'preparation' }
@@ -224,6 +231,22 @@ PBBootstrap >> exportProtocolsFor: packageNames to: protocolsFile [
 		      stream nextPutAll: def classIsMeta asString; tab.
 		      stream nextPutAll: def selector asString; tab.
 		      stream nextPutAll: def category asString; cr ]]]
+]
+
+{ #category : 'preparation' }
+PBBootstrap >> exportSourcePackageNames [
+	"Exports the names of the source packages read by the bootstrap, one per line, for the key of the bootstrap cache"
+
+	| file |
+	logger log: '[+] Exporting the names of the source packages'.
+	file := self bootstrapCacheDirectory / 'bootstrapSourcePackages.txt'.
+	"writeStreamDo: does not truncate an existing file"
+	file ensureDelete.
+	file writeStreamDo: [ :stream |
+		self sourcePackageNames do: [ :name |
+			stream
+				nextPutAll: name;
+				lf ] ]
 ]
 
 { #category : 'preparation' }
@@ -299,6 +322,7 @@ PBBootstrap >> prepareBootstrap [
 	self
 		ensureBaselineOfPharoBootstrap;
 		exportKernelProtocols;
+		exportSourcePackageNames;
 		exportAllPackagesIntoMcz;
 		createHermesPackageListFiles;
 		prepareEnvironmentForHermes;
@@ -311,7 +335,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 	| allPackages |
 
 	logger log: '[+] Cleaning bootstrap model'.
-	allPackages := ringEnvironment packages collect: #name.
+	allPackages := ringEnvironment ask packages collect: #name.
 
 	(allPackages reject: [ :x | #BaselineOfPharoBootstrap asClass kernelPackageNames includes: x ])
 		do: [ :x | 
@@ -349,6 +373,19 @@ PBBootstrap >> repositoryLocation [
 PBBootstrap >> repositoryLocation: aFileReference [
 
 	repositoryLocation := aFileReference
+]
+
+{ #category : 'package-names' }
+PBBootstrap >> sourcePackageNames [
+	"The packages of the repository read by the bootstrap: a change in any of them must change the key of the bootstrap cache (see bootstrap/scripts/bootstrap-cache.sh).
+	BaselineOfPharoBootstrapProcess and PharoBootstrap are the tools loaded by prepare_image.st."
+
+	^ (Set new
+		   addAll: #( 'BaselineOfPharoBootstrapProcess' 'PharoBootstrap' );
+		   addAll: self updatedMetacelloPackageNames;
+		   addAll: (self bootstrapBaselineNames collect: [ :each | each asString ]);
+		   addAll: self allPackagesForHermes;
+		   yourself) asSortedCollection asArray
 ]
 
 { #category : 'as yet unclassified' }
@@ -389,6 +426,13 @@ PBBootstrap >> updateMonticello [
 	type = #DoubleWordLayout ifTrue: [ ^'' variableDoubleWordSubclass: '' ].
 	"To support user defined layouts (load them as normal classes), we just return the default"
 	^ '' subclass: '''
+]
+
+{ #category : 'package-names' }
+PBBootstrap >> updatedMetacelloPackageNames [
+	"The Metacello packages replaced in this image by their version in the repository"
+
+	^ #( 'Metacello-Core' )
 ]
 
 { #category : 'accessing' }

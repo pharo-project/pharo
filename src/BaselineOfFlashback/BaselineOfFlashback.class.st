@@ -14,12 +14,21 @@ Class {
 { #category : 'baseline' }
 BaselineOfFlashback >> baseline: spec [
 	<baseline>
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 	spec
 		for: #common
 		do: [ 
+			"The tests decompile the examples of the compiler's tests"
+			spec baseline: 'CompilerTests' with: [
+				spec
+					repository: repository;
+					className: 'BaselineOfCompiler';
+					loads: #( 'OpalCompiler-Tests' ) ].
+
 			"Packages"
 			spec package: 'Flashback-Decompiler'.
-			spec package: 'Flashback-Decompiler-Tests' with: [ spec requires: 'Flashback-Decompiler' ].
+			spec package: 'Flashback-Decompiler-Tests' with: [ spec requires: #( 'Flashback-Decompiler' 'CompilerTests' ) ].
 
 			"Groups"
 			spec

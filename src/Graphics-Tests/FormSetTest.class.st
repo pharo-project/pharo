@@ -28,80 +28,98 @@ FormSetTest >> classToBeTested [
 FormSetTest >> testAsForm [
 
 	| form1 form2 formSet result |
-
-	(form1 := Form extent: 1@2 depth: 32)
-		fillColor: Color red translucent.
-	(form2 := Form extent: 2@4 depth: 32)
-		fillColor: Color red translucent.
+	(form1 := Form extent: 1 @ 2 depth: 32) fillColor: (Color red alpha: 0.4).
+	(form2 := Form extent: 2 @ 4 depth: 32) fillColor: (Color red alpha: 0.4).
 
 	formSet := FormSet form: form1.
 	self assert: formSet asForm identicalTo: form1.
 
-	formSet := FormSet forms: { form1. form2 }.
+	formSet := FormSet forms: {
+		           form1.
+		           form2 }.
 	self assert: formSet asForm identicalTo: form1.
 
-	formSet := FormSet forms: { form2. form1 }.
+	formSet := FormSet forms: {
+		           form2.
+		           form1 }.
 	self assert: formSet asForm identicalTo: form2.
 
-	formSet := FormSet extent: 2@4 depth: 32 forms: { form1. form2 }.
+	formSet := FormSet extent: 2 @ 4 depth: 32 forms: {
+		           form1.
+		           form2 }.
 	self assert: formSet asForm identicalTo: form2.
 
-	formSet := FormSet extent: 3@6 depth: 32 forms: { form1. form2 }.
+	formSet := FormSet extent: 3 @ 6 depth: 32 forms: {
+		           form1.
+		           form2 }.
 	result := formSet asForm.
-	self assert: result extent equals: 3@6.
+	self assert: result extent equals: 3 @ 6.
 	self assert: result depth equals: 32.
-	self assert: result isFilledWith: Color red translucent.
+	self assert: result isFilledWith: (Color red alpha: 0.4).
 
-	formSet := FormSet extent: 2@4 depth: 8 forms: { form1. form2 }.
+	formSet := FormSet extent: 2 @ 4 depth: 8 forms: {
+		           form1.
+		           form2 }.
 	result := formSet asForm.
-	self assert: result extent equals: 2@4.
+	self assert: result extent equals: 2 @ 4.
 	self assert: result depth equals: 8.
-	self assert: result isFilledWith: Color red.
+	self assert: result isFilledWith: Color red
 ]
 
 { #category : 'tests - converting' }
 FormSetTest >> testAsFormAtScale [
 
 	| form1 form2 form3 formSet result |
-
-	(form1 := Form extent: 1@2 depth: 32)
-		fillColor: Color green translucent.
-	(form2 := Form extent: 2@4 depth: 32)
-		fillColor: Color green translucent.
-	(form3 := Form extent: 4@8 depth: 32)
-		fillColor: Color green translucent.	
+	(form1 := Form extent: 1 @ 2 depth: 32) fillColor: (Color green alpha: 0.4).
+	(form2 := Form extent: 2 @ 4 depth: 32) fillColor: (Color green alpha: 0.4).
+	(form3 := Form extent: 4 @ 8 depth: 32) fillColor: (Color green alpha: 0.4).
 
 	formSet := FormSet form: form1.
 	self assert: (formSet asFormAtScale: 1) identicalTo: form1.
 
-	formSet := FormSet forms: { form1. form2. form3 }.
+	formSet := FormSet forms: {
+		           form1.
+		           form2.
+		           form3 }.
 	self assert: (formSet asFormAtScale: 1) identicalTo: form1.
 	self assert: (formSet asFormAtScale: 2) identicalTo: form2.
 	self assert: (formSet asFormAtScale: 4) identicalTo: form3.
 
-	formSet := FormSet forms: { form2. form1. form3 }.
+	formSet := FormSet forms: {
+		           form2.
+		           form1.
+		           form3 }.
 	self assert: (formSet asFormAtScale: 1) identicalTo: form2.
 	self assert: (formSet asFormAtScale: 2) identicalTo: form3.
 
-	formSet := FormSet extent: 2@4 depth: 32 forms: { form1. form2. form3 }.
+	formSet := FormSet extent: 2 @ 4 depth: 32 forms: {
+		           form1.
+		           form2.
+		           form3 }.
 	self assert: (formSet asFormAtScale: 1) identicalTo: form2.
 	self assert: (formSet asFormAtScale: 2) identicalTo: form3.
 
-	formSet := FormSet extent: 3@6 depth: 32 forms: { form1. form2. form3 }.
+	formSet := FormSet extent: 3 @ 6 depth: 32 forms: {
+		           form1.
+		           form2.
+		           form3 }.
 	result := formSet asFormAtScale: 1.
-	self assert: result extent equals: 3@6.
+	self assert: result extent equals: 3 @ 6.
 	self assert: result depth equals: 32.
-	self assert: result isFilledWith: Color green translucent.
+	self assert: result isFilledWith: (Color green alpha: 0.4).
 
-	formSet := FormSet extent: 1@2 depth: 8 forms: { form1. form2. form3 }.
+	formSet := FormSet extent: 1 @ 2 depth: 8 forms: {
+		           form1.
+		           form2.
+		           form3 }.
 	result := formSet asFormAtScale: 1.
-	self assert: result extent equals: 1@2.
+	self assert: result extent equals: 1 @ 2.
 	self assert: result depth equals: 8.
 	self assert: result isFilledWith: Color green.
 	result := formSet asFormAtScale: 2.
-	self assert: result extent equals: 2@4.
+	self assert: result extent equals: 2 @ 4.
 	self assert: result depth equals: 8.
-	self assert: result isFilledWith: Color green.
+	self assert: result isFilledWith: Color green
 ]
 
 { #category : 'tests - converting' }
@@ -110,18 +128,18 @@ FormSetTest >> testAsFormWithExtent [
 	| form1 form2 form3 formSet result |
 
 	(form1 := Form extent: 1@2 depth: 32)
-		fillColor: Color blue translucent.
+		fillColor: (Color blue alpha: 0.4).
 	(form2 := Form extent: 2@4 depth: 32)
-		fillColor: Color blue translucent.
+		fillColor: (Color blue alpha: 0.4).
 	(form3 := Form extent: 4@8 depth: 32)
-		fillColor: Color blue translucent.
+		fillColor: (Color blue alpha: 0.4).
 
 	formSet := FormSet form: form1.
 	self assert: (formSet asFormWithExtent: 1@2) identicalTo: form1.
 	result := formSet asFormWithExtent: 2@4.
 	self assert: result extent equals: 2@4.
 	self assert: result depth equals: 32.
-	self assert: result isFilledWith: Color blue translucent.
+	self assert: result isFilledWith: (Color blue alpha: 0.4).
 
 	formSet := FormSet forms: { form2. form1. form3 }.
 	self assert: (formSet asFormWithExtent: 1@2) identicalTo: form1.
@@ -130,7 +148,7 @@ FormSetTest >> testAsFormWithExtent [
 	result := formSet asFormWithExtent: 3@6.
 	self assert: result extent equals: 3@6.
 	self assert: result depth equals: 32.
-	self assert: result isFilledWith: Color blue translucent.
+	self assert: result isFilledWith: (Color blue alpha: 0.4).
 
 	formSet := FormSet extent: 2@4 depth: 32 forms: { form3. form2. form1 }.
 	self assert: (formSet asFormWithExtent: 1@2) identicalTo: form1.
@@ -139,11 +157,11 @@ FormSetTest >> testAsFormWithExtent [
 	result := formSet asFormWithExtent: 3@6.
 	self assert: result extent equals: 3@6.
 	self assert: result depth equals: 32.
-	self assert: result isFilledWith: Color blue translucent.
+	self assert: result isFilledWith: (Color blue alpha: 0.4).
 	result := formSet asFormWithExtent: 4@5.
 	self assert: result extent equals: 4@5.
 	self assert: result depth equals: 32.
-	self assert: result isFilledWith: Color blue translucent.
+	self assert: result isFilledWith: (Color blue alpha: 0.4).
 
 	formSet := FormSet extent: 1@2 depth: 8 forms: { form1. form2. form3 }.
 	result := formSet asFormWithExtent: 1@2.

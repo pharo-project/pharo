@@ -1,6 +1,8 @@
 Class {
 	#name : 'MissionControlMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'thumbnails',
 		'spacesBar',

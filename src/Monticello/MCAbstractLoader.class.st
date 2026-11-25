@@ -33,6 +33,6 @@ MCAbstractLoader >> isStrict [
 { #category : 'accessing' }
 MCAbstractLoader >> isStrict: anObject [
 
-	self assert: anObject notNil.
+	self assert: anObject isNotNil.
 	isStrict := anObject
 ]

@@ -6,6 +6,34 @@ Class {
 }
 
 { #category : 'tests' }
+ClyRegexPatternTest >> testEscapedLineEndings [ 
+
+	self assert: (
+		((ClyRegexPattern with: '^bb\ncc') matches: 
+				(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; lf] ]))
+			&
+		((ClyRegexPattern with: '^bb\rcc') matches: 
+				(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr] ]))
+			&
+		((ClyRegexPattern with: '^bb\r\ncc') matches: 
+			(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr; lf] ]))
+	)
+
+]
+
+{ #category : 'tests' }
+ClyRegexPatternTest >> testLineEndings [ 
+
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr] ])).
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; lf] ])).
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr; lf] ])).
+
+]
+
+{ #category : 'tests' }
 ClyRegexPatternTest >> testMatchesAnyStringWhenItIsBadRegex [
 
 	| pattern |

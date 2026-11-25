@@ -9,41 +9,51 @@ Class {
 	#instVars : [
 		'dates',
 		'source',
-		'readings',
-		'pharoMajor',
 		'repositories',
 		'versions',
-		'versionFailures'
+		'projectVersions',
+		'givenProjectVersions'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
 }
 
-{ #category : 'reading' }
-MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aReading [
-	"A declared minimum Pharo newer than this image is an error before anything is loaded (answer false); for: #pharoN.x blocks are accepted, with a warning"
+{ #category : 'instance creation' }
+MetacelloMVSGraph class >> new [
+	self error: 'A graph needs a version source: use on:'
+]
 
-	aSandbox pharoMinimum ifNotNil: [ :minimum |
-			minimum > self pharoMajor ifTrue: [
-					aReading
-						error: #platformMismatch
-						text:
-						aCandidate printString , ' needs Pharo ' , minimum printString , ' or newer, this is Pharo ' , self pharoMajor printString.
-					^ false ] ].
-	aSandbox platformBlocks ifNotEmpty: [ :platforms |
-			aReading
-				warning: #platformBlock
-				text: 'The baseline of ' , aCandidate printString , ' has blocks for ' , (', ' join: platforms)
-					, ': its requirements depend on the image that resolves them' ].
-	^ true
+{ #category : 'instance creation' }
+MetacelloMVSGraph class >> on: aVersionSource [
+	"A graph asks aVersionSource the facts it was not given by hand"
+	^ self basicNew initializeOn: aVersionSource
+]
+
+{ #category : 'reading' }
+MetacelloMVSGraph >> causeOf: aCompilationError [
+	"Why the baseline does not compile, in one line: what the compiler noticed"
+
+	^ ', ' join: (aCompilationError compilationResult ast allNotices collect: [ :each | each messageText ])
+]
+
+{ #category : 'reading' }
+MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aProjectVersion [
+	"for: #pharoN.x blocks are accepted, with a warning: the requirements then depend on the image"
+
+	aSandbox platformBlocks ifNotEmpty: [ :platforms | aProjectVersion warning: #platformBlock text: (', ' join: platforms) ]
 ]
 
 { #category : 'versions' }
 MetacelloMVSGraph >> datesOf: aRepository [
-	"Version name -> DateAndTime of each version of aRepository whose date is known"
+	"Version name -> DateAndTime of each version of aRepository whose date is known. Asked once its versions are read (see versionsOf:ifFail:)"
+	^ dates at: aRepository
+]
 
-	self versionsOf: aRepository.
-	^ dates at: aRepository ifAbsent: [ Dictionary new ]
+{ #category : 'accessing' }
+MetacelloMVSGraph >> description: aDescription requires: aCollectionOfProjectSpecs [
+	"Given by hand: the baseline read from aDescription, a directory (tonel:///path), requires aCollectionOfProjectSpecs, and says nothing else"
+
+	(self givenProjectVersionOf: aDescription) references: aCollectionOfProjectSpecs
 ]
 
 { #category : 'project specs' }
@@ -54,130 +64,118 @@ MetacelloMVSGraph >> descriptionOf: aProjectSpec [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSGraph >> failureOf: aRepository [
-	"Why the versions of aRepository cannot be read, or nil"
+MetacelloMVSGraph >> givenProjectVersionOf: aDescription [
+	"The project version given by hand for aDescription, a repository at a version or a directory, for whatever project asks it there"
 
-	self versionsOf: aRepository.
-	^ versionFailures at: aRepository ifAbsent: [ nil ]
+	^ givenProjectVersions at: aDescription ifAbsentPut: [ MetacelloMVSProjectVersion new ]
+]
+
+{ #category : 'accessing' }
+MetacelloMVSGraph >> givenProjectVersionOf: aRepository at: aVersion [
+	"The project version given by hand for aRepository at the version or ref named aVersion, for whatever project asks it there"
+
+	^ self givenProjectVersionOf: aRepository , ':' , aVersion
 ]
 
 { #category : 'project specs' }
-MetacelloMVSGraph >> hasVersions: aProjectSpec [
-	"Whether aProjectSpec names one repository that has versions: one that answers a project path and a version"
+MetacelloMVSGraph >> hasVersions: aProjectSpec ifFail: aBlock [
+	"Whether aProjectSpec names one repository, and that repository has versions (see versionsOf:ifFail:). When the repository cannot be created or its versions cannot be read, aBlock is given why"
 
-	^ (self repositoryFor: aProjectSpec) isNotNil
+	| repository |
+	aProjectSpec repositoryDescriptions size = 1 ifFalse: [ ^ false ].
+	"The repository is not ours, and creating it fails in ways with no common class: Monticello signals a plain Error for an unknown type, Iceberg its own errors when it cannot clone, the file system its own for a missing directory. Each becomes a finding instead of stopping the resolution, as reading its versions does (see MetacelloMVSRepositorySource>>versionsOf:ifFail:)"
+	repository := [ self repositoryUrlOf: aProjectSpec ]
+		              on: Error
+		              do: [ :error | ^ aBlock value: (self descriptionOf: aProjectSpec) , ': ' , error description ].
+	^ (self versionsOf: repository ifFail: aBlock) isNotEmpty
 ]
 
-{ #category : 'initialization' }
-MetacelloMVSGraph >> initialize [
+{ #category : 'reading' }
+MetacelloMVSGraph >> initializeOn: aVersionSource [
+	"Facts the graph was not given by hand are asked to aVersionSource, once"
 
 	super initialize.
+	source := aVersionSource.
 	versions := Dictionary new.
-	versionFailures := Dictionary new.
 	dates := Dictionary new.
-	readings := Dictionary new.
+	projectVersions := Dictionary new.
+	givenProjectVersions := Dictionary new.
 	repositories := Dictionary new
 ]
 
 { #category : 'project specs' }
-MetacelloMVSGraph >> pathOf: aProjectSpec [
-	"The path of its code inside its repository, or nil"
-
-	^ (self repositoryFor: aProjectSpec) repoPath ifNotNil: [ :path | path ifEmpty: [ nil ] ]
-]
-
-{ #category : 'reading' }
-MetacelloMVSGraph >> pharoMajor [
-	"The major version of Pharo that baselines are checked against: this image's, unless told"
-
-	^ pharoMajor ifNil: [ SystemVersion current major ]
-]
-
-{ #category : 'reading' }
-MetacelloMVSGraph >> pharoMajor: anInteger [
-
-	pharoMajor := anInteger
-]
-
-{ #category : 'project specs' }
 MetacelloMVSGraph >> projectOf: aProjectSpec [
-	"The name of its project: its baseline's (an alias made with project:copyFrom:with: names the same baseline), or nil when unknown"
-
-	^ aProjectSpec className ifNil: [ aProjectSpec name ] ifNotNil: [ :className | className allButFirst: 'BaselineOf' size ]
+	"The name of its project: its baseline's (an alias made with project:copyFrom:with: names the same baseline)"
+	^ aProjectSpec className allButFirst: 'BaselineOf' size
 ]
 
 { #category : 'reading' }
-MetacelloMVSGraph >> read: aBaselineDefinitions of: aCandidate into: aReading [
+MetacelloMVSGraph >> projectVersionFrom: aBaselineDefinitions of: aCandidate [
+	"Run the baseline in the sandbox, as the version of aCandidate. Never signals: the baseline is third-party code, so whatever it fails with becomes a problem saying the cause; the report names the version. A baseline that does not compile says why in one line. The problems are about the request of aCandidate, the first that asked for this version"
+
+	| projectVersion |
+	projectVersion := MetacelloMVSProjectVersion new
+		           request: aCandidate request;
+		           yourself.
+	aBaselineDefinitions problems do: [ :each |
+			projectVersion add: (MetacelloResolutionFinding
+					 severity: each second
+					 kind: each first
+					 text: each third
+					 request: aCandidate request) ].
+	aBaselineDefinitions hasBaseline ifFalse: [ ^ projectVersion ].
+	[
+		[ self read: aBaselineDefinitions of: aCandidate into: projectVersion ]
+			on: OCCompilationError
+			do: [ :error | projectVersion error: #baselineFailure text: (self causeOf: error) ] ]
+		on: Error
+		do: [ :error | projectVersion error: #baselineFailure text: error description ].
+	^ projectVersion
+]
+
+{ #category : 'reading' }
+MetacelloMVSGraph >> projectVersionOf: aCandidate [
+	"The project of aCandidate at its version, with what its baseline declares: given by hand for its repository at that version, or read once from the definitions the source answers. Kept by where it is read from and by project: one repository can hold the baselines of several projects (Spec2 and SpecCore)"
+
+	^ projectVersions at: aCandidate repositoryDescription -> aCandidate project ifAbsentPut: [
+		  givenProjectVersions
+			  at: aCandidate repositoryDescription
+			  ifAbsent: [ self projectVersionFrom: (source baselineOf: aCandidate) of: aCandidate ] ]
+]
+
+{ #category : 'reading' }
+MetacelloMVSGraph >> read: aBaselineDefinitions of: aCandidate into: aProjectVersion [
 
 	| sandbox |
 	sandbox := MetacelloMVSBaselineSandbox
 		           onDefinitions: aBaselineDefinitions definitions
 		           repository: aBaselineDefinitions repositoryDescription.
-	aReading repositoryDescription: aBaselineDefinitions repositoryDescription.
-	(self checkPlatformOf: aCandidate in: sandbox into: aReading) ifFalse: [ ^ self ].
-	self warnAboutBaselineOf: aCandidate in: sandbox into: aReading.
-	aReading replacements: sandbox replacements.
-	aReading references: (sandbox requirementsInto: aReading)
-]
-
-{ #category : 'reading' }
-MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
-	"Run the baseline in the sandbox, as the version of aCandidate. Never signals: the baseline is third-party code, so whatever it fails with becomes a problem naming the version. The problems are about the request of aCandidate, the first that asked for this version"
-
-	| reading |
-	reading := MetacelloMVSBaselineReading new
-		           request: aCandidate request;
-		           yourself.
-	aBaselineDefinitions problems do: [ :each |
-			reading add: (MetacelloResolutionFinding
-					 severity: each second
-					 kind: each first
-					 text: each third
-					 request: aCandidate request) ].
-	aBaselineDefinitions hasBaseline ifFalse: [ ^ reading ].
-	[ self read: aBaselineDefinitions of: aCandidate into: reading ]
-		on: Error
-		do: [ :error |
-				reading error: #baselineFailure text: 'The baseline of ' , aCandidate printString , ' fails: ' , error description
-					,
-					'. If this version is too old for this Pharo, it is a platform break, not a missed major: the root can replace: it with a newer version of '
-					, aCandidate repository ].
-	^ reading
-]
-
-{ #category : 'reading' }
-MetacelloMVSGraph >> readingOf: aCandidate [
-	"The reading of the baseline of the version of aCandidate: told, or read once from the definitions the source answers"
-
-	^ readings at: aCandidate repository -> aCandidate version string ifAbsentPut: [
-			  source
-				  ifNil: [
-						  MetacelloMVSBaselineReading new
-							  request: aCandidate request;
-							  error: #repositoryFailure text: 'No requirements known for ' , aCandidate printString;
-							  yourself ]
-				  ifNotNil: [ self readingFrom: (source baselineOf: aCandidate) of: aCandidate ] ]
+	aProjectVersion repositoryDescription: aBaselineDefinitions repositoryDescription.
+	self checkPlatformOf: aCandidate in: sandbox into: aProjectVersion.
+	self warnAboutBaselineOf: aCandidate in: sandbox into: aProjectVersion.
+	aProjectVersion replacements: sandbox replacements.
+	aProjectVersion references: (sandbox requirementsInto: aProjectVersion)
 ]
 
 { #category : 'accessing' }
-MetacelloMVSGraph >> repository: aRepository at: aVersion reading: aReading [
-	"Told: the reading of the baseline of aRepository at aVersion"
+MetacelloMVSGraph >> repository: aRepository at: aVersion projectVersion: aProjectVersion [
+	"Given by hand: the project version of aRepository at the version or ref named aVersion, for whatever project asks it there"
 
-	readings at: aRepository -> aVersion put: aReading
+	givenProjectVersions at: aRepository , ':' , aVersion put: aProjectVersion
 ]
 
 { #category : 'accessing' }
 MetacelloMVSGraph >> repository: aRepository at: aVersion replaces: aDictionary [
-	"Told: the baseline of aRepository at aVersion replaces project name -> repository string"
+	"Given by hand: the baseline of aRepository at aVersion replaces project name -> repository string"
 
-	(self toldReadingOf: aRepository at: aVersion) replacements: aDictionary
+	(self givenProjectVersionOf: aRepository at: aVersion) replacements: aDictionary
 ]
 
 { #category : 'accessing' }
 MetacelloMVSGraph >> repository: aRepository at: aVersion requires: aCollectionOfProjectSpecs [
-	"Told: the baseline of aRepository at aVersion requires aCollectionOfProjectSpecs, and says nothing else"
+	"Given by hand: the baseline of aRepository at aVersion requires aCollectionOfProjectSpecs, and says nothing else"
 
-	(self toldReadingOf: aRepository at: aVersion) references: aCollectionOfProjectSpecs
+	(self givenProjectVersionOf: aRepository at: aVersion) references: aCollectionOfProjectSpecs
 ]
 
 { #category : 'accessing' }
@@ -197,33 +195,18 @@ MetacelloMVSGraph >> repository: aRepository versions: aCollection [
 
 { #category : 'project specs' }
 MetacelloMVSGraph >> repositoryFor: aProjectSpec [
-	"The repository Metacello's platform creates for aProjectSpec (Iceberg's when it integrates, Monticello's otherwise), when it answers a project path, a version and a path inside it. nil otherwise. Once per description"
+	"The repository Metacello's platform creates for the one repository aProjectSpec names (Iceberg's when it integrates, Monticello's otherwise). Once per description"
 
-	| descriptions |
-	descriptions := aProjectSpec repositoryDescriptions.
-	descriptions size = 1 ifFalse: [ ^ nil ].
-	^ repositories at: descriptions first ifAbsentPut: [
-			  | repository |
-			  repository := [ MetacelloPlatform current createRepository: aProjectSpec repositorySpecs first ]
-				                on: Error
-				                do: [ nil ].
-			  (repository isNotNil and: [ (repository respondsTo: #projectPath) and: [ repository projectPath isNotNil ] ])
-				  ifTrue: [ repository ]
-				  ifFalse: [ nil ] ]
+	^ repositories
+		  at: (self descriptionOf: aProjectSpec)
+		  ifAbsentPut: [ MetacelloPlatform current createRepository: aProjectSpec repositorySpecs first ]
 ]
 
 { #category : 'project specs' }
 MetacelloMVSGraph >> repositoryUrlOf: aProjectSpec [
-	"The URL of the repository aProjectSpec asks for, without its version or path: type://owner/name. What the graph knows is kept per repository"
+	"Where the project aProjectSpec asks for lives, without the version it names: type://owner/name for git, the whole description for a directory (see MCRepository>>projectUrl). What the graph knows is kept per repository"
 
-	^ aProjectSpec repositorySpecs first type , '://' , (self repositoryFor: aProjectSpec) projectPath
-]
-
-{ #category : 'accessing' }
-MetacelloMVSGraph >> source: aVersionSource [
-	"Facts the graph was not told are asked to aVersionSource, once"
-
-	source := aVersionSource
+	^ (self repositoryFor: aProjectSpec) projectUrl
 ]
 
 { #category : 'project specs' }
@@ -238,12 +221,6 @@ MetacelloMVSGraph >> specFor: aRepositoryString project: aProjectName loads: aCo
 		  yourself
 ]
 
-{ #category : 'accessing' }
-MetacelloMVSGraph >> toldReadingOf: aRepository at: aVersion [
-
-	^ readings at: aRepository -> aVersion ifAbsentPut: [ MetacelloMVSBaselineReading new ]
-]
-
 { #category : 'project specs' }
 MetacelloMVSGraph >> versionStringOf: aProjectSpec [
 	"The version aProjectSpec names after the repository, as written, or nil"
@@ -252,37 +229,21 @@ MetacelloMVSGraph >> versionStringOf: aProjectSpec [
 ]
 
 { #category : 'versions' }
-MetacelloMVSGraph >> versionsOf: aRepository [
-	"The version names of aRepository; none when they cannot be read, and failureOf: says why"
-
-	^ versions at: aRepository ifAbsent: [
-			  | published |
-			  published := source
-				               ifNil: [
-						               versionFailures at: aRepository put: 'No versions known for ' , aRepository.
-						               #(  ) ]
-				               ifNotNil: [
-						               source versionsOf: aRepository ifFail: [ :text |
-								               versionFailures at: aRepository put: text.
-								               #(  ) ] ].
-			  dates
-				  at: aRepository
-				  put: ((published select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
-			  versions at: aRepository put: (published collect: [ :each | each name ]) asArray ]
+MetacelloMVSGraph >> versionsOf: aRepository ifFail: aBlock [
+	"The version names of aRepository, read once from the source. When they cannot be read, aBlock is given why, at that moment"
+	| published |
+	versions at: aRepository ifPresent: [ :names | ^ names ].
+	published := source versionsOf: aRepository ifFail: [ :text | ^ aBlock value: text ].
+	dates at: aRepository put: ((published select: [ :each | each date isNotNil ]) collect: [ :each | each name -> each date ]) asDictionary.
+	^ versions at: aRepository put: (published collect: [ :each | each name ]) asArray
 ]
 
 { #category : 'reading' }
-MetacelloMVSGraph >> warnAboutBaselineOf: aCandidate in: aSandbox into: aReading [
+MetacelloMVSGraph >> warnAboutBaselineOf: aCandidate in: aSandbox into: aProjectVersion [
+	"Each text says what its kind does not already say (SystemVersion). The finding is about aCandidate, so the report names it"
 
-	aSandbox imageQueries ifNotEmpty: [ :queries |
-			aReading warning: #imageQuery text: 'The baseline of ' , aCandidate printString , ' asks the image (' , (', ' join: queries)
-				, '): its requirements can depend on the image that resolves them' ].
+	aSandbox imageQueries ifNotEmpty: [ :queries | aProjectVersion warning: #imageQuery text: (', ' join: queries) ].
 	aSandbox usesRemovedMetacelloAPI ifTrue: [
-			aReading warning: #removedAPI text: 'The baseline of ' , aCandidate printString
-				, ' sends packageRepositoryURL, which Metacello replaced by packageRepositoryURLForSpec:' ].
-	aSandbox copiesProjects ifTrue: [
-			aReading
-				warning: #copiedProject
-				text:
-				'The baseline of ' , aCandidate printString , ' uses project:copyFrom:with:, a second name for a project it already requires' ]
+		aProjectVersion warning: #removedAPI text: 'packageRepositoryURL, replaced by packageRepositoryURLForSpec:' ].
+	aSandbox copiesProjects ifTrue: [ aProjectVersion warning: #copiedProject text: 'project:copyFrom:with:' ]
 ]

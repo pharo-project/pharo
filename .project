@@ -1,4 +1,6 @@
 {
 	'srcDirectory' : 'src',
-	'tags' : [ #system ]
+	'tags' : [
+		#system
+	]
 }

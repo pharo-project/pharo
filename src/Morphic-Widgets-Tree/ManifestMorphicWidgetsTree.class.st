@@ -13,5 +13,5 @@ Class {
 ManifestMorphicWidgetsTree class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Object Events' #'System-Localization')
+	^ #(#'System-Localization')
 ]

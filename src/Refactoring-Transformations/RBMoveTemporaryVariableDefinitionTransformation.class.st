@@ -120,7 +120,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree 
 	searcher
 		matches: self blockPatternString
 		do: [ :aNode :answer |
-			(aNode references: variableName)
+			(aNode referencesVariableNamed: variableName)
 				ifTrue: [ answer add: aNode ].
 			answer ].
 	^ searcher

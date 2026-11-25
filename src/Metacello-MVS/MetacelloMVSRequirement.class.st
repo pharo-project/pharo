@@ -2,7 +2,7 @@
 I am one requirement the walk met, from what was asked to what it resolved to. I have the core MetacelloProjectRequest (who asked, the project spec as written in the baseline) and add what only the MVS walk knows:
 
 request: the MetacelloProjectRequest; it goes to the resolved project when the asking candidate is selected.
-from: the candidate that asked (its version's baseline declared me); superseded candidates ask too.
+from: who asked: the candidate whose version's baseline declared me (superseded candidates ask too), or the user for a root.
 reference: the project spec resolution used, after spelling and replace; nil when it never got that far.
 repository: the repository the reference names.
 minimum: the version the reference asks at least.
@@ -19,16 +19,17 @@ Class {
 		'repository',
 		'minimum',
 		'request',
-		'findings'
+		'findings',
+		'project'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
 }
 
 { #category : 'instance creation' }
-MetacelloMVSRequirement class >> from: aCandidate asked: aReference [
+MetacelloMVSRequirement class >> from: aRequester asked: aReference [
 
-	^ self new setFrom: aCandidate asked: aReference
+	^ self new setFrom: aRequester asked: aReference
 ]
 
 { #category : 'accessing' }
@@ -96,6 +97,19 @@ MetacelloMVSRequirement >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
+MetacelloMVSRequirement >> project [
+	"The name of the project asked, once its reference is read: the key of the build list"
+
+	^ project
+]
+
+{ #category : 'accessing' }
+MetacelloMVSRequirement >> project: aProjectName [
+
+	project := aProjectName
+]
+
+{ #category : 'accessing' }
 MetacelloMVSRequirement >> reference [
 	"The reference resolution used, after spelling and replace; nil when it never got that far"
 
@@ -129,9 +143,9 @@ MetacelloMVSRequirement >> request [
 
 { #category : 'accessing' }
 MetacelloMVSRequirement >> resolveIn: aBuildList [
-	"The resolution is over: remember what my repository ended up with"
+	"The resolution is over: remember what my project ended up with"
 
-	resolved := self hasErrors ifFalse: [ aBuildList at: self repository ifAbsent: [ nil ] ]
+	resolved := self hasErrors ifFalse: [ aBuildList at: self project ifAbsent: [ nil ] ]
 ]
 
 { #category : 'accessing' }
@@ -142,9 +156,9 @@ MetacelloMVSRequirement >> resolved [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSRequirement >> setFrom: aCandidate asked: aProjectSpec [
+MetacelloMVSRequirement >> setFrom: aRequester asked: aProjectSpec [
 
-	from := aCandidate.
-	request := MetacelloProjectRequest requester: aCandidate resolvedProject projectSpec: aProjectSpec.
+	from := aRequester.
+	request := aRequester requestFor: aProjectSpec.
 	findings := OrderedCollection new
 ]

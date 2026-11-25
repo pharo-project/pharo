@@ -18,27 +18,12 @@ Class {
 		'layoutProperties',
 		'borderStyle',
 		'cornerStyle',
-		'actionMap',
 		'clipSubmorphs'
 	],
 	#category : 'Morphic-Core-Kernel',
 	#package : 'Morphic-Core',
 	#tag : 'Kernel'
 }
-
-{ #category : 'accessing' }
-MorphExtension >> actionMap [
-	"Answer the value of actionMap"
-
-	^actionMap ifNil: [self valueOfProperty: #actionMap]
-]
-
-{ #category : 'accessing' }
-MorphExtension >> actionMap: anObject [
-	"Set the value of actionMap"
-
-	actionMap := anObject
-]
 
 { #category : 'accessing - other properties' }
 MorphExtension >> assureOtherProperties [
@@ -162,26 +147,6 @@ MorphExtension >> initialize [
 	locked := false.
 	visible := true.
 	sticky := false
-]
-
-{ #category : 'other' }
-MorphExtension >> inspectElement [
-	"Create and schedule an Inspector on the otherProperties and the
-	named properties."
-	| key obj |
-	key := self morphicUIManager
-				chooseFrom: self sortedPropertyNames
-				values: self sortedPropertyNames
-				title: 'Inspect which property?' translated.
-	key
-		ifNil: [^ self].
-	obj := otherProperties
-				at: key
-				ifAbsent: ['nOT a vALuE'].
-	obj = 'nOT a vALuE'
-		ifTrue: [(self perform: key) inspect
-			"named properties"]
-		ifFalse: [obj inspect]
 ]
 
 { #category : 'other' }
@@ -418,7 +383,6 @@ MorphExtension >> veryDeepInner: deepCopier [
 	layoutProperties := layoutProperties veryDeepCopyWith: deepCopier.
 	borderStyle := borderStyle  veryDeepCopyWith: deepCopier.
 	cornerStyle := cornerStyle veryDeepCopyWith: deepCopier.
-	actionMap := actionMap veryDeepCopyWith: deepCopier.
 	clipSubmorphs := clipSubmorphs veryDeepCopyWith: deepCopier.
 
 	otherProperties ifNil: [ ^self ].

@@ -19,5 +19,5 @@ ManifestMorphicDeprecated class >> isDeprecated [
 ManifestMorphicDeprecated class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'System-Object Events')
+	^ #()
 ]

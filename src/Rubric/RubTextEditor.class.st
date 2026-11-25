@@ -480,7 +480,7 @@ RubTextEditor >> chooseColor [
 
 	| attribute |
 	attribute := TextColor color: Color black "default".
-	self morphicUIManager chooseColor
+	MorphicWidgetFactory new chooseColor
 		ifNotNil: [:nc | attribute color: nc].
 	^ attribute
 ]
@@ -560,7 +560,7 @@ RubTextEditor >> compareToClipboard [
 	s1 := self clipboardText string.
 	s2 := self string.
 	s1 = s2 ifTrue: [ ^ InformativeNotification signal: 'Exact match' ].
-	self morphicUIManager longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2) title: 'Comparison to Clipboard Text'
+	MorphicWidgetFactory new longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2) title: 'Comparison to Clipboard Text'
 ]
 
 { #category : 'editing keys' }

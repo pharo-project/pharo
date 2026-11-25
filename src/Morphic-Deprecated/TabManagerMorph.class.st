@@ -165,13 +165,6 @@ TabManagerMorph >> containerColor [
 	^ self theme lightBaseColor
 ]
 
-{ #category : 'protocol' }
-TabManagerMorph >> delete [
-
-	super delete.
-	self triggerEvent: #tabManagerDeleted with: self
-]
-
 { #category : 'private - actions' }
 TabManagerMorph >> deleteSelectedTabs [
 	toolbar selectedTab
@@ -218,7 +211,6 @@ TabManagerMorph >> initialize [
 
 	toolbar := TabBarMorph new.
 	processes := OrderedCollection new.
-	self registerBarActions.
 	self registerShortcuts.
 
 	container := Morph new
@@ -251,20 +243,6 @@ TabManagerMorph >> model [
 TabManagerMorph >> model: aModel [
 
 	model := aModel
-]
-
-{ #category : 'initialization' }
-TabManagerMorph >> registerBarActions [
-
-	toolbar
-		when: #tabSelected send: #tabSelected: to: self;
-		when: #barDeleted send: #barDeleted: to: self;
-		when: #tabsChanged send: #tabsChanged to: self;
-		when: #tabRefreshed send: #tabRefreshed: to: self;
-		when: #tabAddedToSelection send: #tabAddedToSelection: to: self;
-		when: #tabRemovedFromSelection send: #tabRemovedFromSelection: to: self;
-		when: #tabResetSelection send: #tabResetSelection: to: self;
-		when: #tabEmptyContents send: #tabEmptyContents: to: self
 ]
 
 { #category : 'initialization' }
@@ -383,8 +361,7 @@ TabManagerMorph >> tabResetSelection: aTab [
 { #category : 'private - actions' }
 TabManagerMorph >> tabSelected: aTab [
 
-	self setTabContentFrom: aTab.
-	self triggerEvent: #tabSelected with: aTab
+	self setTabContentFrom: aTab
 ]
 
 { #category : 'protocol' }

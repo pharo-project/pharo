@@ -5,6 +5,8 @@ Themed synchronous taskbar (not using #step to poll windows). The buttons provid
 Class {
 	#name : 'TaskbarMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'tasks',
 		'orderedTasks'
@@ -17,12 +19,6 @@ Class {
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'
 }
-
-{ #category : 'class initialization' }
-TaskbarMorph class >> initialize [
-	"Initialize the receiver."
-	self showTaskbarPreferenceChanged
-]
 
 { #category : 'setting' }
 TaskbarMorph class >> maximumButtons [
@@ -101,6 +97,33 @@ TaskbarMorph class >> taskbarSettingOn: aBuilder [
 					label: 'Maximum number of tasks to show';
 					defaultValue: 100;
 					description: 'By default, the value is ' , self maximumButtonsDefault printString ]
+]
+
+{ #category : 'menus' }
+TaskbarMorph >> addTaskItemsFor: aMorph to: aMenu [
+	"Add to the menu of aMorph's taskbar button the items that move its task"
+
+	| moveSubmenu |
+	moveSubmenu := self theme newMenuIn: self for: self.
+	aMenu addLine.
+	aMenu
+		add: 'Move' translated
+		iconFormSet: (self iconFormSetNamed: #blank)
+		subMenu: moveSubmenu.
+	moveSubmenu
+		addToggle: 'Move left' translated
+		target: self
+		selector: #moveTaskLeftOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveLeft: aMorph ]
+		argumentList: { aMorph }.
+	moveSubmenu
+		addToggle: 'Move right' translated
+		target: self
+		selector: #moveTaskRightOf:
+		getStateSelector: nil
+		enablementSelector: [ self canMoveRight: aMorph ]
+		argumentList: { aMorph }
 ]
 
 { #category : 'taskbar' }
@@ -213,27 +236,6 @@ TaskbarMorph >> isAdheringToBottom [
 ]
 
 { #category : 'testing' }
-TaskbarMorph >> isAdheringToLeft [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
-TaskbarMorph >> isAdheringToRight [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
-TaskbarMorph >> isAdheringToTop [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
 TaskbarMorph >> isDockingBar [
 	"Answer yes so we get updated when the Display is resized."
 
@@ -275,6 +277,26 @@ TaskbarMorph >> move: task withOffset: offset [
 	newOrderedTasks add: task beforeIndex: newTaskIndex.
 	self orderedTasks: newOrderedTasks.
 	^ self updateTaskButtons
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskLeftOf: aMorph [
+
+	self moveTaskOf: aMorph by: -1
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskOf: aMorph by: offset [
+	"Move the task of aMorph by offset positions (negative: to the left)"
+
+	self updateTasks.
+	(self taskOf: aMorph) ifNotNil: [ :task | self move: task withOffset: offset ]
+]
+
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTaskRightOf: aMorph [
+
+	self moveTaskOf: aMorph by: 1
 ]
 
 { #category : 'accessing' }

@@ -362,7 +362,7 @@ FLSerializerTest >> testLookupAllInGlobals [
 	| globals global1 marge |
 	global1 := Object new.
 	marge := 'Marge'.
-	globals := { Object. Class. Smalltalk. #World. global1. marge }.
+	globals := { Object. Class. Smalltalk. #Processor. global1. marge }.
 	self serializer lookUpAllInGlobals: globals.
 	self environmentOfTest
 		at: #global1 put: global1;
@@ -375,7 +375,7 @@ FLSerializerTest >> testLookupAllInGlobals [
 		#Object -> Object.
 		#Class -> Class.
 		#Smalltalk -> Smalltalk.
-		#World -> World.
+		#Processor -> Processor.
 		#global1 -> global1.
 	} do: [ :assoc |
 		self assert: (self serializer globals includesAssociation: assoc) ]

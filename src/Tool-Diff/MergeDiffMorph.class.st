@@ -61,22 +61,16 @@ MergeDiffMorph >> compositeText [
 MergeDiffMorph >> indicateDst [
 	"Change the indicators of the joins to the dst side."
 
-	self joinMappings do: [:section |
-		section selectionState: #dst].
-	self
-		changed;
-		changed: #selectedDifferences
+	self joinMappings do: [ :section | section selectionState: #dst ].
+	self changed
 ]
 
 { #category : 'obsolete' }
 MergeDiffMorph >> indicateSrc [
 	"Change the indicators of the joins to the src side."
 
-	self joinMappings do: [:section |
-		section selectionState: #src].
-	self
-		changed;
-		changed: #selectedDifferences
+	self joinMappings do: [ :section | section selectionState: #src ].
+	self changed
 ]
 
 { #category : 'initialization' }
@@ -86,6 +80,13 @@ MergeDiffMorph >> initialize [
 	super initialize.
 	self
 		allowJoinClicks: true
+]
+
+{ #category : 'actions' }
+MergeDiffMorph >> joinClicked [
+	"A join has probably changed its selection state: redraw"
+
+	self changed
 ]
 
 { #category : 'actions' }
@@ -99,17 +100,7 @@ MergeDiffMorph >> joinSectionClass [
 MergeDiffMorph >> newJoinMorph [
 	"Answer a new join morph."
 
-	^super newJoinMorph
-		when: #joinClicked send: #update: to: self with: #joinClicked
-]
-
-{ #category : 'actions' }
-MergeDiffMorph >> update: aspect [
-	"A join has probably changed its selection state."
-
-	super update: aspect.
-	aspect == #joinClicked
-		ifTrue: [self
-				changed;
-				changed: #selectedDifferences]
+	^ super newJoinMorph
+		  whenClickedDo: [ self joinClicked ];
+		  yourself
 ]

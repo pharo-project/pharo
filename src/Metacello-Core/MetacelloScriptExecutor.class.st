@@ -11,7 +11,8 @@ Class {
 		'classNameArg',
 		'repositoryArg',
 		'loadsArg',
-		'roots'
+		'roots',
+		'resolution'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -79,6 +80,7 @@ MetacelloScriptExecutor >> execute [
 	^ [
 		  self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
 		  engine perform: actionArg key withArguments: actionArg value ] ensure: [
+		  resolution := engine resolution.
 		  self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ]
 ]
 
@@ -182,6 +184,13 @@ MetacelloScriptExecutor >> repositoryArg [
 { #category : 'args' }
 MetacelloScriptExecutor >> repositoryArg: anObject [
     repositoryArg := anObject
+]
+
+{ #category : 'accessing' }
+MetacelloScriptExecutor >> resolution [
+	"The MetacelloResolution of the last execution that resolved (load, record, resolve...), errors included; nil when none did"
+
+	^ resolution
 ]
 
 { #category : 'actions api' }

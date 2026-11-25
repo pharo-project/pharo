@@ -42,12 +42,6 @@ HEExtendedInstaller >> failOnUndeclared: anObject [
 ]
 
 { #category : 'initialization' }
-HEExtendedInstaller >> forOptions: aClapHermesCommand [
-	failOnUndeclared := aClapHermesCommand shouldFailOnUndeclared.
-	duplicationMode := HEDuplicationModeStrategy forOption: aClapHermesCommand duplicationMode
-]
-
-{ #category : 'initialization' }
 HEExtendedInstaller >> initialize [
 	super initialize.
 	failOnUndeclared := true.
@@ -59,11 +53,8 @@ HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
 
 	| message |
 	newUndeclareds ifNotEmpty: [
-		message := 'New Undeclared created... check dependencies: '
-		           , (newUndeclareds collect: [ :e | e key ]) printString.
-		failOnUndeclared
-			ifTrue: [ self error: message ]
-			ifFalse: [ SystemNotification signal: message ] ]
+		message := 'New Undeclared created... check dependencies: ' , (newUndeclareds collect: [ :association | association key ]) printString.
+		failOnUndeclared ifTrue: [ self error: message ] ifFalse: [ SystemNotification signal: message ] ]
 ]
 
 { #category : 'validating existence' }

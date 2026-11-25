@@ -8,28 +8,6 @@ SystemWindow >> basicTaskThumbnailOfSize: thumbExtent [
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> canBeMovedToLeft [
-
-
-	self worldTaskbar ifNil: [ ^ false ].
-	^ self worldTaskbar canMoveLeft: self
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> canBeMovedToRight [
-
-	self worldTaskbar ifNil: [ ^ false ].
-	^ self worldTaskbar canMoveRight: self
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> isTaskbarPresent [
-	"Answer whether there is a taskbar in the world."
-
-	^self worldTaskbar isNotNil
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> minimizeAfterGeneratingThumbnail [
 	"Minimize the window after thumbnail generation."
 
@@ -126,7 +104,7 @@ SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 SystemWindow >> taskbarButtonMenu: aMenu [
 	"Answer the menu for the task bar button."
 
-	| menu theme submenu  moveSubmenu |
+	| menu theme submenu |
 	theme :=  self theme.
 	menu := theme newMenuIn: self for: self.
 
@@ -160,30 +138,6 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		iconFormSet: self theme windowMaximizeFormSet;
 		font: theme menuFont.
 
-	menu addLine.
-
-	moveSubmenu := theme newMenuIn: self for: self.
-	menu
-		add: 'Move'
-		iconFormSet: (self iconFormSetNamed: #blank)
-		subMenu: moveSubmenu.
-	moveSubmenu
-		addToggle: 'Move left' translated
-		target: self
-		selector: #taskbarMoveLeft
-		getStateSelector: nil
-		enablementSelector: #canBeMovedToLeft.
-	moveSubmenu
-		addToggle: 'Move right' translated
-		target: self
-		selector: #taskbarMoveRight
-		getStateSelector: nil
-		enablementSelector: #canBeMovedToRight.
-	moveSubmenu
-		addToggle: 'Move to...' translated
-		target: self
-		selector: #taskbarMoveTo
-		getStateSelector: nil.
 	menu addLine.
 
 	submenu := theme newMenuIn: self for: self.
@@ -341,15 +295,4 @@ SystemWindow >> taskbarThumbnailExtent [
 	^self isMinimized
 		ifTrue: [self fullFrame extent min: self defaultTaskbarThumbnailExtent]
 		ifFalse: [super taskbarThumbnailExtent]
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> worldTaskbar [
-	"Answer the world taskbar or nil if none."
-
-	^self world ifNotNil: [ :world |
-		world
-		submorphThat: [ :morph | morph isTaskbar ]
-		ifNone: [ nil ]
-	]
 ]

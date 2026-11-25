@@ -15,9 +15,9 @@ Class {
 	#instVars : [
 		'hermesFiles'
 	],
-	#category : 'Hermes-CommandLineHandler',
+	#category : 'Hermes-CommandLine',
 	#package : 'Hermes',
-	#tag : 'CommandLineHandler'
+	#tag : 'CommandLine'
 }
 
 { #category : 'loading' }
