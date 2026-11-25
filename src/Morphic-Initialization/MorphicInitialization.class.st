@@ -53,7 +53,7 @@ MorphicInitialization class >> initializeFonts [
 	FreeTypeSystemSettings loadFt2Library: true.
 	GraphicFontSettings setFontsToStyleNamed: #small.
 	"The balloon font is taken from the fonts just set"
-	BalloonMorph balloonFont: StandardFonts defaultFont
+	BalloonMorph initialize
 ]
 
 { #category : 'initialization' }
