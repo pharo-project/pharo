@@ -10,6 +10,57 @@ Class {
 }
 
 { #category : 'tests' }
+ReRenameClassDriver2Test >> testChangesAfterReconfiguration [
+
+	| driver firstRefactoring firstChanges secondChanges |
+
+	driver := ReRenameClassDriver2 new
+		oldName: #ReClassToBeRenamed;
+		newName: #NewName;
+		scopes: { RBBrowserEnvironment default };
+		yourself.
+
+	driver createAndSetNewRefactoring.
+	firstRefactoring := driver refactoring.
+	firstChanges := driver changes.
+
+	driver newName: #AnotherNewName.
+	driver createAndSetNewRefactoring.
+	secondChanges := driver changes.
+
+	self deny: firstRefactoring identicalTo: driver refactoring.
+	self deny: firstChanges changes isEmpty.
+	self deny: secondChanges changes isEmpty.
+	self deny: firstChanges identicalTo: secondChanges.
+
+	self assert: (firstChanges changes anySatisfy: [ :change |
+		change class = ReRenameClassChange and: [
+			change newName = #NewName ] ]).
+
+	self assert: (secondChanges changes anySatisfy: [ :change |
+		change class = ReRenameClassChange and: [
+			change newName = #AnotherNewName ] ])
+]
+{ #category : 'tests' }
+ReRenameClassDriver2Test >> testChangesCanBeRequestedTwice [
+
+	| driver firstChanges secondChanges |
+
+	driver := ReRenameClassDriver2 new
+		oldName: #ReClassToBeRenamed;
+		newName: #NewName;
+		scopes: { RBBrowserEnvironment default };
+		yourself.
+
+	driver createAndSetNewRefactoring.
+
+	firstChanges := driver changes.
+	secondChanges := driver changes.
+
+	self deny: firstChanges changes isEmpty.
+	self assert: firstChanges identicalTo: secondChanges
+]
+{ #category : 'tests' }
 ReRenameClassDriver2Test >> testDetectsBehaviorPreservingPrecondition [
     "Verify that the driver detects a behavior-preserving precondition violation."
 
