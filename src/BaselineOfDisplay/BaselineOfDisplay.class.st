@@ -27,8 +27,12 @@ BaselineOfDisplay >> baseline: spec [
 				package: 'Graphics-Display Objects';
 				package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 				package: 'Graphics-Transformations';
-				package: 'Graphics-Files'.
-			spec group: 'Core' with: #( 'Colors' 'Graphics-Display Objects' 'Graphics-Primitives' 'Graphics-Transformations' ) ]
+				package: 'Graphics-Files';
+				package: 'Graphics-Tests' with: [ spec requires: #( 'Graphics-Primitives' 'Graphics-Files' ) ].
+			spec
+				group: 'default' with: #( 'Core' 'Graphics-Files' );
+				group: 'Core' with: #( 'Colors' 'Graphics-Display Objects' 'Graphics-Primitives' 'Graphics-Transformations' );
+				group: 'Tests' with: #( 'default' 'Graphics-Tests' ) ]
 ]
 
 { #category : 'accessing' }

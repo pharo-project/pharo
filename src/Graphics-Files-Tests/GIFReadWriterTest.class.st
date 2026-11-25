@@ -4,9 +4,8 @@ GIF Specific ReadWriter tests. All tests ensure that the images written are read
 Class {
 	#name : 'GIFReadWriterTest',
 	#superclass : 'TestCase',
-	#category : 'Graphics-Tests-Files',
-	#package : 'Graphics-Tests',
-	#tag : 'Files'
+	#category : 'Graphics-Files-Tests',
+	#package : 'Graphics-Files-Tests'
 }
 
 { #category : 'accessing' }

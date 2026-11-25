@@ -270,6 +270,7 @@ def bootstrapImage(){
         isoTesters['Flashback'] = { defineIsoTestStage("Flashback") }
         isoTesters['Fuel'] = { defineIsoTestStage("Fuel") }
         isoTesters['ClassParser'] = { defineIsoTestStage("ClassParser") }
+        isoTesters['Display'] = { defineIsoTestStage("Display") }
         isoTesters['Fonts'] = { defineIsoTestStage("Fonts") }
         isoTesters['FreeType'] = { defineIsoTestStage("FreeType") }
         isoTesters['Keymapping'] = { defineIsoTestStage("Keymapping") }

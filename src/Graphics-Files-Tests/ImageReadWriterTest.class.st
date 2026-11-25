@@ -4,9 +4,8 @@ Functional tests for image IO to binary streams and files for the major formats 
 Class {
 	#name : 'ImageReadWriterTest',
 	#superclass : 'TestCase',
-	#category : 'Graphics-Tests-Files',
-	#package : 'Graphics-Tests',
-	#tag : 'Files'
+	#category : 'Graphics-Files-Tests',
+	#package : 'Graphics-Files-Tests'
 }
 
 { #category : 'accessing' }

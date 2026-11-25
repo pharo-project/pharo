@@ -31,6 +31,7 @@ BaselineOfGeneralTests >> baseline: spec [
 					repository: repository;
 					loads: #( 'Tests' ) ];
 			baseline: 'MorphicCore' with: [ spec loads: #Tests from: repository ];
+			baseline: 'Display' with: [ spec loads: #Tests from: repository ];
 			package: 'NumberParser-Tests';
 			package: 'Fuel-Core-Tests';
 			package: 'Collections-Arithmetic-Tests';
@@ -38,7 +39,8 @@ BaselineOfGeneralTests >> baseline: spec [
 			baseline: 'Epicea' with: [ spec loads: #Tests from: repository ];
 			baseline: 'Fonts' with: [ spec loads: #Tests from: repository ];
 			baseline: 'FreeType' with: [ spec loads: #Tests from: repository ];
-			package: 'Graphics-Tests';
+			"The image file format tests draw with FormCanvas and read the logo from the settings"
+			package: 'Graphics-Files-Tests';
 			package: 'Text-Tests';
 			package: 'Morphic-Testing-Support';
 			package: 'Morphic-Tests';
