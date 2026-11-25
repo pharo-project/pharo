@@ -13,26 +13,6 @@ MorphicUIManager >> abort: aStringOrText title: aString [
 ]
 
 { #category : '*Morphic-Widgets' }
-MorphicUIManager >> activate [
-
-	self currentWorld worldState worldRenderer:
-		(AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
-	self currentWorld currentCursor: self currentWorld currentCursor.
-
-	self currentWorld ifNotNil: [ :world | world restoreMorphicDisplay ].
-	WorldMorph extraWorldList do: [ :each | each restoreMorphicDisplay ].
-
-
-	SystemProgressMorph enable.
-
-	activeTranscript
-		ifNotNil: [ Transcript := activeTranscript ]
-		ifNil: [
-			Transcript class name == 'StThreadSafeTranscript' ifFalse: [
-				Smalltalk globals at: #StThreadSafeTranscript ifPresent: [ :c | c installThreadSafeAsTranscript ] ] ]
-]
-
-{ #category : '*Morphic-Widgets' }
 MorphicUIManager >> alert: aStringOrText [
 
 	^ self widgetFactory alert: aStringOrText
@@ -252,17 +232,6 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 		falseChoice: falseChoice
 		cancelChoice: cancelChoice
 		default: defaultOption
-]
-
-{ #category : '*Morphic-Widgets' }
-MorphicUIManager >> deactivate [
-
-	activeTranscript := Transcript.
-	SystemProgressMorph disable.
-
-	WorldMorph extraWorldList do: [ :world | world removeModalWindow ].
-
-	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld)
 ]
 
 { #category : '*Morphic-Widgets' }

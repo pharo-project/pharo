@@ -43,6 +43,33 @@ MorphicUIManager class >> uiProcess [
 	^ UIProcess
 ]
 
+{ #category : 'activation' }
+MorphicUIManager >> activate [
+
+	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
+	self currentWorld currentCursor: self currentWorld currentCursor.
+
+	self currentWorld ifNotNil: [ :world |
+		world restoreMorphicDisplay.
+		world uiActivated ].
+	WorldMorph extraWorldList do: [ :each | each restoreMorphicDisplay ].
+
+	activeTranscript ifNotNil: [ Transcript := activeTranscript ] ifNil: [
+		Transcript class name == 'StThreadSafeTranscript' ifFalse: [
+			Smalltalk globals at: #StThreadSafeTranscript ifPresent: [ :c | c installThreadSafeAsTranscript ] ] ]
+]
+
+{ #category : 'activation' }
+MorphicUIManager >> deactivate [
+
+	activeTranscript := Transcript.
+	self currentWorld uiDeactivated.
+
+	WorldMorph extraWorldList do: [ :world | world removeModalWindow ].
+
+	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld)
+]
+
 { #category : 'ui process' }
 MorphicUIManager >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"

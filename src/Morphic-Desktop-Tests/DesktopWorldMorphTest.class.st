@@ -95,6 +95,12 @@ DesktopWorldMorphTest >> testNotifiesTheUserInItself [
 ]
 
 { #category : 'tests' }
+DesktopWorldMorphTest >> testShowsTheSystemJobProgressByDefault [
+
+	self assert: DesktopWorldMorph new jobAnnouncer identicalTo: Job jobAnnouncer
+]
+
+{ #category : 'tests' }
 DesktopWorldMorphTest >> testTakesTheDesktopColorOfItsTheme [
 
 	| world theme |
@@ -103,4 +109,29 @@ DesktopWorldMorphTest >> testTakesTheDesktopColorOfItsTheme [
 	theme := UITheme current class new.
 	world theme: theme.
 	self assert: world color equals: theme desktopColor
+]
+
+{ #category : 'tests' }
+DesktopWorldMorphTest >> testUIActivatedShowsJobProgress [
+
+	| world jobs |
+	jobs := Announcer new.
+	world := DesktopWorldMorph new
+		         jobAnnouncer: jobs;
+		         yourself.
+	world uiActivated.
+	self assert: (jobs hasSubscriber: SystemProgressMorph)
+]
+
+{ #category : 'tests' }
+DesktopWorldMorphTest >> testUIDeactivatedHidesJobProgress [
+
+	| world jobs |
+	jobs := Announcer new.
+	world := DesktopWorldMorph new
+		         jobAnnouncer: jobs;
+		         yourself.
+	world uiActivated.
+	world uiDeactivated.
+	self deny: (jobs hasSubscriber: SystemProgressMorph)
 ]
