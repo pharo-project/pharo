@@ -52,16 +52,16 @@ BaselineOfMorphic >> baseline: spec [
 
 		"Finds the selector under the cursor of the code editor"
 		spec package: 'Tools-CodeNavigation'.
-		"Plain widgets, and Rubric's text widgets and editors"
-		spec package: 'Morphic-Widgets' with: [ spec requires: #( 'MorphicCore' 'Graphics-Icons' 'Regex' 'Tools-CodeNavigation' ) ].
-		spec package: 'Morphic-Widgets-Basic' with: [ spec requires: #( 'Morphic-Widgets' ) ].
-		spec package: 'Morphic-Widgets-Pluggable' with: [ spec requires: #( 'Morphic-Widgets' ) ].
-		spec package: 'Morphic-Widgets-PolyTabs' with: [ spec requires: #( 'Morphic-Widgets' ) ].
-		spec package: 'Morphic-Widgets-Taskbar' with: [ spec requires: #( 'Morphic-Widgets-Basic' ) ].
+		"Plain widgets, buttons, lists, tabs, and Rubric's text widgets and editors"
+		spec package: 'Morphic-Widgets' with: [
+			spec requires:
+				#( 'MorphicCore' 'Graphics-Icons' 'Graphics-Shapes' 'Regex' 'Tools-CodeNavigation' 'System-History' 'Text-Diff' 'Text-Edition'
+				   'Text-Scanning' 'Tool-Base' ) ].
+		spec package: 'Morphic-Widgets-Taskbar' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-MissionControl' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 
-		spec package: 'Morphic-Widgets-Menubar' with: [ spec requires: #( 'Morphic-Widgets-Basic' ) ].
-		spec package: 'Morphic-Widgets-Tree' with: [ spec requires: #( 'Morphic-Widgets-Basic' ) ].
+		spec package: 'Morphic-Widgets-Menubar' with: [ spec requires: #( 'Morphic-Widgets' ) ].
+		spec package: 'Morphic-Widgets-Tree' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' ) ].
 		"Halos plug into the world's root event handler, and open menus"
 		spec package: 'Morphic-Halos' with: [ spec requires: #( 'Morphic-Widgets' ) ].

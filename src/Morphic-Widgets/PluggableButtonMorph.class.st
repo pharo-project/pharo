@@ -57,8 +57,8 @@ Class {
 		'iconPosition',
 		'lastState'
 	],
-	#category : 'Morphic-Widgets-Basic-Buttons',
-	#package : 'Morphic-Widgets-Basic',
+	#category : 'Morphic-Widgets-Buttons',
+	#package : 'Morphic-Widgets',
 	#tag : 'Buttons'
 }
 

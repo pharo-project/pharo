@@ -20,7 +20,8 @@ Class {
 		'originalObject'
 	],
 	#category : 'Morphic-Widgets-Basic',
-	#package : 'Morphic-Widgets-Basic'
+	#package : 'Morphic-Widgets',
+	#tag : 'Basic'
 }
 
 { #category : 'instance creation' }

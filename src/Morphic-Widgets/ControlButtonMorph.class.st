@@ -4,8 +4,8 @@ Specially themed ""control"" button. Used for drop-lists, expanders etc.
 Class {
 	#name : 'ControlButtonMorph',
 	#superclass : 'PluggableButtonMorph',
-	#category : 'Morphic-Widgets-Basic-Buttons',
-	#package : 'Morphic-Widgets-Basic',
+	#category : 'Morphic-Widgets-Buttons',
+	#package : 'Morphic-Widgets',
 	#tag : 'Buttons'
 }
 

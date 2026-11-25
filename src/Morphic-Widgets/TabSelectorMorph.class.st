@@ -15,7 +15,8 @@ Class {
 		'wrapScrolling'
 	],
 	#category : 'Morphic-Widgets-PolyTabs',
-	#package : 'Morphic-Widgets-PolyTabs'
+	#package : 'Morphic-Widgets',
+	#tag : 'PolyTabs'
 }
 
 { #category : 'operations' }
