@@ -1,7 +1,7 @@
 Class {
 	#name : 'SliderMorph',
 	#superclass : 'ModelMorph',
-	#traits : 'TMorphicWidget',
+	#traits : 'TMorphicWidget - {#defaultBorderWidth}',
 	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'slider',
@@ -37,12 +37,6 @@ SliderMorph >> computeSlider [
 SliderMorph >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ #inset
-]
-
-{ #category : 'initialization' }
-SliderMorph >> defaultBorderWidth [
-	"answer the default border width for the receiver"
-	^ 1
 ]
 
 { #category : 'initialization' }
