@@ -459,7 +459,6 @@ Morph >> addYellowButtonMenuItemsTo: aMenu event: evt [
 	aMenu addLine.
 	self isWorldMorph
 		ifFalse: [aMenu add: 'copy to paste buffer' selector: #copyToPasteBuffer:].
-	(self allStringsAfter: nil) isEmpty ifFalse: [aMenu add: 'copy text' selector: #clipText].
 	self addExportMenuItems: aMenu hand: evt hand.
 	aMenu addLine.
 	aMenu add: 'adhere to edge...' selector: #adhereToEdge.
@@ -545,8 +544,6 @@ Morph >> buildMetaMenu: evt [
 	menu add: 'copy to paste buffer' selector: #copyToPasteBuffer:.
 	self maybeAddCollapseItemTo: menu.
 	menu add: 'delete' selector: #dismissMorph:.
-	menu addLine.
-	menu add: 'copy text' selector: #clipText.
 	menu addLine.
 	menu add: 'go behind' selector: #goBehind.
 	menu add: 'add halo' selector: #addHalo:.
