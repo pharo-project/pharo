@@ -2,7 +2,7 @@
 This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
 
 Depends on:
-- Display, Fonts (Core), FreeType (core), Keymapping (Core), UIManager
+- Display, Fonts (Core), Keymapping (Core), UIManager
 
 Load type: 
 - linear
@@ -28,7 +28,6 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec
 				baseline: 'Display' with: [ spec repository: repository ];
 				baseline: 'Fonts' with: [ spec loads: #Core from: repository ];
-				baseline: 'FreeType' with: [ spec loads: #core from: repository ];
 				baseline: 'Keymapping' with: [ spec loads: #Core from: repository ];
 				baseline: 'UIManager' with: [ spec repository: repository ].
 			"The Morphic tests of keymapping subclass the tests of Keymapping"
@@ -45,7 +44,7 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec package: 'System-Model'.
 			spec package: 'FileSystem-Zip'.
 			spec package: 'Morphic-Core' with: [
-				spec requires: #( 'System-Object Events' 'System-Caching' 'FormCanvas-Core' 'System-Model' 'FileSystem-Zip' 'FreeType' 'Keymapping' 'UIManager' ) ].
+				spec requires: #( 'System-Object Events' 'System-Caching' 'FormCanvas-Core' 'System-Model' 'FileSystem-Zip' 'Keymapping' 'UIManager' ) ].
 
 			spec package: 'System-Object Events-Tests' with: [ spec requires: #( 'System-Object Events' ) ].
 			spec package: 'System-Caching-Tests' with: [ spec requires: #( 'System-Caching' ) ].
