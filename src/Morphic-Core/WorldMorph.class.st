@@ -724,6 +724,20 @@ WorldMorph >> taskbarTasks [
 		  thenSelect: [ :m | m isNotNil ]
 ]
 
+{ #category : 'world state' }
+WorldMorph >> uiActivated [
+	"Morphic became the active UI, with me as its current world"
+
+	
+]
+
+{ #category : 'world state' }
+WorldMorph >> uiDeactivated [
+	"Morphic stopped being the active UI"
+
+	
+]
+
 { #category : 'copying' }
 WorldMorph >> veryDeepCopyWith: deepCopier [
 	"never copy the World"

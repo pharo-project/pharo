@@ -186,7 +186,7 @@ ReAbstractCritique >> isCritique [
 { #category : 'actions' }
 ReAbstractCritique >> popDescriptionUp [
 
-	MorphicUIManager new longMessage: self description title: self title
+	MorphicWidgetFactory new longMessage: self description title: self title
 ]
 
 { #category : 'printing' }

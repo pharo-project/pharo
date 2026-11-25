@@ -47,15 +47,28 @@ SystemProgressMorph class >> cleanUp [
 { #category : 'enabling/disabling' }
 SystemProgressMorph class >> disable [
 
-	Job jobAnnouncer unsubscribe: self
+	self disableOn: Job jobAnnouncer
+]
+
+{ #category : 'enabling/disabling' }
+SystemProgressMorph class >> disableOn: aJobAnnouncer [
+
+	aJobAnnouncer unsubscribe: self
 ]
 
 { #category : 'enabling/disabling' }
 SystemProgressMorph class >> enable [
 
-	Job jobAnnouncer when: JobStart send: #startJob: to: self.
-	Job jobAnnouncer when: JobEnd send: #endJob: to: self.
-	Job jobAnnouncer when: JobChange send: #updateJob: to: self
+	self enableOn: Job jobAnnouncer
+]
+
+{ #category : 'enabling/disabling' }
+SystemProgressMorph class >> enableOn: aJobAnnouncer [
+	"Show the progress of the jobs aJobAnnouncer announces"
+
+	aJobAnnouncer when: JobStart send: #startJob: to: self.
+	aJobAnnouncer when: JobEnd send: #endJob: to: self.
+	aJobAnnouncer when: JobChange send: #updateJob: to: self
 ]
 
 { #category : 'job subscription' }

@@ -291,7 +291,7 @@ CalendarMorph >> handleMonthNameTouched [
 
 	| newMonthName dayCount |
 
-	newMonthName := self morphicUIManager
+	newMonthName := MorphicWidgetFactory new
 		chooseDropList: 'Choose a month:'
 		list:
 			#('January' 'February' 'March' 'April' 'May' 'June' 'July' 'August' 'September' 'October' 'November' 'December').
@@ -331,6 +331,7 @@ CalendarMorph >> handleYearTouched [
 
 	newYear := self morphicUIManager
 		chooseOrRequestFrom: ( 2000 to: 2020 )
+		values: ( 2000 to: 2020 )
 		lines: #()
 		title: 'Choose a year:'.
 

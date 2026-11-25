@@ -110,7 +110,7 @@ WorldState class >> saveAndQuit [
 WorldState >> saveAs [
 
 	| reference |
-	reference := worldRenderer world morphicUIManager
+	reference := MorphicWidgetFactory new
 		             chooseForSaveFileReference: 'Save Image as?'
 		             extensions: #( 'image' )
 		             path: Smalltalk imageFile nextVersion.

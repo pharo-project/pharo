@@ -2979,7 +2979,7 @@ SystemWindow >> setWasClosedFromShortcut: aBoolean [
 SystemWindow >> setWindowColor [
 	"Allow the user to select a new basic color for the window"
 
-	(self morphicUIManager chooseColor: self paneColor)
+	(MorphicWidgetFactory new chooseColor: self paneColor)
 		ifNotNil: [:nc | self setWindowColor: nc]
 ]
 

@@ -228,7 +228,7 @@ Morph >> embeddedInMorphicWindowLabeled: labelString [
 Morph >> exportAs: anExtension using: aWriter [
 
 	| reference |
-	reference := self morphicUIManager
+	reference := MorphicWidgetFactory new
 		chooseForSaveFileReference: 'Save Morph as ', anExtension asUppercase
 		extensions: { anExtension }
 		path: (self externalName, '.' , anExtension).
