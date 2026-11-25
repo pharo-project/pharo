@@ -72,12 +72,6 @@ ThumbnailMorph >> actualViewee [
 ]
 
 { #category : 'initialization' }
-ThumbnailMorph >> defaultBorderWidth [
-"answer the default border width for the receiver"
-	^ 1
-]
-
-{ #category : 'initialization' }
 ThumbnailMorph >> defaultColor [
 "answer the default color/fill style for the receiver"
 	^ Color

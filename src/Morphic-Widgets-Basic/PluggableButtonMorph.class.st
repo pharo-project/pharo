@@ -391,12 +391,6 @@ PluggableButtonMorph >> cornerStyle: aSymbol [
 ]
 
 { #category : 'initialization' }
-PluggableButtonMorph >> defaultBorderWidth [
-	"answer the default border width for the receiver"
-	^ self theme borderWidth
-]
-
-{ #category : 'initialization' }
 PluggableButtonMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ self containingWindow ifNil: [Color lightGreen] ifNotNil: [:w | w defaultBackgroundColor]
