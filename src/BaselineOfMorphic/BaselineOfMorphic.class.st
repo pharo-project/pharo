@@ -71,7 +71,9 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-MissionControl-Tests' with: [ spec requires: #( 'Morphic-Widgets-MissionControl' ) ].
 
 		"Several packages depend on Rubric as a basic Morphic component"
-		spec package: 'Rubric' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' ) ].
+		"Finds the selector under the cursor of Rubric's code editor"
+		spec package: 'Tools-CodeNavigation'.
+		spec package: 'Rubric' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' 'Tools-CodeNavigation' ) ].
 
 		spec baseline: 'NewValueHolder' with: [
 			spec
