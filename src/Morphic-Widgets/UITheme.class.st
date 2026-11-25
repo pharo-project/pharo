@@ -3749,6 +3749,11 @@ UITheme >> resizerGripNormalFillStyleFor: aResizer [
 	^ colorPalette resizerGripNormalFillStyleFor: aResizer
 ]
 
+{ #category : 'accessing' }
+UITheme >> rubScrolledTextMorphThemer [
+	^ RubScrolledTextMorphThemer new
+]
+
 { #category : 'scrollbars' }
 UITheme >> scrollBarButtonArrowVertices: aRectangle [
 	^ self verticesForComplexArrow: aRectangle

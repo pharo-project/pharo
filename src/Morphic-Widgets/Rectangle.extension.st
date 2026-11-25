@@ -11,3 +11,13 @@ Rectangle >> asLayoutFrame [
 		bottomFraction: self bottom;
 		yourself
 ]
+
+{ #category : '*Morphic-Widgets' }
+Rectangle >> privateSetCorner: bottomRight [
+	corner := bottomRight
+]
+
+{ #category : '*Morphic-Widgets' }
+Rectangle >> privateSetOrigin: topLeft [
+	origin := topLeft
+]

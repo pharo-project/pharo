@@ -29,8 +29,7 @@ BaselineOfMorphic >> baseline: spec [
 	| repository |
 	repository := self packageRepositoryURLForSpec: spec.
 
-	spec for: #common do: [
-		"Plain morphs, events, layouts and worlds. The widgets build on them"
+	spec for: #common do: [ "Plain morphs, events, layouts and worlds. The widgets build on them"
 		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
 
 		spec package: 'System-Identification'.
@@ -51,7 +50,10 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: #( 'Core' ) ].
 
-		spec package: 'Morphic-Widgets' with: [ spec requires: #( 'MorphicCore' 'Graphics-Icons' ) ].
+		"Finds the selector under the cursor of the code editor"
+		spec package: 'Tools-CodeNavigation'.
+		"Plain widgets, and Rubric's text widgets and editors"
+		spec package: 'Morphic-Widgets' with: [ spec requires: #( 'MorphicCore' 'Graphics-Icons' 'Regex' 'Tools-CodeNavigation' ) ].
 		spec package: 'Morphic-Widgets-Basic' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-Pluggable' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-PolyTabs' with: [ spec requires: #( 'Morphic-Widgets' ) ].
@@ -69,11 +71,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Taskbar-Tests' with: [ spec requires: #( 'Morphic-Widgets-Taskbar' ) ].
 		spec package: 'Morphic-Desktop-Tests' with: [ spec requires: #( 'Morphic-Desktop' ) ].
 		spec package: 'Morphic-Widgets-MissionControl-Tests' with: [ spec requires: #( 'Morphic-Widgets-MissionControl' ) ].
-
-		"Several packages depend on Rubric as a basic Morphic component"
-		"Finds the selector under the cursor of Rubric's code editor"
-		spec package: 'Tools-CodeNavigation'.
-		spec package: 'Rubric' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' 'Tools-CodeNavigation' ) ].
 
 		spec baseline: 'NewValueHolder' with: [
 			spec
@@ -100,13 +97,12 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Tool-Base' with: [ spec requires: #( 'MorphicCore' ) ].
 
 		"Sets up Morphic and starts its UI; the bootstrap runs it after loading Pharo"
-		spec
-			package: 'Morphic-Initialization'
-			with: [
-			spec requires: #( 'Morphic-Widgets' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ].
+		spec package: 'Morphic-Initialization' with: [
+			spec requires:
+				#( 'Morphic-Widgets' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos'
+				   'Morphic-Desktop' ) ].
 
-		spec
-			group: 'Tests' with: #( 'Morphic-Widgets-Taskbar-Tests' 'Morphic-Desktop-Tests' 'Morphic-Widgets-MissionControl-Tests' ) ]
+		spec group: 'Tests' with: #( 'Morphic-Widgets-Taskbar-Tests' 'Morphic-Desktop-Tests' 'Morphic-Widgets-MissionControl-Tests' ) ]
 ]
 
 { #category : 'baseline' }

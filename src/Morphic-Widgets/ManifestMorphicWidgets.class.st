@@ -13,7 +13,7 @@ Class {
 ManifestMorphicWidgets class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'Graphics-Files' #'System-Localization')
+	^ #( #'Graphics-Files' #'System-Localization' #'Transcript-NonInteractive' #'Text-Edition' )
 ]
 
 { #category : 'code-critics' }

@@ -82,6 +82,11 @@ Object >> okToClose [
 ]
 
 { #category : '*Morphic-Widgets' }
+Object >> reactToRubTextAreaDoubleClick: anEvent [
+	"Noop"
+]
+
+{ #category : '*Morphic-Widgets' }
 Object >> systemIconName [
 
 	^ #class
@@ -118,6 +123,10 @@ Object >> treeNodeHead [
 Object >> treeNodeTail [
 
 	^ nil
+]
+
+{ #category : '*Morphic-Widgets' }
+Object >> unplug [
 ]
 
 { #category : '*Morphic-Widgets' }
