@@ -3175,11 +3175,6 @@ Morph >> mainDockingBars [
 		select: [:each | each hasProperty: #mainDockingBarTimeStamp]
 ]
 
-{ #category : 'geometry' }
-Morph >> makeMeVisible [
-	"Move into the visible area of my world. Most morphs stay where they are; windows move back on screen"
-]
-
 { #category : 'halos and balloon help' }
 Morph >> maxBalloonHelpLineLength [
 

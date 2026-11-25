@@ -1951,6 +1951,13 @@ SystemWindow >> isSystemWindow [
 	^ true
 ]
 
+{ #category : 'testing' }
+SystemWindow >> isTaskbarPresent [
+	"Answer whether there is a taskbar in the world."
+
+	^ self worldTaskbar isNotNil
+]
+
 { #category : 'top window' }
 SystemWindow >> isTopWindow [
 
@@ -3233,4 +3240,11 @@ SystemWindow >> window [
 	"Answer the receiver's window."
 
 	^self
+]
+
+{ #category : 'testing' }
+SystemWindow >> worldTaskbar [
+	"Answer the world taskbar or nil if none."
+
+	^ self world ifNotNil: [ :world | world submorphThat: [ :morph | morph isTaskbar ] ifNone: [ nil ] ]
 ]

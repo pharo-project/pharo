@@ -47,6 +47,26 @@ DesktopWorldMorphTest >> testAltTabOpensTheTaskListOfTheDesktop [
 ]
 
 { #category : 'tests' }
+DesktopWorldMorphTest >> testFullRepaintMovesWindowTopLeftOnScreen [
+	"A window can end up outside the desktop, for example when the desktop shrinks.
+	A full repaint brings it back: makeMeVisible only promises that the window's top-left corner is visible, so that is what we check"
+
+	| desktop window |
+	desktop := DesktopWorldMorph new.
+	desktop extent: 800 @ 600.
+	window := SystemWindow labelled: 'lost'.
+	window extent: 200 @ 100.
+	desktop addMorph: window.
+
+	"Push the window far beyond the desktop's bottom-right corner"
+	window position: 2000 @ 2000.
+
+	desktop fullRepaintNeeded.
+
+	self assert: (desktop bounds containsPoint: window position)
+]
+
+{ #category : 'tests' }
 DesktopWorldMorphTest >> testHasTheDesktopHandlers [
 
 	self assert: (DesktopWorldMorph new rootEventHandlers collect: [ :handler | handler class ]) asArray equals: {
