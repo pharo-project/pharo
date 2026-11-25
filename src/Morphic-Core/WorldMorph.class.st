@@ -482,8 +482,7 @@ WorldMorph >> fullContainsPoint: pt [
 { #category : 'drawing' }
 WorldMorph >> fullRepaintNeeded [
 
-	worldState doFullRepaint.
-	self windowsSatisfying: [:w | w makeMeVisible. false]
+	worldState doFullRepaint
 ]
 
 { #category : 'event handling' }

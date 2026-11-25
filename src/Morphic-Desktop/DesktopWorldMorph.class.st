@@ -10,6 +10,14 @@ Class {
 	#package : 'Morphic-Desktop'
 }
 
+{ #category : 'drawing' }
+DesktopWorldMorph >> fullRepaintNeeded [
+	"Bring windows back on screen, for example after the world was resized"
+
+	super fullRepaintNeeded.
+	self submorphsDo: [ :each | each isSystemWindow ifTrue: [ each makeMeVisible ] ]
+]
+
 { #category : 'initialization' }
 DesktopWorldMorph >> initialize [
 	"A desktop: its world menu and quit dialog, its taskbar keys, and halos on meta gestures"

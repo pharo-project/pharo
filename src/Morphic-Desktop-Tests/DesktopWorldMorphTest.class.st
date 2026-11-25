@@ -47,6 +47,22 @@ DesktopWorldMorphTest >> testAltTabOpensTheTaskListOfTheDesktop [
 ]
 
 { #category : 'tests' }
+DesktopWorldMorphTest >> testFullRepaintBringsWindowsBackOnScreen [
+
+	| desktop window |
+	desktop := DesktopWorldMorph new.
+	desktop extent: 800 @ 600.
+	window := SystemWindow labelled: 'lost'.
+	window extent: 200 @ 100.
+	desktop addMorph: window.
+	window position: 2000 @ 2000.
+
+	desktop fullRepaintNeeded.
+
+	self assert: (desktop bounds containsPoint: window position)
+]
+
+{ #category : 'tests' }
 DesktopWorldMorphTest >> testHasTheDesktopHandlers [
 
 	self assert: (DesktopWorldMorph new rootEventHandlers collect: [ :handler | handler class ]) asArray equals: {
