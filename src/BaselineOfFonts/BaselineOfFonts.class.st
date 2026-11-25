@@ -18,9 +18,7 @@ BaselineOfFonts >> baseline: spec [
 	| repository |
 	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
-			spec postLoadDoIt: #postload:package:.
-
-			"Fonts draw on forms, and the bitmap fonts load from PNG files"
+			"Fonts draw on forms"
 			spec baseline: 'Display' with: [ spec repository: repository ].
 
 			spec
@@ -33,11 +31,4 @@ BaselineOfFonts >> baseline: spec [
 			spec
 				group: 'Core' with: #( 'Fonts-Abstract' 'Fonts-Infrastructure' 'Graphics-Fonts' 'Text-Core' );
 				group: 'Tests' with: #( 'Fonts-Infrastructure-Tests' ) ]
-]
-
-{ #category : 'actions' }
-BaselineOfFonts >> postload: loader package: packageSpec [
-	"The baseline is compiled before its packages load, so it finds the class by name"
-
-	(self class environment at: #StrikeFont) loadBitmapFonts
 ]
