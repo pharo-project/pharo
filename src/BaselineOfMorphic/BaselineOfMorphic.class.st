@@ -45,6 +45,18 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Native-Browser'.
 
+		"Menus are built from pragmas and menu specs"
+		spec baseline: 'MenuRegistration' with: [ spec repository: repository ].
+		"The clipboard, for copy and paste"
+		spec package: 'System-Utilities'.
+		"Jobs announce their progress to the progress bar"
+		spec package: 'Jobs'.
+		"Rubric's debug it submits an Oups debug request"
+		spec baseline: 'Debugging' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
+
 		spec baseline: 'Regex' with: [
 			spec
 				repository: repository;
@@ -56,7 +68,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets' with: [
 			spec requires:
 				#( 'MorphicCore' 'Graphics-Icons' 'Graphics-Shapes' 'Regex' 'Tools-CodeNavigation' 'System-History' 'Text-Diff' 'Text-Edition'
-				   'Text-Scanning' 'Tool-Base' ) ].
+				   'Text-Scanning' 'Tool-Base' 'Debugging' 'Jobs' 'MenuRegistration' 'System-Utilities' ) ].
 		spec package: 'Morphic-Widgets-Taskbar' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-MissionControl' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 
@@ -94,7 +106,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Scanning'.
 
 		"Tool-Base extends and uses morphic, so it depends on it"
-		spec package: 'Tool-Base' with: [ spec requires: #( 'MorphicCore' ) ].
+		spec package: 'Tool-Base' with: [ spec requires: #( 'MorphicCore' 'Debugging' ) ].
 
 		"Sets up Morphic and starts its UI; the bootstrap runs it after loading Pharo"
 		spec package: 'Morphic-Initialization' with: [
