@@ -6,8 +6,6 @@ I was packaged in toolbuilder and I may change in the future. For the moment, th
 Class {
 	#name : 'MorphicUIManager',
 	#superclass : 'UIManager',
-	#traits : 'TEasilyThemed - {#theme}',
-	#classTraits : 'TEasilyThemed classTrait',
 	#instVars : [
 		'activeTranscript'
 	],
@@ -46,6 +44,18 @@ MorphicUIManager class >> uiProcess [
 	^ UIProcess
 ]
 
+{ #category : 'dialogs' }
+MorphicUIManager >> abort: aStringOrText [
+
+	^ self widgetFactory abort: aStringOrText
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> abort: aStringOrText title: aString [
+
+	^ self widgetFactory abort: aStringOrText title: aString
+]
+
 { #category : 'private' }
 MorphicUIManager >> activate [
 
@@ -64,6 +74,30 @@ MorphicUIManager >> activate [
 		ifNil: [
 			Transcript class name == 'StThreadSafeTranscript' ifFalse: [
 				Smalltalk globals at: #StThreadSafeTranscript ifPresent: [ :c | c installThreadSafeAsTranscript ] ] ]
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> alert: aStringOrText [
+
+	^ self widgetFactory alert: aStringOrText
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> alert: aStringOrText title: aString [
+
+	^ self widgetFactory alert: aStringOrText title: aString
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> alert: aStringOrText title: aString configure: aBlock [
+
+	^ self widgetFactory alert: aStringOrText title: aString configure: aBlock
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> chooseDirectory: title [
+
+	^ self widgetFactory chooseDirectory: title
 ]
 
 { #category : 'ui requests' }
@@ -410,6 +444,42 @@ MorphicUIManager >> preferredCornerStyle [
 	^ self theme preferredCornerStyle
 ]
 
+{ #category : 'dialogs' }
+MorphicUIManager >> proceed: aStringOrText [
+
+	^ self widgetFactory proceed: aStringOrText
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> proceed: aStringOrText title: aString [
+
+	^ self widgetFactory proceed: aStringOrText title: aString
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> question: aStringOrText [
+
+	^ self widgetFactory question: aStringOrText
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> question: aStringOrText title: aString [
+
+	^ self widgetFactory question: aStringOrText title: aString
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> questionWithoutCancel: aStringOrText [
+
+	^ self widgetFactory questionWithoutCancel: aStringOrText
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> questionWithoutCancel: aStringOrText title: aString [
+
+	^ self widgetFactory questionWithoutCancel: aStringOrText title: aString
+]
+
 { #category : 'ui requests' }
 MorphicUIManager >> request: queryString initialAnswer: defaultAnswer [
 	"Create an instance of me whose question is queryString with the given initial answer. Invoke it centered at the given point, and answer the string the user accepts. Answer the empty string if the user cancels."
@@ -489,6 +559,24 @@ MorphicUIManager >> terminateUIProcess [
 	UIProcess := nil "?"
 ]
 
+{ #category : 'dialogs' }
+MorphicUIManager >> textEntry: aStringOrText [
+
+	^ self widgetFactory textEntry: aStringOrText
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> textEntry: aStringOrText title: aString [
+
+	^ self widgetFactory textEntry: aStringOrText title: aString
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> textEntry: aStringOrText title: aString entryText: defaultEntryText [
+
+	^ self widgetFactory textEntry: aStringOrText title: aString entryText: defaultEntryText
+]
+
 { #category : 'accessing' }
 MorphicUIManager >> theme [
 	^ Smalltalk ui theme
@@ -500,6 +588,12 @@ MorphicUIManager >> uiProcess [
 	Client should check explicitly if #uiProcess answers nil or not (see other implementations)"
 
 	^ UIProcess
+]
+
+{ #category : 'dialogs' }
+MorphicUIManager >> widgetFactory [
+
+	^ MorphicWidgetFactory new
 ]
 
 { #category : 'global state' }
