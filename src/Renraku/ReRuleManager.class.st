@@ -178,16 +178,19 @@ ReRuleManager class >> resetWithInform [
 
 { #category : 'accessing' }
 ReRuleManager class >> ruleProfileSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder pickOne: #rulesProfile)
 		order: 1;
 		label: 'Select a quality rules profile ';
-		description: 'Select a profile according to your experience with Pharo. This will allow the QualityAssistant to show the rules that are appropiate to your level.';
+		description:
+			'Select a profile according to your experience with Pharo. This will allow the QualityAssistant to show the rules that are appropiate to your level.';
 		parentName: #qualityAssistant;
 		target: self;
 		defaultValue: #setDefaultProfile;
-		domainValues: {'Default' translated -> #setDefaultProfile .
-							'Beginner' translated -> #setBeginnerProfile }
+		domainValues: {
+			('Default' -> #setDefaultProfile).
+			('Beginner' -> #setBeginnerProfile) }
 ]
 
 { #category : 'settings' }
@@ -315,19 +318,6 @@ ReRuleManager >> classRules [
 	^ self allRules select: [ :rule | rule class checksClass ]
 ]
 
-{ #category : 'accessing' }
-ReRuleManager >> groupedRules [
-
-	| rulesByGroup |
-	(self visibleRuleClasses collect: [ :aClass |
-		          aClass new ]) sorted: [ :a :b | a ruleName < b ruleName ].
-	rulesByGroup := (rules groupedBy: [:each | each group]) associations collect: [ :as |
-		                CBCritiquesRuleGroup
-			                named: as key
-			                rules: as value ].
-	^ rulesByGroup
-]
-
 { #category : 'initialization' }
 ReRuleManager >> initializeRules: aCollection [
 
@@ -350,12 +340,6 @@ ReRuleManager >> nodeRules [
 ReRuleManager >> packageRules [
 
 	^ self allRules select: [ :rule | rule class checksPackage ]
-]
-
-{ #category : 'accessing' }
-ReRuleManager >> sortedGroupedRules [
-
-	^ self groupedRules sort: [ :a :b | a name < b name ]
 ]
 
 { #category : 'accessing' }

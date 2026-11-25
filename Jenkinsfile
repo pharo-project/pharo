@@ -270,6 +270,7 @@ def bootstrapImage(){
         isoTesters['Flashback'] = { defineIsoTestStage("Flashback") }
         isoTesters['Fuel'] = { defineIsoTestStage("Fuel") }
         isoTesters['UnifiedFFI'] = { defineIsoTestStage("UnifiedFFI") }
+        isoTesters['ClassParser'] = { defineIsoTestStage("ClassParser") }
         parallel isoTesters
 
         stage ("Full Image") {

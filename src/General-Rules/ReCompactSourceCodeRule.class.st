@@ -82,7 +82,7 @@ ReCompactSourceCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	(self basicCheck: aMethod)
 		ifTrue: [
 			aCriticBlock cull: (
-				ReCompactSourceCodeCritic
+				ReCompactSourceCodeCritique
 					for: aMethod
 					by: self)  ]
 ]
