@@ -34,8 +34,8 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Graphics-Files',
-	#package : 'Graphics-Files'
+	#category : 'Graphics-Icons',
+	#package : 'Graphics-Icons'
 }
 
 { #category : 'accessing' }
