@@ -60,9 +60,9 @@ Class {
 		'packageRules',
 		'critiques'
 	],
-	#category : 'Renraku-CriticBrowser',
+	#category : 'Renraku-Checker',
 	#package : 'Renraku',
-	#tag : 'CriticBrowser'
+	#tag : 'Checker'
 }
 
 { #category : 'adding' }

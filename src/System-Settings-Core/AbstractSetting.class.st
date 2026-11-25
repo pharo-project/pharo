@@ -83,7 +83,7 @@ AbstractSetting >> description [
 
 	^ description
 		ifNil: [ '' ]
-		ifNotNil: [ description translated ]
+		ifNotNil: [ description ]
 ]
 
 { #category : 'accessing' }
@@ -175,8 +175,8 @@ AbstractSetting >> item [
 AbstractSetting >> label [
 
 	^ label
-		  ifNil: [ self name translated ]
-		  ifNotNil: [ label translated ]
+		  ifNil: [ self name ]
+		  ifNotNil: [ label ]
 ]
 
 { #category : 'accessing' }

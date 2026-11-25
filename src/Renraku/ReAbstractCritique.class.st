@@ -30,18 +30,6 @@ Class {
 	#tag : 'Critiques'
 }
 
-{ #category : 'item decoration' }
-ReAbstractCritique class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
-	| critique |
-	critique := aBrowserItem actualObject.
-
-	aBrowserItem addProperty: (ClyCritiqueSeverityProperty of: critique).
-	critique sourceAnchor ifNotNil: [ :anchor |
-		anchor providesInterval ifTrue: [
-			aBrowserItem addProperty: (ClySourceNodeCritiqueIntervalProperty from: anchor interval)]].
-	critique providesChange	ifTrue: [ aBrowserItem markWith: ClyCritiqueFixableTag ]
-]
-
 { #category : 'instance creation' }
 ReAbstractCritique class >> for: anEntity by: aRule [
 
@@ -87,49 +75,6 @@ ReAbstractCritique class >> withAnchor: anAnchor by: aRule hint: aString [
 ]
 
 { #category : 'actions' }
-ReAbstractCritique >> actions [
-
-	| actions |
-
-	actions := OrderedCollection new: 3.
-
-	actions add: (RePropertyAction new
-			icon: (self iconNamed: #smallQuestion);
-			description: 'View rationale behind the rule';
-			action: [ :crit |
-				crit popDescriptionUp.
-				ReSystemAnnouncer uniqueInstance
-					notifyCritique: crit
-					descriptionViewedFor: crit sourceAnchor entity ];
-			yourself).
-
-	self providesChange ifTrue: [
-		actions add: (RePropertyAction new
-			icon: (self iconNamed: #repair);
-			description: 'Automatically resolve the issue';
-			action: [ :crit |
-				| changesBrowser |
-
-				changesBrowser := (StChangesBrowserPresenter changes: { crit change })
-					extent: 500@400;
-					asModalWindow;
-					yourself.
-
-				changesBrowser openDialog
-					okAction: [ changesBrowser accept ];
-					centered ];
-			yourself) ].
-
-	actions add: (RePropertyAction new
-			icon: (self iconNamed: #smallCancel);
-			description: 'Ban this rule';
-			action: [ :crit | crit guidedBan ];
-			yourself).
-
-	^ actions
-]
-
-{ #category : 'actions' }
 ReAbstractCritique >> ban [
 	self entity ban: self
 ]
@@ -149,12 +94,6 @@ ReAbstractCritique >> color [
 { #category : 'accessing' }
 ReAbstractCritique >> description [
 	^ rule rationale
-]
-
-{ #category : 'actions' }
-ReAbstractCritique >> guidedBan [
-
-	ReCriticEngine guidedBy: self entity  ban: self
 ]
 
 { #category : 'accessing' }
@@ -181,12 +120,6 @@ ReAbstractCritique >> initializeRule: aRule target: anEntity [
 { #category : 'testing' }
 ReAbstractCritique >> isCritique [
 	^ true
-]
-
-{ #category : 'actions' }
-ReAbstractCritique >> popDescriptionUp [
-
-	MorphicWidgetFactory new longMessage: self description title: self title
 ]
 
 { #category : 'printing' }
