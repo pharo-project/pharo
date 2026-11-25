@@ -15,15 +15,20 @@ BaselineOfFonts class >> corePackageNames [
 BaselineOfFonts >> baseline: spec [
 
 	<baseline>
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 			spec postLoadDoIt: #postload:package:.
+
+			"Fonts draw on forms, and the bitmap fonts load from PNG files"
+			spec baseline: 'Display' with: [ spec repository: repository ].
 
 			spec
 				package: 'Fonts-Abstract';
 				package: 'Fonts-Infrastructure' with: [ spec requires: #( 'Fonts-Abstract' 'Text-Core' ) ];
 				package: 'Fonts-Infrastructure-Tests' with: [ spec requires: #( 'Fonts-Infrastructure' ) ];
 				package: 'Text-Core' with: [ spec requires: #( 'Fonts-Abstract' ) ];
-				package: 'Graphics-Fonts' with: [ spec requires: #( 'Fonts-Abstract' 'Fonts-Infrastructure' 'Text-Core' ) ].
+				package: 'Graphics-Fonts' with: [ spec requires: #( 'Fonts-Abstract' 'Fonts-Infrastructure' 'Text-Core' 'Display' ) ].
 
 			spec
 				group: 'Core' with: #( 'Fonts-Abstract' 'Fonts-Infrastructure' 'Graphics-Fonts' 'Text-Core' );
@@ -31,80 +36,8 @@ BaselineOfFonts >> baseline: spec [
 ]
 
 { #category : 'actions' }
-BaselineOfFonts >> loadBitmapDejaVuSans [
-
-	| dejaVu |
-
-	dejaVu := self loadBitmapFontFamily: 'Bitmap DejaVu Sans' sizes: #(7 9 12 14 18 24).
-
-	TextConstants TextSharedInformation at: #'DefaultTextStyle' put: dejaVu.
-	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu.
-	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejaVu.
-	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejaVu.
-]
-
-{ #category : 'actions' }
-BaselineOfFonts >> loadBitmapFontFamily: familyName sizes: pointSizes [
-	| fonts fileName directoryReference |
-	directoryReference := (OSEnvironment current
-		                       at: 'BOOTSTRAP_REPOSITORY'
-		                       ifAbsent: [ FileSystem workingDirectory ])
-		                      asFileReference / 'resources' / 'fonts'.
-	fonts := pointSizes collect: [ :pointSize | 
-		         | regular bold italic boldItalic |
-		         fileName := familyName , ' ' , pointSize asString.
-		         regular := STON fromStream:
-			                    (directoryReference
-			                     / (fileName , ' Regular.ston')) readStream.
-		         regular setGlyphs: (PNGReadWriter formFromFileNamed:
-				          (directoryReference / (fileName , ' Regular.png'))
-					          fullName).
-		         bold := STON fromStream:
-			                 (directoryReference / (fileName , ' Bold.ston'))
-				                 readStream.
-		         bold setGlyphs: (PNGReadWriter formFromFileNamed:
-				          (directoryReference / (fileName , ' Bold.png')) fullName).
-		         italic := STON fromStream:
-			                   (directoryReference
-			                    / (fileName , ' Italic.ston')) readStream.
-		         italic setGlyphs: (PNGReadWriter formFromFileNamed:
-				          (directoryReference / (fileName , ' Italic.png'))
-					          fullName).
-		         boldItalic := STON fromStream:
-			                       (directoryReference
-			                        / (fileName , ' Bold Italic.ston'))
-				                       readStream.
-		         boldItalic setGlyphs: (PNGReadWriter formFromFileNamed:
-				          (directoryReference / (fileName , ' Bold Italic.png'))
-					          fullName).
-		         regular instVarNamed: #derivativeFonts put: { 
-				         bold.
-				         italic.
-				         boldItalic } , (Array new: 29).
-		         bold instVarNamed: #derivativeFonts put: (Array new: 32).
-		         italic instVarNamed: #derivativeFonts put: (Array new: 32).
-		         boldItalic
-			         instVarNamed: #derivativeFonts
-			         put: (Array new: 32).
-		         regular ].
-	^ TextStyle fontArray: fonts
-]
-
-{ #category : 'actions' }
-BaselineOfFonts >> loadBitmapSourcePro [
-
-	| sansPro codePro |
-
-	sansPro := self loadBitmapFontFamily: 'Bitmap Source Sans Pro' sizes: #(9 10 11 12 14 18 24).
-	TextConstants TextSharedInformation at: #'Bitmap Source Sans Pro' put: sansPro.
-
-	codePro := self loadBitmapFontFamily: 'Bitmap Source Code Pro' sizes: #(9 10 11 12 14 18 24).
-	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
-]
-
-{ #category : 'actions' }
 BaselineOfFonts >> postload: loader package: packageSpec [
+	"The baseline is compiled before its packages load, so it finds the class by name"
 
-	self loadBitmapDejaVuSans.
-	self loadBitmapSourcePro
+	(self class environment at: #StrikeFont) loadBitmapFonts
 ]
