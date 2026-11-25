@@ -15,22 +15,22 @@ LRUCacheTest >> newCache [
 ]
 
 { #category : 'testing' }
-LRUCacheTest >> test5kClasses [
+LRUCacheTest >> test5kKeys [
 	| cache data |
 	(cache := self newCache)
 		maximumWeight: 1024.
-	data := Object allSubclasses first: 5*1024.
+	data := (1 to: 5*1024) collect: [ :index | 'key' , index printString ].
 	data do: [ :each |
-		cache at: each name ifAbsentPut: [ each ] ].
+		cache at: each ifAbsentPut: [ each ] ].
 	cache validateInvariantWith: self.
 	self assert: cache size equals: 1024.
 	data shuffled do: [ :each |
-		cache at: each name ifAbsentPut: [ each ] ].
+		cache at: each ifAbsentPut: [ each ] ].
 	self assert: cache size equals: 1024.
 	cache validateInvariantWith: self.
 	data
-		select: [ :each | cache includesKey: each name ]
-		thenDo: [ :each | cache at: each name ifAbsentPut: [ self fail ] ].
+		select: [ :each | cache includesKey: each ]
+		thenDo: [ :each | cache at: each ifAbsentPut: [ self fail ] ].
 	self assert: cache hits >= 1024.
 	cache validateInvariantWith: self
 ]
