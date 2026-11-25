@@ -56,7 +56,7 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString [
 { #category : 'private' }
 PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 	| envValue |
-	envValue := [ OSEnvironment current at: aString ifAbsent: [ nil ] ]
+	envValue := [ OSPlatform current environmentVariableNamed: aString ifAbsent: [ nil ] ]
 		on: Error
 		do: [ ^ aBlock value ].
 	^ envValue isEmptyOrNil

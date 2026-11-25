@@ -51,12 +51,6 @@ WinPlatform >> formatMessage: dwFlags _: lpSource _: dwMessageId _: dwLanguageId
                             void*  arguments))
 ]
 
-{ #category : 'environment-variables' }
-WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
-	"Primitive to obtain an environment variable using windows Wide Strings"
-	^ self ffiCall: #(ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
-]
-
 { #category : 'file paths' }
 WinPlatform >> getTempPath: bufferLength buffer: buffer [
 
@@ -75,12 +69,6 @@ WinPlatform >> keyForValue: aKeyValue [
 ]
 
 { #category : 'accessing' }
-WinPlatform >> lastError [
-
-	^ self ffiCall: #(ulong GetLastError())
-]
-
-{ #category : 'accessing' }
 WinPlatform >> lineEnding [
 
 	^ String crlf
@@ -95,12 +83,6 @@ WinPlatform >> menuShortcutString [
 WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
 
 	^self ffiCall: #(int MultiByteToWideChar(uint codepage, ulong flags, void* input, int inputLen, Win32WideString output, int outputLen ))
-]
-
-{ #category : 'accessing' }
-WinPlatform >> setLastError: aValue [
-
-	^ self ffiCall: #(void SetLastError(ulong aValue))
 ]
 
 { #category : 'accessing' }

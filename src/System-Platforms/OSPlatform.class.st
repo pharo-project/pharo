@@ -61,6 +61,32 @@ OSPlatform >> accept: aVisitor [
 	self subclassResponsibility
 ]
 
+{ #category : 'environment-variables' }
+OSPlatform >> at: aKey encoding: anEncoding ifAbsent: aBlock [
+	"Gets the value of an environment variable called `aKey`.
+	Execute aBlock if absent.
+	Use `anEncoding` to encode the arguments and return values.
+
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+
+	| result |
+	result := self rawAt: (aKey encodeWith: anEncoding) ifAbsent: [ ^ aBlock value ].
+	^ result decodeWith: anEncoding
+]
+
+{ #category : 'environment-variables' }
+OSPlatform >> basicGetEnvRaw: encodedVariableName [
+
+	"PRIVATE: This primitive call works on Strings, while the correct way to manage encodings is with raw data.
+	Use me through #rawAt: to correctly marshall data."
+
+	"Gets the value of an environment variable called `anEncodedVariableName` already encoded but in ByteString form."
+
+	<primitive: 'primitiveGetenv' module: '' error: ec>
+	self primitiveFailed: ec
+]
+
 { #category : 'accessing' }
 OSPlatform >> current [
 	^ self
@@ -104,6 +130,21 @@ OSPlatform >> defaultEncoding [
 OSPlatform >> defaultMaximumPathLength [
 	"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation"
 	 ^self subclassResponsibility
+]
+
+{ #category : 'environment-variables' }
+OSPlatform >> environmentVariableNamed: aKey ifAbsent: aBlock [
+	"See super
+	Uses a single encoding determined dynamically"
+
+	^ self at: aKey encoding: self defaultEncoding ifAbsent: aBlock
+]
+
+{ #category : 'environment-variables' }
+OSPlatform >> environmentVariableNamed: aKey put: aValue [
+	"Do nothing by default"
+
+	
 ]
 
 { #category : 'accessing' }
@@ -190,6 +231,21 @@ OSPlatform >> platformFamily [
 { #category : 'compatibility' }
 OSPlatform >> platformName [
 	^ self name
+]
+
+{ #category : 'environment-variables' }
+OSPlatform >> rawAt: anEncodedKey ifAbsent: aBlock [
+	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
+	Execute aBlock if absent.
+
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+
+	| rawValue |
+	rawValue := self basicGetEnvRaw: anEncodedKey asString.
+	^ rawValue
+		ifNil: [ aBlock value ]
+		ifNotNil: [ rawValue asByteArray ]
 ]
 
 { #category : 'accessing' }
