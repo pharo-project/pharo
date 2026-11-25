@@ -146,7 +146,6 @@ Build Url: ${env.BUILD_URL}
 def defineIsoTestStage(projectName, testPackages=""){
     stage("Tests-ISO-" + projectName) {
         def testGroup = "Tests"
-        // MorphicCore loads and tests more than the other ISO projects
         timeout(5) {
             dir(env.STAGE_NAME){
                 def PHARO_MAJOR = shellOutput('git describe --tags --first-parent | cut -d\'-\' -f 1 | cut -c 2- | cut -d\'.\' -f 1-1')
