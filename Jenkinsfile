@@ -271,6 +271,7 @@ def bootstrapImage(){
         isoTesters['Fuel'] = { defineIsoTestStage("Fuel") }
         isoTesters['ClassParser'] = { defineIsoTestStage("ClassParser") }
         isoTesters['Fonts'] = { defineIsoTestStage("Fonts") }
+        isoTesters['FreeType'] = { defineIsoTestStage("FreeType") }
         isoTesters['MorphicCore'] = { defineIsoTestStage("MorphicCore") }
         parallel isoTesters
 

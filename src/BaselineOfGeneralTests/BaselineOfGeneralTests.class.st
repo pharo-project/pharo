@@ -37,7 +37,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Metacello-CommandLine-Tests';
 			baseline: 'Epicea' with: [ spec loads: #Tests from: repository ];
 			baseline: 'Fonts' with: [ spec loads: #Tests from: repository ];
-			baseline: 'FreeType' with: [ spec loads: #tests from: repository ];
+			baseline: 'FreeType' with: [ spec loads: #Tests from: repository ];
 			package: 'Graphics-Tests';
 			package: 'Text-Tests';
 			package: 'Morphic-Testing-Support';
