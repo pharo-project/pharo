@@ -41,6 +41,8 @@ BaselineOfGeneralTests >> baseline: spec [
 			baseline: 'FreeType' with: [ spec loads: #Tests from: repository ];
 			"The image file format tests draw with FormCanvas and read the logo from the settings"
 			package: 'Graphics-Files-Tests';
+			"Keymapping driven by morphs: Morph's keymapping methods live in Morphic-Widgets"
+			package: 'Keymapping-Morphic-Tests';
 			package: 'Text-Tests';
 			package: 'Morphic-Testing-Support';
 			package: 'Morphic-Tests';
