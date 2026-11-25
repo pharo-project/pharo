@@ -65,7 +65,7 @@ DesktopWorldMorphTest >> testDroppedFilesGoToTheirHandler [
 	| desktop hand |
 	dropped := OrderedCollection new.
 	desktop := DesktopWorldMorph new.
-	desktop dropHandlers: self.
+	desktop dropHandlerRegistry: self.
 	hand := HandMorph new.
 	desktop addHand: hand.
 
