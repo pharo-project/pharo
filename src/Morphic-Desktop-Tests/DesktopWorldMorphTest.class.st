@@ -56,6 +56,13 @@ DesktopWorldMorphTest >> testHasTheDesktopHandlers [
 ]
 
 { #category : 'tests' }
+DesktopWorldMorphTest >> testIsAPlainWorldNotAWidget [
+	"A desktop world is created before the theme can answer its sizes: it styles itself like any world"
+
+	self assert: DesktopWorldMorph new borderWidth equals: WorldMorph new borderWidth
+]
+
+{ #category : 'tests' }
 DesktopWorldMorphTest >> testNotifiesTheUserInItself [
 
 	| desktop |
