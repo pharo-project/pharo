@@ -53,23 +53,27 @@ if [ ! -e "${BOOTSTRAP_CACHE}/metacello.image" ]; then
     # unzip metacello.zip
 fi
 
+# Stop at the first failing step
+set -e
+
+# The images below are named relatively to the cache directory
+cd "${BOOTSTRAP_CACHE}"
+
 if [ ! -e "${BOOTSTRAP_CACHE}/sunit.image" ]; then
     myLog "Loading Sunit Core"
     rm -fr sunit.{image,changes}
     ${VM_TARGET} metacello.image save sunit
-    ${VM_TARGET} sunit.image metacello install --save --strict --signalErrorOnWarning filetree://${SRC_DIR} SUnit --groups Core
+    ${VM_TARGET} sunit.image metacello install --strict --signalErrorOnWarning filetree://${SRC_DIR} SUnit --groups Core || { rm -f sunit.image sunit.changes; exit 1; } # do not keep an image where SUnit is missing
 fi
-
-cd ${BOOTSTRAP_CACHE}
 
 rm -fr ${PROJECT_NAME}.{image,changes}
 ${VM_TARGET} sunit.image save ${PROJECT_NAME}
 
 myLog "Loading ${PROJECT_NAME} Core"
-${VM_TARGET} ${PROJECT_NAME}.image metacello install --save --strict --signalErrorOnWarning filetree://${SRC_DIR} ${PROJECT_NAME} --groups Core
+${VM_TARGET} ${PROJECT_NAME}.image metacello install --strict --signalErrorOnWarning filetree://${SRC_DIR} ${PROJECT_NAME} --groups Core
 
 myLog "Loading ${PROJECT_NAME} Tests"
-${VM_TARGET} ${PROJECT_NAME}.image metacello install --save --strict --signalErrorOnWarning filetree://${SRC_DIR} --groups Tests ${PROJECT_NAME}
+${VM_TARGET} ${PROJECT_NAME}.image metacello install --strict --signalErrorOnWarning filetree://${SRC_DIR} --groups Tests ${PROJECT_NAME}
 
 myLog "Execute ${PROJECT_NAME} Tests"
 ${VM_TARGET} ${PROJECT_NAME}.image test --junit-xml-output --project-name ${PROJECT_NAME}
