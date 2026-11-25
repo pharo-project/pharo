@@ -23,3 +23,9 @@ FFIInt32 >> basicHandle: aHandle at: index [
 FFIInt32 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedLongAt: index put: value
 ]
+
+{ #category : 'accessing' }
+FFIInt32 >> tfExternalType [
+
+	^ TFBasicType sint32
+]

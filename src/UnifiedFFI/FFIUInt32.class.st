@@ -33,3 +33,9 @@ FFIUInt32 >> basicHandle: aHandle at: index [
 FFIUInt32 >> basicHandle: aHandle at: index put: value [
 	^ aHandle unsignedLongAt: index put: value
 ]
+
+{ #category : 'accessing' }
+FFIUInt32 >> tfExternalType [
+
+	^ TFBasicType uint32
+]

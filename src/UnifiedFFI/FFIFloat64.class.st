@@ -49,3 +49,9 @@ FFIFloat64 >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	aCallbackArgumentReader extractDouble
 ]
+
+{ #category : 'accessing' }
+FFIFloat64 >> tfExternalType [
+
+	^ TFBasicType double
+]

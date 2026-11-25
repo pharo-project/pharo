@@ -47,6 +47,12 @@ FFILibrary >> asFFILibrary [
 	^ self
 ]
 
+{ #category : 'accessing' }
+FFILibrary >> callbackRunningStrategy [
+
+	^ TFCallbackForkRunStrategy new
+]
+
 { #category : 'converting' }
 FFILibrary >> calloutAPIClass [
 
@@ -120,6 +126,12 @@ FFILibrary >> postMethodBuildContext: sender builder: builder spec: functionSpec
 
 { #category : 'extension - hooks' }
 FFILibrary >> preMethodBuildContext: sender builder: builder spec: functionSpec [
+]
+
+{ #category : 'accessing' }
+FFILibrary >> runner [
+
+	^ TFSameThreadRunner uniqueInstance
 ]
 
 { #category : 'accessing' }

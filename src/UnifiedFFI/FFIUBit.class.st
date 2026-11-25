@@ -99,6 +99,12 @@ FFIUBit >> readFieldAt: byteOffset [
 		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
+{ #category : 'accessing' }
+FFIUBit >> tfExternalType [
+
+	^ FFIArchitecture forCurrentArchitecture tfUBitType
+]
+
 { #category : 'emitting code' }
 FFIUBit >> writeFieldAt: byteOffset with: valueName [
 	self isPointer ifTrue: [

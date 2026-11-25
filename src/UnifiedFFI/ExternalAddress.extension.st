@@ -215,6 +215,17 @@ ExternalAddress >> replaceFrom: start to: stop with: replacement startingAt: rep
 	LibC memCopy: srcAddress to: dstAddress size: repSize
 ]
 
+{ #category : '*UnifiedFFI' }
+ExternalAddress >> tfPointerAddress [
+
+	^ self
+]
+
+{ #category : '*UnifiedFFI' }
+ExternalAddress >> thunk [
+	^ self
+]
+
 { #category : '*UnifiedFFI-private' }
 ExternalAddress >> unpackFromArity: arity [
 	"This will 'unpack' a pointer from a certain arity. See #unpackToArity: for a better explanation."

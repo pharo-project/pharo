@@ -23,3 +23,9 @@ FFIInt8 >> basicHandle: aHandle at: index [
 FFIInt8 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedByteAt: index put: value
 ]
+
+{ #category : 'accessing' }
+FFIInt8 >> tfExternalType [
+
+	^ TFBasicType sint8
+]

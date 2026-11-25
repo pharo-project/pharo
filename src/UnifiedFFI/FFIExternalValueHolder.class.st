@@ -100,6 +100,12 @@ FFIExternalValueHolder >> initialize [
 ]
 
 { #category : 'accessing' }
+FFIExternalValueHolder >> tfPointerAddress [
+
+	^ data tfPointerAddress
+]
+
+{ #category : 'accessing' }
 FFIExternalValueHolder >> type [
 	^ self class type
 ]

@@ -23,3 +23,9 @@ FFIInt16 >> basicHandle: aHandle at: index [
 FFIInt16 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedShortAt: index put: value
 ]
+
+{ #category : 'accessing' }
+FFIInt16 >> tfExternalType [
+
+	^ TFBasicType sint16
+]

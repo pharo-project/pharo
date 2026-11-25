@@ -12,7 +12,7 @@ self ffiCall: #( void function(FFIOpaqueObject  var)  ""WRONG""
 Class {
 	#name : 'FFIDereferencedOpaqueObjectError',
 	#superclass : 'Error',
-	#category : 'UnifiedFFI-Types-Exceptions',
+	#category : 'UnifiedFFI-Exceptions',
 	#package : 'UnifiedFFI',
-	#tag : 'Types-Exceptions'
+	#tag : 'Exceptions'
 }

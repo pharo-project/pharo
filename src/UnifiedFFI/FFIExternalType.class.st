@@ -391,6 +391,34 @@ FFIExternalType >> stackValueParameterClass [
 ]
 
 { #category : 'accessing' }
+FFIExternalType >> tfExternalType [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+FFIExternalType >> tfExternalTypeForStructure [
+
+	^ {self tfExternalType}
+]
+
+{ #category : 'accessing' }
+FFIExternalType >> tfExternalTypeForStructureWithArity [
+
+	^ self pointerArity > 0
+		ifTrue: [ {TFBasicType pointer} ]
+		ifFalse: [ self tfExternalTypeForStructure ]
+]
+
+{ #category : 'accessing' }
+FFIExternalType >> tfExternalTypeWithArity [
+
+	^ self pointerArity > 0
+		ifTrue: [ TFBasicType pointer ]
+		ifFalse: [ self tfExternalType ]
+]
+
+{ #category : 'accessing' }
 FFIExternalType >> typeAlignment [
 	"Answer a number of bytes, which receiver type takes in memory"
 	self pointerArity > 0 ifTrue: [ ^ self pointerAlignment ].

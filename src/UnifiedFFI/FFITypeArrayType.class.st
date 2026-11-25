@@ -95,6 +95,12 @@ FFITypeArrayType >> readFieldAt: byteOffset [
 	^ self readArrayAt: byteOffset
 ]
 
+{ #category : 'accessing' }
+FFITypeArrayType >> tfExternalTypeForStructure [
+
+	^ Array new: self objectClass numberOfElements withAll: self objectClass type tfExternalTypeWithArity
+]
+
 { #category : 'emitting code' }
 FFITypeArrayType >> writeFieldAt: byteOffset with: valueName [
 	^ String streamContents:[ :stream|

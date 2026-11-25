@@ -72,6 +72,12 @@ FFIFunctionArgument >> resolvedType [
 ]
 
 { #category : 'accessing' }
+FFIFunctionArgument >> tfExternalTypeWithArity [
+
+	^ self resolvedType tfExternalTypeWithArity
+]
+
+{ #category : 'accessing' }
 FFIFunctionArgument >> type [
 
 	^ type

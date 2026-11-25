@@ -14,3 +14,9 @@ Integer >> pointer [
 		unsignedLongAt: 1 put: self;
 		yourself
 ]
+
+{ #category : '*UnifiedFFI' }
+Integer >> tfPointerAddress [
+
+    ^ExternalAddress new fromInteger: self
+]

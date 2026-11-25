@@ -87,3 +87,9 @@ FFITypeDeclaration >> resolveUsing: aResolver forArgument: aFFIVariableArgument 
 FFITypeDeclaration >> resolvedType [
 	^ resolvedType
 ]
+
+{ #category : 'accessing' }
+FFITypeDeclaration >> tfExternalTypeWithArity [
+
+	^ self resolvedType tfExternalTypeWithArity
+]

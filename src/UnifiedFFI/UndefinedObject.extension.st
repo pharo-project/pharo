@@ -11,3 +11,9 @@ UndefinedObject >> packToArity: aNumber [
 	"pointer to NULL is NULL too"
 	^ self
 ]
+
+{ #category : '*UnifiedFFI' }
+UndefinedObject >> tfPointerAddress [
+
+	^ ExternalAddress null
+]

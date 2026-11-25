@@ -90,3 +90,18 @@ FFICharacterType >> needsArityUnpacking [
 FFICharacterType >> stackValueParameterClass [
 	^ #integer
 ]
+
+{ #category : 'accessing' }
+FFICharacterType >> tfExternalType [
+
+	^ TFBasicType schar
+]
+
+{ #category : 'accessing' }
+FFICharacterType >> tfExternalTypeWithArity [
+
+	"If it is a char* we can assume it is a String"
+	self pointerArity = 1 ifTrue: [ ^TFDerivedType string ].
+
+	^ super tfExternalTypeWithArity
+]

@@ -94,3 +94,20 @@ FFIArchitecture >> returnSingleFloatsAsDoubles [
 FFIArchitecture >> sizeTTypeSize [
 	^ self externalSizeTType byteSize
 ]
+
+{ #category : 'accessing' }
+FFIArchitecture >> tfBitType [
+
+	^ TFBasicType sint8
+]
+
+{ #category : 'accessing' }
+FFIArchitecture >> tfUBitType [
+
+	^ TFBasicType uint8
+]
+
+{ #category : 'accessing' }
+FFIArchitecture >> tfexternalSizeTType [
+	^ TFBasicType uint32
+]

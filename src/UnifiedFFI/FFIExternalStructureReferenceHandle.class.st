@@ -248,6 +248,12 @@ FFIExternalStructureReferenceHandle >> structAt: byteOffset put: value length: l
 ]
 
 { #category : 'accessing' }
+FFIExternalStructureReferenceHandle >> tfPointerAddress [
+
+	^ handle tfPointerAddress + startOffset
+]
+
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedByteAt: byteOffset [
 	^ handle unsignedByteAt: startOffset + byteOffset
 ]

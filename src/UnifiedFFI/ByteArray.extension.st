@@ -158,6 +158,13 @@ ByteArray >> signedByteAt: byteOffset put: value [
 ]
 
 { #category : '*UnifiedFFI' }
+ByteArray >> tfPointerAddress [
+
+	self pinInMemory.
+	^ PointerUtils oopForObject: self
+]
+
+{ #category : '*UnifiedFFI' }
 ByteArray >> unpackHandleFromArity: arity [
 	"This will 'unpack' a long (handle) from a certain arity. See #packToArity: for a better explanation."
 

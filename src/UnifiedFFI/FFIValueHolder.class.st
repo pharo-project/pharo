@@ -158,6 +158,12 @@ FFIValueHolder >> pointer [
 ]
 
 { #category : 'accessing' }
+FFIValueHolder >> tfPointerAddress [
+
+	^ self getHandle tfPointerAddress
+]
+
+{ #category : 'accessing' }
 FFIValueHolder >> type [
 
 	^ type

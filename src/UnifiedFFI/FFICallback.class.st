@@ -112,9 +112,21 @@ FFICallback >> backendCallback [
 ]
 
 { #category : 'accessing' }
+FFICallback >> beFailed [
+
+	^ self backendCallback beFailed
+]
+
+{ #category : 'accessing' }
 FFICallback >> beNull [
 
 	self backendCallback beNull
+]
+
+{ #category : 'accessing' }
+FFICallback >> beSuccess [
+
+	^ self backendCallback beSuccess
 ]
 
 { #category : 'accessing' }
@@ -176,6 +188,12 @@ FFICallback >> invokeAsFunctionWithArguments: aCollection [
 	^ self backendCallback invokeAsFunctionWithArguments: aCollection
 ]
 
+{ #category : 'testing' }
+FFICallback >> isSuccess [
+
+	^ self backendCallback isSuccess
+]
+
 { #category : 'private' }
 FFICallback >> newParser [
 	^ FFIFunctionParser new
@@ -204,6 +222,18 @@ FFICallback >> signature: signature block: aBlock [
 	functionSpec := parser parseAnonymousFunction: signature.
 	functionSpec resolveUsing: parser requestor.
 	block := aBlock
+]
+
+{ #category : 'accessing' }
+FFICallback >> tfPointerAddress [
+
+	^ self getHandle tfPointerAddress
+]
+
+{ #category : 'printing' }
+FFICallback >> tfPrintString [
+
+	^ self block printString
 ]
 
 { #category : 'accessing' }

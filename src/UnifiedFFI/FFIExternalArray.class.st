@@ -200,6 +200,12 @@ FFIExternalArray >> size [
 ]
 
 { #category : 'accessing' }
+FFIExternalArray >> tfPointerAddress [
+
+	^ handle tfPointerAddress
+]
+
+{ #category : 'accessing' }
 FFIExternalArray >> type [
 	^ type
 ]

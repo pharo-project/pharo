@@ -17,3 +17,9 @@ ExternalObject >> isNullOrNil [
 ExternalObject >> pointer [
 	^ self getHandle pointer
 ]
+
+{ #category : '*UnifiedFFI' }
+ExternalObject >> tfPointerAddress [
+
+	^ self getHandle tfPointerAddress
+]

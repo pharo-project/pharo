@@ -105,3 +105,9 @@ FFIVoid >> needsArityUnpacking [
 	 if they have been rolled before"
 	^ self needsArityPacking
 ]
+
+{ #category : 'accessing' }
+FFIVoid >> tfExternalType [
+
+	^ TFBasicType void
+]
