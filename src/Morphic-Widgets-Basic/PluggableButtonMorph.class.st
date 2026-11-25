@@ -24,6 +24,8 @@ Options:
 Class {
 	#name : 'PluggableButtonMorph',
 	#superclass : 'AlignmentMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'model',
 		'label',
@@ -386,12 +388,6 @@ PluggableButtonMorph >> cornerStyle: aSymbol [
 
 	super cornerStyle: aSymbol.
 	self layoutInset: (self theme buttonLabelInsetFor: self)
-]
-
-{ #category : 'initialization' }
-PluggableButtonMorph >> defaultBorderWidth [
-	"answer the default border width for the receiver"
-	^ self theme borderWidth
 ]
 
 { #category : 'initialization' }

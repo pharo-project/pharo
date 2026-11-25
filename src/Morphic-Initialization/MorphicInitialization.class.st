@@ -57,9 +57,8 @@ MorphicInitialization class >> initializeFonts [
 
 { #category : 'initialization' }
 MorphicInitialization class >> initializePreferences [
-	"The desktop color, and where windows and notifications open"
+	"Where windows and notifications open. The desktop color comes from the theme"
 
-	PolymorphSystemSettings desktopColor: Color white.
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true

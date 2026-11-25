@@ -5,6 +5,8 @@ Themed synchronous taskbar (not using #step to poll windows). The buttons provid
 Class {
 	#name : 'TaskbarMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'tasks',
 		'orderedTasks'
@@ -231,27 +233,6 @@ TaskbarMorph >> isAdheringToBottom [
 	"Must implement. Answer true."
 
 	^true
-]
-
-{ #category : 'testing' }
-TaskbarMorph >> isAdheringToLeft [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
-TaskbarMorph >> isAdheringToRight [
-	"Must implement. Answer false."
-
-	^false
-]
-
-{ #category : 'testing' }
-TaskbarMorph >> isAdheringToTop [
-	"Must implement. Answer false."
-
-	^false
 ]
 
 { #category : 'testing' }

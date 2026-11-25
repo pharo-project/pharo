@@ -8,13 +8,6 @@ SystemWindow >> basicTaskThumbnailOfSize: thumbExtent [
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> isTaskbarPresent [
-	"Answer whether there is a taskbar in the world."
-
-	^self worldTaskbar isNotNil
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> minimizeAfterGeneratingThumbnail [
 	"Minimize the window after thumbnail generation."
 
@@ -302,15 +295,4 @@ SystemWindow >> taskbarThumbnailExtent [
 	^self isMinimized
 		ifTrue: [self fullFrame extent min: self defaultTaskbarThumbnailExtent]
 		ifFalse: [super taskbarThumbnailExtent]
-]
-
-{ #category : '*Morphic-Widgets-Taskbar' }
-SystemWindow >> worldTaskbar [
-	"Answer the world taskbar or nil if none."
-
-	^self world ifNotNil: [ :world |
-		world
-		submorphThat: [ :morph | morph isTaskbar ]
-		ifNone: [ nil ]
-	]
 ]

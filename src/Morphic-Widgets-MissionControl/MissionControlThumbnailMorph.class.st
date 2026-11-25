@@ -1,6 +1,8 @@
 Class {
 	#name : 'MissionControlThumbnailMorph',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'window',
 		'thumbnailForm',

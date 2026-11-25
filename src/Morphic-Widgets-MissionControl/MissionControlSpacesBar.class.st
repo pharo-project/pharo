@@ -1,6 +1,8 @@
 Class {
 	#name : 'MissionControlSpacesBar',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'desktopThumbnail',
 		'spaceThumbnails'

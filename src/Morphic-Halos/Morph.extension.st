@@ -479,38 +479,6 @@ Morph >> adhereToEdge [
 ]
 
 { #category : '*Morphic-Halos' }
-Morph >> adhereToEdge: edgeSymbol [
-	| edgeMessage |
-	(owner isNil or: [owner isHandMorph]) ifTrue: [^self].
-
-	"these are implemented in Morph, no need to use perform:"
-	edgeSymbol == #bottomLeft ifTrue: [ ^ self bottomLeft: owner bottomLeft ].
-	edgeSymbol == #bottomRight ifTrue: [ ^ self bottomRight: owner bottomRight ].
-	edgeSymbol == #adjustedCenter ifTrue: [ ^ self adjustedCenter: owner adjustedCenter ].
-
-	(owner class canUnderstand:  edgeSymbol) ifFalse:  [^self].
-	(self class canUnderstand: ( edgeMessage := (edgeSymbol , ':') asSymbol ))
-		 ifFalse:  [^self].
-
-	self perform: edgeMessage
-		withArguments: (Array with: (owner perform: edgeSymbol))
-]
-
-{ #category : '*Morphic-Halos' }
-Morph >> adjustedCenter [
-	"Provides a hook for objects to provide a reference point other than the receiver's center,for the purpose of centering a submorph under special circumstances, such as BalloonMorph"
-
-	^ self center
-]
-
-{ #category : '*Morphic-Halos' }
-Morph >> adjustedCenter: c [
-	"Set the receiver's position based on the #adjustedCenter protocol for adhereToEdge.  By default this simply sets the receiver's center.   Though there are (at its inception anyway) no other implementors of this method, it is required in use with the #adhereToEdge when the centering of a submorph is to be with reference to a rectangle  other than the receiver's center."
-
-	self center: c
-]
-
-{ #category : '*Morphic-Halos' }
 Morph >> balloonHelpTextForHandle: aHandle [
 	"Answer a string providing balloon help for the
 	given halo handle"
@@ -661,7 +629,7 @@ Morph >> changeColor [
 Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor hand: aHand [
 	"Put up a color picker for changing some kind of color."
 
-	(self morphicUIManager chooseColor: aColor)
+	(MorphicWidgetFactory new chooseColor: aColor)
 		ifNotNil: [:nc | anObject perform: aSymbol with: nc]
 ]
 
@@ -794,7 +762,7 @@ Morph >> changeRubberBandCells [
 Morph >> changeShadowColor [
 	"Change the shadow color of the receiver -- triggered, e.g. from a menu"
 
-	(self morphicUIManager chooseColor: self shadowColor)
+	(MorphicWidgetFactory new chooseColor: self shadowColor)
 		ifNotNil: [:nc | self shadowColor: nc]
 ]
 
@@ -1191,16 +1159,6 @@ Morph >> showActions [
 					cls == Morph
 						ifFalse: [adder value: cls value: selector]]].
 	(Smalltalk tools toolNamed: #messageList) browse: list title:  'Actions of ' , self printString from: self class
-]
-
-{ #category : '*Morphic-Halos' }
-Morph >> snapToEdgeIfAppropriate [
-	| edgeSymbol oldBounds aWorld |
-	(edgeSymbol := self valueOfProperty: #edgeToAdhereTo) ifNotNil:
-		[oldBounds := bounds.
-		self adhereToEdge: edgeSymbol.
-		bounds ~= oldBounds ifTrue: [(aWorld := self world) ifNotNil: [aWorld viewBox ifNotNil:
-			[aWorld displayWorld]]]]
 ]
 
 { #category : '*Morphic-Halos' }

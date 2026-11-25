@@ -173,13 +173,6 @@ Morph class >> shortcutsHandler: anObject [
 	ShortcutsHandler := anObject
 ]
 
-{ #category : 'accessing' }
-Morph class >> theme [
-	"Answer the ui theme that provides controls."
-
-	^ Smalltalk ui theme
-]
-
 { #category : 'dropping/grabbing' }
 Morph >> aboutToBeGrabbedBy: aHand [
 	"The receiver is being grabbed by a hand.
@@ -405,6 +398,24 @@ Morph >> addedMorph: aMorph [
 ]
 
 { #category : 'layout' }
+Morph >> adhereToEdge: edgeSymbol [
+	| edgeMessage |
+	(owner isNil or: [owner isHandMorph]) ifTrue: [^self].
+
+	"these are implemented in Morph, no need to use perform:"
+	edgeSymbol == #bottomLeft ifTrue: [ ^ self bottomLeft: owner bottomLeft ].
+	edgeSymbol == #bottomRight ifTrue: [ ^ self bottomRight: owner bottomRight ].
+	edgeSymbol == #adjustedCenter ifTrue: [ ^ self adjustedCenter: owner adjustedCenter ].
+
+	(owner class canUnderstand:  edgeSymbol) ifFalse:  [^self].
+	(self class canUnderstand: ( edgeMessage := (edgeSymbol , ':') asSymbol ))
+		 ifFalse:  [^self].
+
+	self perform: edgeMessage
+		withArguments: (Array with: (owner perform: edgeSymbol))
+]
+
+{ #category : 'layout' }
 Morph >> adjustLayoutBounds [
 	"Adjust the receivers bounds depending on the resizing strategy imposed"
 
@@ -425,6 +436,20 @@ Morph >> adjustLayoutBounds [
 	myExtent y < self minHeight
 		ifTrue: [ myExtent := myExtent x @ (myExtent y max: self minHeight - self bounds height + self layoutBounds height) ].
 	self layoutBounds: (box origin extent: myExtent)
+]
+
+{ #category : 'geometry' }
+Morph >> adjustedCenter [
+	"Provides a hook for objects to provide a reference point other than the receiver's center,for the purpose of centering a submorph under special circumstances, such as BalloonMorph"
+
+	^ self center
+]
+
+{ #category : 'geometry' }
+Morph >> adjustedCenter: c [
+	"Set the receiver's position based on the #adjustedCenter protocol for adhereToEdge.  By default this simply sets the receiver's center.   Though there are (at its inception anyway) no other implementors of this method, it is required in use with the #adhereToEdge when the centering of a submorph is to be with reference to a rectangle  other than the receiver's center."
+
+	self center: c
 ]
 
 { #category : 'accessing' }
@@ -630,30 +655,28 @@ Morph >> assureExtension [
 	^ extension ifNil: [extension := MorphExtension new]
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> balloonColor [
-	^ self
-		valueOfProperty: #balloonColor
-		ifAbsent: [self defaultBalloonColor]
+{ #category : 'layout-properties' }
+Morph >> assureLayoutProperties [
+	| props |
+	props := self layoutProperties.
+	props == self ifTrue:[props := nil].
+	props ifNil:[
+		props := LayoutProperties new initializeFrom: self.
+		self layoutProperties: props].
+	^props
 ]
 
-{ #category : 'halos and balloon help' }
-Morph >> balloonColor: aColor [
-	^ self
-		setProperty: #balloonColor
-		toValue: aColor
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonFont [
-	^ self
-		valueOfProperty: #balloonFont
-		ifAbsent: [self defaultBalloonFont]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonFont: aFont [
-	^ self setProperty: #balloonFont toValue: aFont
+{ #category : 'layout-properties' }
+Morph >> assureTableProperties [
+	| props |
+	props := self layoutProperties.
+	props == self ifTrue:[props := nil].
+	props ifNil:[
+		props := TableLayoutProperties new initializeFrom: self.
+		self layoutProperties: props].
+	props includesTableProperties
+		ifFalse:[self layoutProperties: (props := props asTableLayoutProperties)].
+	^props
 ]
 
 { #category : 'halos and balloon help' }
@@ -664,32 +687,26 @@ Morph >> balloonHelpAligner [
 
 { #category : 'halos and balloon help' }
 Morph >> balloonHelpDelayTime [
-	"Return the number of milliseconds before a balloon help should be put up on the receiver. The balloon help will only be put up if the receiver responds to #wantsBalloon by returning true."
-	^ self theme settings balloonHelpDelayTime
+	"Return the number of milliseconds before a balloon help should be put up on the receiver."
+
+	^ 800
 ]
 
-{ #category : 'settings' }
+{ #category : 'halos and balloon help' }
 Morph >> balloonHelpEnabled [
-	^ self theme settings balloonHelpEnabled
+	"Plain morphs show no balloon help: balloons are widgets (see TMorphicWidget)"
+
+	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'halos and balloon help' }
 Morph >> balloonText [
 	"Answer balloon help text or nil, if no help is available.
 	NB: subclasses may override such that they programatically
 	construct the text, for economy's sake, such as model phrases in
 	a Viewer"
 
-	^ extension ifNotNil: [:ext | ext balloonText ifNotNil: [:text |
-				text withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]]
-]
-
-{ #category : 'theme' }
-Morph >> basicTheme: aUITheme [
-	"Set the current theme for the receiver without notification of change."
-
-	self theme = aUITheme ifFalse: [
-		self setProperty: #theme toValue: aUITheme]
+	^ extension ifNotNil: [ :ext | ext balloonText ifNotNil: [ :text | text withNoLineLongerThan: self maxBalloonHelpLineLength ] ]
 ]
 
 { #category : 'accessing' }
@@ -986,6 +1003,15 @@ Morph >> changeClipSubmorphs [
 	self clipSubmorphs: self clipSubmorphs not
 ]
 
+{ #category : 'layout' }
+Morph >> changeTableLayout [
+	| layout |
+	((layout := self layoutPolicy) isNotNil and:[layout isTableLayout])
+		ifTrue:[^self]. "already table layout"
+	self layoutPolicy: TableLayout new.
+	self layoutChanged
+]
+
 { #category : 'recategorized' }
 Morph >> changed [
 	"Report that the area occupied by this morph should be redrawn.
@@ -1260,11 +1286,11 @@ Morph >> debugDrawError [
 	(self valueOfProperty: #drawError) debug
 ]
 
-{ #category : 'accessing - defaults' }
+{ #category : 'drawing' }
 Morph >> defaultBackgroundColor [
 	"Answer the color to be used as the base window color for a window whose model is an object of the receiver's class"
 
-	^  self theme windowColorFor: self
+	^ Color white
 ]
 
 { #category : 'accessing - defaults' }
@@ -1827,9 +1853,14 @@ Morph >> focusChanged [
 
 { #category : 'drawing' }
 Morph >> focusIndicatorMorph [
-	"Answer the focus indicator morph for the receiver."
+	"Answer the focus indicator morph for the receiver: a plain outline"
 
-	^self theme focusIndicatorMorphFor: self
+	^ BorderedMorph new
+		  fillStyle: Color transparent;
+		  borderStyle: (SimpleBorderStyle new
+			   width: 1;
+			   baseColor: Color black);
+		  bounds: self focusBounds
 ]
 
 { #category : 'dropping/grabbing' }
@@ -2670,6 +2701,34 @@ Morph >> invalidRect: aRectangle from: aMorph [
 	owner ifNotNil: [owner invalidRect: damageRect from: self]
 ]
 
+{ #category : 'testing' }
+Morph >> isAdheringToBottom [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
+{ #category : 'testing' }
+Morph >> isAdheringToLeft [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
+{ #category : 'testing' }
+Morph >> isAdheringToRight [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
+{ #category : 'testing' }
+Morph >> isAdheringToTop [
+	"Docking bars answer the edge of the world they adhere to"
+
+	^ false
+]
+
 { #category : 'classification' }
 Morph >> isAlignmentMorph [
 
@@ -2719,6 +2778,12 @@ Morph >> isHandMorph [
 Morph >> isInDockingBar [
 	"answer if the receiver is in a menu bar"
 	^ (owner isNotNil) and: [owner isDockingBar]
+]
+
+{ #category : 'structure' }
+Morph >> isInSystemWindow [
+	"answer if the receiver is in a system window"
+	^ owner isMorph and:[owner isSystemWindow or:[owner isInSystemWindow]]
 ]
 
 { #category : 'structure' }
@@ -2843,6 +2908,15 @@ Morph >> keyboardFocusChange: gotFocus [
 { #category : 'submorphs - accessing' }
 Morph >> lastSubmorph [
 	^submorphs last
+]
+
+{ #category : 'structure' }
+Morph >> lastSubmorphRecursive [
+	"Answer recursive last submorph of the receiver."
+
+	^self hasSubmorphs
+		ifTrue: [self lastSubmorph lastSubmorphRecursive]
+		ifFalse: [self]
 ]
 
 { #category : 'layout' }
@@ -3101,6 +3175,12 @@ Morph >> mainDockingBars [
 		select: [:each | each hasProperty: #mainDockingBarTimeStamp]
 ]
 
+{ #category : 'halos and balloon help' }
+Morph >> maxBalloonHelpLineLength [
+
+	^ 40
+]
+
 { #category : 'layout - properties' }
 Morph >> maxCellSize [
 	"Layout specific. This property specifies the maximum size of a table cell."
@@ -3114,11 +3194,6 @@ Morph >> maxCellSize: aPoint [
 	"Layout specific. This property specifies the maximum size of a table cell."
 	self assureTableProperties maxCellSize: aPoint.
 	self layoutChanged
-]
-
-{ #category : 'settings' }
-Morph >> menuKeyboardControl [
-	^ self theme settings menuKeyboardControl
 ]
 
 { #category : 'layout - properties' }
@@ -3250,12 +3325,6 @@ Morph >> morphicLayerNumber [
 	].
 
 	"leave lots of room for special things"
-]
-
-{ #category : 'theme' }
-Morph >> morphicUIManager [
-
-	^ MorphicUIManager new
 ]
 
 { #category : 'submorphs - accessing' }
@@ -3490,6 +3559,37 @@ Morph >> nearestOwnerThat: conditionBlock [
 	"Return the first enclosing morph for which aBlock evaluates to true, or nil if none"
 
 	^ self firstOwnerSuchThat: conditionBlock
+]
+
+{ #category : 'focus handling' }
+Morph >> nextMorphAcrossInWindow [
+	"Answer the next morph in the window. Traverse
+	from the receiver to its next sibling or owner's next sibling etc."
+
+	^self submorphAfter ifNil: [
+		(self owner ifNil: [^self]) nextMorphAcrossInWindow]
+]
+
+{ #category : 'focus handling' }
+Morph >> nextMorphInWindow [
+	"Answer the next morph in the window. Traverse
+	from the receiver to its first child or next sibling or owner's next sibling etc."
+
+	^self hasSubmorphs
+		ifTrue: [self submorphs first]
+		ifFalse: [self nextMorphAcrossInWindow]
+]
+
+{ #category : 'focus handling' }
+Morph >> nextMorphWantingFocus [
+	"Answer the next morph that wants keyboard focus."
+
+	|m|
+	m := self nextMorphInWindow ifNil: [^nil].
+	[m = self or: [m wantsKeyboardFocusNavigation]]
+		whileFalse: [m := m nextMorphInWindow].
+	^m wantsKeyboardFocusNavigation
+		ifTrue: [m]
 ]
 
 { #category : 'halos and balloon help' }
@@ -3835,6 +3935,29 @@ Morph >> prepareToBeSaved [
 	self formerOwner: nil.
 	self formerPosition: nil.
 	fullBounds := nil
+]
+
+{ #category : 'focus handling' }
+Morph >> previousMorphInWindow [
+	"Answer the next morph in the window. Traverse
+	from the receiver to its previous sibling's last submorph (recursive)
+	or owner's previous sibling's last submorph (recursive) etc."
+
+	^ self submorphBefore
+		  ifNotNil: [ self submorphBefore lastSubmorphRecursive ]
+		  ifNil: [ self owner ]
+]
+
+{ #category : 'focus handling' }
+Morph >> previousMorphWantingFocus [
+	"Answer the previous morph that wants keyboard focus."
+
+	|m|
+	m := self previousMorphInWindow ifNil: [^nil].
+	[m = self or: [m wantsKeyboardFocusNavigation]]
+		whileFalse: [m := m previousMorphInWindow ifNil: [^nil]].
+	^m wantsKeyboardFocusNavigation
+		ifTrue: [m]
 ]
 
 { #category : 'structure' }
@@ -4521,7 +4644,7 @@ Morph >> separateDragAndDrop [
 Morph >> setBalloonText: stringOrText [
 	"Set receiver's balloon help text. Pass nil to remove the help."
 
-	self setBalloonText: stringOrText maxLineLength: self theme settings maxBalloonHelpLineLength
+	self setBalloonText: stringOrText maxLineLength: self maxBalloonHelpLineLength
 ]
 
 { #category : 'halos and balloon help' }
@@ -4622,6 +4745,16 @@ Morph >> shadowColor: aColor [
 ]
 
 { #category : 'drop shadows' }
+Morph >> shadowMargins [
+	"Answer the margins of my shadow"
+	|left right top bottom deltaX deltaY|
+	left := right := top := bottom := 0.
+	(deltaX := self shadowOffset x) < 0 ifTrue: [ left := deltaX] ifFalse: [right := deltaX ].
+	(deltaY := self shadowOffset x) < 0 ifTrue: [ top := deltaY] ifFalse: [bottom := deltaY ].
+	^Margin left: left right: right top: top bottom: bottom
+]
+
+{ #category : 'drop shadows' }
 Morph >> shadowOffset [
 	"Return the current shadow offset"
 
@@ -4696,14 +4829,9 @@ Morph >> showBalloon: msgString [
 
 { #category : 'halos and balloon help' }
 Morph >> showBalloon: msgString hand: aHand [
-	"Pop up a balloon containing the given string,
-	first removing any existing BalloonMorphs in the world."
+	"Plain morphs show no balloon: balloons are widgets (see TMorphicWidget)"
 
-	|w h|
-	(w := self world) ifNil: [^self].
-	h := aHand ifNil: [w activeHand].
-	( self theme builder newBalloonHelp: msgString for: self balloonHelpAligner)
-		popUpFor: self hand: h
+	
 ]
 
 { #category : 'accessing' }
@@ -4843,6 +4971,16 @@ Morph >> simulateRightMouseDown [
 Morph >> simulateRightMouseUp [
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseUpWith: MouseEvent yellowButton
+]
+
+{ #category : 'layout' }
+Morph >> snapToEdgeIfAppropriate [
+	| edgeSymbol oldBounds aWorld |
+	(edgeSymbol := self valueOfProperty: #edgeToAdhereTo) ifNotNil:
+		[oldBounds := bounds.
+		self adhereToEdge: edgeSymbol.
+		bounds ~= oldBounds ifTrue: [(aWorld := self world) ifNotNil: [aWorld viewBox ifNotNil:
+			[aWorld displayWorld]]]]
 ]
 
 { #category : 'layout - properties' }
@@ -5070,8 +5208,8 @@ Morph >> submorphsSatisfying: aBlock [
 
 { #category : 'event handling' }
 Morph >> tabAmongFields [
-	^ self theme settings tabAmongFields
-		or: [self hasProperty: #tabAmongFields]
+
+	^ self hasProperty: #tabAmongFields
 ]
 
 { #category : 'card in a stack' }
@@ -5149,111 +5287,12 @@ Morph >> textInput: aTextInputEvent [
 ]
 
 { #category : 'theme' }
-Morph >> theme [
-	"Answer the current theme for the receiver."
-
-	(self valueOfProperty: #theme) ifNotNil: [:t | ^ t].
-	^(self owner ifNil: [self class]) theme
-]
-
-{ #category : 'theme' }
-Morph >> theme: aUITheme [
-	"Set the current theme for the receiver and propagate theme changed to submorphs."
-
-	self theme = aUITheme ifFalse: [
-		self setProperty: #theme toValue: aUITheme.
-		"we do not invoke basicTheme: to avoid checking twice if the theme changed or not"
-		self themeChanged]
-]
-
-{ #category : 'theme' }
 Morph >> themeChanged [
 	"The current theme has changed.
 	Update any dependent visual aspects."
 
 	self submorphsDo: [:m | m themeChanged].
 	self changed
-]
-
-{ #category : 'tiling' }
-Morph >> tileBottom [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max leftCenter corner: max corner)
-]
-
-{ #category : 'tiling' }
-Morph >> tileBottomLeft [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max leftCenter corner: max bottomCenter)
-]
-
-{ #category : 'tiling' }
-Morph >> tileBottomRight [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max center corner: max corner)
-]
-
-{ #category : 'tiling' }
-Morph >> tileCenter [
-
-	| max initial |
-	max := RealEstateAgent maximumUsableArea.
-	initial := self initialExtent.
-	self bounds: ((max center - (initial/2)) extent: initial)
-]
-
-{ #category : 'tiling' }
-Morph >> tileFull [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: max
-]
-
-{ #category : 'tiling' }
-Morph >> tileLeft [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max topLeft corner: max bottomCenter)
-]
-
-{ #category : 'tiling' }
-Morph >> tileRight [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max topCenter corner: max corner)
-]
-
-{ #category : 'tiling' }
-Morph >> tileTop [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max topLeft corner: max rightCenter)
-]
-
-{ #category : 'tiling' }
-Morph >> tileTopLeft [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max topLeft corner: max center)
-]
-
-{ #category : 'tiling' }
-Morph >> tileTopRight [
-
-	| max |
-	max := RealEstateAgent maximumUsableArea.
-	self bounds: (max topCenter corner: max rightCenter)
 ]
 
 { #category : 'rounding' }

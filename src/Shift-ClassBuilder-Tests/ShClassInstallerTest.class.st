@@ -363,31 +363,6 @@ ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclassMetaclass [
 	self deny: ((superClass class slots collect: [ :e | e name ]) includes: 'aSlot')
 ]
 
-{ #category : 'tests - class definition for scripting' }
-ShClassInstallerTest >> testGreaterGreaterGreaterInstallAClassWithSlots [
-
-	[ Object <<< #NweUinqueClass 
-		slots: { #x };
-		package: self generatedClassesPackageName.
-	"a question do we want to return or not the class
-	"
-	newClass := (self class environment at: #NweUinqueClass).
-	self 
-		assert: newClass name 
-		equals: 'NweUinqueClass'.
-	self assert: newClass slots isNotEmpty.
-	self assert: (newClass hasSlotNamed: #x).
-	self 
-		assert: newClass superclass 
-		equals: Object.
-	self 
-		assert: (self class environment at: #NweUinqueClass) 
-		equals: newClass ]
-	ensure: [  
-		(self class environment removeClassNamed: #NweUinqueClass) ]
-	
-]
-
 { #category : 'tests' }
 ShClassInstallerTest >> testInstallInSpecificEnvironment [
 

@@ -9,6 +9,8 @@ I manage the color changes when the user is doing a mouse over or a selection.
 Class {
 	#name : 'FTSelectableMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'selectionColor',
 		'colorBeforeOver'

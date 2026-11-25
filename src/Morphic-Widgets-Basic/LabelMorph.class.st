@@ -4,6 +4,8 @@ String morph with enablement support. When disabled the text will appear inset.
 Class {
 	#name : 'LabelMorph',
 	#superclass : 'StringMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'getEnabledSelector',
 		'getTextSelector',
@@ -70,6 +72,13 @@ LabelMorph class >> newLabelFor: aModel label: aString getEnabled: enabledSel [
 
 { #category : 'accessing' }
 LabelMorph >> adoptPaneColor: aColor [
+]
+
+{ #category : 'initialization' }
+LabelMorph >> defaultColor [
+	"answer the default color/fill style for the receiver"
+
+	^ self theme textColor
 ]
 
 { #category : 'protocol' }

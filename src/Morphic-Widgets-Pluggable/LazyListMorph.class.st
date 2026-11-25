@@ -6,6 +6,8 @@ I will cache the maximum width of my items in maxWidth to avoid this potentially
 Class {
 	#name : 'LazyListMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'listItems',
 		'font',

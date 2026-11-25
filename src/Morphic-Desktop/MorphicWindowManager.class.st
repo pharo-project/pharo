@@ -16,6 +16,8 @@ If you create a window, the window is add at the taskbar.
 Class {
 	#name : 'MorphicWindowManager',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'taskBar',
 		'taskBarWindow',

@@ -479,11 +479,10 @@ WorldMorph >> fullContainsPoint: pt [
 	^bounds containsPoint: pt
 ]
 
-{ #category : 'Morphic-Base-Windows' }
+{ #category : 'drawing' }
 WorldMorph >> fullRepaintNeeded [
 
-	worldState doFullRepaint.
-	self windowsSatisfying: [:w | w makeMeVisible. false]
+	worldState doFullRepaint
 ]
 
 { #category : 'event handling' }
@@ -723,6 +722,20 @@ WorldMorph >> taskbarTasks [
 	^ self submorphs
 		  collect: [ :m | m taskbarTask ]
 		  thenSelect: [ :m | m isNotNil ]
+]
+
+{ #category : 'world state' }
+WorldMorph >> uiActivated [
+	"Morphic became the active UI, with me as its current world"
+
+	
+]
+
+{ #category : 'world state' }
+WorldMorph >> uiDeactivated [
+	"Morphic stopped being the active UI"
+
+	
 ]
 
 { #category : 'copying' }

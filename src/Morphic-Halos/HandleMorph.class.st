@@ -4,6 +4,8 @@ A HandleMorph provides mouse-up control behavior.
 Class {
 	#name : 'HandleMorph',
 	#superclass : 'EllipseMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'pointBlock',
 		'lastPointBlock'
