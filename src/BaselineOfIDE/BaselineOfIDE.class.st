@@ -261,7 +261,8 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		register: StProcessBrowser as: #processBrowser;
 		register: StOpenFilePresenter as: #fileDialog;
 		register: StSaveFilePresenter as: #fileSaveDialog;
-		register: StOpenDirectoryPresenter as: #directoryDialog.
+		register: StOpenDirectoryPresenter as: #directoryDialog;
+		register: FontChooser as: #fontChooser.
 
 	OCProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ OCSimpleFormatter ]).
 

@@ -27,6 +27,18 @@ UIThemeDialogsTest >> testDialogsComeFromTheToolRegistry [
 ]
 
 { #category : 'tests' }
+UIThemeDialogsTest >> testFontChooserComesFromTheToolRegistry [
+
+	| theme registry |
+	registry := ToolRegistry new.
+	registry register: Object as: #fontChooser.
+	theme := UITheme current class new.
+	theme tools: registry.
+
+	self assert: theme fontChooserClass equals: Object
+]
+
+{ #category : 'tests' }
 UIThemeDialogsTest >> testNoRegisteredDialogIsAnError [
 	"A fresh registry holds only the tools that register themselves: the IDE registers the dialogs"
 

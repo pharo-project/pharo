@@ -820,6 +820,20 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 ]
 
 { #category : 'services' }
+UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
+	"Answer the result of a font selector dialog with the given title and initial font."
+
+	| selectedFont |
+
+	self fontChooserClass 
+		openModalWithTitle: aString 
+		initialFont: aFont
+		onAcceptDo: [ :e | selectedFont := e ].			
+	
+	^ selectedFont
+]
+
+{ #category : 'services' }
 UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
@@ -1930,6 +1944,13 @@ UITheme >> focusIndicatorMorphFor: aMorph [
 		ifTrue: [self focusIndicator: aMorph ->(self newFocusIndicatorMorphFor: aMorph)].
 	^self focusIndicator value
 		privateBounds: aMorph focusBounds
+]
+
+{ #category : 'services' }
+UITheme >> fontChooserClass [
+	"The tool that chooses fonts, registered by the IDE"
+
+	^ self tools toolNamed: #fontChooser
 ]
 
 { #category : 'private' }
