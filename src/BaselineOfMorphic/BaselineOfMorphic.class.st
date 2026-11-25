@@ -101,7 +101,10 @@ BaselineOfMorphic >> baseline: spec [
 		spec
 			package: 'Morphic-Initialization'
 			with: [
-			spec requires: #( 'Morphic-Widgets' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ] ]
+			spec requires: #( 'Morphic-Widgets' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ].
+
+		spec
+			group: 'Tests' with: #( 'Morphic-Widgets-Taskbar-Tests' 'Morphic-Desktop-Tests' 'Morphic-Widgets-MissionControl-Tests' ) ]
 ]
 
 { #category : 'baseline' }
