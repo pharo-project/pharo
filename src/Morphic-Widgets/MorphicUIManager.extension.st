@@ -217,21 +217,6 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 ]
 
 { #category : '*Morphic-Widgets' }
-MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
-	"Open an editor on the given string/text"
-
-	| window pane |
-	window := (SystemWindow labelled: labelString) model: self.
-	pane := RubScrolledTextMorph new
-				setText: aText asString;
-				yourself.
-	aBlockOrNil ifNotNil: [
-		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text] for: self].
-	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
-	^ window
-]
-
-{ #category : '*Morphic-Widgets' }
 MorphicUIManager >> inform: aStringOrText [
 	"Display a message for the user to read and then dismiss. The world decides how: a desktop notifies, a plain world opens a dialog"
 

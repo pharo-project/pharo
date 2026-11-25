@@ -374,27 +374,6 @@ UIManager >> deny: aStringOrText title: aString [
 ]
 
 { #category : 'ui requests' }
-UIManager >> edit: aText [
-	"Open an editor on the given string/text."
-
-	^self edit: aText label: nil
-]
-
-{ #category : 'ui requests' }
-UIManager >> edit: aText label: labelString [
-	"Open an editor on the given string/text."
-
-	^self edit: aText label: labelString accept: nil
-]
-
-{ #category : 'ui requests' }
-UIManager >> edit: aText label: labelString accept: aBlockOrNil [
-	"Open an editor on the given string/text."
-
-	^self subclassResponsibility
-]
-
-{ #category : 'ui requests' }
 UIManager >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 
