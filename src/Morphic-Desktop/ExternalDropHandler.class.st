@@ -13,9 +13,8 @@ Class {
 		'DefaultHandler',
 		'RegisteredHandlers'
 	],
-	#category : 'Morphic-Core-Worlds',
-	#package : 'Morphic-Core',
-	#tag : 'Worlds'
+	#category : 'Morphic-Desktop',
+	#package : 'Morphic-Desktop'
 }
 
 { #category : 'private' }

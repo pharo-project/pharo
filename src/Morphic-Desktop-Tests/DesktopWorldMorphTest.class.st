@@ -4,6 +4,9 @@ I check that a desktop world created programmatically is a desktop: it has the d
 Class {
 	#name : 'DesktopWorldMorphTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'dropped'
+	],
 	#category : 'Morphic-Desktop-Tests',
 	#package : 'Morphic-Desktop-Tests'
 }
@@ -21,6 +24,16 @@ DesktopWorldMorphTest >> altTabWith: aHand [
 		   stamp: 0)
 		  key: Character tab asKeyCombination key;
 		  yourself
+]
+
+{ #category : 'helpers' }
+DesktopWorldMorphTest >> lookupExternalDropHandler: aFileReference [
+	"I stand for the registry of drop handlers: every file goes to the handler of the test"
+
+	^ ExternalDropHandler
+		type: nil
+		extension: nil
+		action: [ :file :world | dropped add: file -> world ]
 ]
 
 { #category : 'tests' }
@@ -44,6 +57,26 @@ DesktopWorldMorphTest >> testAltTabOpensTheTaskListOfTheDesktop [
 	self assert: (desktop rootEventHandlersTake: (self altTabWith: hand)).
 
 	self assert: (desktop submorphs anySatisfy: [ :morph | morph isKindOf: TaskListMorph ])
+]
+
+{ #category : 'tests' }
+DesktopWorldMorphTest >> testDroppedFilesGoToTheirHandler [
+
+	| desktop hand |
+	dropped := OrderedCollection new.
+	desktop := DesktopWorldMorph new.
+	desktop dropHandlers: self.
+	hand := HandMorph new.
+	desktop addHand: hand.
+
+	desktop dropFiles: (DropFilesEvent new
+			 setPosition: 0 @ 0
+			 contents: 1
+			 hand: hand;
+			 fileNames: { '/tmp/dropped.txt' };
+			 yourself).
+
+	self assert: dropped asArray equals: { '/tmp/dropped.txt' asFileReference -> desktop }
 ]
 
 { #category : 'tests' }

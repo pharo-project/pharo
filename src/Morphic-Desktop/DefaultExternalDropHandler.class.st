@@ -5,9 +5,8 @@ An alternative default handler that uses the file-list services to process files
 Class {
 	#name : 'DefaultExternalDropHandler',
 	#superclass : 'Object',
-	#category : 'Morphic-Core-Worlds',
-	#package : 'Morphic-Core',
-	#tag : 'Worlds'
+	#category : 'Morphic-Desktop',
+	#package : 'Morphic-Desktop'
 }
 
 { #category : 'class initialization' }
