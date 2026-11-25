@@ -12,13 +12,6 @@ Class {
 	#tag : 'Base-New'
 }
 
-{ #category : 'converting' }
-RangeSetting >> asSettingPresenterWithOwner: aPresenter [
-	"Answer an appropriate <SpPresenter> container for the receiver's value"
-
-	^ aPresenter instantiate: StSettingDropListPresenterItem on: self
-]
-
 { #category : 'accessing' }
 RangeSetting >> domainValues [
 
