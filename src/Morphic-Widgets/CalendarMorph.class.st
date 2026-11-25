@@ -331,6 +331,7 @@ CalendarMorph >> handleYearTouched [
 
 	newYear := self morphicUIManager
 		chooseOrRequestFrom: ( 2000 to: 2020 )
+		values: ( 2000 to: 2020 )
 		lines: #()
 		title: 'Choose a year:'.
 
