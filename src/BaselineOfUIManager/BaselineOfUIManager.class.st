@@ -14,5 +14,10 @@ Class {
 BaselineOfUIManager >> baseline: spec [
 
 	<baseline>
-	spec for: #common do: [ spec package: 'UIManager' ]
+	spec for: #common do: [
+		spec package: 'UIManager'.
+		"UIManager has no tests yet: its ISO stage only checks that it loads on its own"
+		spec
+			group: 'Core' with: #( 'UIManager' );
+			group: 'Tests' with: #( 'Core' ) ]
 ]
