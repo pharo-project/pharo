@@ -30,6 +30,8 @@ BaselineOfMorphic >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
+		spec preLoadDoIt: #installBitmapFonts:package:.
+
 		"Plain morphs, events, layouts and worlds. The widgets build on them"
 		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
 
@@ -102,6 +104,14 @@ BaselineOfMorphic >> baseline: spec [
 			package: 'Morphic-Initialization'
 			with: [
 			spec requires: #( 'Morphic-Widgets' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' 'Morphic-Desktop' ) ] ]
+]
+
+{ #category : 'actions' }
+BaselineOfMorphic >> installBitmapFonts: loader package: packageSpec [
+	"Code loaded with Morphic and the tools reads the default font while it loads: install the fonts before.
+	The baseline is compiled before its packages load, so it finds the class by name"
+
+	(self class environment at: #StrikeFont) loadBitmapFonts
 ]
 
 { #category : 'baseline' }
