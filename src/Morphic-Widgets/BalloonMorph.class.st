@@ -106,9 +106,9 @@ BalloonMorph class >> getVertices: bounds [
 
 { #category : 'class initialization' }
 BalloonMorph class >> initialize [
+	"The balloon font is set by Morphic's initialization, once the fonts are installed"
 
-	self setBalloonColorTo: self defaultBalloonColor.
-	self balloonFont: StandardFonts defaultFont
+	self setBalloonColorTo: self defaultBalloonColor
 ]
 
 { #category : 'utilities' }
