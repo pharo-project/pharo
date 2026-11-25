@@ -2775,7 +2775,8 @@ RubTextEditor >> visualCharacterSize: aCharacter atOffset: anOffset [
 	| tabSize |
 	aCharacter = Character tab ifFalse: [ ^1 ].
 	
-	tabSize := EFFormatter numberOfSpacesInIndent.
+	"Count a tab as many columns as it is drawn wide: the text area's tab width, in spaces of its font"
+	tabSize := (self textArea tabWidth / (self textArea font widthOf: Character space)) rounded max: 1.
 	
 	^ tabSize - (anOffset rem: tabSize)
 ]
