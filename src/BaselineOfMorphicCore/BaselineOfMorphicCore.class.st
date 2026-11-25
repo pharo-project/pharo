@@ -31,6 +31,12 @@ BaselineOfMorphicCore >> baseline: spec [
 				baseline: 'FreeType' with: [ spec loads: #core from: repository ];
 				baseline: 'Keymapping' with: [ spec loads: #Core from: repository ];
 				baseline: 'UIManager' with: [ spec repository: repository ].
+			"The Morphic tests of keymapping subclass the tests of Keymapping"
+			spec baseline: 'KeymappingTests' with: [
+				spec
+					className: 'BaselineOfKeymapping';
+					repository: repository;
+					loads: #( 'Tests' ) ].
 
 			spec package: 'System-Object Events'.
 			spec package: 'System-Caching'.
@@ -45,8 +51,9 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec package: 'System-Caching-Tests' with: [ spec requires: #( 'System-Caching' ) ].
 			spec package: 'FormCanvas-Tests' with: [ spec requires: #( 'FormCanvas-Core' ) ].
 			spec package: 'System-Model-Tests' with: [ spec requires: #( 'System-Model' ) ].
+			spec package: 'Keymapping-Morphic-Tests' with: [ spec requires: #( 'Morphic-Core' 'KeymappingTests' ) ].
 
 			spec
 				group: 'default' with: #( 'Morphic-Core' );
-				group: 'Tests' with: #( 'default' 'System-Object Events-Tests' 'System-Caching-Tests' 'FormCanvas-Tests' 'System-Model-Tests' ) ]
+				group: 'Tests' with: #( 'default' 'System-Object Events-Tests' 'System-Caching-Tests' 'FormCanvas-Tests' 'System-Model-Tests' 'Keymapping-Morphic-Tests' ) ]
 ]

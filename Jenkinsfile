@@ -272,6 +272,7 @@ def bootstrapImage(){
         isoTesters['ClassParser'] = { defineIsoTestStage("ClassParser") }
         isoTesters['Fonts'] = { defineIsoTestStage("Fonts") }
         isoTesters['FreeType'] = { defineIsoTestStage("FreeType") }
+        isoTesters['Keymapping'] = { defineIsoTestStage("Keymapping") }
         isoTesters['MorphicCore'] = { defineIsoTestStage("MorphicCore") }
         parallel isoTesters
 

@@ -15,11 +15,15 @@ BaselineOfKeymapping class >> corePackageNames [
 BaselineOfKeymapping >> baseline: spec [
 
 	<baseline>
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
+			spec baseline: 'MenuRegistration' with: [ spec repository: repository ].
+
 			spec
 				package: 'Keymapping-Core';
 				package: 'Keymapping-KeyCombinations' with: [ spec requires: #( 'Keymapping-Core' ) ];
-				package: 'Keymapping-Pragmas' with: [ spec requires: #( 'Keymapping-Core' ) ];
+				package: 'Keymapping-Pragmas' with: [ spec requires: #( 'Keymapping-Core' 'MenuRegistration' ) ];
 				package: 'Keymapping-Tests' with: [ spec requires: #( 'Keymapping-Core' 'Keymapping-KeyCombinations' ) ].
 
 			spec
