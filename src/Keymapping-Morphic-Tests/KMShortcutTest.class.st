@@ -4,8 +4,8 @@ SUnit tests for key mapping shortcuts
 Class {
 	#name : 'KMShortcutTest',
 	#superclass : 'AbstractKeymappingTest',
-	#category : 'Keymapping-Tests',
-	#package : 'Keymapping-Tests'
+	#category : 'Keymapping-Morphic-Tests',
+	#package : 'Keymapping-Morphic-Tests'
 }
 
 { #category : 'tests' }

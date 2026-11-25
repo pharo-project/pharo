@@ -34,12 +34,14 @@ BaselineOfMorphic >> baseline: spec [
 		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
 
 		spec package: 'System-Identification'.
-		spec package: 'System-Settings-Core' with: [ spec requires: #( 'System-Identification' ) ].
+		spec package: 'System-Settings-Core' with: [ spec requires: #( 'System-Identification' 'Graphics-Icons' ) ].
 		spec package: 'StartupPreferences'. "This should move out of Morphic but currently there is a cyclic dependency with System-Settings-Core..."
 
 		spec package: 'System-Localization'.
 
 		spec package: 'Graphics-Shapes'.
+		"Icon packs: they download their icons over HTTP"
+		spec package: 'Graphics-Icons' with: [ spec requires: #( 'MorphicCore' ) ].
 		spec package: 'Growl' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 
 		spec package: 'Native-Browser'.
@@ -49,7 +51,7 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: #( 'Core' ) ].
 
-		spec package: 'Morphic-Widgets' with: [ spec requires: #( 'MorphicCore' ) ].
+		spec package: 'Morphic-Widgets' with: [ spec requires: #( 'MorphicCore' 'Graphics-Icons' ) ].
 		spec package: 'Morphic-Widgets-Basic' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-Pluggable' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-PolyTabs' with: [ spec requires: #( 'Morphic-Widgets' ) ].

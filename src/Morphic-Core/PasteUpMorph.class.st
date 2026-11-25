@@ -303,24 +303,6 @@ PasteUpMorph >> dropEnabled [
 	^ (self valueOfProperty: #dropEnabled) ~~ false
 ]
 
-{ #category : 'event handling' }
-PasteUpMorph >> dropFiles: anEvent [
-	"Handle a number of dropped files from the OS.
-	TODO:
-		- use a more general mechanism for figuring out what to do with the file (perhaps even offering a choice from a menu)
-		- remember the resource location or (when in browser) even the actual file handle"
-
-	| numFiles |
-	numFiles := anEvent contents.
-	1 to: numFiles do: [ :i |
-		| aFileReference handler |
-		aFileReference := anEvent requestDropReference: i.
-		handler := ExternalDropHandler
-			lookupExternalDropHandler: aFileReference.
-		handler
-			ifNotNil: [ handler handle: aFileReference in: self dropEvent: anEvent ] ]
-]
-
 { #category : 'drawing' }
 PasteUpMorph >> gridFormOrigin: origin grid: smallGrid background: backColor line: lineColor [
 

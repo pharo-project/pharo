@@ -146,7 +146,7 @@ Build Url: ${env.BUILD_URL}
 def defineIsoTestStage(projectName, testPackages=""){
     stage("Tests-ISO-" + projectName) {
         def testGroup = "Tests"
-        timeout(2) {
+        timeout(5) {
             dir(env.STAGE_NAME){
                 def PHARO_MAJOR = shellOutput('git describe --tags --first-parent | cut -d\'-\' -f 1 | cut -c 2- | cut -d\'.\' -f 1-1')
                 def PHARO_MINOR = shellOutput('git describe --tags --first-parent | cut -d\'-\' -f 1 | cut -c 2- | cut -d\'.\' -f 2-2')
@@ -270,6 +270,10 @@ def bootstrapImage(){
         isoTesters['Flashback'] = { defineIsoTestStage("Flashback") }
         isoTesters['Fuel'] = { defineIsoTestStage("Fuel") }
         isoTesters['ClassParser'] = { defineIsoTestStage("ClassParser") }
+        isoTesters['Display'] = { defineIsoTestStage("Display") }
+        isoTesters['Fonts'] = { defineIsoTestStage("Fonts") }
+        isoTesters['Keymapping'] = { defineIsoTestStage("Keymapping") }
+        isoTesters['MorphicCore'] = { defineIsoTestStage("MorphicCore") }
         parallel isoTesters
 
         stage ("Full Image") {

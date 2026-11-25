@@ -7,9 +7,8 @@ Class {
 	#instVars : [
 		'fileName'
 	],
-	#category : 'Graphics-Tests-Files',
-	#package : 'Graphics-Tests',
-	#tag : 'Files'
+	#category : 'Graphics-Files-Tests',
+	#package : 'Graphics-Files-Tests'
 }
 
 { #category : 'helpers - png encoding' }

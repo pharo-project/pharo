@@ -21,14 +21,23 @@ Class {
 BaselineOfDisplay >> baseline: spec [
 
 	<baseline>
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
+			"The BMP tests decode their images from Base64"
+			spec baseline: 'ZincCharacterEncoding' with: [ spec loads: #Core from: repository ].
+
 			spec
 				package: 'Colors';
 				package: 'Graphics-Display Objects';
 				package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 				package: 'Graphics-Transformations';
-				package: 'Graphics-Files'.
-			spec group: 'Core' with: #( 'Colors' 'Graphics-Display Objects' 'Graphics-Primitives' 'Graphics-Transformations' ) ]
+				package: 'Graphics-Files';
+				package: 'Graphics-Tests' with: [ spec requires: #( 'Graphics-Primitives' 'Graphics-Files' 'ZincCharacterEncoding' ) ].
+			spec
+				group: 'default' with: #( 'Core' 'Graphics-Files' );
+				group: 'Core' with: #( 'Colors' 'Graphics-Display Objects' 'Graphics-Primitives' 'Graphics-Transformations' );
+				group: 'Tests' with: #( 'default' 'Graphics-Tests' ) ]
 ]
 
 { #category : 'accessing' }

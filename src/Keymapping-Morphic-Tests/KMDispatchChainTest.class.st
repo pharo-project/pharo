@@ -4,8 +4,8 @@ SUnit tests for testing the dispatch chain
 Class {
 	#name : 'KMDispatchChainTest',
 	#superclass : 'AbstractKeymappingTest',
-	#category : 'Keymapping-Tests',
-	#package : 'Keymapping-Tests'
+	#category : 'Keymapping-Morphic-Tests',
+	#package : 'Keymapping-Morphic-Tests'
 }
 
 { #category : 'tests' }
