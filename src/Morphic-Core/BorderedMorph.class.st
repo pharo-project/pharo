@@ -160,10 +160,11 @@ BorderedMorph >> defaultBorderColor [
 	^ Color black
 ]
 
-{ #category : 'accessing - defaults' }
+{ #category : 'initialization' }
 BorderedMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
-	^ self theme borderWidth
+
+	^ 1
 ]
 
 { #category : 'accessing' }

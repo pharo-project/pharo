@@ -16,6 +16,8 @@ Structure:
 Class {
 	#name : 'SelectionMorph',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'selectedItems',
 		'slippage',

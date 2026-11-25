@@ -4,8 +4,8 @@ Morph with an inset border by default and theme access.
 Class {
 	#name : 'ComposableMorph',
 	#superclass : 'ModelMorph',
-	#traits : 'TEasilyThemed',
-	#classTraits : 'TEasilyThemed classTrait',
+	#traits : 'TEasilyThemed - {#theme} + (TMorphicWidget - {#defaultBorderWidth})',
+	#classTraits : 'TEasilyThemed classTrait + TMorphicWidget classTrait',
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets',
 	#tag : 'Basic'
@@ -16,13 +16,6 @@ ComposableMorph >> defaultBorderColor [
 	"Answer the default border color/fill style for the receiver"
 
 	^#inset
-]
-
-{ #category : 'initialization' }
-ComposableMorph >> defaultBorderWidth [
-	"Answer the default border width for the receiver."
-
-	^ 1
 ]
 
 { #category : 'accessing' }

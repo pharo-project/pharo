@@ -4,6 +4,8 @@ I am the superclass of a hierarchy of morph specialized in allowing the user to 
 Class {
 	#name : 'AbstractResizerMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'dotColor',
 		'handleColor',

@@ -4,13 +4,16 @@ A scroll pane that handles its contents accurately.
 Class {
 	#name : 'GeneralScrollPaneMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'scroller',
 		'hScrollbar',
 		'vScrollbar'
 	],
 	#category : 'Morphic-Widgets-Scrolling',
-	#package : 'Morphic-Widgets-Scrolling'
+	#package : 'Morphic-Widgets',
+	#tag : 'Scrolling'
 }
 
 { #category : 'accessing' }

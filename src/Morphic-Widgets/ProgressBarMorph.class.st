@@ -25,8 +25,8 @@ p openInWorld.
 Class {
 	#name : 'ProgressBarMorph',
 	#superclass : 'BorderedMorph',
-	#traits : 'TAbleToRotate',
-	#classTraits : 'TAbleToRotate classTrait',
+	#traits : 'TAbleToRotate + TMorphicWidget',
+	#classTraits : 'TAbleToRotate classTrait + TMorphicWidget classTrait',
 	#instVars : [
 		'start',
 		'end',

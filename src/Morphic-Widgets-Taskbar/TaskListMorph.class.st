@@ -5,6 +5,8 @@ Hold the modifier key to keep the switcher open; press Tab to cycle forward, Shi
 Class {
 	#name : 'TaskListMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'tasks'
 	],

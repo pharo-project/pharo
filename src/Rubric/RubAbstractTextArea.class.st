@@ -77,6 +77,8 @@ wrapped
 Class {
 	#name : 'RubAbstractTextArea',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'model',
 		'paragraph',

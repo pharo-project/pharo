@@ -82,12 +82,6 @@ EllipseMorph >> couldHaveRoundedCorners [
 ]
 
 { #category : 'initialization' }
-EllipseMorph >> defaultBorderWidth [
-	"answer the default border width for the receiver"
-	^ 1
-]
-
-{ #category : 'initialization' }
 EllipseMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color yellow

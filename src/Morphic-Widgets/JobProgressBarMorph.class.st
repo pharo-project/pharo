@@ -12,6 +12,8 @@ It is possible to disable the icon to prevent the user from stopping the task vi
 Class {
 	#name : 'JobProgressBarMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'progressBar'
 	],

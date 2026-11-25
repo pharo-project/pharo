@@ -20,6 +20,8 @@ target
 Class {
 	#name : 'FastDraggingFrameMorph',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'target',
 		'startGap',

@@ -17,6 +17,8 @@ Instance variables:
 Class {
 	#name : 'MenuItemMorph',
 	#superclass : 'StringMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'isEnabled',
 		'subMenu',
@@ -209,6 +211,13 @@ MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 MenuItemMorph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 extent: 10 @ 10
+]
+
+{ #category : 'initialization' }
+MenuItemMorph >> defaultColor [
+	"answer the default color/fill style for the receiver"
+
+	^ self theme textColor
 ]
 
 { #category : 'initialization' }

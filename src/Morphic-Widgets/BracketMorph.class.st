@@ -4,11 +4,14 @@ Morph displaying opposing arrows.
 Class {
 	#name : 'BracketMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'orientation'
 	],
 	#category : 'Morphic-Widgets-Scrolling',
-	#package : 'Morphic-Widgets-Scrolling'
+	#package : 'Morphic-Widgets',
+	#tag : 'Scrolling'
 }
 
 { #category : 'drawing' }

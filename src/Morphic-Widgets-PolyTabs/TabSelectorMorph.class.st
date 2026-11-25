@@ -4,6 +4,8 @@ Row of tabs for a TabGroupMorph.
 Class {
 	#name : 'TabSelectorMorph',
 	#superclass : 'ModelMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'selectedIndex',
 		'visibleTabRange',

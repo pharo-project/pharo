@@ -5,6 +5,8 @@ A SystemProgressItemMorph is 'bar' in a SystemProgressMorph.
 Class {
 	#name : 'SystemProgressItemMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'bar',
 		'labelMorph',

@@ -4,6 +4,8 @@ This morph provides a halo of handles for its target morph. Dragging, duplicatin
 Class {
 	#name : 'HaloMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'target',
 		'innerTarget',

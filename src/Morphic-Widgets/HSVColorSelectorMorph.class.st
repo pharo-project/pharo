@@ -4,6 +4,8 @@ Colour selector featuring a saturation/volume area and a hue selection strip.
 Class {
 	#name : 'HSVColorSelectorMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'svMorph',
 		'hMorph',

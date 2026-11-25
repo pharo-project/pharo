@@ -66,6 +66,8 @@ scrollPaneWidth
 Class {
 	#name : 'IdentifierChooserMorph',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'requestor',
 		'labels',

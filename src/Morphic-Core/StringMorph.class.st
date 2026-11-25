@@ -167,7 +167,8 @@ StringMorph >> contrastingBackgroundColor [
 { #category : 'initialization' }
 StringMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
-	^ self theme textColor
+
+	^ Color black
 ]
 
 { #category : 'editing' }
@@ -236,7 +237,7 @@ StringMorph >> enabled: aBoolean [
 
 	aBoolean
 		ifTrue: [ self color: self defaultColor ]
-		ifFalse: [ self color: self theme disabledTextColor ]
+		ifFalse: [ self color: Color gray ]
 ]
 
 { #category : 'accessing' }
@@ -311,14 +312,12 @@ StringMorph >> heightToDisplayInList: aList [
 
 { #category : 'drawing' }
 StringMorph >> imageForm: depth forRectangle: rect [
+
 	| canvas |
 	canvas := FormCanvas extent: rect extent depth: depth.
 
-	backgroundColor isTransparent ifTrue: [
-		canvas form fillColor: self theme backgroundColor.
-	].
-	canvas translateBy: rect topLeft negated
-		during:[:tempCanvas| tempCanvas fullDrawMorph: self].
+	backgroundColor isTransparent ifTrue: [ canvas form fillColor: Color white ].
+	canvas translateBy: rect topLeft negated during: [ :tempCanvas | tempCanvas fullDrawMorph: self ].
 	^ canvas form offset: rect topLeft
 ]
 

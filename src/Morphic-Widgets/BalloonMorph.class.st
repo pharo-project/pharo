@@ -11,6 +11,8 @@ Balloons should not be duplicated with veryDeepCopy unless their target is also 
 Class {
 	#name : 'BalloonMorph',
 	#superclass : 'PolygonMorph',
+	#traits : 'TMorphicWidget - {#defaultBorderWidth}',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'target',
 		'offsetFromTarget',
@@ -173,13 +175,6 @@ BalloonMorph >> defaultBorderColor [
 	"Answer the default border color/fill style for the receiver"
 
 	^ self defaultColor muchDarker
-]
-
-{ #category : 'initialization' }
-BalloonMorph >> defaultBorderWidth [
-	"Answer the default border width for the receiver"
-
-	^ 1
 ]
 
 { #category : 'initialization' }

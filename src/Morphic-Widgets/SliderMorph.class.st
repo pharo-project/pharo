@@ -1,6 +1,8 @@
 Class {
 	#name : 'SliderMorph',
 	#superclass : 'ModelMorph',
+	#traits : 'TMorphicWidget - {#defaultBorderWidth}',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'slider',
 		'value',
@@ -11,7 +13,8 @@ Class {
 		'dragging'
 	],
 	#category : 'Morphic-Widgets-Scrolling',
-	#package : 'Morphic-Widgets-Scrolling'
+	#package : 'Morphic-Widgets',
+	#tag : 'Scrolling'
 }
 
 { #category : 'geometry' }
@@ -34,12 +37,6 @@ SliderMorph >> computeSlider [
 SliderMorph >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ #inset
-]
-
-{ #category : 'initialization' }
-SliderMorph >> defaultBorderWidth [
-	"answer the default border width for the receiver"
-	^ 1
 ]
 
 { #category : 'initialization' }

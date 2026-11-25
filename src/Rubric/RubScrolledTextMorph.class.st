@@ -4,6 +4,8 @@ I am the common morph to represent a text area. I should be created by my model,
 Class {
 	#name : 'RubScrolledTextMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'hasEditingConflicts',
 		'hasUnacceptedEdits',

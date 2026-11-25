@@ -43,6 +43,38 @@ Morph >> attachKeymapCategory: aCategoryName targetting: anObject [
 	self kmDispatcher attachCategory: aCategoryName targetting: anObject
 ]
 
+{ #category : '*Morphic-Widgets' }
+Morph >> balloonColor [
+
+	^ self valueOfProperty: #balloonColor ifAbsent: [ self defaultBalloonColor ]
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> balloonColor: aColor [
+
+	^ self setProperty: #balloonColor toValue: aColor
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> balloonFont [
+
+	^ self valueOfProperty: #balloonFont ifAbsent: [ self defaultBalloonFont ]
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> balloonFont: aFont [
+
+	^ self setProperty: #balloonFont toValue: aFont
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> basicTheme: aUITheme [
+	"Set the current theme for the receiver without notification of change."
+
+	self theme = aUITheme ifFalse: [
+		self setProperty: #theme toValue: aUITheme]
+]
+
 { #category : '*Morphic-Widgets-keymapping' }
 Morph >> bindKeyCombination: aShortcut toAction: anAction [
 	
@@ -366,6 +398,32 @@ Morph >> removeKeyCombination: aShortcut [
 Morph class >> systemIconName [
 
 	^ #morph
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph class >> theme [
+	"Answer the ui theme that provides controls."
+
+	^ Smalltalk ui theme
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> theme [
+	"Answer the current theme for the receiver.
+	Compatibility: plain morphs are not styled; widgets get their theme from TMorphicWidget. Senders should move to widgets before this goes away."
+
+	(self valueOfProperty: #theme) ifNotNil: [:t | ^ t].
+	^(self owner ifNil: [self class]) theme
+]
+
+{ #category : '*Morphic-Widgets' }
+Morph >> theme: aUITheme [
+	"Set the current theme for the receiver and propagate theme changed to submorphs."
+
+	self theme = aUITheme ifFalse: [
+		self setProperty: #theme toValue: aUITheme.
+		"we do not invoke basicTheme: to avoid checking twice if the theme changed or not"
+		self themeChanged]
 ]
 
 { #category : '*Morphic-Widgets' }

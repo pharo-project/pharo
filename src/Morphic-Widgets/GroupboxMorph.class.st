@@ -4,6 +4,8 @@ Groupbox with title with a vertical layout. Appears in a lighter colour than the
 Class {
 	#name : 'GroupboxMorph',
 	#superclass : 'ModelMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'contentMorph',
 		'labelMorph',

@@ -6,6 +6,8 @@ Usually I am contained in the global instance of the SystemProgressMorph
 Class {
 	#name : 'JobProgressMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'bar',
 		'endValue',

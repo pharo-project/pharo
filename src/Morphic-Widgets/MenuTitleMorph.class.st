@@ -24,6 +24,8 @@ This is a TitleMorph used by MenuMorph.
 Class {
 	#name : 'MenuTitleMorph',
 	#superclass : 'AlignmentMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'titleContainer',
 		'icon',

@@ -227,12 +227,6 @@ PasteUpMorph >> defaultBorderColor [
 ]
 
 { #category : 'initialization' }
-PasteUpMorph >> defaultBorderWidth [
-	"answer the default border width for the receiver"
-	^ 1
-]
-
-{ #category : 'initialization' }
 PasteUpMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color
@@ -620,17 +614,6 @@ PasteUpMorph >> shouldGetStepsFrom: aWorld [
 	(self isWorldMorph and: [ owner isNotNil ]) ifTrue: [
 		^ self outermostWorldMorph == aWorld ].
 	^ super shouldGetStepsFrom: aWorld
-]
-
-{ #category : 'theme' }
-PasteUpMorph >> themeChanged [
-	"The theme has changed.
-	Update the desktop wallpaper if appropriate."
-
-	(self theme desktopImageFor: self) ifNotNil: [:aForm |
-		self color: Color white.
-		self backgroundImage: aForm layout: self theme desktopImageLayout].
-	super themeChanged
 ]
 
 { #category : 'project state' }

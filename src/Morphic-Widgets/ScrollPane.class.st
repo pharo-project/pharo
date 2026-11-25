@@ -8,6 +8,8 @@ Basic clue about utilization of the ScrollPane class is given in:
 Class {
 	#name : 'ScrollPane',
 	#superclass : 'ModelMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'scrollBar',
 		'scroller',
@@ -17,7 +19,8 @@ Class {
 		'hScrollBar'
 	],
 	#category : 'Morphic-Widgets-Scrolling',
-	#package : 'Morphic-Widgets-Scrolling'
+	#package : 'Morphic-Widgets',
+	#tag : 'Scrolling'
 }
 
 { #category : 'settings' }

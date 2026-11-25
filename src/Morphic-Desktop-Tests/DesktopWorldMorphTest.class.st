@@ -56,6 +56,13 @@ DesktopWorldMorphTest >> testHasTheDesktopHandlers [
 ]
 
 { #category : 'tests' }
+DesktopWorldMorphTest >> testIsAPlainWorldNotAWidget [
+	"A desktop world is created before the theme can answer its sizes: it styles itself like any world"
+
+	self assert: DesktopWorldMorph new borderWidth equals: WorldMorph new borderWidth
+]
+
+{ #category : 'tests' }
 DesktopWorldMorphTest >> testNotifiesTheUserInItself [
 
 	| desktop |
@@ -65,4 +72,15 @@ DesktopWorldMorphTest >> testNotifiesTheUserInItself [
 	desktop notifyUser: 'hello'.
 
 	self assert: (desktop submorphs anySatisfy: [ :morph | morph isKindOf: GrowlMorph ])
+]
+
+{ #category : 'tests' }
+DesktopWorldMorphTest >> testTakesTheDesktopColorOfItsTheme [
+
+	| world theme |
+	world := DesktopWorldMorph new.
+	world color: Color red.
+	theme := UITheme current class new.
+	world theme: theme.
+	self assert: world color equals: theme desktopColor
 ]

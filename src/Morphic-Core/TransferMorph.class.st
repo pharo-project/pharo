@@ -76,7 +76,8 @@ TransferMorph >> aboutToBeGrabbedBy: aHand [
 { #category : 'initialization' }
 TransferMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
-	^ self theme selectionColor
+
+	^ Color r: 0.686 g: 0.835 b: 0.979
 ]
 
 { #category : 'submorphs - add/remove' }

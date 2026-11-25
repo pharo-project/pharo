@@ -173,13 +173,6 @@ Morph class >> shortcutsHandler: anObject [
 	ShortcutsHandler := anObject
 ]
 
-{ #category : 'accessing' }
-Morph class >> theme [
-	"Answer the ui theme that provides controls."
-
-	^ Smalltalk ui theme
-]
-
 { #category : 'dropping/grabbing' }
 Morph >> aboutToBeGrabbedBy: aHand [
 	"The receiver is being grabbed by a hand.
@@ -687,32 +680,6 @@ Morph >> assureTableProperties [
 ]
 
 { #category : 'halos and balloon help' }
-Morph >> balloonColor [
-	^ self
-		valueOfProperty: #balloonColor
-		ifAbsent: [self defaultBalloonColor]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonColor: aColor [
-	^ self
-		setProperty: #balloonColor
-		toValue: aColor
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonFont [
-	^ self
-		valueOfProperty: #balloonFont
-		ifAbsent: [self defaultBalloonFont]
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> balloonFont: aFont [
-	^ self setProperty: #balloonFont toValue: aFont
-]
-
-{ #category : 'halos and balloon help' }
 Morph >> balloonHelpAligner [
 	"Answer the morph to which the receiver's balloon help should point"
 	^ (self valueOfProperty: #balloonTarget) ifNil: [self]
@@ -720,32 +687,26 @@ Morph >> balloonHelpAligner [
 
 { #category : 'halos and balloon help' }
 Morph >> balloonHelpDelayTime [
-	"Return the number of milliseconds before a balloon help should be put up on the receiver. The balloon help will only be put up if the receiver responds to #wantsBalloon by returning true."
-	^ self theme settings balloonHelpDelayTime
+	"Return the number of milliseconds before a balloon help should be put up on the receiver."
+
+	^ 800
 ]
 
-{ #category : 'settings' }
+{ #category : 'halos and balloon help' }
 Morph >> balloonHelpEnabled [
-	^ self theme settings balloonHelpEnabled
+	"Plain morphs show no balloon help: balloons are widgets (see TMorphicWidget)"
+
+	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'halos and balloon help' }
 Morph >> balloonText [
 	"Answer balloon help text or nil, if no help is available.
 	NB: subclasses may override such that they programatically
 	construct the text, for economy's sake, such as model phrases in
 	a Viewer"
 
-	^ extension ifNotNil: [:ext | ext balloonText ifNotNil: [:text |
-				text withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]]
-]
-
-{ #category : 'theme' }
-Morph >> basicTheme: aUITheme [
-	"Set the current theme for the receiver without notification of change."
-
-	self theme = aUITheme ifFalse: [
-		self setProperty: #theme toValue: aUITheme]
+	^ extension ifNotNil: [ :ext | ext balloonText ifNotNil: [ :text | text withNoLineLongerThan: self maxBalloonHelpLineLength ] ]
 ]
 
 { #category : 'accessing' }
@@ -1325,11 +1286,11 @@ Morph >> debugDrawError [
 	(self valueOfProperty: #drawError) debug
 ]
 
-{ #category : 'accessing - defaults' }
+{ #category : 'drawing' }
 Morph >> defaultBackgroundColor [
 	"Answer the color to be used as the base window color for a window whose model is an object of the receiver's class"
 
-	^  self theme windowColorFor: self
+	^ Color white
 ]
 
 { #category : 'accessing - defaults' }
@@ -1892,9 +1853,14 @@ Morph >> focusChanged [
 
 { #category : 'drawing' }
 Morph >> focusIndicatorMorph [
-	"Answer the focus indicator morph for the receiver."
+	"Answer the focus indicator morph for the receiver: a plain outline"
 
-	^self theme focusIndicatorMorphFor: self
+	^ BorderedMorph new
+		  fillStyle: Color transparent;
+		  borderStyle: (SimpleBorderStyle new
+			   width: 1;
+			   baseColor: Color black);
+		  bounds: self focusBounds
 ]
 
 { #category : 'dropping/grabbing' }
@@ -3214,6 +3180,12 @@ Morph >> makeMeVisible [
 	"Move into the visible area of my world. Most morphs stay where they are; windows move back on screen"
 ]
 
+{ #category : 'halos and balloon help' }
+Morph >> maxBalloonHelpLineLength [
+
+	^ 40
+]
+
 { #category : 'layout - properties' }
 Morph >> maxCellSize [
 	"Layout specific. This property specifies the maximum size of a table cell."
@@ -3227,11 +3199,6 @@ Morph >> maxCellSize: aPoint [
 	"Layout specific. This property specifies the maximum size of a table cell."
 	self assureTableProperties maxCellSize: aPoint.
 	self layoutChanged
-]
-
-{ #category : 'settings' }
-Morph >> menuKeyboardControl [
-	^ self theme settings menuKeyboardControl
 ]
 
 { #category : 'layout - properties' }
@@ -4682,7 +4649,7 @@ Morph >> separateDragAndDrop [
 Morph >> setBalloonText: stringOrText [
 	"Set receiver's balloon help text. Pass nil to remove the help."
 
-	self setBalloonText: stringOrText maxLineLength: self theme settings maxBalloonHelpLineLength
+	self setBalloonText: stringOrText maxLineLength: self maxBalloonHelpLineLength
 ]
 
 { #category : 'halos and balloon help' }
@@ -4867,14 +4834,9 @@ Morph >> showBalloon: msgString [
 
 { #category : 'halos and balloon help' }
 Morph >> showBalloon: msgString hand: aHand [
-	"Pop up a balloon containing the given string,
-	first removing any existing BalloonMorphs in the world."
+	"Plain morphs show no balloon: balloons are widgets (see TMorphicWidget)"
 
-	|w h|
-	(w := self world) ifNil: [^self].
-	h := aHand ifNil: [w activeHand].
-	( self theme builder newBalloonHelp: msgString for: self balloonHelpAligner)
-		popUpFor: self hand: h
+	
 ]
 
 { #category : 'accessing' }
@@ -5251,8 +5213,8 @@ Morph >> submorphsSatisfying: aBlock [
 
 { #category : 'event handling' }
 Morph >> tabAmongFields [
-	^ self theme settings tabAmongFields
-		or: [self hasProperty: #tabAmongFields]
+
+	^ self hasProperty: #tabAmongFields
 ]
 
 { #category : 'card in a stack' }
@@ -5327,24 +5289,6 @@ Morph >> textEdition: aTextEditionEvent [
 
 { #category : 'event handling' }
 Morph >> textInput: aTextInputEvent [
-]
-
-{ #category : 'theme' }
-Morph >> theme [
-	"Answer the current theme for the receiver."
-
-	(self valueOfProperty: #theme) ifNotNil: [:t | ^ t].
-	^(self owner ifNil: [self class]) theme
-]
-
-{ #category : 'theme' }
-Morph >> theme: aUITheme [
-	"Set the current theme for the receiver and propagate theme changed to submorphs."
-
-	self theme = aUITheme ifFalse: [
-		self setProperty: #theme toValue: aUITheme.
-		"we do not invoke basicTheme: to avoid checking twice if the theme changed or not"
-		self themeChanged]
 ]
 
 { #category : 'theme' }

@@ -42,6 +42,26 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex autoBoundAt: aP
 ]
 
 { #category : '*Morphic-Widgets' }
+FormCanvas >> paragraph: para bounds: bounds color: c [
+
+	^ self
+		  paragraph: para
+		  bounds: bounds
+		  color: c
+		  scale: 1
+]
+
+{ #category : '*Morphic-Widgets' }
+FormCanvas >> paragraph: para bounds: bounds color: c scale: scale [
+
+	| scanner |
+	self setPaintColor: c.
+	scanner := (port clippedBy: (bounds translateBy: origin)) displayScannerFor: para foreground: c.
+	scanner scale: scale.
+	para displayOn: (self copyClipRect: bounds) using: scanner at: origin + bounds topLeft
+]
+
+{ #category : '*Morphic-Widgets' }
 FormCanvas >> roundCornersOf: aMorph in: bounds during: aBlock [
 	aMorph wantsRoundedCorners ifFalse:[^aBlock value].
 	(self seesNothingOutside: (CornerRounder rectWithinCornersOf: bounds))
