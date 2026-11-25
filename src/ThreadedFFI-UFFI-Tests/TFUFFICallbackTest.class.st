@@ -156,8 +156,7 @@ TFUFFICallbackTest >> testCallbackWithErrorHanlded [
 		fromAddress: callback getHandle
 		definition: definition.
 
-	UIManager nonInteractiveDuring: [
-		self assert: (runner invokeFunction: fun withArguments: {1}) equals: -1]
+	self assert: (runner invokeFunction: fun withArguments: {1}) equals: -1
 ]
 
 { #category : 'tests' }
