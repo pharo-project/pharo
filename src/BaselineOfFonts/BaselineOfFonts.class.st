@@ -31,36 +31,6 @@ BaselineOfFonts >> baseline: spec [
 ]
 
 { #category : 'actions' }
-BaselineOfFonts >> exportBitmapDejaVuSans [
-
-	| familyName styleNames pointSizes family font fileName fontCopy style |
-
-	familyName := 'Bitmap DejaVu Sans'.
-	styleNames := #('Regular' 'Bold' 'Italic' 'Bold Italic').
-	pointSizes := #(7 9 12 14 18 24).
-
-	family := LogicalFontManager current allFamilies detect: [ :f | 
-		f familyName = 	familyName ] ifNone: [  ].
-
-	pointSizes do: [ :pointSize | 
-		styleNames do: [ :styleName |
-
-			style := family members detect: [ :m | m styleName = styleName ].
-			font := style asLogicalFontOfPointSize: pointSize.
-			font := font realFont.
-
-			fileName := font familyName, ' ', pointSize asString, ' ', styleName.
-
-			font glyphs writePNGFileNamed: fileName, '.png'.
-
-			fontCopy := font copy.
-			fontCopy instVarNamed: #derivativeFonts put: nil.
-			fontCopy setGlyphs: fileName.
-
-			STON put: fontCopy onStream: (fileName, '.ston') asFileReference writeStream ]].
-]
-
-{ #category : 'actions' }
 BaselineOfFonts >> loadBitmapDejaVuSans [
 
 	| dejaVu |
