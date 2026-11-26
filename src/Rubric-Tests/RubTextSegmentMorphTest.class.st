@@ -92,7 +92,8 @@ RubTextSegmentMorphTest >> testComputeVerticesSingleLine [
 
 { #category : 'helpers' }
 RubTextSegmentMorphTest >> widthOf: aString in: aFont [
-	"The width of aString as the text is laid out: the sum of the characters' unrounded widths"
+	"The width of aString as the text is laid out: the sum of the characters' unrounded widths.
+	The scanner moves each character closer by the font's base kern, which small bitmap fonts use"
 
-	^ aString inject: 0 into: [ :width :character | width + (aFont linearWidthOf: character) ]
+	^ aString inject: 0 into: [ :width :character | width + (aFont linearWidthOf: character) - aFont baseKern ]
 ]
