@@ -45,7 +45,7 @@ Form class >> openImageInWindow: fullName [
 { #category : '*Morphic-Widgets' }
 Form >> scaledByDisplayScaleFactor [
 
-	^ self scaledToSize: self extent * self currentWorld displayScaleFactor
+	^ self scaledToSize: self extent * WorldMorph displayScaleFactor
 ]
 
 { #category : '*Morphic-Widgets' }

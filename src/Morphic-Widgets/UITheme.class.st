@@ -1956,7 +1956,7 @@ UITheme >> fontChooserClass [
 { #category : 'private' }
 UITheme >> formSetsForCurrentDisplayScaleFactor [
 
-	^ self formSetsForScale: self currentWorld displayScaleFactor
+	^ self formSetsForScale: WorldMorph displayScaleFactor
 ]
 
 { #category : 'private' }

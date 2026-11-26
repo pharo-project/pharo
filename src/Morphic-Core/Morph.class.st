@@ -1381,7 +1381,7 @@ Morph >> displayExtentChanged [
 { #category : 'settings' }
 Morph >> displayScaleFactor [
 
-	^ self currentWorld displayScaleFactor
+	^ WorldMorph displayScaleFactor
 ]
 
 { #category : 'announcements' }
