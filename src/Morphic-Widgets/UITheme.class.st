@@ -1583,7 +1583,7 @@ UITheme >> disabledTextColor [
 { #category : 'accessing' }
 UITheme >> displayScaleFactor [
 
-	^ self currentWorld displayScaleFactor
+	^ WorldMorph displayScaleFactor
 ]
 
 { #category : 'accessing' }

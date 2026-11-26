@@ -1,6 +1,6 @@
 Class {
 	#name : 'FTTableMorphTest',
-	#superclass : 'FTTestCase',
+	#superclass : 'TestCase',
 	#instVars : [
 		'table'
 	],

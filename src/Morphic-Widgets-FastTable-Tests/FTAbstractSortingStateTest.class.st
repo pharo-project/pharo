@@ -3,7 +3,7 @@ A FTAbstractSortingStateTest is a test class for testing the behavior of FTAbstr
 "
 Class {
 	#name : 'FTAbstractSortingStateTest',
-	#superclass : 'FTTestCase',
+	#superclass : 'TestCase',
 	#instVars : [
 		'state'
 	],
