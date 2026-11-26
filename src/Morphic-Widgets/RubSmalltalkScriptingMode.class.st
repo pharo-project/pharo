@@ -44,6 +44,7 @@ RubSmalltalkScriptingMode >> updateStyler [
 
 { #category : 'update' }
 RubSmalltalkScriptingMode >> updateTextAreaWhenPlugged [
+
 	super updateTextAreaWhenPlugged.
-	self textArea shoutStyler beForSmalltalkScripting
+	self textArea shoutStyler ifNotNil: [ :styler | styler beForSmalltalkScripting ]
 ]

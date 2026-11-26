@@ -14,17 +14,14 @@ RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter [
 
 { #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: useCtrl command: useCommand shift: useShift [
+
 	| event modifier code |
 	event := KeyboardEvent new.
 	modifier := 0.
-	useShift
-		ifTrue: [ modifier := modifier + 8 ].
-	useCtrl
-		ifTrue: [ modifier := modifier + 16 ].
-	useAlt
-		ifTrue: [ modifier := modifier + 32 ].
-	useCommand
-		ifTrue: [ modifier := modifier + 64 ].
+	useShift ifTrue: [ modifier := modifier + 8 ].
+	useCtrl ifTrue: [ modifier := modifier + 16 ].
+	useAlt ifTrue: [ modifier := modifier + 32 ].
+	useCommand ifTrue: [ modifier := modifier + 64 ].
 	code := aCharacter asInteger.
 	event
 		setType: #keyDown
@@ -32,7 +29,7 @@ RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: u
 		position: 0 @ 0
 		keyValue: code
 		charCode: code
-		hand: self currentWorld currentHand
+		hand: HandMorph new
 		stamp: Time now.
 	event key: (KeyboardKey fromCharacter: aCharacter).
 	^ event
