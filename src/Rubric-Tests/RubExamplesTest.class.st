@@ -6,40 +6,53 @@ Class {
 	#tag : 'Examples'
 }
 
+{ #category : 'helpers' }
+RubExamplesTest >> newWorld [
+	"A world of the test's own, with a hand: windows ask the world's active hand for the keyboard focus when they open"
+
+	| world hand |
+	world := WorldMorph new.
+	hand := HandMorph new.
+	world addHand: hand.
+	world activeHand: hand.
+	^ world
+]
+
 { #category : 'tests' }
 RubExamplesTest >> testRubLipsumBasicExampleSmoke [
 
-	| morph |
-	[ self shouldnt: [ morph := RubLipsumBasicExample openNotWrapped ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ].
-	[ self shouldnt: [ morph := RubLipsumBasicExample openWrapped ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ]
+	| world |
+	world := self newWorld.
+	self shouldnt: [ RubLipsumBasicExample openNotWrappedIn: world ] raise: Error.
+	self shouldnt: [ RubLipsumBasicExample openWrappedIn: world ] raise: Error
 ]
 
 { #category : 'tests' }
 RubExamplesTest >> testRubLipsumWithSegmentsExampleSmoke [
 
-	| morph |
-	[ self shouldnt: [ morph := RubLipsumWithSegmentsExample openNotWrapped ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ].
-	[ self shouldnt: [ morph := RubLipsumWithSegmentsExample openWrapped ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ]
+	| world |
+	world := self newWorld.
+	self shouldnt: [ RubLipsumWithSegmentsExample openNotWrappedIn: world ] raise: Error.
+	self shouldnt: [ RubLipsumWithSegmentsExample openWrappedIn: world ] raise: Error
 ]
 
 { #category : 'tests' }
 RubExamplesTest >> testRubTextFieldExampleSmoke [
 
-	| morph |
-	[ self shouldnt: [ morph := RubTextFieldExample exampleOpen ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ]
+	self shouldnt: [ RubTextFieldExample openIn: self newWorld ] raise: Error
 ]
 
 { #category : 'tests' }
 RubExamplesTest >> testRubTextFieldWithEntryCompletionExampleSmoke [
 
-	| morph |
-	[ self shouldnt: [ morph := RubTextFieldWithEntryCompletionExample exampleOpen ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ]
+	self shouldnt: [ RubTextFieldWithEntryCompletionExample openIn: self newWorld ] raise: Error
 ]
 
 { #category : 'tests' }
 RubExamplesTest >> testRubWorkspaceExampleSmoke [
 
-	| morph |
-	[ self shouldnt: [ morph := RubWorkspaceExample exampleWindowWithScrolledText ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ].
-	[ self shouldnt: [ morph := RubWorkspaceExample exampleWithCustomShortcut ] raise: Error ] ensure: [ morph ifNotNil: [ morph delete ] ]
+	| world |
+	world := self newWorld.
+	self shouldnt: [ RubWorkspaceExample openIn: world ] raise: Error.
+	self shouldnt: [ RubWorkspaceExample openWithCustomShortcutIn: world ] raise: Error
 ]

@@ -27,9 +27,7 @@ Class {
 { #category : 'examples' }
 RubTextFieldExample class >> exampleOpen [
 
-	| st |
-	st := self new newScrolledText.
-	^ st openInWorld
+	^ self openIn: self currentWorld
 ]
 
 { #category : 'examples' }
@@ -39,6 +37,14 @@ RubTextFieldExample class >> openAutoAccept [
 	st := model newScrolledTextAutoAccept.
 	model inspect.
  	st openInWorld
+]
+
+{ #category : 'opening' }
+RubTextFieldExample class >> openIn: aWorld [
+
+	| st |
+	st := self new newScrolledText.
+	^ st openInWorld: aWorld
 ]
 
 { #category : 'examples' }

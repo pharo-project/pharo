@@ -12,9 +12,16 @@ Class {
 
 { #category : 'examples' }
 RubTextFieldWithEntryCompletionExample class >> exampleOpen [
+
+	^ self openIn: self currentWorld
+]
+
+{ #category : 'opening' }
+RubTextFieldWithEntryCompletionExample class >> openIn: aWorld [
+
 	| st |
 	st := self new newScrolledText.
- 	st openInWorld.
+	st openInWorld: aWorld.
 	^ st
 ]
 
