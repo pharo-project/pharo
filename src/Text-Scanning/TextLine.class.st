@@ -25,9 +25,8 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : 'Morphic-Widgets-Text Support',
-	#package : 'Morphic-Widgets',
-	#tag : 'Text Support'
+	#category : 'Text-Scanning',
+	#package : 'Text-Scanning'
 }
 
 { #category : 'instance creation' }
