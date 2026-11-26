@@ -153,3 +153,24 @@ four'.
 	self sendDoubleClickAt: index withShift: false.
 	self assert: area selection equals: text.
 ]
+
+{ #category : 'tests' }
+RubEditingAreaTest >> testTextCursorIsHiddenAfterLeavingTheWorld [
+	"The text cursor shows on the hand of the area's world, and is hidden on that hand even once the area left the world"
+
+	| world hand editingArea |
+	world := WorldMorph new.
+	hand := HandMorph new.
+	world addHand: hand.
+	world activeHand: hand.
+	editingArea := RubEditingArea new.
+	world addMorph: editingArea.
+	hand position: editingArea center.
+
+	editingArea showOverEditableTextCursor.
+	self assert: hand temporaryCursor isNotNil.
+
+	editingArea delete.
+	editingArea hideOverEditableTextCursor.
+	self assert: hand temporaryCursor isNil
+]

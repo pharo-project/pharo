@@ -73,10 +73,8 @@ GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
 { #category : 'private' }
 GraphicFontSettings class >> pickFont [
 
-	FontChooser
-		openModalWithTitle: 'Font for all font'
-		initialFont: StandardFonts defaultFont
-		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ]
+	(UITheme current chooseFontIn: nil title: 'Font for all font' font: StandardFonts defaultFont)
+		ifNotNil: [ :aFont | self resetAllFontsTo: aFont ]
 ]
 
 { #category : 'fonts' }

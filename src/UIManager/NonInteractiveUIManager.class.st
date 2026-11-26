@@ -149,15 +149,6 @@ NonInteractiveUIManager >> deny: aStringOrText title: aString [
 ]
 
 { #category : 'ui requests' }
-NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
-	"Open an editor on the given string/text"
-	^self nonInteractiveWarning: (String streamContents: [ :s |
-		s  nextPutAll: 'Editing Text: '.
-		labelString ifNotNil: [ s nextPutAll: '[ '; nextPutAll: labelString; nextPutAll: ' ] '].
-		s cr; nextPutAll: aText])
-]
-
-{ #category : 'ui requests' }
 NonInteractiveUIManager >> inform: aString [
 
 	| logBlock |

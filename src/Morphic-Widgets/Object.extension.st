@@ -1,6 +1,12 @@
 Extension { #name : 'Object' }
 
 { #category : '*Morphic-Widgets' }
+Object >> acceptDroppingMorph: transferMorph event: evt inMorph: dstListMorph [
+
+	^false
+]
+
+{ #category : '*Morphic-Widgets' }
 Object >> addModelYellowButtonMenuItemsTo: aCustomMenu forMorph: aMorph hand: aHandMorph [
 	"The receiver serves as the model for aMorph; a menu is being constructed for the morph, and here the receiver is able to add its own items"
 	Morph cmdGesturesEnabled ifTrue: [
@@ -56,9 +62,27 @@ Object >> defaultLabel [
 ]
 
 { #category : '*Morphic-Widgets' }
+Object >> dragPassengerFor: item inMorph: dragSource [
+
+	^ item
+]
+
+{ #category : '*Morphic-Widgets' }
 Object >> dragPassengersFor: item inMorph: dragSource [
 
 	^ { item }
+]
+
+{ #category : '*Morphic-Widgets' }
+Object >> dragTransferType [
+
+	^ nil
+]
+
+{ #category : '*Morphic-Widgets' }
+Object >> dragTransferTypeForMorph: dragSource [
+
+	^ nil
 ]
 
 { #category : '*Morphic-Widgets' }
@@ -79,6 +103,11 @@ Object >> okToClose [
 	Allows this check to be independent of okToChange."
 
 	^true
+]
+
+{ #category : '*Morphic-Widgets' }
+Object >> reactToRubTextAreaDoubleClick: anEvent [
+	"Noop"
 ]
 
 { #category : '*Morphic-Widgets' }
@@ -121,7 +150,22 @@ Object >> treeNodeTail [
 ]
 
 { #category : '*Morphic-Widgets' }
+Object >> unplug [
+]
+
+{ #category : '*Morphic-Widgets' }
+Object >> wantsDroppedMorph: aMorph event: anEvent inMorph: destinationLM [
+	^false
+]
+
+{ #category : '*Morphic-Widgets' }
 Object >> wantsVisualFeedback [
 
 	^ true
+]
+
+{ #category : '*Morphic-Widgets' }
+Object >> withoutListWrapper [
+
+	^self
 ]

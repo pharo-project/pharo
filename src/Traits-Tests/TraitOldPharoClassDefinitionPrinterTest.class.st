@@ -77,7 +77,7 @@ TraitOldPharoClassDefinitionPrinterTest >> testTrait [
 	uses: TViewModel
 	instanceVariableNames: ''hasUnacceptedEdits announcer text primarySelectionInterval interactionModel''
 	classVariableNames: ''''
-	package: ''Rubric-Editing-Widgets'''
+	package: ''Morphic-Widgets-Editing-Widgets'''
 ]
 
 { #category : 'tests - traits' }

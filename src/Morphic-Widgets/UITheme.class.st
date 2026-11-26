@@ -22,7 +22,8 @@ Class {
 		'focusIndicator',
 		'windowActiveDropShadowStyle',
 		'useScrollbarThumbShadow',
-		'colorPalette'
+		'colorPalette',
+		'tools'
 	],
 	#classVars : [
 		'Builder',
@@ -781,10 +782,12 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 
 	| dialog |
 	dialog := self fileDialogWindowClass new.
-	exts ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
-	path ifNotNil: [ dialog nameText: path basename ].
+	exts ifNotNil: [ dialog extensions: exts ].
+	path ifNotNil: [
+		dialog
+			nameText: path basename;
+			defaultFolder: path ].
 	dialog
-		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
 		title: (title ifNil: [ 'Choose File' translated ]);
 		openModal.
 
@@ -800,10 +803,12 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 
 	| dialog |
 	dialog := self fileDialogWindowClass new.
-	exts ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
-	path ifNotNil: [ dialog nameText: path basename ].
+	exts ifNotNil: [ dialog extensions: exts ].
+	path ifNotNil: [
+		dialog
+			nameText: path basename;
+			defaultFolder: path ].
 	dialog
-		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
 		title: (title
 				 ifNil: [ 'Choose File' translated ]
 				 ifNotNil: [ title ]);
@@ -815,24 +820,33 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 ]
 
 { #category : 'services' }
+UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
+	"Answer the result of a font selector dialog with the given title and initial font."
+
+	| selectedFont |
+
+	self fontChooserClass 
+		openModalWithTitle: aString 
+		initialFont: aFont
+		onAcceptDo: [ :e | selectedFont := e ].			
+	
+	^ selectedFont
+]
+
+{ #category : 'services' }
 UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog directory |
+	| dialog |
 	dialog := self fileSaveDialogWindowClass new.
-	exts ifNotNil: [
-		dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	exts ifNotNil: [ dialog extensions: exts ].
 	path ifNotNil: [
-		dialog nameText: path asFileReference nextVersion basename ].
-	directory := path
-		             ifNil: [ StFileSystemModel defaultDirectory ]
-		             ifNotNil: [
-				           path asFileReference parent ].
-
+		dialog
+			nameText: path asFileReference nextVersion basename;
+			defaultFolder: path asFileReference parent ].
 	dialog
-		defaultFolder: directory;
 		title: (title ifNil: [ 'Save as' ] ifNotNil: [ title ]);
 		openModal.
 
@@ -849,9 +863,11 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 
 	| dialog |
 	dialog := self fileDialogWindowClass new.
-	path ifNotNil: [ dialog nameText: path basename ].
+	path ifNotNil: [
+		dialog
+			nameText: path basename;
+			defaultFolder: path ].
 	dialog
-		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
 		title: (title ifNil: [ 'Choose File' translated ]);
 		openModal.
 
@@ -1533,10 +1549,9 @@ UITheme >> diffRemovedLinesBackgroundColor [
 
 { #category : 'services' }
 UITheme >> directoryDialogWindowClass [
+	"The tool that chooses directories, registered by the IDE"
 
-	^ self class environment 
-		at: #StOpenDirectoryPresenter
-		ifAbsent: [  self error: 'Directory dialog support is missing in the image' ]
+	^ self tools toolNamed: #directoryDialog
 ]
 
 { #category : 'accessing - colors' }
@@ -1568,7 +1583,7 @@ UITheme >> disabledTextColor [
 { #category : 'accessing' }
 UITheme >> displayScaleFactor [
 
-	^ self currentWorld displayScaleFactor
+	^ WorldMorph displayScaleFactor
 ]
 
 { #category : 'accessing' }
@@ -1877,18 +1892,16 @@ UITheme >> fadedBackgroundWindows [
 
 { #category : 'services' }
 UITheme >> fileDialogWindowClass [
+	"The tool that opens files, registered by the IDE"
 
-	^ self class environment 
-		at: #StOpenFilePresenter
-		ifAbsent: [  self error: 'File dialog support is missing in the image' ]
+	^ self tools toolNamed: #fileDialog
 ]
 
 { #category : 'services' }
 UITheme >> fileSaveDialogWindowClass [
+	"The tool that saves files, registered by the IDE"
 
-	^ self class environment 
-		at: #StSaveFilePresenter
-		ifAbsent: [  self error: 'File dialog support is missing in the image' ]
+	^ self tools toolNamed: #fileSaveDialog
 ]
 
 { #category : 'accessing' }
@@ -1933,10 +1946,17 @@ UITheme >> focusIndicatorMorphFor: aMorph [
 		privateBounds: aMorph focusBounds
 ]
 
+{ #category : 'services' }
+UITheme >> fontChooserClass [
+	"The tool that chooses fonts, registered by the IDE"
+
+	^ self tools toolNamed: #fontChooser
+]
+
 { #category : 'private' }
 UITheme >> formSetsForCurrentDisplayScaleFactor [
 
-	^ self formSetsForScale: self currentWorld displayScaleFactor
+	^ self formSetsForScale: WorldMorph displayScaleFactor
 ]
 
 { #category : 'private' }
@@ -3729,6 +3749,11 @@ UITheme >> resizerGripNormalFillStyleFor: aResizer [
 	^ colorPalette resizerGripNormalFillStyleFor: aResizer
 ]
 
+{ #category : 'accessing' }
+UITheme >> rubScrolledTextMorphThemer [
+	^ RubScrolledTextMorphThemer new
+]
+
 { #category : 'scrollbars' }
 UITheme >> scrollBarButtonArrowVertices: aRectangle [
 	^ self verticesForComplexArrow: aRectangle
@@ -4540,6 +4565,20 @@ UITheme >> textFont [
 	"Answer the text font to use."
 
 	^StandardFonts defaultFont
+]
+
+{ #category : 'accessing' }
+UITheme >> tools [
+	"Where I find the tools behind my dialogs. The system's registry, unless told otherwise"
+
+	tools ifNotNil: [ ^ tools ].
+	^ Smalltalk tools
+]
+
+{ #category : 'accessing' }
+UITheme >> tools: aToolRegistry [
+
+	tools := aToolRegistry
 ]
 
 { #category : 'label-styles' }

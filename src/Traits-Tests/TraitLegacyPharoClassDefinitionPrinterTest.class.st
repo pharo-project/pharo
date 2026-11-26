@@ -87,7 +87,7 @@ TraitLegacyPharoClassDefinitionPrinterTest >> testTrait [
 	instanceVariableNames: ''hasUnacceptedEdits announcer text primarySelectionInterval interactionModel''
 	classVariableNames: ''''
 	poolDictionaries: ''''
-	category: ''Rubric-Editing-Widgets'''
+	category: ''Morphic-Widgets-Editing-Widgets'''
 ]
 
 { #category : 'tests - traits' }

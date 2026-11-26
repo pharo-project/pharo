@@ -84,7 +84,6 @@ BaselineOfBasicTools >> baseline: spec [
 
 			self specRefactoring: spec.
 
-			spec package: 'Tools-CodeNavigation'.
 			spec package: 'Tool-Diff'.
 			spec package: 'Tool-ImageCleaner'.
 			spec package: 'Tools' ]

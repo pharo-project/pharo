@@ -698,6 +698,18 @@ FreeTypeFont >> releaseCachedState [
 	FreeTypeCache current removeAllForFont: self
 ]
 
+{ #category : 'character scanning' }
+FreeTypeFont >> scanByteCharactersFrom: startIndex to: stopIndex in: aByteString with: aCharacterScanner rightX: rightX [
+	"scan a single byte character string"
+	^aCharacterScanner scanKernableByteCharactersFrom: startIndex to: stopIndex in: aByteString rightX: rightX
+]
+
+{ #category : 'character scanning' }
+FreeTypeFont >> scanMultibyteCharactersFrom: startIndex to: stopIndex in: aWideString with: aCharacterScanner rightX: rightX [
+	"scan a multibyte character string"
+	^aCharacterScanner scanKernableMultibyteCharactersFrom: startIndex to: stopIndex in: aWideString rightX: rightX
+]
+
 { #category : 'accessing' }
 FreeTypeFont >> setFace: aFreetypeFace pointSize: anInteger [
 	face := aFreetypeFace.

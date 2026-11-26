@@ -565,13 +565,7 @@ OCProgramNode >> exactNodeDefines: aName [
 { #category : 'printing' }
 OCProgramNode >> formattedCode [
 
-	^ self formattedCodeIn: self class
-]
-
-{ #category : 'printing' }
-OCProgramNode >> formattedCodeIn: context [
-
-	^ context formatter format: self
+	^ self class formatter format: self
 ]
 
 { #category : 'accessing' }

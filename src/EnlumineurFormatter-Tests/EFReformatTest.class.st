@@ -83,7 +83,7 @@ EFReformatTest >> testReformatAllFormatsBothSidesAndLeavesTraitMethods [
 	{
 		(class >> #instanceSideProbe).
 		(class classSide >> #classSideProbe) } do: [ :method |
-		self assert: method sourceCode equals: (method ast formattedCodeIn: method methodClass) ].
+		self assert: method sourceCode equals: (method methodClass formatter format: method ast) ].
 	self assert: (class >> #traitProbe) isFromTrait.
 	self assert: (trait >> #traitProbe) sourceCode equals: (self longMethodNamed: 'traitProbe')
 ]
@@ -100,7 +100,7 @@ EFReformatTest >> testReformatFormatsATraitMethodInItsTrait [
 	(class >> #foo) reformat.
 
 	self assert: (class >> #foo) isFromTrait.
-	self assert: (trait >> #foo) sourceCode equals: ((trait >> #foo) ast formattedCodeIn: trait)
+	self assert: (trait >> #foo) sourceCode equals: (trait formatter format: (trait >> #foo) ast)
 ]
 
 { #category : 'tests' }
@@ -114,6 +114,6 @@ EFReformatTest >> testReformatFormatsWithTheFormatterOfThePackage [
 	(class >> #foo) reformat.
 
 	method := class >> #foo.
-	self assert: method sourceCode equals: (method ast formattedCodeIn: class).
+	self assert: method sourceCode equals: (class formatter format: method ast).
 	self deny: method sourceCode equals: method ast formattedCode
 ]

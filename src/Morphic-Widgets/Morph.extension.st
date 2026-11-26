@@ -395,6 +395,12 @@ Morph >> removeKeyCombination: aShortcut [
 ]
 
 { #category : '*Morphic-Widgets' }
+Morph >> selection [
+
+	^ nil
+]
+
+{ #category : '*Morphic-Widgets' }
 Morph class >> systemIconName [
 
 	^ #morph

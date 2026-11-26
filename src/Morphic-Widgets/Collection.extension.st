@@ -1,6 +1,6 @@
 Extension { #name : 'Collection' }
 
-{ #category : '*Morphic-Widgets-Basic' }
+{ #category : '*Morphic-Widgets' }
 Collection >> asDraggableMorph [
 	^ (String streamContents: [ :s|
 		self

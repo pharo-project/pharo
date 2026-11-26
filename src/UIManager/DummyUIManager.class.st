@@ -53,12 +53,6 @@ DummyUIManager >> confirm: aString orCancel: cancelBlock [
 ]
 
 { #category : 'ui requests' }
-DummyUIManager >> edit: aText label: labelString accept: aBlockOrNil [
-
-	^ nil
-]
-
-{ #category : 'ui requests' }
 DummyUIManager >> inform: aString [
 	"Nothing to be done here"
 ]

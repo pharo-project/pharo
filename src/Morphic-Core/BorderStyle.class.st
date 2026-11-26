@@ -54,7 +54,8 @@ BorderStyle class >> inset [
 
 { #category : 'instance creation' }
 BorderStyle class >> thinGray [
-	^ self width: 1 * self currentWorld displayScaleFactor color: Color gray
+
+	^ self width: 1 * WorldMorph displayScaleFactor color: Color gray
 ]
 
 { #category : 'instance creation' }

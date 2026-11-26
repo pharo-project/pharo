@@ -25,8 +25,6 @@ BaselineOfMorphicCore >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
-			spec preLoadDoIt: #declareWorld:package:.
-
 			spec
 				baseline: 'Display' with: [ spec repository: repository ];
 				baseline: 'Fonts' with: [ spec loads: #Core from: repository ];
@@ -40,7 +38,9 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec package: 'System-Model'.
 			spec package: 'FileSystem-Zip'.
 			spec package: 'Morphic-Core' with: [
-				spec requires: #( 'System-Object Events' 'System-Caching' 'FormCanvas-Core' 'System-Model' 'FileSystem-Zip' 'Keymapping' 'UIManager' ) ].
+				spec
+					requires: #( 'System-Object Events' 'System-Caching' 'FormCanvas-Core' 'System-Model' 'FileSystem-Zip' 'Keymapping' 'UIManager' );
+					preLoadDoIt: #declareWorld:package: ].
 
 			spec package: 'System-Object Events-Tests' with: [ spec requires: #( 'System-Object Events' ) ].
 			spec package: 'System-Caching-Tests' with: [ spec requires: #( 'System-Caching' ) ].

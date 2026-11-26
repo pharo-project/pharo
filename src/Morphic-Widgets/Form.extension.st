@@ -45,7 +45,7 @@ Form class >> openImageInWindow: fullName [
 { #category : '*Morphic-Widgets' }
 Form >> scaledByDisplayScaleFactor [
 
-	^ self scaledToSize: self extent * self currentWorld displayScaleFactor
+	^ self scaledToSize: self extent * WorldMorph displayScaleFactor
 ]
 
 { #category : '*Morphic-Widgets' }
@@ -71,18 +71,6 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 		at: extent - scaledForm extent // 2.
 
 	^ result
-]
-
-{ #category : '*Morphic-Widgets' }
-Form class >> serviceOpenImageInWindow [
-	"Answer a service for opening a graphic in a window"
-	<formService>
-	^ FileServiceEntry
-		provider: self
-		label: 'Open graphic in a window'
-		selector: #openImageInWindow:
-		description: 'Open a graphic file in a window'
-		buttonLabel: 'Open'
 ]
 
 { #category : '*Morphic-Widgets-Support' }

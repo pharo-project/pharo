@@ -258,11 +258,19 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		register: ExternalChangesBrowser as: #changeList;
 		register: StFileSystemPresenter as: #fileList;
 		register: StFinderPresenter as: #finder;
-		register: StProcessBrowser as: #processBrowser.
+		register: StProcessBrowser as: #processBrowser;
+		register: StOpenFilePresenter as: #fileDialog;
+		register: StSaveFilePresenter as: #fileSaveDialog;
+		register: StOpenDirectoryPresenter as: #directoryDialog;
+		register: FontChooser as: #fontChooser;
+		register: StSettingsBrowser as: #settingsBrowser.
 
 	OCProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ OCSimpleFormatter ]).
 
 	Color flushCache.
+
+	"Morphic answers an empty icon pack until a pack is set. IconPacks downloads the default one"
+	ThemeIcons current: ThemeIcons loadDefault.
 
 	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
 	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
@@ -282,7 +290,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	self loadExtraTools.
 	self makeCalypsoDefaultBrowser.
 
-	Initialized := true.
+	Initialized := true
 ]
 
 { #category : 'baselines - dependencies' }
