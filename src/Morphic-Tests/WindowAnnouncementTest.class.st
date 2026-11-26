@@ -179,22 +179,18 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 
 { #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowLabelling [
-	"Test change of label for a window."
+	"Test change of label for a window. The window announces it on its own announcer"
 
 	| labels win |
 	labels := #(  ).
-	[
-	self currentWorld announcer
+	window := SystemWindow labelled: 'foo'.
+	window announcer
 		when: WindowLabelled
 		do: [ :ann |
 			win := ann window.
 			labels := labels copyWith: ann label ]
 		for: self.
-	window := SystemWindow labelled: 'foo'.
-	window openInWorld.
-	self assert: win equals: window.
-	self assert: labels equals: #( 'foo' ).
 	window setLabel: 'bar'.
 	self assert: win equals: window.
-	self assert: labels equals: #( 'foo' 'bar' ) ] ensure: [ self currentWorld announcer unsubscribe: self ]
+	self assert: labels equals: #( 'bar' )
 ]
