@@ -22,3 +22,21 @@ ReDuplicateClassRefactoringTest >> testDuplicateClassDefinedOnlyInModel [
 	self assert: (model includesClassNamed: #RBModelOnlyClassCopy)
 ]
 
+
+{ #category : 'tests' }
+ReDuplicateClassRefactoringTest >> testDuplicateTrait [
+
+	| refactoring duplicate addition |
+	refactoring := ReDuplicateClassRefactoring
+		model: model
+		copyClass: TReTraitToBeUsedInDuplication
+		withName: #TReDuplicatedTrait
+		in: #'Refactoring-Transformations-Tests'.
+	refactoring generateChanges.
+	duplicate := model classNamed: #TReDuplicatedTrait.
+	self assert: duplicate isTrait.
+	self assert: (duplicate directlyDefinesMethod: #methodInTrait).
+	addition := refactoring changes changes
+		detect: [ :change | change isKindOf: ReAddClassChange ].
+	self assert: addition builder isTrait
+]
