@@ -121,52 +121,78 @@ ClassDescription >> authors [
 
 { #category : 'accessing - comment' }
 ClassDescription >> classCommentBlank [
-	"Classes can override this method to show another template."
 
-	"There are two use cases: a class hierarchy can give information about what kind of comment is
-	useful (see 'PackageManifest class'). If in addition, '#hasComment ^true' can be implemented in
-	cases where the class does not need a dedicated comment. See 'TestCase class'for an example"
+	^ 'Write the comment in the first person, as the class speaking ("I represent..."). Keep the sections in this order, drop the last two (Internal representation, Implementation points) when they have nothing to say, and never leave a placeholder. Only include sections that provide information not readily available from the code. Omit irrelevant sections rather than filling them with generic statements.
 
-	| stream |
-	stream := (String new: 100) writeStream.
-	stream nextPutAll: 'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
+Describe the concept represented by this class and the problem it addresses. Focus on its role in the design, rather than restating what its methods do. Describe me in a short paragraph, e.g. "I represent a paragraph of text." This paragraph can mention the main collaborators (not the tests) and one or two key messages.
 
-For the Class part:  State a one line summary. For example, "I represent a paragraph of text".
+## Examples
 
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
+One code block calling a class-side <example>/<script> method.
+The example in the class comment should always refer to an executable method. This way tools can check that the example can still be executed. 
 
-For the Collaborators Part: State my main collaborators and one line about how I interact with them.
+```
+MyClass exampleDefault
+```
 
-Public API and Key Messages
+## Design Rationale
 
-- message one
-- message two
-- (for bonus points) how to create instances.
+Explain why the class is designed this way. Document decisions that cannot be easily inferred from the code.
+Use bullets.
 
-   One simple example is simply gorgeous.
+Consider:
+- Why this abstraction or design was chosen over alternatives.
+- Important trade-offs and constraints.
+- Non-obvious design choices or seemingly unusual behavior.
+- Properties the design intentionally preserves.
 
-Internal Representation and Key Implementation Points.'.
-	self instanceVariables ifNotEmpty: [
-		stream
-			cr;
-			cr;
-			nextPutAll: '    Instance Variables' ].
+Examples:
+- "We use a linked list rather than an array because..."
+- "This class deliberately avoids caching because..."
+- "The separation between these two objects allows..."
 
-	self instVarNames sorted do: [ :each |
-		stream
-			cr;
-			tab;
-			nextPutAll: each;
-			nextPut: $:;
-			tab;
-			tab;
-			nextPutAll: '<Object>' ].
-	stream cr.
-	stream
-		cr;
-		cr;
-		nextPutAll: '    Implementation Points'.
-	^ stream contents
+Describe the intended usage and lifecycle of instances. Who creates me and who uses me. Do not mention tests. 
+
+A few numbered steps telling the story of my instances: who creates them (which class and method), 
+who keeps them, who uses them and how (which messages they send me), and how they change or go away. 
+Name the collaborating classes and methods (`MyCreator>>createSomething`), checked against the senders and references in the image. 
+For a hierarchy, write this section once in the root class ("who creates and who uses them"); subclasses only add what is 
+specific to them.
+
+## Usage 
+
+Consider:
+- **Mutability:** Is the object immutable, mutable, or partially mutable?
+- **Reusability:** Is it intended to be reused across multiple operations, or consumed by a single use?
+- **Thread safety:** Can it be safely shared across threads? Are there concurrency restrictions?
+- **Statefulness:** Does it maintain state between operations? Does its behavior depend on previous interactions?
+- **Lifecycle:** Who creates and owns instances? When do they become invalid or need to be discarded?
+
+Examples:
+- "Instances are immutable and can safely be shared across threads."
+- "An instance represents a single compilation attempt and should not be reused."
+- "Instances are mutable but are not intended to be accessed concurrently."
+
+## Implementation Notes
+
+Document implementation decisions, constraints, performance considerations, and technical subtleties that future maintainers should understand before changing the implementation.
+
+Examples:
+- "The lookup is intentionally linear because..."
+- "This uses weak references to avoid..."
+- "Changing the order of these operations would break..."
+
+## Invariants and Assumptions
+
+Document important invariants, assumptions, and preconditions that are not sufficiently expressed by the code.
+
+Distinguish between guarantees provided by this class and assumptions imposed by its clients or environment.
+
+Examples:
+- "The collection is always sorted by..."
+- "All nodes must belong to the same..."
+- "The caller guarantees that the input has already been validated."
+'
 ]
 
 { #category : 'subclass creation' }
