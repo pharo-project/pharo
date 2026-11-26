@@ -42,13 +42,13 @@ OCValueNode >> containedBy: anInterval [
 		and: [anInterval last >= self stopWithoutParentheses]
 ]
 
-{ #category : 'evaluating' }
+{ #category : '*OpalCompiler-Core' }
 OCValueNode >> evaluate [
 	"evaluate the AST with a nil  receiver"
 	^ self evaluateForReceiver: nil
 ]
 
-{ #category : 'evaluating' }
+{ #category : '*OpalCompiler-Core' }
 OCValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
 	^ aContext compiler
@@ -56,7 +56,7 @@ OCValueNode >> evaluateForContext: aContext [
 		  evaluate
 ]
 
-{ #category : 'evaluating' }
+{ #category : '*OpalCompiler-Core' }
 OCValueNode >> evaluateForReceiver: aReceiver [
 	"evaluate the AST binding self to the receiver and taking its variables"
 

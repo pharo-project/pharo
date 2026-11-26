@@ -21,7 +21,7 @@ OCAssignmentToken >> length [
 	^ 2
 ]
 
-{ #category : 'evaluating' }
+{ #category : 'accessing' }
 OCAssignmentToken >> value [
 	^':='
 ]
