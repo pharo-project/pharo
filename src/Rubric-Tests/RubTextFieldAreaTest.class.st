@@ -46,17 +46,14 @@ RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter [
 
 { #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl: useCtrl command: useCommand shift: useShift [
+
 	| event modifier code |
 	event := KeyboardEvent new.
 	modifier := 0.
-	useShift
-		ifTrue: [ modifier := modifier + 8 ].
-	useCtrl
-		ifTrue: [ modifier := modifier + 16 ].
-	useAlt
-		ifTrue: [ modifier := modifier + 32 ].
-	useCommand
-		ifTrue: [ modifier := modifier + 64 ].
+	useShift ifTrue: [ modifier := modifier + 8 ].
+	useCtrl ifTrue: [ modifier := modifier + 16 ].
+	useAlt ifTrue: [ modifier := modifier + 32 ].
+	useCommand ifTrue: [ modifier := modifier + 64 ].
 	code := aCharacter asInteger.
 	event
 		setType: #keystroke
@@ -64,7 +61,7 @@ RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl:
 		position: 0 @ 0
 		keyValue: code
 		charCode: code
-		hand: self currentWorld currentHand
+		hand: HandMorph new
 		stamp: Time now.
 	^ event
 ]
