@@ -12,13 +12,13 @@ SlotTraitsTest >> testClassWithClassTrait [
 	self assertEmpty: TOne classTrait traitUsers.
 
 	aClass := self make: [ :builder |  ].
-	aClass class setTraitComposition: TOne.
+	aClass class setTraitComposition: TOne classTrait.
 
-	self assert: TOne traitUsers asArray equals: {aClass class}.
-	self assertEmpty: TOne classTrait traitUsers.
+	self assert: TOne classTrait traitUsers asArray equals: {aClass class}.
+	self assertEmpty: TOne traitUsers.
 
-	self assert: (aClass class canUnderstand: #one).
-	self assert: aClass one equals: 1
+	self assert: (aClass class canUnderstand: #classOne).
+	self assert: aClass classOne equals: 1
 ]
 
 { #category : 'tests' }
@@ -40,18 +40,18 @@ SlotTraitsTest >> testClassWithTrait [
 SlotTraitsTest >> testModifyClassTraitComposition [
 	"Tests that when modifying the trait composition on class-side, the old methods are removed from the method dictionary, and the new ones are added."
 
-	self make: [ :builder | builder classTraitComposition: TOne ].
+	self make: [ :builder | builder classTraitComposition: TOne classTrait ].
 
-	aClass := self make: [ :builder | builder classTraitComposition: TTwo ].
+	aClass := self make: [ :builder | builder classTraitComposition: TTwo classTrait ].
 
 	self assertEmpty: TOne traitUsers.
 	self assertEmpty: TOne classTrait traitUsers.
-	self assert: TTwo traitUsers asArray equals: {aClass class}.
-	self assertEmpty: TTwo classTrait traitUsers.
+	self assert: TTwo classTrait traitUsers asArray equals: {aClass class}.
+	self assertEmpty: TTwo traitUsers.
 
 	self deny: (aClass class canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #classOne).
-	self assert: (aClass class canUnderstand: #two).
+	self assert: (aClass class canUnderstand: #classTwo).
 	aClass classLayout checkIntegrity.
 
 	aClass := self make: [ :builder | builder classTraitComposition: {} ].
@@ -102,11 +102,11 @@ SlotTraitsTest >> testModifyTraitComposition [
 SlotTraitsTest >> testRemoveClassTrait [
 	"Tests that when removing a trait from class-side, its methods are removed from the method dictionary."
 
-	aClass := self make: [ :builder | builder classTraitComposition: TOne ].
+	aClass := self make: [ :builder | builder classTraitComposition: TOne classTrait].
 
 	aClass := self make: [ :builder | builder classTraitComposition: {} ].
 
-	self deny: (aClass class canUnderstand: #one).
+	self deny: (aClass class canUnderstand: #classOne).
 	self assertEmpty: TOne traitUsers.
 	self assertEmpty: TOne classTrait traitUsers
 ]
@@ -136,17 +136,17 @@ SlotTraitsTest >> testTraitUsersAfterClassReshape [
 			name: self anotherClassName;
 			superclass: aClass;
 			traitComposition: TOne;
-			classTraitComposition: TOne classTrait + TTwo ].
+			classTraitComposition: TOne classTrait + TTwo classTrait ].
 
 	self assert: TOne traitUsers asArray equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
-	self assert: TTwo traitUsers asArray equals: { anotherClass class }.
-	self assert: TTwo classTrait traitUsers asArray equals: { }.
+	self assert: TTwo classTrait traitUsers asArray equals: { anotherClass class }.
+	self assert: TTwo traitUsers asArray equals: { }.
 
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
-	self assert: (anotherClass class canUnderstand: #two).
+	self assert: (anotherClass class canUnderstand: #classTwo).
 
 
 	"reshape the super class"
@@ -158,13 +158,13 @@ SlotTraitsTest >> testTraitUsersAfterClassReshape [
 
 	self assert: TOne traitUsers asArray equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
-	self assert: TTwo traitUsers asArray equals: { anotherClass class }.
-	self assert: TTwo classTrait traitUsers asArray equals: { }.
+	self assert: TTwo classTrait traitUsers asArray equals: { anotherClass class }.
+	self assert: TTwo traitUsers asArray equals: { }.
 
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
-	self assert: (anotherClass class canUnderstand: #two)
+	self assert: (anotherClass class canUnderstand: #classTwo)
 ]
 
 { #category : 'tests' }
@@ -179,18 +179,18 @@ SlotTraitsTest >> testTraitUsersAfterMetaclassReshape [
 			name: self anotherClassName;
 			superclass: aClass;
 			traitComposition: TOne;
-			classTraitComposition: TOne classTrait + TTwo ].
+			classTraitComposition: TOne classTrait + TTwo classTrait].
 
 
 	self assert: TOne traitUsers asArray            equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
-	self assert: TTwo traitUsers asArray            equals: { anotherClass class }.
-	self assert: TTwo classTrait traitUsers asArray equals: { }.
+	self assert: TTwo classTrait traitUsers asArray equals: { anotherClass class }.
+	self assert: TTwo  traitUsers asArray equals: { }.
 
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
-	self assert: (anotherClass class canUnderstand: #two).
+	self assert: (anotherClass class canUnderstand: #classTwo).
 
 	aClass := self make: [ :builder |
 		builder
@@ -199,11 +199,11 @@ SlotTraitsTest >> testTraitUsersAfterMetaclassReshape [
 
 	self assert: TOne traitUsers asArray            equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
-	self assert: TTwo traitUsers asArray            equals: { anotherClass class }.
-	self assert: TTwo classTrait traitUsers asArray equals: { }.
+	self assert: TTwo classTrait traitUsers asArray            equals: { anotherClass class }.
+	self assert: TTwo traitUsers asArray equals: { }.
 
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
-	self deny: (aClass class canUnderstand: #two).
-	self assert: (anotherClass class canUnderstand: #two)
+	self deny: (aClass class canUnderstand: #classTwo).
+	self assert: (anotherClass class canUnderstand: #classTwo)
 ]
