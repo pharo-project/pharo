@@ -1939,8 +1939,6 @@ OCParserTest >> testSymbolLiteral [
 	'#<' #<
 	'#>' #>
 	'#<>' #<>
-	'##foo' #foo
-	'###foo' #foo
 	'#foo:' #foo:
 	'#foo::' #'foo::'
 	'#foo::bar' #'foo::bar'
@@ -1951,16 +1949,24 @@ OCParserTest >> testSymbolLiteral [
 		self assert: tree start equals: 1.
 		self assert: tree stop equals: parseString size ].
 
+
+]
+
+{ #category : 'tests - parsing' }
+OCParserTest >> testSymbolLiteralRaiseError [
+
 	#(
-	('#"bar"foo' #foo)
-	('# foo' #foo)
-	('#1' 1)
-	('#12' 12)
-	('#12.3' 12.3)
-	('# 1' 1)
-	('##1' 1)
-	('#"bar"1' 1)) do: [ :pair |
-		self should: [self parserClass parseExpression: pair first] raise: OCCodeError ]
+	'#"bar"foo'
+	'# foo' 
+	'##foo'
+	'###foo'
+	'#1'
+	'#12'
+	'#12.3'
+	'# 1'
+	'##1'
+	'#"bar"1') do: [ :each |
+		self should: [self parserClass parseExpression: each ] raise: OCCodeError ]
 ]
 
 { #category : 'tests - Literal' }
@@ -1971,8 +1977,6 @@ OCParserTest >> testSymbolLiteralSuccessfullyCreateLiteralNode [
 	'#<' #<
 	'#>' #>
 	'#<>' #<>
-	'##foo' #foo
-	'###foo' #foo
 	'#foo:' #foo:
 	'#foo::' #'foo::'
 	'#foo::bar' #'foo::bar'

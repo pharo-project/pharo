@@ -510,16 +510,6 @@ OCCodeSnippet class >> badExpressions [
 			         styled: 'XX 00 n n n 0';
 			         notices: #( #( 1 13 14 ''')'' expected' ) )).
 		        (self new
-			         source: '[(#("a"("b"###("c"###["d"]#["e"]["f"]))))]';
-			         nodeAt: '0222FFF9999AAAAAAABBBBBBBBCCCCCCDAAAEA9220';
-			         styled: '0011"""2"""3333"""1111"""111"""1#"""#32100';
-			         formattedCode:
-				         '[ #( #( #( #[ ] #[ ] #''['' #'']'' ) ) ) "a" "b" "c" "d" "e" "f" ]';
-			         isFaulty: false;
-			         value: #( #( #( #[  ] #[  ] #'[' #']' ) ) );
-			         notices: #( #( 33 33 33 'Use a proper symbol literal' )
-				            #( 37 37 37 'Use a proper symbol literal' ) )). "dry [ and ] in lit array are symbols"
-		        (self new
 			         source: '#[ 1 ) 2 ]';
 			         nodeAt: '0001020300';
 			         styled: 'XX n X n X';
@@ -1507,25 +1497,27 @@ OCCodeSnippet class >> badScanner [
 				            #( 39 39 39 'Use a proper symbol literal' ) )). "Check if comments are lost"
 		        (self new
 			         source: '#(# ## #ab #10 #. 10)';
-			         nodeAt: '001022033304550670880';
+			         nodeAt: '001023044405660780990';
 			         styled: 'XXXXXXX### XXn XX nnX';
-			         formattedCode: '#( # ## #ab # 10 # #''.'' 10 )';
+			         formattedCode: '#( # # # #ab # 10 # #''.'' 10 )';
 			         isFaulty: true;
 			         notices:
 				         #( #( 3 3 4 'Literal expected' )
-				            #( 5 6 7 'Literal expected' )
+				            #( 5 5 6 'Multiple # sequence is forbidden' )
+				            #( 6 6 7 'Literal expected' )
 				            #( 12 12 13 'Literal expected' )
 				            #( 16 16 17 'Literal expected' )
 				            #( 17 17 17 'Use a proper symbol literal' ) )). "Lonely # are errors"
 		        (self new
 			         source: '#(#"A"##"B")';
-			         nodeAt: '003555446660';
+			         nodeAt: '003666457770';
 			         styled: 'XXXX""XXX""X';
-			         formattedCode: '#( # ## )';
+			         formattedCode: '#( # # # )';
 			         isFaulty: true;
 			         notices:
 				         #( #( 3 3 4 'Literal expected' )
-				            #( 7 8 9 'Literal expected' ) )). "Check if comments are lost"
+				            #( 7 7 8 'Multiple # sequence is forbidden' )
+				            #( 8 8 9 'Literal expected' ) )). "Check if comments are lost"
 		        (self new
 			         source: '#(:=aa:=:==bb:==#cc:==)';
 			         nodeAt: '00112223445666778888990';
@@ -2303,9 +2295,11 @@ OCCodeSnippet class >> badTokens [
 				            #( 2 2 3 'an integer greater than 1 as valid radix expected' ) )). "Two bad sequences"
 		        (self new
 			         source: '##';
-			         nodeAt: '00';
+			         nodeAt: '12';
 			         styled: 'XX';
-			         notices: #( #( 1 2 3 'Literal expected' ) )).
+			         formattedCode: '#. #';
+			         notices: #( #( 1 1 2 'Multiple # sequence is forbidden' )
+				            #( 2 2 3 'Literal expected' ) )).
 		        "Note: if quotes, same thing than strings"
 		        (self new
 			         source: '#''hello';
@@ -2331,27 +2325,36 @@ OCCodeSnippet class >> badTokens [
 				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''hello';
-			         nodeAt: '000000000';
+			         nodeAt: '123333333';
 			         styled: 'XXXXXXXXX';
-			         notices:
-				         #( #( 1 9 10 'Unmatched '' in string literal.' ) )).
+			         formattedCode: '#. #. #''hello';
+			         notices: #( #( 1 1 2 'Multiple # sequence is forbidden' )
+				            #( 2 2 3 'Multiple # sequence is forbidden' )
+				            #( 3 9 10 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''hello''''world';
-			         nodeAt: '0000000000000000';
+			         nodeAt: '1233333333333333';
 			         styled: 'XXXXXXXXXXXXXXXX';
-			         notices:
-				         #( #( 1 16 17 'Unmatched '' in string literal.' ) )).
+			         formattedCode: '#. #. #''hello''''world';
+			         notices: #( #( 1 1 2 'Multiple # sequence is forbidden' )
+				            #( 2 2 3 'Multiple # sequence is forbidden' )
+				            #( 3 16 17 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''';
-			         nodeAt: '0000';
+			         nodeAt: '1233';
 			         styled: 'XXXX';
-			         notices: #( #( 1 4 5 'Unmatched '' in string literal.' ) )).
+			         formattedCode: '#. #. #''';
+			         notices: #( #( 1 1 2 'Multiple # sequence is forbidden' )
+				            #( 2 2 3 'Multiple # sequence is forbidden' )
+				            #( 3 4 5 'Unmatched '' in string literal.' ) )).
 		        (self new
 			         source: '###''hello''''';
-			         nodeAt: '00000000000';
+			         nodeAt: '12333333333';
 			         styled: 'XXXXXXXXXXX';
-			         notices:
-				         #( #( 1 11 12 'Unmatched '' in string literal.' ) )).
+			         formattedCode: '#. #. #''hello''''';
+			         notices: #( #( 1 1 2 'Multiple # sequence is forbidden' )
+				            #( 2 2 3 'Multiple # sequence is forbidden' )
+				            #( 3 11 12 'Unmatched '' in string literal.' ) )).
 
 		        "Bad numeric literal"
 		        "Note: currently there is only 2 cases or bad numeric literal, both related to bad radix"
