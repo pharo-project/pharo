@@ -5,7 +5,8 @@ Class {
 	#name : 'RubSmalltalkCodeMode',
 	#superclass : 'RubAbstractSmalltalkMode',
 	#instVars : [
-		'classOrMetaclass'
+		'classOrMetaclass',
+		'formatter'
 	],
 	#category : 'Morphic-Widgets-Editing-Code',
 	#package : 'Morphic-Widgets',
@@ -167,14 +168,27 @@ RubSmalltalkCodeMode >> formatMethodCode [
 		ifFalse: [
 			source := self textArea text.
 			tree := self parseSource: source ].
-	tree checkFaulty: [ :msg :pos |
-		^ self editor notify: msg at: pos + 1 in: source ].
-	formatted := tree formattedCodeIn: classOrMetaclass.
+	tree checkFaulty: [ :msg :pos | ^ self editor notify: msg at: pos + 1 in: source ].
+	formatted := self formatter format: tree.
 	"Text can = String, but String never = Text"
 	formatted = source asString ifTrue: [ ^ self ].
 	self textArea hasSelection
 		ifTrue: [ self textArea replaceSelectionWith: formatted ]
 		ifFalse: [ self textArea updateTextWith: formatted ]
+]
+
+{ #category : 'accessing' }
+RubSmalltalkCodeMode >> formatter [
+	"The formatter of the edited code: the one set on me, or else the one of the edited class's package"
+
+	formatter ifNotNil: [ ^ formatter ].
+	^ classOrMetaclass formatter
+]
+
+{ #category : 'accessing' }
+RubSmalltalkCodeMode >> formatter: aFormatter [
+
+	formatter := aFormatter
 ]
 
 { #category : 'shout' }
