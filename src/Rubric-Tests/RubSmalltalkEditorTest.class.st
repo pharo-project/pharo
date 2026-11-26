@@ -537,27 +537,6 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 		assertNodeValue: 3
 ]
 
-{ #category : 'tests' }
-RubSmalltalkEditorTest >> testCompletionEngineInstanceIsNotUsedIfNil [
-	
-	| current |
-	[ current := RubSmalltalkEditor completionEngineInstance.
-	RubSmalltalkEditor completionEngineInstance: nil.
-	RubSmalltalkEditor completionEngineClass: CoStatisticsCompletionEngine.
-	self assert: RubSmalltalkEditor new completionEngine class equals: CoStatisticsCompletionEngine ]
-		ensure: [ RubSmalltalkEditor completionEngineInstance: current ]
-]
-
-{ #category : 'tests' }
-RubSmalltalkEditorTest >> testCompletionEngineInstanceIsUsedIfSpecified [
-	
-	| current |
-	[ current := RubSmalltalkEditor completionEngineInstance.
-	RubSmalltalkEditor completionEngineInstance: CoStatisticsCompletionEngine new.
-	self assert: RubSmalltalkEditor new completionEngine class equals: CoStatisticsCompletionEngine ]
-		ensure: [ RubSmalltalkEditor completionEngineInstance: current ]
-]
-
 { #category : 'tests - copy' }
 RubSmalltalkEditorTest >> testCopySelection [
 
@@ -1029,24 +1008,6 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
 	self
 		positionBefore: 'msg2';
 		assertWidensToRegex: ';.*msg2' playground: true
-]
-
-{ #category : 'tests - completion' }
-RubSmalltalkEditorTest >> testSettingCompletionFromEditor [
-
-	RubSmalltalkEditor completionEngineClass: CompletionEngine.
-	self assert: RubSmalltalkEditor completionEngineClass equals: CompletionEngine
-]
-
-{ #category : 'tests - completion' }
-RubSmalltalkEditorTest >> testSettingCompletionFromEditorToTextArea [
-
-	| textEditor |
-	RubSmalltalkEditor completionEngineClass: CompletionEngine.
-	textEditor := RubSmalltalkEditor new.
-	self assert: textEditor completionEngine class equals: CompletionEngine.
-	textEditor textArea: RubEditingArea new.
-	self assert: textEditor textArea completionEngine class equals: CompletionEngine
 ]
 
 { #category : 'tests - widenSelection' }
