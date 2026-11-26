@@ -53,6 +53,19 @@ OCASTSemanticAnalyzer >> blockCounter [
 	^blockCounter ifNil: [0]
 ]
 
+{ #category : 'error handling' }
+OCASTSemanticAnalyzer >> checkReservedName: aVariableNode as: aVariable [
+
+	| name kind |
+	self compilationContext isScripting ifTrue: [ ^ self ].
+	name := aVariableNode name.
+	(Symbol reservedLiterals includes: name) ifFalse: [ ^ self ].
+	kind := aVariable isArgumentVariable
+		ifTrue: [ 'a parameter' ]
+		ifFalse: [ 'a temporary variable' ].
+	aVariableNode addNotice: (OCReservedVariableNotice new messageText: name, ' is a reserved word and cannot be used as ', kind, ' name')
+]
+
 { #category : 'accessing' }
 OCASTSemanticAnalyzer >> compilationContext [
 	^ compilationContext
@@ -89,11 +102,13 @@ OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable [
 	| name var shadowing |
 	name := aVariableNode name.
+	self checkReservedName: aVariableNode as: anOCTempVariable.
 	"check if another variable with same name is visible"
 	shadowing := scope lookupVar: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
-	(shadowing isNotNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
+	(shadowing isNotNil and: [ shadowing allowsShadowing not and: [ shadowing isPseudoVariable not ] ])
+		ifTrue: [ self shadowing: shadowing withVariable: aVariableNode ].
 	^ var
 ]
 
@@ -134,7 +149,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 { #category : 'error handling' }
 OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 
-	aNode addWarning: 'Name already defined'
+	aNode addNotice: (OCShadowingNotice new messageText: 'Name already defined')
 ]
 
 { #category : 'error handling' }
