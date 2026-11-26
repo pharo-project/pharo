@@ -16,8 +16,7 @@ MetacelloVersionSpecTest >> testVersionSpec [
 		           yourself.
 	self assert: version preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoIt.
-	self should: [ version preLoadDoIt: '' ] raise: Error.
-	self should: [ version postLoadDoIt: '' ] raise: Error
+	
 ]
 
 { #category : 'tests' }
@@ -65,6 +64,15 @@ MetacelloVersionSpecTest >> testVersionSpec2 [
 	self assert: (group includes includes: 'Core').
 	projectReferenceSpec := version packagesSpec loadableSpecNamed: 'Project' ifAbsent: [ self assert: false ].
 	self assert: projectReferenceSpec projectName equals: 'Project'
+]
+
+{ #category : 'tests - errors' }
+MetacelloVersionSpecTest >> testVersionSpecWithEmptyLoadDoItRaiseError [
+
+	| version |
+	version := self versionSpec.
+	self should: [ version preLoadDoIt: '' ] raise: Error.
+	self should: [ version postLoadDoIt: '' ] raise: Error
 ]
 
 { #category : 'specs' }
