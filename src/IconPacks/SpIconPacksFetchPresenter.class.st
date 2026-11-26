@@ -418,6 +418,7 @@ SpIconPacksFetchPresenter >> setCurrentIconPack [
 	| selectedIconsPack |
 	(ConfirmationRequest signal: 'Are you sure to replace the current icon pack?') ifFalse: [ ^ self ].
 	selectedIconsPack := availableIconPacksPresenter selectedItem.
+	selectedIconsPack hasIcons ifFalse: [ selectedIconsPack loadIconsFromUrl ].
 	selectedIconsPack beCurrent.
 	self inform: 'Current Icons Pack updated to: ' , selectedIconsPack name
 ]

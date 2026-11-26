@@ -269,6 +269,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	Color flushCache.
 
+	"Morphic answers an empty icon pack until a pack is set. IconPacks downloads the default one"
+	ThemeIcons current: ThemeIcons loadDefault.
+
 	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
 	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
 
@@ -287,7 +290,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	self loadExtraTools.
 	self makeCalypsoDefaultBrowser.
 
-	Initialized := true.
+	Initialized := true
 ]
 
 { #category : 'baselines - dependencies' }

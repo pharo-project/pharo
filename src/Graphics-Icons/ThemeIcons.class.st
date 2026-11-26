@@ -57,13 +57,13 @@ ThemeIcons class >> baseUrl [
 { #category : 'instance creation' }
 ThemeIcons class >> current [
 	"WARNING: Direct access to this method is ill-adviced, use Smalltalk ui icons instead."
-	^ Current ifNil: [ Current := self loadDefault ]
+
+	^ Current ifNil: [ Current := self empty ]
 ]
 
 { #category : 'instance creation' }
 ThemeIcons class >> current: aPack [
 
-	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
 	self codeSupportAnnouncer announce: IconSetChanged
 ]
@@ -79,12 +79,12 @@ ThemeIcons class >> destinationPath [
 	^ FileLocator localDirectory / 'icon-packs'
 ]
 
-{ #category : 'private' }
-ThemeIcons class >> loadDefault [
-	<script>
+{ #category : 'instance creation' }
+ThemeIcons class >> empty [
+	"A pack without icons: every icon is blank. Morphic uses it until a pack is set"
+
 	^ self new
-		  name: self defaultIconsPack;
-		  loadIconsFromUrl;
+		  name: 'empty';
 		  yourself
 ]
 
@@ -181,19 +181,6 @@ ThemeIcons >> doesNotUnderstand: aMessage [
 	^ super doesNotUnderstand: aMessage
 ]
 
-{ #category : 'loading' }
-ThemeIcons >> downloadFromUrl [
-
-	self class destinationPath ensureCreateDirectory.
-	zipArchive := self class destinationPath / (self name, '.zip').
-	zipArchive exists
-		ifFalse: [
-			ZnClient new
-				url: self url;
-				downloadTo: zipArchive ].
-	^ zipArchive
-]
-
 { #category : 'utilities' }
 ThemeIcons >> form16x16FromContents: aByteArray [
 	^ Form
@@ -272,19 +259,6 @@ ThemeIcons >> iconsPerScale [
 { #category : 'testing' }
 ThemeIcons >> isReportingNotFound [
 	^ reportNotFound ifNil: [ reportNotFound := false ]
-]
-
-{ #category : 'loading' }
-ThemeIcons >> loadIconsFromUrl [
-
-	^ self loadIconsFromUrlUsingScale: 1
-]
-
-{ #category : 'loading' }
-ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
-
-	self downloadFromUrl.
-	^ self loadIconsFromZipArchiveUsingScale: newScale
 ]
 
 { #category : 'loading' }

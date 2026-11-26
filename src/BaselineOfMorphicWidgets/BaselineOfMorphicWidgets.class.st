@@ -33,7 +33,7 @@ BaselineOfMorphicWidgets >> baseline: spec [
 
 		spec package: 'System-Localization'.
 		spec package: 'Graphics-Shapes'.
-		"Icon packs: they download their icons over HTTP"
+		"Icon packs. IconPacks, in the IDE, downloads them"
 		spec package: 'Graphics-Icons' with: [ spec requires: #( 'MorphicCore' ) ].
 		"The clipboard, for copy and paste"
 		spec package: 'System-Utilities'.
@@ -57,6 +57,7 @@ BaselineOfMorphicWidgets >> baseline: spec [
 		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' ) ].
 		spec package: 'DarkBlueTheme' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 
+		spec package: 'Graphics-Icons-Tests' with: [ spec requires: #( 'Graphics-Icons' ) ].
 		spec package: 'Rubric-Tests' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-FastTable-Tests' with: [ spec requires: #( 'Morphic-Widgets-FastTable' ) ].
 
@@ -64,5 +65,5 @@ BaselineOfMorphicWidgets >> baseline: spec [
 			group: 'default'
 			with: #( 'Morphic-Widgets' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Tree' 'Morphic-Widgets-FastTable'
 				   'DarkBlueTheme' );
-			group: 'Tests' with: #( 'default' 'Rubric-Tests' 'Morphic-Widgets-FastTable-Tests' ) ]
+			group: 'Tests' with: #( 'default' 'Graphics-Icons-Tests' 'Rubric-Tests' 'Morphic-Widgets-FastTable-Tests' ) ]
 ]
