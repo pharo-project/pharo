@@ -1,5 +1,7 @@
 "
-Unit test for RBBrowserEnvironment
+Unit tests for RBBrowserEnvironment and its wrappers.
+
+Most checks walk their whole universe many times, so `universalEnvironment` is an `RBScopedBrowserEnvironment` limited to the classes of #universeClasses. The tests that need the whole image set `universalEnvironment` to an `RBBrowserEnvironment` themselves.
 "
 Class {
 	#name : 'RBBrowserEnvironmentTest',
@@ -60,7 +62,7 @@ RBBrowserEnvironmentTest >> classesFor: aBrowserEnvironment [
 	| allClasses |
 	allClasses := aBrowserEnvironment classes.
 	allClasses addAll: aBrowserEnvironment not classes.
-	RBBrowserEnvironment new allClassesDo: [ :each | allClasses remove: each ].
+	universalEnvironment allClassesDo: [ :each | allClasses remove: each ].
 	self assertEmpty: allClasses
 ]
 
@@ -101,6 +103,12 @@ RBBrowserEnvironmentTest >> numberSelectorsFor: aBrowserEnvironment [
 ]
 
 { #category : 'private' }
+RBBrowserEnvironmentTest >> packageClassNames [
+
+	^ (self class package definedClasses collect: [ :class | class name ]) asSet
+]
+
+{ #category : 'private' }
 RBBrowserEnvironmentTest >> packagesFor: anEnvironment [
 
 	| allPackages |
@@ -120,15 +128,15 @@ RBBrowserEnvironmentTest >> protocolsFor: aBrowserEnvironment [
 { #category : 'running' }
 RBBrowserEnvironmentTest >> setUp [
 	super setUp.
-	"These tests are written to work on the global environment"
-	testingEnvironment := Smalltalk globals.
-	universalEnvironment := RBBrowserEnvironment new
+	universalEnvironment := RBScopedBrowserEnvironment onClasses: self universeClasses.
+	testingEnvironment := universalEnvironment systemDictionary
 ]
 
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testAndAnOrEnvironmentAndAnotherOrEnvironment [
 
 	| orEnvironmentWithPackage orEnvironmentWithClass andEnvironment newClass |
+	universalEnvironment := RBBrowserEnvironment new.
 	"The first or environment contains a single package"
 	orEnvironmentWithPackage := (universalEnvironment forClasses: {  })
 	                            |
@@ -140,8 +148,8 @@ RBBrowserEnvironmentTest >> testAndAnOrEnvironmentAndAnotherOrEnvironment [
 	andEnvironment := orEnvironmentWithClass & orEnvironmentWithPackage.
 
 	self
-		assert: orEnvironmentWithPackage classNames asArray
-		equals: { self class name }.
+		assert: orEnvironmentWithPackage classNames asSet
+		equals: self packageClassNames.
 	self
 		assert: orEnvironmentWithClass classNames asArray
 		equals: { self class name }.
@@ -156,9 +164,7 @@ RBBrowserEnvironmentTest >> testAndAnOrEnvironmentAndAnotherOrEnvironment [
 			            name: #RBBrowserTemporaryClassForTest;
 			            package: self class package ].
 	"Check that the new class belongs in the or environment with a package"
-	self assert: orEnvironmentWithPackage classNames asSet equals: {
-			self class name.
-			#RBBrowserTemporaryClassForTest } asSet.
+	self assert: orEnvironmentWithPackage classNames asSet equals: (self packageClassNames copyWith: #RBBrowserTemporaryClassForTest).
 	"Check that the new class does not belong in the and scope"
 	self deny: (andEnvironment classNames includes: newClass name) ]
 		ensure: [ newClass removeFromSystem ]
@@ -210,15 +216,15 @@ RBBrowserEnvironmentTest >> testAndEnvironmentWithStoreOn [
 RBBrowserEnvironmentTest >> testAndPackageEnvironmentAndClassEnvironment [
 
 	| packageEnvironment classEnvironment andEnvironment newClass |
-	"There is a single class in the package"
+	universalEnvironment := RBBrowserEnvironment new.
 	packageEnvironment := universalEnvironment forPackages:
 		                      { self class package }.
 	classEnvironment := universalEnvironment forClasses: { self class }.
 	andEnvironment := packageEnvironment & classEnvironment.
 
 	self
-		assert: packageEnvironment classNames asArray
-		equals: { self class name }.
+		assert: packageEnvironment classNames asSet
+		equals: self packageClassNames.
 	self
 		assert: classEnvironment classNames asArray
 		equals: { self class name }.
@@ -240,7 +246,11 @@ RBBrowserEnvironmentTest >> testAndPackageEnvironmentAndClassEnvironment [
 
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testBrowserEnvironment [
-	self universalTestFor: RBBrowserEnvironment new
+	"This test checks the whole image. The other ones use a smaller universe to be faster."
+
+	testingEnvironment := self class environment.
+	universalEnvironment := RBBrowserEnvironment new.
+	self universalTestFor: universalEnvironment
 ]
 
 { #category : 'tests - environments' }
@@ -328,7 +338,7 @@ RBBrowserEnvironmentTest >> testConstructedSelectorEnvironment [
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 	| printString wrapper |
-	printString := RBBrowserEnvironment new referencesTo: #printString.
+	printString := universalEnvironment referencesTo: #printString.
 	wrapper := RBBrowserEnvironmentWrapper onEnvironment: printString.
 	self assert: wrapper numberSelectors equals: printString numberSelectors.
 	self assert: wrapper numberClasses equals: printString numberClasses.
@@ -339,7 +349,7 @@ RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 RBBrowserEnvironmentTest >> testHierarchyEnvironment [
 
 	| aHierarchyEnvironment |
-	aHierarchyEnvironment := universalEnvironment forClassHierarchy: RBBrowserEnvironmentTest.
+	aHierarchyEnvironment := RBClassHierarchyEnvironment onEnvironment: universalEnvironment class: self class.
 	self universalTestFor: aHierarchyEnvironment.
 	self assert: (aHierarchyEnvironment implementorsOf: #testPackageEnvironment) numberSelectors equals: 1.
 	self assert: (aHierarchyEnvironment implementorsOf: #setUp) numberSelectors equals:4 
@@ -348,10 +358,10 @@ RBBrowserEnvironmentTest >> testHierarchyEnvironment [
 { #category : 'tests' }
 RBBrowserEnvironmentTest >> testImplementorsMatching [
 	| print |
-	print := RBBrowserEnvironment new implementorsMatching: '*print*'.
+	print := universalEnvironment implementorsMatching: '*print*'.
 	self universalTestFor: print.
 	self assert: (print implementorsOf: #printString) numberSelectors
-				equals: (RBBrowserEnvironment new implementorsOf: #printString) numberSelectors.
+				equals: (universalEnvironment implementorsOf: #printString) numberSelectors.
 	print
 		classesAndSelectorsDo: [:class :sel | self assert: ('*print*' match: sel)]
 ]
@@ -359,8 +369,8 @@ RBBrowserEnvironmentTest >> testImplementorsMatching [
 { #category : 'tests' }
 RBBrowserEnvironmentTest >> testMatches [
 	| envEnvironment environmentEnvironment |
-	envEnvironment := RBBrowserEnvironment new matches: '*env*'.
-	environmentEnvironment := RBBrowserEnvironment new
+	envEnvironment := universalEnvironment matches: '*env*'.
+	environmentEnvironment := universalEnvironment
 				referencesTo: #environment.
 	self assert: (envEnvironment referencesTo: #environment) numberSelectors
 				equals: environmentEnvironment numberSelectors
@@ -385,7 +395,7 @@ RBBrowserEnvironmentTest >> testNotEnvironment [
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testNotEnvironmentWithClassEnvironments [
 	| numberEnvironment notNumberEnvironment |
-	numberEnvironment := RBBrowserEnvironment new forClasses: Number withAllSubclasses.
+	numberEnvironment := universalEnvironment forClasses: Number withAllSubclasses.
 	notNumberEnvironment := numberEnvironment not.
 
 	self universalTestFor: notNumberEnvironment.
@@ -434,7 +444,7 @@ RBBrowserEnvironmentTest >> testPragmaEnvironment [
 RBBrowserEnvironmentTest >> testProtocolEnvironment [
 	| aProtocolEnvironment size |
 	aProtocolEnvironment := RBProtocolEnvironment
-				onEnvironment: RBBrowserEnvironment new
+				onEnvironment: universalEnvironment
 				class: Object
 				protocols: #(#printing #testing).
 	self universalTestFor: aProtocolEnvironment.
@@ -448,13 +458,13 @@ RBBrowserEnvironmentTest >> testProtocolEnvironment [
 		do:
 			[:each |
 			self assert: (#(#printing #testing)
-						includes: (RBBrowserEnvironment new whichProtocolIncludes: each in: Object))]
+						includes: (universalEnvironment whichProtocolIncludes: each in: Object))]
 ]
 
 { #category : 'tests' }
 RBBrowserEnvironmentTest >> testRemoveSelectorByAndAndNot [
 	| aBrowserEnvironment objectPrintString |
-	aBrowserEnvironment := RBBrowserEnvironment new.
+	aBrowserEnvironment := universalEnvironment.
 	objectPrintString := RBSelectorEnvironment
 				onEnvironment: aBrowserEnvironment.
 	objectPrintString addClass: Object selector: #printString.
@@ -466,19 +476,19 @@ RBBrowserEnvironmentTest >> testRemoveSelectorByAndAndNot [
 { #category : 'tests' }
 RBBrowserEnvironmentTest >> testSelectMethods [
 	| environment |
-	environment := RBBrowserEnvironment new selectMethods: [ :each | false ].
+	environment := universalEnvironment selectMethods: [ :each | false ].
 	self assert: environment numberSelectors equals: 0.
 	self assert: environment numberClasses equals: 0.
-	environment := RBBrowserEnvironment new selectMethods: [ :each | true ].
-	self assert: environment numberSelectors equals: RBBrowserEnvironment new numberSelectors.
-	environment := RBBrowserEnvironment new selectMethods: [ :each | each refersToLiteral: #environment ].
-	self assert: environment numberSelectors equals: (RBBrowserEnvironment new referencesTo: #environment) numberSelectors
+	environment := universalEnvironment selectMethods: [ :each | true ].
+	self assert: environment numberSelectors equals: universalEnvironment numberSelectors.
+	environment := universalEnvironment selectMethods: [ :each | each refersToLiteral: #environment ].
+	self assert: environment numberSelectors equals: (universalEnvironment referencesTo: #environment) numberSelectors
 ]
 
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testSelectorEnvironment [
 	| printString |
-	printString := RBBrowserEnvironment new referencesTo: #printString.
+	printString := universalEnvironment referencesTo: #printString.
 	self universalTestFor: printString.
 	self deny: universalEnvironment isSelectorEnvironment.
 	self assert: printString isSelectorEnvironment.
@@ -490,7 +500,7 @@ RBBrowserEnvironmentTest >> testSelectorEnvironment [
 RBBrowserEnvironmentTest >> testSelectorEnvironmentRemovesEmptyClasses [
 
 	| printString class |
-	printString := RBBrowserEnvironment new referencesTo: #printString.
+	printString := universalEnvironment referencesTo: #printString.
 	class := printString classes anyOne.
 	printString selectorsForClass: class do: [ :eachSelector |
 		printString removeClass: class selector: eachSelector ].
@@ -511,7 +521,7 @@ RBBrowserEnvironmentTest >> testSystemIntegrity [
 { #category : 'tests' }
 RBBrowserEnvironmentTest >> testVariableEnvironmentAddRemove [
 	| refs |
-	refs := RBVariableEnvironment new.
+	refs := RBVariableEnvironment onEnvironment: universalEnvironment.
 	refs addClass: self class instanceVariable: 'universalEnvironment'.
 	self assert: refs numberSelectors > 0.
 	self assert: refs numberClasses equals: 1.
@@ -543,7 +553,7 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentClassVars [
 	"test variable environment for class vars, refered on the class side only"
 
 	| classRefs |
-	classRefs := RBVariableEnvironment referencesToClassVariable: 'ClassSideOnlyVariable' in: self class.
+	classRefs := RBVariableEnvironment on: universalEnvironment referencesToClassVariable: 'ClassSideOnlyVariable' in: self class.
 	self universalTestFor: classRefs.
 	self denyEmpty: classRefs methods
 ]
@@ -552,18 +562,20 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentClassVars [
 RBBrowserEnvironmentTest >> testVariableEnvironmentInstVars [
 	| refs writers readers classRefs |
 
-	self timeLimit: 300 seconds.
-
 	refs := RBVariableEnvironment
+		on: universalEnvironment
 		referencesToInstanceVariable: 'universalEnvironment'
 		in: self class.
 	writers := RBVariableEnvironment
+		on: universalEnvironment
 		writersOfInstanceVariable: 'universalEnvironment'
 		in: self class.
 	readers := RBVariableEnvironment
+		on: universalEnvironment
 		readersOfInstanceVariable: 'universalEnvironment'
 		in: self class.
 	classRefs := RBVariableEnvironment
+		on: universalEnvironment
 		referencesToClassVariable: 'AClassVariable'
 		in: self class.
 	self universalTestFor: refs.
@@ -578,7 +590,7 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentInstVars [
 { #category : 'tests' }
 RBBrowserEnvironmentTest >> testWithoutClassesRemovesClassesFromSender [
 	| environment newEnvironment |
-	environment := (RBBrowserEnvironment new) forClasses: Number withAllSubclasses.
+	environment := universalEnvironment forClasses: Number withAllSubclasses.
 
 	newEnvironment := environment withoutClasses: { Number . Integer }.
 
@@ -608,4 +620,16 @@ RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.
 	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty
+]
+
+{ #category : 'running' }
+RBBrowserEnvironmentTest >> universeClasses [
+	"The checks of #universalTestFor: walk their whole universe many times, so I limit it to the classes the tests need instead of using the whole image."
+
+	| testPackageClasses |
+	testPackageClasses := #( 'Refactoring-Environment-Tests' 'Refactoring-Critics-Tests' ) flatCollect: [ :name | (self packageOrganizer packageNamed: name) definedClasses ].
+	^ testPackageClasses , self class withAllSuperclasses , Number withAllSubclasses , RBBrowserEnvironment withAllSubclasses , {
+		  Class.
+		  Collection.
+		  OrderedCollection }
 ]
