@@ -78,11 +78,7 @@ MetacelloProjectSpecTest >> testProjectSpec [
 	self assert: project loads equals: #( 'MyPackage' 'MyTests' ).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
-	self should: [ project includes: #(  ) ] raise: Error.
-	self should: [ project requires: #(  ) ] raise: Error.
-	self assert: project class equals: MetacelloProjectSpec.
-	self should: [ project preLoadDoIt: '' ] raise: Error.
-	self should: [ project postLoadDoIt: '' ] raise: Error
+	self assert: project class equals: MetacelloProjectSpec
 ]
 
 { #category : 'tests' }
@@ -104,4 +100,27 @@ MetacelloProjectSpecTest >> testProjectSpec2 [
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'dkh'.
 	self assert: repository password equals: 'password'
+]
+
+{ #category : 'tests' }
+MetacelloProjectSpecTest >> testProjectSpecDoesNotUnderstandIncludes [
+
+	self deny: (MetacelloProjectSpec canUnderstand: #includes:)
+]
+
+{ #category : 'tests' }
+MetacelloProjectSpecTest >> testProjectSpecDoesNotUnderstandRequires [
+
+	self deny: (MetacelloProjectSpec canUnderstand: #requires:)
+]
+
+{ #category : 'tests - errors' }
+MetacelloProjectSpecTest >> testProjectSpecWithEmptyLoadDoItRaisesError [
+
+	| project |
+	project := self projectSpec
+		           name: 'Project';
+		           yourself.
+	self should: [ project preLoadDoIt: '' ] raise: Error.
+	self should: [ project postLoadDoIt: '' ] raise: Error
 ]

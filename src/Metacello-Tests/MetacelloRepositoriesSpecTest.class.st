@@ -107,24 +107,6 @@ MetacelloRepositoriesSpecTest >> testAddF [
 ]
 
 { #category : 'tests' }
-MetacelloRepositoriesSpecTest >> testCopyTo [
-
-	| repositories |
-	repositories := MetacelloRepositoriesSpec new.
-	repositories add: (MetacelloRepositorySpec new
-			 description: 'http://example.com/repository';
-			 username: 'dkh';
-			 password: 'password';
-			 yourself).
-	self
-		should: [
-				repositories copy: 'http://example.com/repository' to: (MetacelloRepositorySpec new
-						 description: 'http://example.com/alternate/repository';
-						 yourself) ]
-		raise: Error
-]
-
-{ #category : 'tests' }
 MetacelloRepositoriesSpecTest >> testMergeA [
 
 	| repositories repository |

@@ -30,12 +30,26 @@ MetacelloProjectReferenceSpecTest >> testProjectReferenceSpec [
 
 	| projectReference project |
 	projectReference := MetacelloProjectReferenceSpec projectReference: (project := self projectSpec
-			                                name: 'Project';
-			                                yourself).
+		                                name: 'Project';
+		                                yourself).
 	self assert: projectReference name equals: 'Project'.
 	self assert: projectReference projectName equals: 'Project'.
 	self assert: projectReference projectReference identicalTo: project.
-	self should: [ projectReference includes: #(  ) ] raise: Error.
-	self should: [ projectReference requires: #(  ) ] raise: Error.
 	self assert: projectReference isProjectReferenceSpec
+]
+
+{ #category : 'tests' }
+MetacelloProjectReferenceSpecTest >> testProjectReferenceSpecDoesNotUnderstandRequires [
+
+	self deny: (MetacelloProjectReferenceSpec canUnderstand: #requires:)
+]
+
+{ #category : 'tests - errors' }
+MetacelloProjectReferenceSpecTest >> testProjectReferenceSpecIncludesRaisesError [
+
+	| projectReference |
+	projectReference := MetacelloProjectReferenceSpec projectReference: (self projectSpec
+		                     name: 'Project';
+		                     yourself).
+	self should: [ projectReference includes: #(  ) ] raise: ShouldNotImplement
 ]

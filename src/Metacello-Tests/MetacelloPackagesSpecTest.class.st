@@ -90,23 +90,21 @@ MetacelloPackagesSpecTest >> testAddProject [
 	| packages project projectReferenceSpec |
 	packages := MetacelloPackagesSpec new.
 	packages add: (MetacelloProjectReferenceSpec projectReference: (self projectSpec
-				  name: 'Project';
-				  className: 'BaselineOfProjectA';
-				  loads: #( 'MyPackage' 'MyTests' );
-				  preLoadDoIt: #preLoadDoItB;
-				  postLoadDoIt: #postLoadDoItB;
-				  yourself)).
+		  name: 'Project';
+		  className: 'BaselineOfProjectA';
+		  loads: #( 'MyPackage' 'MyTests' );
+		  preLoadDoIt: #preLoadDoItB;
+		  postLoadDoIt: #postLoadDoItB;
+		  yourself)).
 	packages add: (MetacelloProjectReferenceSpec projectReference: (self projectSpec
-				  name: 'Project';
-				  className: 'BaselineOfProject';
-				  loads: #( 'MyPackage' );
-				  preLoadDoIt: #preLoadDoIt;
-				  postLoadDoIt: #postLoadDoIt;
-				  yourself)).
+		  name: 'Project';
+		  className: 'BaselineOfProject';
+		  loads: #( 'MyPackage' );
+		  preLoadDoIt: #preLoadDoIt;
+		  postLoadDoIt: #postLoadDoIt;
+		  yourself)).
 	projectReferenceSpec := packages loadableSpecNamed: 'Project' ifAbsent: [ self assert: false ].
 	self assert: projectReferenceSpec projectName equals: 'Project'.
-	self should: [ projectReferenceSpec includes: #(  ) ] raise: Error.
-	self should: [ projectReferenceSpec requires: #(  ) ] raise: Error.
 	self assert: projectReferenceSpec isProjectReferenceSpec.
 	project := projectReferenceSpec referencedSpec.
 	self assert: project name equals: 'Project'.
