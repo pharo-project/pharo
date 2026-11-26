@@ -4,8 +4,9 @@ I check that Rubric's text renders the same with FreeType fonts when several pro
 Class {
 	#name : 'RubFreeTypeRenderingTest',
 	#superclass : 'TestCase',
-	#category : 'Rubric-Tests',
-	#package : 'Rubric-Tests'
+	#category : 'FreeType-Tests-Cache',
+	#package : 'FreeType-Tests',
+	#tag : 'Cache'
 }
 
 { #category : 'tests' }
