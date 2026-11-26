@@ -430,7 +430,6 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 					with: [
 							(aBuilder setting: #lineNumbersFont)
 								target: self;
-								defaultValue: (TextStyle default fontOfPointSize: 7);
 								description: 'Font used for line numbers';
 								label: 'Line numbers font'.
 							(aBuilder setting: #lineNumbersTextColor)

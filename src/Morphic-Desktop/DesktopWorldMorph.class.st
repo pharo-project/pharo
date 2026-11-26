@@ -7,11 +7,42 @@ Class {
 	#name : 'DesktopWorldMorph',
 	#superclass : 'WorldMorph',
 	#instVars : [
-		'jobAnnouncer'
+		'jobAnnouncer',
+		'dropHandlerRegistry'
 	],
 	#category : 'Morphic-Desktop',
 	#package : 'Morphic-Desktop'
 }
+
+{ #category : 'event handling' }
+DesktopWorldMorph >> dropFiles: anEvent [
+	"Handle a number of dropped files from the OS.
+	TODO:
+		- use a more general mechanism for figuring out what to do with the file (perhaps even offering a choice from a menu)
+		- remember the resource location or (when in browser) even the actual file handle"
+
+	| numFiles |
+	numFiles := anEvent contents.
+	1 to: numFiles do: [ :i |
+		| aFileReference handler |
+		aFileReference := anEvent requestDropReference: i.
+		handler := self dropHandlerRegistry lookupExternalDropHandler: aFileReference.
+		handler ifNotNil: [ handler handle: aFileReference in: self dropEvent: anEvent ] ]
+]
+
+{ #category : 'accessing' }
+DesktopWorldMorph >> dropHandlerRegistry [
+	"Where I look up the handler of a file dropped on me. The system's registry, unless told otherwise"
+
+	dropHandlerRegistry ifNotNil: [ ^ dropHandlerRegistry ].
+	^ dropHandlerRegistry := ExternalDropHandler
+]
+
+{ #category : 'accessing' }
+DesktopWorldMorph >> dropHandlerRegistry: aRegistry [
+
+	dropHandlerRegistry := aRegistry
+]
 
 { #category : 'drawing' }
 DesktopWorldMorph >> fullRepaintNeeded [

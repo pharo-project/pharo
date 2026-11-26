@@ -19,7 +19,8 @@ Class {
 		'currentCursor',
 		'worldRenderer',
 		'realWindowExtent',
-		'deferredUIMessages'
+		'deferredUIMessages',
+		'errorHandler'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
@@ -390,7 +391,7 @@ WorldState >> displayWorldSafely: aWorld [
 			[errCtx isNotNil and:[(errCtx receiver isMorph) not]]
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
-			errCtx ifNil:[^self handleFatalDrawingError: err description].
+			errCtx ifNil:[^self handleFatalDrawingError: err].
 			errMorph := errCtx receiver.
 			"If the morph causing the problem has already the #drawError flag set,
 			then search for the next morph above in the caller chain."
@@ -480,11 +481,25 @@ were redrawn."
 	^validList
 ]
 
+{ #category : 'accessing' }
+WorldState >> errorHandler [
+	"Who handles the errors I cannot recover from. The system's one, unless told otherwise"
+
+	errorHandler ifNotNil: [ ^ errorHandler ].
+	^ ErrorHandler default
+]
+
+{ #category : 'accessing' }
+WorldState >> errorHandler: anErrorHandler [
+
+	errorHandler := anErrorHandler
+]
+
 { #category : 'update cycle' }
-WorldState >> handleFatalDrawingError: errMsg [
+WorldState >> handleFatalDrawingError: anError [
 	"Handle a fatal drawing error."
 	self worldRenderer deferUpdates: false. "Just in case"
-	self primitiveError: errMsg.
+	self errorHandler handleError: anError log: true.
 
 	"Hm... we should jump into a 'safe' worldState here, but how do we find it?!"
 ]

@@ -8,21 +8,9 @@ Class {
 { #category : 'running' }
 OCClassBuilderTest >> buildClassFromDefinition: aString [
 
-	^ self buildClassFromDefinition: aString allowUndefined: false
-]
-
-{ #category : 'running' }
-OCClassBuilderTest >> buildClassFromDefinition: aString allowUndefined: aBoolean [
-
-	| ast builder |
-	ast := CDFluidClassDefinitionParser parse: aString.
-
-	builder := ShiftClassBuilder new buildEnvironment: self class environment.
-
-	aBoolean ifTrue: [ builder useUndefinedClass ].
-
-	^ builder
-		  buildFromAST: ast;
+	^ ShiftClassBuilder new
+		  buildEnvironment: self class environment;
+		  buildFromAST: (CDFluidClassDefinitionParser parse: aString);
 		  build
 ]
 
@@ -102,17 +90,6 @@ OCClassBuilderTest >> testCreateNormalClassNamed [
 ]
 
 { #category : 'tests' }
-OCClassBuilderTest >> testCreateNormalClassSuperClass [
-
-	[
-	| class |
-	class := self buildClassFromDefinition: 'Xcrd << #TestSubClass' allowUndefined: true.
-
-	self assert: class superclass equals: (self class environment classNamed: #Xcrd) ] ensure: [
-		self class environment at: #Xcrd ifPresent: [ :aClass | aClass removeFromSystem ] ]
-]
-
-{ #category : 'tests' }
 OCClassBuilderTest >> testCreateNormalClassWithClassVariable [
 
 	| class |
@@ -142,13 +119,10 @@ OCClassBuilderTest >> testCreateNormalClassWithPackage [
 { #category : 'tests' }
 OCClassBuilderTest >> testCreateNormalClassWithSharedPools [
 
-	| class resTest |
-	class := self buildClassFromDefinition: 'Class << #TestSubClass sharedPools: { TestSharedPool . ShTestSharedPool }'.
+	| class |
+	class := self buildClassFromDefinition: 'Class << #TestSubClass sharedPools: { ChronologyConstants . ZipConstants }'.
 
-	resTest := OrderedCollection new.
-	resTest add: 'TestSharedPool' asSymbol.
-	resTest add: 'ShTestSharedPool' asSymbol.
-	self assert: class sharedPoolNames equals: resTest
+	self assert: class sharedPoolNames asArray equals: #( #ChronologyConstants #ZipConstants )
 ]
 
 { #category : 'tests' }
@@ -307,21 +281,4 @@ OCClassBuilderTest >> testCreateWeakClassWithAll [
 OCClassBuilderTest >> testDefaultResolve [
 
 	self should: [ self buildClassFromDefinition: 'cdfgdf << #TestSubClass traits: TOccurrencesTest' ] raise: Error
-]
-
-{ #category : 'resolveSuperclass' }
-OCClassBuilderTest >> testUseUndefinedClass [
-
-	| ast |
-	ast := CDFluidClassDefinitionParser parse: 'PoPouet << #TestClass'.
-	[
-	ShiftClassInstaller new make: [ :builder |
-		builder
-			useUndefinedClass;
-			buildEnvironment: self class environment;
-			buildFromAST: ast ].
-	self assert: [ (self class environment at: #PoPouet) isUndefined ] ] ensure: [
-		self class environment at: #PoPouet ifPresent: [ :class | "We first need to remove TestClass before removing PoPouet."
-			class subclassesDo: [ :subclass | subclass removeFromSystem ].
-			class removeFromSystem ] ]
 ]
