@@ -274,7 +274,7 @@ def bootstrapImage(){
         isoTesters['Fonts'] = { defineIsoTestStage("Fonts") }
         isoTesters['Keymapping'] = { defineIsoTestStage("Keymapping") }
         isoTesters['MorphicCore'] = { defineIsoTestStage("MorphicCore") }
-        isoTesters['Morphic'] = { defineIsoTestStage("Morphic") }
+        isoTesters['MorphicWidgets'] = { defineIsoTestStage("MorphicWidgets") }
         parallel isoTesters
 
         stage ("Full Image") {
