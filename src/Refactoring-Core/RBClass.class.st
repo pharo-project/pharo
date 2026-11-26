@@ -295,9 +295,8 @@ RBClass >> renameClassVariable: oldName to: newName around: aBlock [
 		at: (self privateClassVariableNames indexOf: oldName asSymbol)
 		put: newName asSymbol.
 	^ self model
-		  perform: aBlock
-		  onlyWithChange:
-		  (changeFactory renameClassVariable: oldName to: newName in: self)
+		  addChange: (changeFactory renameClassVariable: oldName to: newName in: self)
+		  containing: aBlock
 ]
 
 { #category : 'accessing' }
