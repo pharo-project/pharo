@@ -37,8 +37,9 @@ RubSmalltalkScriptingMode >> parseSource: aString [
 
 { #category : 'shout' }
 RubSmalltalkScriptingMode >> updateStyler [
+
 	super updateStyler.
-	self textArea shoutStyler beForSmalltalkScripting
+	self textArea shoutStyler ifNotNil: [ :styler | styler beForSmalltalkScripting ]
 ]
 
 { #category : 'update' }
