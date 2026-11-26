@@ -48,6 +48,8 @@ BaselineOfMorphicWidgets >> baseline: spec [
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
+		"The code editor's do it evaluates with OpalCompiler>>evaluate"
+		spec package: 'OpalCompiler-UI' with: [ spec requires: #( 'MorphicCore' ) ].
 		"Finds the selector under the cursor of the code editor"
 		spec package: 'Tools-CodeNavigation'.
 		spec package: 'Tool-Base' with: [ spec requires: #( 'MorphicCore' 'Debugging' ) ].
@@ -56,7 +58,8 @@ BaselineOfMorphicWidgets >> baseline: spec [
 		spec package: 'Morphic-Widgets' with: [
 			spec requires:
 				#( 'MorphicCore' 'Graphics-Icons' 'Graphics-Shapes' 'Tools-CodeNavigation' 'System-History' 'System-Localization'
-				   'Text-Diff' 'Text-Edition' 'Text-Scanning' 'Tool-Base' 'Debugging' 'Jobs' 'MenuRegistration' 'System-Utilities' ) ].
+				   'Text-Diff' 'Text-Edition' 'Text-Scanning' 'Tool-Base' 'Debugging' 'Jobs' 'MenuRegistration' 'System-Utilities'
+				   'OpalCompiler-UI' ) ].
 		spec package: 'Morphic-Widgets-Menubar' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-Tree' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' 'SortFunctions' ) ].
