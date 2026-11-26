@@ -377,3 +377,20 @@ RBNamespaceTest >> testRoots [
 			(({ ProtoObject} collect: [ :each | namespace classFor: each ])
 				 asSortedCollection: [ :a :b | a name < b name ]) asArray
 ]
+
+{ #category : 'tests - classes' }
+RBNamespaceTest >> testDefineTrait [
+
+	| change trait |
+	change := namespace defineTrait: [ :builder |
+		builder
+			name: #TNamespaceDefinedTrait;
+			traitComposition: TReTraitToBeUsedInDuplication;
+			package: #'Refactoring-Core-Tests' ].
+	trait := namespace classNamed: #TNamespaceDefinedTrait.
+	self assert: trait isTrait.
+	self assert: trait superclass isNil.
+	self assertCollection: trait traitComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self assert: change builder isTrait
+]
