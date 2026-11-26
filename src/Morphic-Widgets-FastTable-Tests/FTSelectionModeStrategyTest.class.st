@@ -3,7 +3,7 @@ A FTSelectionModeStrategyTest is a test class for testing the behavior of FTSele
 "
 Class {
 	#name : 'FTSelectionModeStrategyTest',
-	#superclass : 'TestCase',
+	#superclass : 'FTTestCase',
 	#instVars : [
 		'table',
 		'strategy'

@@ -555,10 +555,12 @@ RubSmalltalkEditorTest >> testCopySelection [
 
 { #category : 'tests - completion' }
 RubSmalltalkEditorTest >> testDefaultCompletionEngineUsesGlobalClass [
+	"Without the IDE, no completion engine class is set. Set one: any class shows that the editor instantiates it. tearDown restores the original"
 
 	| textEditor |
+	RubSmalltalkEditor completionEngineClass: Object.
 	textEditor := RubSmalltalkEditor new.
-	self assert: textEditor completionEngine class equals: currentCompletion
+	self assert: textEditor completionEngine class equals: Object
 ]
 
 { #category : 'tests - completion' }

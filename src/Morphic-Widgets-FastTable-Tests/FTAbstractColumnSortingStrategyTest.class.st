@@ -3,7 +3,7 @@ A FTAbstractColumnSortingStrategyTest is a test class for testing the behavior o
 "
 Class {
 	#name : 'FTAbstractColumnSortingStrategyTest',
-	#superclass : 'TestCase',
+	#superclass : 'FTTestCase',
 	#instVars : [
 		'strategy'
 	],
