@@ -62,7 +62,7 @@ BaselineOfMorphicWidgets >> baseline: spec [
 		spec baseline: 'FreeType' with: [
 			spec
 				repository: repository;
-				loads: #( 'Tests' ) ].
+				loads: #( 'core' ) ].
 		spec package: 'Rubric-Tests' with: [ spec requires: #( 'Morphic-Widgets' 'FreeType' ) ].
 		spec package: 'Morphic-Widgets-FastTable-Tests' with: [ spec requires: #( 'Morphic-Widgets-FastTable' ) ].
 
