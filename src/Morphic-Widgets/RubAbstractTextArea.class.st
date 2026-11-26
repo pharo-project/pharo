@@ -101,7 +101,8 @@ Class {
 		'grow',
 		'findReplaceService',
 		'editing',
-		'hasDragDoubleClick'
+		'hasDragDoubleClick',
+		'overTextCursorHand'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -751,8 +752,8 @@ RubAbstractTextArea >> defaultYellowButtonMenuEnabled [
 
 { #category : 'submorphs - add/remove' }
 RubAbstractTextArea >> delete [
-	self hasFocus
-		ifTrue: [ self currentHand newKeyboardFocus: nil ].
+
+	self hasFocus ifTrue: [ self activeHand newKeyboardFocus: nil ].
 	super delete
 ]
 
@@ -1191,7 +1192,11 @@ RubAbstractTextArea >> hasSelection [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> hideOverEditableTextCursor [
-	self currentHand showTemporaryCursor: nil
+	"Hide the text cursor on the hand that shows it"
+
+	overTextCursorHand ifNil: [ ^ self ].
+	overTextCursorHand showTemporaryCursor: nil.
+	overTextCursorHand := nil
 ]
 
 { #category : 'accessing' }
@@ -1499,8 +1504,7 @@ RubAbstractTextArea >> mouseMove: evt [
 RubAbstractTextArea >> mouseUp: evt [
 
 	self scrollPivot: nil.
-	(self boundsInWorld containsPoint: self currentHand position)
-		ifFalse: [ self hideOverEditableTextCursor ].
+	(self boundsInWorld containsPoint: evt position) ifFalse: [ self hideOverEditableTextCursor ].
 	mouseDownPoint := nil.
 	hasDragDoubleClick := false
 ]
@@ -1976,15 +1980,19 @@ RubAbstractTextArea >> sharesFindReplace [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> showOverEditableTextCursor [
+	"Show the text cursor on the hand of my world, when it is over me.
+	Remember the hand, so the cursor is hidden on it even after I leave my world"
 
-	| o |
-
+	| o hand |
 	owner ifNil: [ ^ self ].
+	hand := self activeHand.
+	hand ifNil: [ ^ self ].
 	o := owner isWorldMorph
-		ifTrue: [ self ]
-		ifFalse: [ owner ].
-	( o boundsInWorld containsPoint: self currentHand position )
-		ifTrue: [ self currentHand showTemporaryCursor: ( self theme overTextCursorFor: self ) ]
+		     ifTrue: [ self ]
+		     ifFalse: [ owner ].
+	(o boundsInWorld containsPoint: hand position) ifFalse: [ ^ self ].
+	hand showTemporaryCursor: (self theme overTextCursorFor: self).
+	overTextCursorHand := hand
 ]
 
 { #category : 'accessing - selection' }
