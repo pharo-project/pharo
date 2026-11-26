@@ -1009,10 +1009,9 @@ SystemWindow >> announceDeActivated [
 SystemWindow >> announceOpened [
 
 	super announceOpened.
-	self currentWorld announcer
-		announce: (WindowOpened new
-						window: self;
-						yourself)
+	self world announcer announce: (WindowOpened new
+		 window: self;
+		 yourself)
 ]
 
 { #category : 'initialization' }
