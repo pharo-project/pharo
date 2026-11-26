@@ -58,7 +58,12 @@ BaselineOfMorphicWidgets >> baseline: spec [
 		spec package: 'DarkBlueTheme' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 
 		spec package: 'Graphics-Icons-Tests' with: [ spec requires: #( 'Graphics-Icons' ) ].
-		spec package: 'Rubric-Tests' with: [ spec requires: #( 'Morphic-Widgets' ) ].
+		"Rubric's tests check that FreeType renders text from several processes"
+		spec baseline: 'FreeType' with: [
+			spec
+				repository: repository;
+				loads: #( 'Tests' ) ].
+		spec package: 'Rubric-Tests' with: [ spec requires: #( 'Morphic-Widgets' 'FreeType' ) ].
 		spec package: 'Morphic-Widgets-FastTable-Tests' with: [ spec requires: #( 'Morphic-Widgets-FastTable' ) ].
 
 		spec
