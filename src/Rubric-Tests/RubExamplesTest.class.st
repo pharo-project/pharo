@@ -23,8 +23,8 @@ RubExamplesTest >> testRubLipsumBasicExampleSmoke [
 
 	| world |
 	world := self newWorld.
-	self shouldnt: [ RubLipsumBasicExample openNotWrappedIn: world ] raise: Error.
-	self shouldnt: [ RubLipsumBasicExample openWrappedIn: world ] raise: Error
+	RubLipsumBasicExample openNotWrappedIn: world.
+	RubLipsumBasicExample openWrappedIn: world
 ]
 
 { #category : 'tests' }
@@ -32,20 +32,20 @@ RubExamplesTest >> testRubLipsumWithSegmentsExampleSmoke [
 
 	| world |
 	world := self newWorld.
-	self shouldnt: [ RubLipsumWithSegmentsExample openNotWrappedIn: world ] raise: Error.
-	self shouldnt: [ RubLipsumWithSegmentsExample openWrappedIn: world ] raise: Error
+	RubLipsumWithSegmentsExample openNotWrappedIn: world.
+	RubLipsumWithSegmentsExample openWrappedIn: world
 ]
 
 { #category : 'tests' }
 RubExamplesTest >> testRubTextFieldExampleSmoke [
 
-	self shouldnt: [ RubTextFieldExample openIn: self newWorld ] raise: Error
+	RubTextFieldExample openIn: self newWorld
 ]
 
 { #category : 'tests' }
 RubExamplesTest >> testRubTextFieldWithEntryCompletionExampleSmoke [
 
-	self shouldnt: [ RubTextFieldWithEntryCompletionExample openIn: self newWorld ] raise: Error
+	RubTextFieldWithEntryCompletionExample openIn: self newWorld
 ]
 
 { #category : 'tests' }
@@ -53,6 +53,6 @@ RubExamplesTest >> testRubWorkspaceExampleSmoke [
 
 	| world |
 	world := self newWorld.
-	self shouldnt: [ RubWorkspaceExample openIn: world ] raise: Error.
-	self shouldnt: [ RubWorkspaceExample openWithCustomShortcutIn: world ] raise: Error
+	RubWorkspaceExample openIn: world.
+	RubWorkspaceExample openWithCustomShortcutIn: world
 ]

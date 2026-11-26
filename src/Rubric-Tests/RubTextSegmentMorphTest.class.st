@@ -45,7 +45,8 @@ brain'.
 	BarZork
 br'.
 
-	font := textArea font.
+	"The font the text is laid out with"
+	font := textArea text fontAt: 1 withStyle: textArea textStyle.
 	"The outline sits one pixel away from the selected characters"
 	gap := 1 @ 0.
 	left := textArea left + textArea margins left.
