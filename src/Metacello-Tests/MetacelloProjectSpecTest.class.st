@@ -102,24 +102,16 @@ MetacelloProjectSpecTest >> testProjectSpec2 [
 	self assert: repository password equals: 'password'
 ]
 
-{ #category : 'tests - errors' }
-MetacelloProjectSpecTest >> testProjectSpecIncludesRaisesError [
+{ #category : 'tests' }
+MetacelloProjectSpecTest >> testProjectSpecDoesNotUnderstandIncludes [
 
-	| project |
-	project := self projectSpec
-		           name: 'Project';
-		           yourself.
-	self should: [ project includes: #(  ) ] raise: Error
+	self deny: (MetacelloProjectSpec canUnderstand: #includes:)
 ]
 
-{ #category : 'tests - errors' }
-MetacelloProjectSpecTest >> testProjectSpecRequiresRaisesError [
+{ #category : 'tests' }
+MetacelloProjectSpecTest >> testProjectSpecDoesNotUnderstandRequires [
 
-	| project |
-	project := self projectSpec
-		           name: 'Project';
-		           yourself.
-	self should: [ project requires: #(  ) ] raise: Error
+	self deny: (MetacelloProjectSpec canUnderstand: #requires:)
 ]
 
 { #category : 'tests - errors' }

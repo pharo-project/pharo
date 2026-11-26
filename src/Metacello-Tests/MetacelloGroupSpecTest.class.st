@@ -37,6 +37,13 @@ MetacelloGroupSpecTest >> testGroupSpecBasicAccessors [
 ]
 
 { #category : 'tests' }
+MetacelloGroupSpecTest >> testGroupSpecDoesNotUnderstandRequires [
+	"A group only includes other specs: it cannot require anything"
+
+	self deny: (MetacelloGroupSpec canUnderstand: #requires:)
+]
+
+{ #category : 'tests' }
 MetacelloGroupSpecTest >> testGroupSpecIncludesArray [
 
 	| group |
@@ -47,15 +54,4 @@ MetacelloGroupSpecTest >> testGroupSpecIncludesArray [
 	self assert: group name equals: 'Platform'.
 	self assert: (group includes includes: 'Core').
 	self assert: group isGroupSpec
-]
-
-{ #category : 'tests - errors' }
-MetacelloGroupSpecTest >> testGroupSpecRequireEmptyArrayRaiseError [
-
-	| group |
-	group := self groupSpec
-		         name: 'Platform';
-		         includes: #( 'Core' );
-		         yourself.
-	self should: [ group requires: #(  ) ] raise: Error
 ]

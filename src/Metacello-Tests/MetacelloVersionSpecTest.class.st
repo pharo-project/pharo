@@ -67,7 +67,7 @@ MetacelloVersionSpecTest >> testVersionSpec2 [
 ]
 
 { #category : 'tests - errors' }
-MetacelloVersionSpecTest >> testVersionSpecWithEmptyLoadDoItRaiseError [
+MetacelloVersionSpecTest >> testVersionSpecWithEmptyLoadDoItRaisesError [
 
 	| version |
 	version := self versionSpec.
