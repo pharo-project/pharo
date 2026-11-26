@@ -525,21 +525,15 @@ RubSmalltalkEditor >> editingMode [
 RubSmalltalkEditor >> evaluate: source andDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 
-	| result rcvr ctxt |
-	rcvr := self doItReceiver.
-	ctxt := self doItContext.
-	
+	| evaluator result |
+	evaluator := OpalEvaluator new receiver: self doItReceiver.
+	"Inside a debugger, evaluate in the selected context"
+	self doItContext ifNotNil: [ :context | evaluator context: context ].
+
 	"to improve: we need better reporting of errors, to revisit when unifying with Spec"
-	[
-		result := rcvr class compiler
-			          source: source;
-			          requestor: self;
-			          context: ctxt;
-			          receiver: rcvr;
-			          permitFaulty: false;
-			          evaluate ]
-		on: OCCodeError
-		do: [ :err | result := nil ].
+	result := [ evaluator evaluate: source ]
+		          on: OCCodeError
+		          do: [ :err | nil ].
 
 	^ aBlock value: result
 ]
