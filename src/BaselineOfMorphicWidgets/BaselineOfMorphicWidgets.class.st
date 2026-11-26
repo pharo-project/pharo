@@ -26,6 +26,11 @@ BaselineOfMorphicWidgets >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'Core' ) ].
+		"Tables sort with sort functions"
+		spec baseline: 'SortFunctions' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
 		spec baseline: 'Regex' with: [
 			spec
 				repository: repository;
@@ -54,7 +59,7 @@ BaselineOfMorphicWidgets >> baseline: spec [
 				   'Text-Diff' 'Text-Edition' 'Text-Scanning' 'Tool-Base' 'Debugging' 'Jobs' 'MenuRegistration' 'System-Utilities' ) ].
 		spec package: 'Morphic-Widgets-Menubar' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 		spec package: 'Morphic-Widgets-Tree' with: [ spec requires: #( 'Morphic-Widgets' ) ].
-		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' ) ].
+		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Morphic-Widgets' 'Regex' 'SortFunctions' ) ].
 		spec package: 'DarkBlueTheme' with: [ spec requires: #( 'Morphic-Widgets' ) ].
 
 		spec package: 'Graphics-Icons-Tests' with: [ spec requires: #( 'Graphics-Icons' ) ].

@@ -132,13 +132,15 @@ StrikeFont class >> initialize [
 
 { #category : 'instance creation' }
 StrikeFont class >> installDefaultBitmapFontFrom: directoryReference [
-	"Install Bitmap DejaVu Sans, read from directoryReference, as the default text style. Keep a default text style already installed"
+	"Install Bitmap DejaVu Sans, read from directoryReference, as the default text styles, like Morphic's initialization does. Keep a default text style already installed"
 
 	| dejaVu |
 	TextStyle default ifNotNil: [ ^ self ].
 	dejaVu := self loadBitmapFontFamily: 'Bitmap DejaVu Sans' sizes: #( 7 9 12 14 18 24 ) from: directoryReference.
 	TextSharedInformation at: #DefaultTextStyle put: dejaVu.
-	TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu
+	TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu.
+	TextSharedInformation at: #DefaultMultiStyle put: dejaVu.
+	TextSharedInformation at: #DefaultFixedTextStyle put: dejaVu
 ]
 
 { #category : 'removing' }
