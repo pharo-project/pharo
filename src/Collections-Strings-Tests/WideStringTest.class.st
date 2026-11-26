@@ -22,9 +22,9 @@ WideStringTest >> classToBeTested [
 WideStringTest >> testAsInteger [
 	self assert: '1796exportFixes-tkMX' asWideString asInteger equals: 1796.
 	self assert: 'donald' asWideString asInteger isNil.
-	self assert: 'abc234def567' asWideString asInteger equals: 234.
+	self assert: 'abc234def567' asWideString asInteger equals: nil.
 	self assert: '-94' asWideString asInteger equals: -94.
-	self assert: 'foo-bar-92' asWideString asInteger equals: -92.
+	self assert: 'foo-bar-92' asWideString asInteger equals: nil.
 
 	self assert: '1796exportFixes-tkMX' asWideString asSignedInteger equals: 1796.
 	self assert: 'donald' asWideString asSignedInteger isNil.

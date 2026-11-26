@@ -449,9 +449,9 @@ StringTest >> testAsInteger [
 
 	self assert: '1796exportFixes-tkMX' asInteger equals: 1796.
 	self assert: 'donald' asInteger isNil.
-	self assert: 'abc234def567' asInteger equals: 234.
+	self assert: 'abc234def567' asInteger equals: nil.
 	self assert: '-94' asInteger equals: -94.
-	self assert: 'foo-bar-92' asInteger equals: -92
+	self assert: 'foo-bar-92' asInteger equals: nil
 ]
 
 { #category : 'tests' }
