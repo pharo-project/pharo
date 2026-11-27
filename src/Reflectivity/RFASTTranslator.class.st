@@ -72,11 +72,10 @@ RFASTTranslator >> emitPreamble: aNode [
 RFASTTranslator >> visitArrayNode: anArrayNode [
 
 	| elementNodes |
-
-	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
+	(self canUseConsArrayFor: anArrayNode) ifFalse: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
-	elementNodes do: [:node | self visitNode: node].
+	elementNodes do: [ :node | self visitNode: node ].
 	self emitPreamble: anArrayNode.
 	self emitMetaLinkBefore: anArrayNode.
 	anArrayNode hasMetalinkInstead
@@ -214,42 +213,43 @@ RFASTTranslator >> visitMessageNode: aMessageNode [
 RFASTTranslator >> visitMethodNode: aMethodNode [
 	"I ignore all links when I am primitive as ReflectiveMethod compiles a wrapper"
 
-	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
+	aMethodNode isError ifTrue: [ self emitRuntimeError: aMethodNode ].
 
+	self planArraysIn: aMethodNode.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
 
-	aMethodNode isPrimitive ifFalse: [self emitPreamble: aMethodNode. self emitMetaLinkBefore: aMethodNode].
+	aMethodNode isPrimitive ifFalse: [
+			self emitPreamble: aMethodNode.
+			self emitMetaLinkBefore: aMethodNode ].
 
 	methodBuilder properties: aMethodNode methodProperties.
 	methodBuilder irPrimitive: aMethodNode primitiveFromPragma.
-	aMethodNode pragmas do: [:each | self visitPragmaNode: each].
+	aMethodNode pragmas do: [ :each | self visitPragmaNode: each ].
 	methodBuilder numArgs: aMethodNode arguments size.
 
-	(aMethodNode hasMetalinkInstead and: [ aMethodNode isPrimitive not ])
-				ifTrue: [ self emitMetaLinkInstead: aMethodNode. methodBuilder returnTop.
-						^self. ].
+	(aMethodNode hasMetalinkInstead and: [ aMethodNode isPrimitive not ]) ifTrue: [
+			self emitMetaLinkInstead: aMethodNode.
+			methodBuilder returnTop.
+			^ self ].
 
 	aMethodNode scope tempVector ifNotEmpty: [
-		methodBuilder
-			createTempVectorNamed: aMethodNode scope tempVectorName
-			withVars: aMethodNode scope tempVectorVarNames.
-	].
+		methodBuilder createTempVectorNamed: aMethodNode scope tempVectorName withVars: aMethodNode scope tempVectorVarNames ].
 	aMethodNode body hasMetalinkInstead
-		ifTrue: [
-			"Apparently, body replacements expect that the result value of the replacement is return value of the method"
-			self visitNode: aMethodNode body.
-			methodBuilder returnTop ]
-		ifFalse: [
-			self visitEffectNode: aMethodNode body ].
+		ifTrue: [ "Apparently, body replacements expect that the result value of the replacement is return value of the method"
+				self visitNode: aMethodNode body.
+				methodBuilder returnTop ]
+		ifFalse: [ self visitEffectNode: aMethodNode body ].
 	(aMethodNode hasProperty: #wrapperMethod)
-	 ifTrue: [
-		"after links are only active in the wrapper method"
-		self emitMetaLinkAfterNoEnsure: aMethodNode.
-		"the wrapper has to return the value of the wrapped method"
-		methodBuilder pushTemp: #RFReifyValueVar; returnTop]
-	ifFalse: [
-		"Always add a return reveiver to be safe since the ones in the body could have been removed"
-		methodBuilder pushReceiver ; returnTop ]
+		ifTrue: [ "after links are only active in the wrapper method"
+				self emitMetaLinkAfterNoEnsure: aMethodNode.
+				"the wrapper has to return the value of the wrapped method"
+				methodBuilder
+					pushTemp: #RFReifyValueVar;
+					returnTop ]
+		ifFalse: [ "Always add a return reveiver to be safe since the ones in the body could have been removed"
+				methodBuilder
+					pushReceiver;
+					returnTop ]
 ]
 
 { #category : 'visitor - double dispatching' }
