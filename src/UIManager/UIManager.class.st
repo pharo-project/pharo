@@ -101,16 +101,10 @@ UIManager >> abort: aStringOrText title: aString [
 	^self subclassResponsibility
 ]
 
-{ #category : 'private' }
-UIManager >> activate [
-]
-
 { #category : 'activation' }
 UIManager >> activateWhenImageStarting: isImageStarting [
 	"Activate me. isImageStarting tells whether the image is starting from a snapshot.
 	Managers that renew session resources when the image starts override me"
-
-	self activate
 ]
 
 { #category : 'ui TEasilyThemed' }

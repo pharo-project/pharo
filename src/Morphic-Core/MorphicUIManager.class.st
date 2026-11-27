@@ -44,12 +44,6 @@ MorphicUIManager class >> uiProcess [
 ]
 
 { #category : 'activation' }
-MorphicUIManager >> activate [
-
-	self activateWhenImageStarting: false
-]
-
-{ #category : 'activation' }
 MorphicUIManager >> activateWhenImageStarting: isImageStarting [
 
 	self currentWorld worldState

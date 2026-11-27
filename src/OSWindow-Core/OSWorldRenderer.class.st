@@ -75,7 +75,7 @@ OSWorldRenderer class >> restart [
 	OSSDL2Driver shutDown: true.
 
 	self startUp: true.
-	UIManager default activate.
+	UIManager default activateWhenImageStarting: false.
 
 	oldWindows 
 	 select: [ :e | e sdl2Window isNotNil ]

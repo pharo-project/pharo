@@ -37,9 +37,10 @@ NonInteractiveUIManager >> abort: aStringOrText title: aString [
 	self logTitle: aString andDescription: aStringOrText to: self stderr
 ]
 
-{ #category : 'private' }
-NonInteractiveUIManager >> activate [
-	super activate.
+{ #category : 'activation' }
+NonInteractiveUIManager >> activateWhenImageStarting: isImageStarting [
+
+	super activateWhenImageStarting: isImageStarting.
 	NonInteractiveTranscript stdout install
 ]
 
