@@ -181,14 +181,14 @@ JobProgressMorph >> progress [
 { #category : 'API' }
 JobProgressMorph >> progress: aNormalizedNumber [
 
-	bar progress = aNormalizedNumber ifFalse: [
-			bar progress: aNormalizedNumber.
-			self changed ]
+	bar progress = aNormalizedNumber ifTrue: [^ self].
+	bar progress: aNormalizedNumber.
+	self changed: #progressValue
 ]
 
 { #category : 'API' }
 JobProgressMorph >> progress: aNormalizedNumber label: aString [
-	"I am here to have a version updating only once the progress bar when we change label and progress. This method should call #change: or #change only once."
+	"I am here to have a version updating only once the progress bar when we change label and progress. This method should call #changed: only once."
 
 	| changed |
 	changed := false.
@@ -198,7 +198,7 @@ JobProgressMorph >> progress: aNormalizedNumber label: aString [
 			changed := true ].
 
 	self label = aString
-		ifTrue: [ changed ifTrue: [ self changed ] ]
+		ifTrue: [ changed ifTrue: [ self changed: #progressValue ] ]
 		ifFalse: [
 				self label ifEmpty: [
 						aString isEmptyOrNil ifTrue: [ ^ self ].
