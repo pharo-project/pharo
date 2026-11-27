@@ -63,6 +63,25 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 ]
 
 { #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageCopiesTraitsAsTraits [
+
+	| refactoring |
+	self class classInstaller make: [ :builder |
+		builder
+			beTrait;
+			name: #TRBFTTrait;
+			package: #RefactoringSmallPackageForTest ].
+	refactoring := self createRefactoringWithArguments: {
+		#RefactoringSmallPackageForTest.
+		#RefactoringCOPYSmallPackageForTest }.
+	(refactoring classMappings: {
+		#RBFTTest1 -> #BarFTTest1.
+		#RBFTTest2 -> #BarFTTest2.
+		#TRBFTTrait -> #TBarFTTrait } asDictionary) execute.
+	self assert: (self class environment at: #TBarFTTrait) isTrait
+]
+
+{ #category : 'tests' }
 RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 
 	| refactoring aModel |

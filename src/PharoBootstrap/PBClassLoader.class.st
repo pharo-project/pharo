@@ -1,12 +1,14 @@
+"
+I create the classes and traits of the new image in the object space of the bootstrap, from their Ring definitions.
+
+I first create stubs of the classes needed by the VM, then the real classes and their class pools. I keep the mapping between the mirrors of the created classes and their definitions, which is used by the image builder (see `PBAbstractImageBuilder`) and by the AST interpreter.
+"
 Class {
 	#name : 'PBClassLoader',
 	#superclass : 'Object',
 	#instVars : [
 		'nextClassIndex',
 		'builder',
-		'useClassBuilder',
-		'initializedClasses',
-		'compactClasses',
 		'mirrorDefinitionMap',
 		'definitionMirrorMap',
 		'shouldInitializeClassPool',
@@ -87,12 +89,6 @@ PBClassLoader >> classNamed: aString [
 	^ class
 ]
 
-{ #category : 'stubs' }
-PBClassLoader >> compactClassIndexForClass: aRFiClass [ 
-	
-	^ builder compactClassIndexForClassNamed: aRFiClass name.
-]
-
 { #category : 'class-loading' }
 PBClassLoader >> createBehaviorFromDefinition: aRFiDefinition [
 
@@ -148,15 +144,6 @@ PBClassLoader >> createStubForClassNamed: aSymbol [
 ]
 
 { #category : 'class-loading' }
-PBClassLoader >> createTraitFromDefinition: aTrait [
-
-	| newTrait |	
-	newTrait := builder objectSpace interpreter evaluateCode: aTrait definition.
-	self registerTrait: newTrait named: aTrait name.
-	^ newTrait
-]
-
-{ #category : 'class-loading' }
 PBClassLoader >> ensureAllSlotsAreInstanceVariableSlotsIn: aRFiDefinition [
 
 	aRFiDefinition slots
@@ -195,22 +182,10 @@ PBClassLoader >> formatOfClass: aRFiClass [
 PBClassLoader >> initialize [
 
 	super initialize.
-	initializedClasses := Set new.
-	compactClasses := EPDictionary new.
 	definitionMirrorMap := EPDictionary new.
 	mirrorDefinitionMap := EPDictionary new.
-	
+
 	fullyLoaded := Dictionary new
-]
-
-{ #category : 'initialization' }
-PBClassLoader >> initializeClassNamed: aClassName [
-
-	(self shouldInitializeClassNamed: aClassName) ifFalse: [ ^ self ].
-		
-	self doInitializeClassNamed: aClassName.
-	initializedClasses add: aClassName.
-	self postInitializeClassNamed: aClassName
 ]
 
 { #category : 'stubs' }
@@ -246,14 +221,6 @@ PBClassLoader >> initializeClassPools [
 	environment keysDo: [ :name |
 		(systemDefinition classNamed: name) isBehavior
 			ifTrue: [ self initializeClassPool: name ] ].
-]
-
-{ #category : 'initialization' }
-PBClassLoader >> initializeTraitNamed: aClassName [
-
-	(self shouldInitializeClassNamed: aClassName) ifFalse: [ ^ self ].
-	self doInitializeTraitNamed: aClassName.
-	initializedClasses add: aClassName.
 ]
 
 { #category : 'class-loading' }
@@ -294,26 +261,25 @@ PBClassLoader >> loadedClassNames [
 
 { #category : 'registration' }
 PBClassLoader >> map: aClassMirror with: aDefinition [
-
 	"We create a mapping between the real classes and their definitions for later"
-	
+
 	| classSideMirror |
 	self assert: (aClassMirror target isKindOf: EPSimulatorHandle).
-	(aClassMirror backend simulator objectMemory classTableRootObj) ifNotNil: [
-		self assert: aClassMirror target asClassIndexHandle address notNil.
-		aClassMirror target: (aClassMirror target asClassIndexHandle) ].
+	aClassMirror backend simulator objectMemory classTableRootObj ifNotNil: [
+			self assert: aClassMirror target asClassIndexHandle address isNotNil.
+			aClassMirror target: aClassMirror target asClassIndexHandle ].
 
 	mirrorDefinitionMap at: aClassMirror put: aDefinition.
 	definitionMirrorMap at: aDefinition put: aClassMirror.
 
 	classSideMirror := aClassMirror basicClass.
 	"only valid for Spur simulator bootstrap by now"
-	(aClassMirror backend simulator objectMemory classTableRootObj) ifNotNil: [
-		self assert: classSideMirror target asClassIndexHandle address notNil.
-		classSideMirror target: (classSideMirror target asClassIndexHandle) ].
-	
+	aClassMirror backend simulator objectMemory classTableRootObj ifNotNil: [
+			self assert: classSideMirror target asClassIndexHandle address isNotNil.
+			classSideMirror target: classSideMirror target asClassIndexHandle ].
+
 	mirrorDefinitionMap at: classSideMirror put: aDefinition classSide.
-	definitionMirrorMap at: aDefinition classSide put: classSideMirror.
+	definitionMirrorMap at: aDefinition classSide put: classSideMirror
 ]
 
 { #category : 'stubs' }
@@ -381,25 +347,20 @@ PBClassLoader >> registerClass: aClassMirror named: aName [
 
 { #category : 'registration' }
 PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean [
-
 	"If it existed before, we migrate its state"
-	(environment includesKey: aName)
-		ifTrue: [ 
-			self migrateOldClass: (environment at: aName) to: aClassMirror ].
 
-	"We register it and keep up to date our compact class index"
+	(environment includesKey: aName) ifTrue: [ self migrateOldClass: (environment at: aName) to: aClassMirror ].
+
 	environment at: aName put: aClassMirror.
-	aClassMirror asClassMirror compactClassIndex = 0 ifFalse: [ 
-		builder objectSpace backend compactClassAt: aClassMirror asClassMirror compactClassIndex put: aClassMirror ].
-	
+
 	"We create a mapping between the real classes and their definitions for later"
 	self map: aClassMirror with: (systemDefinition classNamed: aName).
-	
-	"We say the simulator that this class is a root, possible becomes can come into it. THIS IS ONLY VALID FOR SPUR SIMULATOR BOOTSTRAP. REFACTOR ME".
+
+	"We say the simulator that this class is a root, possible becomes can come into it. THIS IS ONLY VALID FOR SPUR SIMULATOR BOOTSTRAP. REFACTOR ME"
 	self flag: #refactorMe.
 	builder objectSpace backend addExtraRoot: aClassMirror.
 	builder objectSpace backend addExtraRoot: aClassMirror classSide.
-	
+
 	"We reset the class map of the ast interpreter"
 	fullyLoaded at: aName put: aBoolean
 ]
@@ -407,20 +368,13 @@ PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean 
 { #category : 'registration' }
 PBClassLoader >> registerTrait: aTraitMirror named: aName fullyLoaded: aBoolean [
 
-	(environment includesKey: aName)
-		ifTrue: [ | oldClass |
+	(environment includesKey: aName) ifTrue: [
+			| oldClass |
 			oldClass := environment at: aName.
-			oldClass becomeInto: aTraitMirror.
-			"oldClassMetaclass target handle == Metaclass
-				ifFalse:[ oldClassMetaclass becomeInto: aClassMirror classSide ] "].
+			oldClass becomeInto: aTraitMirror ].
 
 	environment at: aName put: aTraitMirror.
 	fullyLoaded at: aName put: aBoolean
-	"aClassMirror compactClassIndex = 0 ifFalse: [ 
-		compactClasses at: aClassMirror compactClassIndex put: aClassMirror ].
-	
-	objectSpace interpreter resetClassMap.
-"
 ]
 
 { #category : 'accessing' }

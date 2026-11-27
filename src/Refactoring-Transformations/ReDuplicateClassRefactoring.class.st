@@ -67,8 +67,10 @@ ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withN
 { #category : 'copying' }
 ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
 
-	^ (self copyClass: aClass withName: copyName in: aSymbol)
+	^ self new
 		  model: aRBNamespace;
+		  packageName: aSymbol;
+		  copyClass: aClass withName: copyName;
 		  yourself
 ]
 
@@ -96,6 +98,14 @@ ReDuplicateClassRefactoring >> classMethods: anObject [
 { #category : 'transforming' }
 ReDuplicateClassRefactoring >> copyClass [
 
+	aClass isTrait
+		ifTrue: [ self copyTraitDefinition ]
+		ifFalse: [ self copyClassDefinition ]
+]
+
+{ #category : 'transforming' }
+ReDuplicateClassRefactoring >> copyClassDefinition [
+
 	self generateChangesFor:
 		((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: aClass superclass;
@@ -104,6 +114,18 @@ ReDuplicateClassRefactoring >> copyClass [
 			 comment: aClass comment;
 			 tagName: self packageTagName;
 			 yourself)
+]
+
+{ #category : 'transforming' }
+ReDuplicateClassRefactoring >> copyTraitDefinition [
+
+	self model defineTrait: [ :builder |
+		builder
+			name: className;
+			traitComposition: aClass traitComposition;
+			package: self packageName;
+			tag: self packageTagName;
+			comment: aClass comment ]
 ]
 
 { #category : 'initialization' }
