@@ -32,7 +32,9 @@ Class {
 		'replaceAllButton',
 		'replaceVisible',
 		'searchOrigin',
-		'updatingFields'
+		'updatingFields',
+		'findBoxBounds',
+		'replaceBoxBounds'
 	],
 	#classVars : [
 		'LastFindText',
@@ -60,8 +62,7 @@ RubFindReplaceBar class >> on: aFindReplaceService [
 
 { #category : 'layout' }
 RubFindReplaceBar >> buttonSize [
-
-	^ self rowHeight - 4
+	^ 22
 ]
 
 { #category : 'accessing' }
@@ -112,13 +113,28 @@ RubFindReplaceBar >> countString [
 
 { #category : 'drawing' }
 RubFindReplaceBar >> drawOn: aCanvas [
+	"A floating card with a soft shadow, holding inset input boxes. All the colors come from the theme."
 
-	| bounds |
-	bounds := self bounds.
-	aCanvas fillRectangle: bounds color: self theme backgroundColor.
-	aCanvas frameRectangle: bounds width: 1 color: self theme borderColor.
-	"A thin accent on the left edge marks the bar like a focused input"
-	aCanvas fillRectangle: (bounds topLeft extent: 2 @ bounds height) color: self theme selectionColor
+	| card radius |
+	card := self cardBounds.
+	radius := 6.
+	1 to: self shadowMargin do: [ :i |
+		aCanvas
+			drawPolygon: (RubFindBarButton roundedVertices: ((card translateBy: 0 @ 1) expandBy: i) radius: radius + i)
+			color: (self shadowColor alpha: self shadowColor alpha / (i + 2))
+			borderWidth: 0
+			borderColor: Color transparent ].
+	aCanvas
+		drawPolygon: (RubFindBarButton roundedVertices: card radius: radius)
+		color: self cardColor
+		borderWidth: 1
+		borderColor: self theme borderColor.
+	self drawBox: findBoxBounds focused: findField textArea hasKeyboardFocus on: aCanvas.
+	replaceVisible ifTrue: [ self drawBox: replaceBoxBounds focused: replaceField textArea hasKeyboardFocus on: aCanvas ].
+	"a thin separator between the count and the navigation buttons"
+	aCanvas
+		fillRectangle: (previousButton left - 5 @ (previousButton top + 4) extent: 1 @ (previousButton height - 8))
+		color: self theme borderColor
 ]
 
 { #category : 'accessing' }
@@ -216,8 +232,8 @@ RubFindReplaceBar >> initialize [
 	previousButton := RubFindBarButton glyph: #up help: 'Previous match (Shift+Enter)' action: [ self findPrevious ].
 	nextButton := RubFindBarButton glyph: #down help: 'Next match (Enter)' action: [ self findNext ].
 	closeButton := RubFindBarButton glyph: #close help: 'Close (Esc)' action: [ self closeFromBar ].
-	replaceButton := RubFindBarButton label: 'Replace' help: 'Replace (Enter)' action: [ self replace ].
-	replaceAllButton := RubFindBarButton label: 'All' help: 'Replace all (Cmd+Enter)' action: [ self replaceAll ].
+	replaceButton := (RubFindBarButton label: 'Replace' help: 'Replace (Enter)' action: [ self replace ]) bePill.
+	replaceAllButton := (RubFindBarButton label: 'All' help: 'Replace all (Cmd+Enter)' action: [ self replaceAll ]) bePill.
 	{ findField. expandButton. caseButton. wordButton. regexButton. countLabel. previousButton. nextButton. closeButton. replaceField. replaceButton. replaceAllButton }
 		do: [ :each | self addMorphBack: each ].
 	self updateToggles.
@@ -238,40 +254,45 @@ RubFindReplaceBar >> isReplaceVisible [
 
 { #category : 'layout' }
 RubFindReplaceBar >> layoutContents [
-	"Lay out my submorphs by hand: no layout policy runs on each change."
+	"Lay out my submorphs by hand: no layout policy runs on each change.
+	Find row:    > [ find field          Aa ab .* ]  3 of 18 | ^ v x
+	Replace row:   [ replace field                 ] (Replace) (All)"
 
-	| pad x y size rightX fieldWidth countWidth |
-	pad := 4.
+	| card pad size x y rightX boxRight countWidth buttonY |
+	card := self cardBounds.
+	pad := self padding.
 	size := self buttonSize.
-	y := self top + pad.
-	x := self left + pad + 2.
-	expandButton bounds: (x @ (y + 2) extent: 16 @ size).
-	x := x + 16 + 2.
-	countWidth := (self theme labelFont widthOfString: '999 of 999+') + 8.
-	rightX := self right - pad.
-	closeButton bounds: (rightX - size @ (y + 2) extent: size @ size).
-	rightX := rightX - size - 1.
-	nextButton bounds: (rightX - size @ (y + 2) extent: size @ size).
-	rightX := rightX - size - 1.
-	previousButton bounds: (rightX - size @ (y + 2) extent: size @ size).
-	rightX := rightX - size - 4.
+	y := card top + pad.
+	buttonY := y + (self rowHeight - size // 2).
+	x := card left + pad.
+	expandButton bounds: (x @ buttonY extent: 18 @ size).
+	x := x + 18 + 4.
+	"right side, from the right edge"
+	rightX := card right - pad.
+	{ closeButton. nextButton. previousButton } do: [ :each |
+		each bounds: (rightX - size @ buttonY extent: size @ size).
+		rightX := rightX - size - 2 ].
+	rightX := rightX - 7. "room for the separator"
+	countWidth := (self theme labelFont widthOfString: '999 of 999+') + 4.
 	countLabel position: rightX - countWidth @ (y + (self rowHeight - countLabel height // 2)).
-	rightX := rightX - countWidth - 2.
+	boxRight := rightX - countWidth - 8.
+	"the find box holds the field and the toggles"
+	rightX := boxRight - 3.
 	{ regexButton. wordButton. caseButton } do: [ :each |
-		each bounds: (rightX - size @ (y + 2) extent: size @ size).
-		rightX := rightX - size - 1 ].
-	fieldWidth := rightX - 2 - x max: 40.
-	findField bounds: (x @ y extent: fieldWidth @ self rowHeight).
+		each bounds: (rightX - 20 @ (y + (self rowHeight - 20 // 2)) extent: 20 @ 20).
+		rightX := rightX - 20 - 1 ].
+	findBoxBounds := x @ y corner: boxRight @ (y + self rowHeight).
+	findField bounds: (x + 6 @ (y + (self rowHeight - findField height // 2)) corner: rightX - 2 @ (y + (self rowHeight - findField height // 2) + findField height)).
 	replaceField visible: replaceVisible.
 	replaceButton visible: replaceVisible.
 	replaceAllButton visible: replaceVisible.
-	replaceVisible ifFalse: [ ^ self ].
+	replaceVisible ifFalse: [ ^ replaceBoxBounds := nil ].
 	y := y + self rowHeight + pad.
-	replaceField bounds: (x @ y extent: fieldWidth @ self rowHeight).
-	rightX := x + fieldWidth + 4.
-	replaceButton bounds: (rightX @ (y + 2) extent: replaceButton minimumWidth @ size).
-	rightX := replaceButton right + 1.
-	replaceAllButton bounds: (rightX @ (y + 2) extent: replaceAllButton minimumWidth @ size)
+	buttonY := y + (self rowHeight - size // 2).
+	replaceAllButton bounds: (card right - pad - replaceAllButton minimumWidth @ buttonY extent: replaceAllButton minimumWidth @ size).
+	replaceButton bounds: (replaceAllButton left - 4 - replaceButton minimumWidth @ buttonY extent: replaceButton minimumWidth @ size).
+	replaceBoxBounds := x @ y corner: boxRight @ (y + self rowHeight).
+	replaceField bounds: (x + 6 @ (y + (self rowHeight - replaceField height // 2)) corner: boxRight - 6 @ (y + (self rowHeight - replaceField height // 2) + replaceField height))
 ]
 
 { #category : 'accessing' }
@@ -287,7 +308,7 @@ RubFindReplaceBar >> manageLayoutInBounds: aRectangle [
 
 	| width |
 	width := self preferredWidth min: aRectangle width - (self theme scrollbarThickness + 8).
-	self bounds: (aRectangle topRight + ((width + self theme scrollbarThickness + 4) negated @ 2) extent: width @ self preferredHeight).
+	self bounds: (aRectangle topRight + ((width + self theme scrollbarThickness + 2) negated @ 3) extent: width @ self preferredHeight).
 	self layoutContents.
 	^ aRectangle
 ]
@@ -295,6 +316,7 @@ RubFindReplaceBar >> manageLayoutInBounds: aRectangle [
 { #category : 'events' }
 RubFindReplaceBar >> matchSelected: aRange [
 
+	self keepMatchVisible.
 	self updateCount
 ]
 
@@ -318,14 +340,20 @@ RubFindReplaceBar >> mouseDown: anEvent [
 
 { #category : 'initialization' }
 RubFindReplaceBar >> newFieldWithGhostText: aString [
+	"A borderless field: I draw its box (see #drawBox:focused:on:), so that the toggles can sit inside it"
 
 	| field |
 	field := RubFindReplaceField new.
 	field
 		withGhostText: aString;
-		borderWidth: 1;
-		borderColor: self theme borderColor;
-		color: self theme backgroundColor.
+		borderWidth: 0;
+		color: Color transparent.
+	field textArea backgroundColor: Color transparent.
+	"The box draws the focus ring, rounded"
+	field scrollPane drawFocusBorder: false.
+	field textArea announcer
+		when: MorphGotFocus send: #changed to: self;
+		when: MorphLostFocus send: #changed to: self.
 	^ field
 ]
 
@@ -350,16 +378,16 @@ RubFindReplaceBar >> openedWithFindText: aString [
 
 { #category : 'layout' }
 RubFindReplaceBar >> preferredHeight [
-
-	^ replaceVisible
-		  ifTrue: [ self rowHeight * 2 + 12 ]
-		  ifFalse: [ self rowHeight + 8 ]
+	| rows |
+	rows := replaceVisible
+		        ifTrue: [ self rowHeight * 2 + self padding ]
+		        ifFalse: [ self rowHeight ].
+	^ rows + (self padding * 2) + (self shadowMargin * 2)
 ]
 
 { #category : 'layout' }
 RubFindReplaceBar >> preferredWidth [
-
-	^ 420
+	^ 460
 ]
 
 { #category : 'accessing' }
@@ -394,8 +422,9 @@ RubFindReplaceBar >> replaceField [
 
 { #category : 'layout' }
 RubFindReplaceBar >> rowHeight [
+	"The height of an input box: the field plus a little air"
 
-	^ findField textFieldHeight
+	^ findField textFieldHeight + 6 max: 26
 ]
 
 { #category : 'search' }
@@ -459,11 +488,6 @@ RubFindReplaceBar >> setService: aFindReplaceService [
 
 { #category : 'event handling' }
 RubFindReplaceBar >> themeChanged [
-
-	{ findField. replaceField } do: [ :field |
-		field
-			borderColor: self theme borderColor;
-			color: self theme backgroundColor ].
 	countLabel font: self theme labelFont.
 	self updateCount.
 	super themeChanged
@@ -513,7 +537,7 @@ RubFindReplaceBar >> updateCount [
 	service textArea ifNotNil: [ :area | area changed ].
 	countLabel color: (failed
 			 ifTrue: [ self theme dangerTextColor ]
-			 ifFalse: [ self theme textColor ]).
+			 ifFalse: [ self theme textColor mixed: 0.7 with: self theme backgroundColor ]).
 	{ previousButton. nextButton. replaceButton. replaceAllButton } do: [ :each | each enabled: hasMatches ]
 ]
 
@@ -527,11 +551,91 @@ RubFindReplaceBar >> updateToggles [
 			 ifTrue: [ #chevronDown ]
 			 ifFalse: [ #chevronRight ]).
 	self extent: self width @ self preferredHeight.
-	self layoutContents
+	self layoutContents.
+	self changed
 ]
 
 { #category : 'accessing' }
 RubFindReplaceBar >> wordButton [
 
 	^ wordButton
+]
+
+{ #category : 'layout' }
+RubFindReplaceBar >> shadowMargin [
+	"Room around the card for its soft shadow"
+
+	^ 3
+]
+
+{ #category : 'layout' }
+RubFindReplaceBar >> padding [
+	^ 6
+]
+
+{ #category : 'layout' }
+RubFindReplaceBar >> cardBounds [
+	"The visible card: my bounds without the shadow margin"
+
+	^ self bounds insetBy: self shadowMargin
+]
+
+{ #category : 'drawing' }
+RubFindReplaceBar >> accentColor [
+	"The theme selection color, pushed toward the text color so that it reads as an accent in both light and dark themes"
+
+	^ self theme selectionColor mixed: 0.6 with: self theme textColor
+]
+
+{ #category : 'drawing' }
+RubFindReplaceBar >> cardColor [
+	"The card is lifted a little from the editor background, toward the text color: lighter in a dark theme, darker in a light one"
+
+	^ self theme backgroundColor mixed: 0.95 with: self theme textColor
+]
+
+{ #category : 'drawing' }
+RubFindReplaceBar >> boxColor [
+	^ self theme backgroundColor
+]
+
+{ #category : 'drawing' }
+RubFindReplaceBar >> shadowColor [
+	^ self theme menuShadowColor
+]
+
+{ #category : 'drawing' }
+RubFindReplaceBar >> drawBox: aRectangle focused: aBoolean on: aCanvas [
+	"An input box, inset in the card. The focused one gets an accent ring."
+
+	aRectangle ifNil: [ ^ self ].
+	aBoolean ifTrue: [
+		"a soft outer glow makes the focus ring readable in light themes too"
+		aCanvas
+			drawPolygon: (RubFindBarButton roundedVertices: (aRectangle expandBy: 1) radius: 5)
+			color: Color transparent
+			borderWidth: 1
+			borderColor: (self accentColor alpha: 0.45) ].
+	aCanvas
+		drawPolygon: (RubFindBarButton roundedVertices: aRectangle radius: 4)
+		color: self boxColor
+		borderWidth: 1
+		borderColor: (aBoolean
+				 ifTrue: [ self accentColor ]
+				 ifFalse: [ self theme borderColor ])
+]
+
+{ #category : 'events' }
+RubFindReplaceBar >> keepMatchVisible [
+	"The selected match was scrolled into view, but it may sit under me: scroll the text down until it shows below me."
+
+	| area pane rects matchRect card |
+	area := service textArea ifNil: [ ^ self ].
+	pane := area scrollPane ifNil: [ ^ self ].
+	rects := area selectionRects.
+	rects ifEmpty: [ ^ self ].
+	matchRect := (pane scroller transformFrom: pane) localBoundsToGlobal: (rects first merge: rects last).
+	card := self cardBounds.
+	(matchRect intersects: card) ifFalse: [ ^ self ].
+	pane scrollBy: 0 @ (card bottom - matchRect top + 4)
 ]

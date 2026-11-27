@@ -66,6 +66,8 @@ SpRubFindReplaceBarTest >> setUp [
 	presenter text: 'foo bar foo
 baz foo qux'.
 	window := presenter open.
+	"A realistic editor size: the bar floats over its top-right corner"
+	window adapter widget extent: 640 @ 360; fullBounds.
 	self textArea takeKeyboardFocus.
 	"The service follows the focused text area"
 	self service textArea: self textArea.
@@ -174,6 +176,28 @@ SpRubFindReplaceBarTest >> testEnterShiftEnterAndEscapeKeysInTheFindField [
 	self keyDown: KeyboardKey escape shift: false in: bar findField.
 	self assert: self bar isNil.
 	self assert: self textArea selectionInterval equals: (17 to: 19)
+]
+
+{ #category : 'tests' }
+SpRubFindReplaceBarTest >> testCurrentMatchIsNeverHiddenUnderTheBar [
+	"Going up to a match scrolls it to the top edge of the editor, where the bar floats: the bar scrolls it below itself"
+
+	| text bar area pane matchRect |
+	text := String streamContents: [ :stream |
+		        "the matches end long lines, so that they are on the right, where the bar floats"
+		        1 to: 80 do: [ :i | stream nextPutAll: (String new: 50 withAll: $-) , ' line ' , i printString , ' x'; cr ].
+		        stream nextPutAll: 'needle at the end' ].
+	presenter text: 'needle' , String cr , text.
+	area := self textArea.
+	area selectFrom: text size - 5 to: text size - 6.
+	area scrollSelectionIntoView: nil.
+	bar := self openFind.
+	self type: 'line 40 '.
+	bar findPrevious.
+	pane := area scrollPane.
+	matchRect := (pane scroller transformFrom: pane) localBoundsToGlobal: (area selectionRects first merge: area selectionRects last).
+	self deny: (matchRect intersects: bar cardBounds).
+	self assert: (pane bounds containsPoint: matchRect center)
 ]
 
 { #category : 'tests' }

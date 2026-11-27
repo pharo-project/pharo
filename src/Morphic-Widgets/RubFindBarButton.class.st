@@ -16,7 +16,8 @@ Class {
 		'isToggle',
 		'selected',
 		'hovered',
-		'enabled'
+		'enabled',
+		'isPill'
 	],
 	#category : 'Morphic-Widgets-Editing-FindReplaceService',
 	#package : 'Morphic-Widgets',
@@ -31,6 +32,25 @@ RubFindBarButton class >> glyph: aSymbol help: aString action: aBlock [
 		  setBalloonText: aString;
 		  action: aBlock;
 		  yourself
+]
+
+{ #category : 'drawing' }
+RubFindBarButton class >> roundedVertices: aRectangle radius: aNumber [
+	"Answer the vertices of aRectangle with rounded corners, to draw it with Canvas>>drawPolygon:color:borderWidth:borderColor: (the canvases have no rounded rectangle primitive)"
+
+	| radius corners |
+	radius := aNumber min: (aRectangle width min: aRectangle height) / 2.
+	corners := {
+		           (aRectangle topRight + (radius negated @ radius) -> 270).
+		           (aRectangle bottomRight - radius -> 0).
+		           (aRectangle bottomLeft + (radius @ radius negated) -> 90).
+		           (aRectangle topLeft + radius -> 180) }.
+	^ Array streamContents: [ :stream |
+		  corners do: [ :each |
+			  0 to: 90 by: 15 do: [ :degrees |
+				  | angle |
+				  angle := (each value + degrees) degreesToRadians.
+				  stream nextPut: each key + ((angle cos * radius) @ (angle sin * radius)) ] ] ]
 ]
 
 { #category : 'instance creation' }
@@ -61,34 +81,43 @@ RubFindBarButton >> drawGlyphOn: aCanvas color: aColor [
 	| c lines |
 	c := self bounds center.
 	lines := glyph caseOf: {
-			         ([ #chevronRight ] -> [ { (-2 @ -4). (2 @ 0). (-2 @ 4) } ]).
-			         ([ #chevronDown ] -> [ { (-4 @ -2). (0 @ 2). (4 @ -2) } ]).
-			         ([ #up ] -> [ { (-4 @ 2). (0 @ -2). (4 @ 2) } ]).
-			         ([ #down ] -> [ { (-4 @ -2). (0 @ 2). (4 @ -2) } ]).
+			         ([ #chevronRight ] -> [ { (-2 @ -5). (3 @ 0). (-2 @ 5) } ]).
+			         ([ #chevronDown ] -> [ { (-5 @ -2). (0 @ 3). (5 @ -2) } ]).
+			         ([ #up ] -> [ { (-5 @ 3). (0 @ -2). (5 @ 3) } ]).
+			         ([ #down ] -> [ { (-5 @ -2). (0 @ 3). (5 @ -2) } ]).
 			         ([ #close ] -> [ nil ]) }.
 	lines ifNil: [
 		aCanvas line: c + (-4 @ -4) to: c + (4 @ 4) width: 1 color: aColor.
 		aCanvas line: c + (-4 @ 4) to: c + (4 @ -4) width: 1 color: aColor.
+		aCanvas line: c + (-4 @ -3) to: c + (3 @ 4) width: 1 color: (aColor alpha: aColor alpha * 0.4).
+		aCanvas line: c + (-4 @ 3) to: c + (3 @ -4) width: 1 color: (aColor alpha: aColor alpha * 0.4).
 		^ self ].
+	"A faint second pass one pixel lower thickens the strokes a little, like antialiasing"
+	1 to: lines size - 1 do: [ :i | aCanvas line: c + (lines at: i) + (0 @ 1) to: c + (lines at: i + 1) + (0 @ 1) width: 1 color: (aColor alpha: aColor alpha * 0.4) ].
 	1 to: lines size - 1 do: [ :i | aCanvas line: c + (lines at: i) to: c + (lines at: i + 1) width: 1 color: aColor ]
 ]
 
 { #category : 'drawing' }
 RubFindBarButton >> drawOn: aCanvas [
-
-	| bounds fill textColor |
+	| bounds fill border textColor accent |
 	bounds := self bounds.
-	fill := selected
-		        ifTrue: [ self theme selectionColor ]
-		        ifFalse: [
-			        (hovered and: [ enabled ])
-				        ifTrue: [ self theme mouseOverColor ]
-				        ifFalse: [ nil ] ].
-	fill ifNotNil: [ aCanvas fillRectangle: bounds color: fill ].
-	selected ifTrue: [ aCanvas frameRectangle: bounds width: 1 color: (self theme selectionColor muchDarker alpha: 0.6) ].
+	accent := self theme selectionColor mixed: 0.6 with: self theme textColor.
+	fill := nil.
+	border := nil.
+	(hovered and: [ enabled ]) ifTrue: [ fill := self theme textColor alpha: 0.12 ].
+	selected ifTrue: [
+		fill := accent alpha: 0.3.
+		border := accent ].
+	(isPill and: [ border isNil ]) ifTrue: [ border := self theme borderColor ].
+	(fill notNil or: [ border notNil ]) ifTrue: [
+		aCanvas
+			drawPolygon: (self class roundedVertices: bounds radius: 4)
+			color: (fill ifNil: [ Color transparent ])
+			borderWidth: (border ifNil: [ 0 ] ifNotNil: [ 1 ])
+			borderColor: (border ifNil: [ Color transparent ]) ].
 	textColor := enabled
 		             ifTrue: [ self theme textColor ]
-		             ifFalse: [ self theme ghostTextColor ].
+		             ifFalse: [ self theme textColor alpha: 0.35 ].
 	label ifNotNil: [
 		| font width |
 		font := self font.
@@ -142,6 +171,7 @@ RubFindBarButton >> initialize [
 	selected := false.
 	hovered := false.
 	enabled := true.
+	isPill := false.
 	self color: Color transparent.
 	self extent: 22 @ 22
 ]
@@ -177,7 +207,7 @@ RubFindBarButton >> minimumWidth [
 
 	^ label
 		  ifNil: [ self height ]
-		  ifNotNil: [ (self font widthOfString: label) + 12 max: self height ]
+		  ifNotNil: [ (self font widthOfString: label) + 16 max: self height ]
 ]
 
 { #category : 'event handling' }
@@ -217,4 +247,11 @@ RubFindBarButton >> selected: aBoolean [
 	selected = aBoolean ifTrue: [ ^ self ].
 	selected := aBoolean.
 	self changed
+]
+
+{ #category : 'accessing' }
+RubFindBarButton >> bePill [
+	"A text button with a visible outline, such as Replace"
+
+	isPill := true
 ]

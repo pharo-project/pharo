@@ -25,7 +25,7 @@ RubExtraSelectionDecorator >> cleanUpText [
 { #category : 'computation' }
 RubExtraSelectionDecorator >> computeFindReplaceShapesFrom: topLeft to: bottomRight [
 	"Compute the shapes of the visible find matches from the ranges cached by the find and replace service: nothing is searched while drawing, and nothing at all when no search is active.
-	The other matches get a soft fill. The current match (the selection, when it is a match) gets a stronger fill and a border, so that it stays visible while the keyboard focus is in the find bar."
+	The other matches get a light fill and a thin outline. The current match (the selection, when it is a match) gets a stronger fill and a border, so that it stays visible while the keyboard focus is in the find bar."
 
 	| service startIndex stopIndex current matchColor |
 	findReplaceShapes := nil.
@@ -49,11 +49,11 @@ RubExtraSelectionDecorator >> computeFindReplaceShapesFrom: topLeft to: bottomRi
 			         lastIndex: r last + 1
 			         color: (r = current
 					          ifTrue: [ matchColor ]
-					          ifFalse: [ matchColor alpha: matchColor alpha * 0.45 ])
-			         borderWidth: (r = current ifTrue: [ 1 ] ifFalse: [ 0 ])
+					          ifFalse: [ matchColor alpha: matchColor alpha * 0.3 ])
+			         borderWidth: 1
 			         borderColor: (r = current
 					          ifTrue: [ matchColor alpha: 1 ]
-					          ifFalse: [ Color transparent ]).
+					          ifFalse: [ matchColor alpha: 0.55 ]).
 		r = current
 			ifTrue: [ currentMatchShape := shape ]
 			ifFalse: [ findReplaceShapes add: shape ] ].
