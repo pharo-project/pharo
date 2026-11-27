@@ -33,7 +33,7 @@ ReMethodsHaveNoSuperCallInSiblingsCondition >> checkSiblingSuperSendsFrom: aRBCl
 	warn the user.
 	Repeat the process for all subclasses of `aRBClass`"
 
-	aRBClass selectors do: [ :each |
+	(selectors flatCollectAsSet: [ :selector | aRBClass whichSelectorsReferToSymbol: selector ]) do: [ :each |
 		| tree |
 		tree := aRBClass parseTreeForSelector: each.
 		tree ifNotNil: [
