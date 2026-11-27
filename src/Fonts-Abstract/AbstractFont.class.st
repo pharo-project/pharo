@@ -97,6 +97,17 @@ AbstractFont >> descentOf: aCharacter [
 ]
 
 { #category : 'displaying' }
+AbstractFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+
+	^ self displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: 1
+]
+
+{ #category : 'displaying' }
+AbstractFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
+	"display the strikeout if appropriate for the receiver"
+]
+
+{ #category : 'displaying' }
 AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
 	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) display context."
@@ -119,11 +130,31 @@ AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: 
 	^self subclassResponsibility
 ]
 
+{ #category : 'displaying' }
+AbstractFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+
+	^ self displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: 1
+]
+
+{ #category : 'displaying' }
+AbstractFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
+	"display the underline if appropriate for the receiver"
+]
+
 { #category : 'accessing' }
 AbstractFont >> familyName [
 	"Answer the name to be used as a key in the TextConstants dictionary."
 
 	^self subclassResponsibility
+]
+
+{ #category : 'testing' }
+AbstractFont >> hasDistinctGlyphsForAll: asciiString [
+	"Answer true if the receiver has glyphs for all the characters
+	in asciiString and no single glyph is shared by more than one character, false otherwise.
+	The default behaviour is to answer true, but subclasses may reimplement"
+
+	^true
 ]
 
 { #category : 'testing' }
@@ -160,9 +191,33 @@ AbstractFont >> isRegular [
 ]
 
 { #category : 'testing' }
+AbstractFont >> isSubPixelPositioned [
+	"Answer true if the receiver is currently using subpixel positioned
+	glyphs, false otherwise. This affects how padded space sizes are calculated
+	when composing text.
+	Currently, only FreeTypeFonts are subPixelPositioned, and only when not
+	Hinted"
+
+	^false
+]
+
+{ #category : 'testing' }
+AbstractFont >> isSymbolFont [
+	"Answer true if the receiver is a Symbol font, false otherwise.
+	The default is to answer false, subclasses can reimplement"
+
+	^false
+]
+
+{ #category : 'testing' }
 AbstractFont >> isTTCFont [
 
 	^ false
+]
+
+{ #category : 'measuring' }
+AbstractFont >> kerningLeft: leftChar right: rightChar [
+	^0
 ]
 
 { #category : 'accessing' }
@@ -170,6 +225,12 @@ AbstractFont >> lineGrid [
 	"Answer the relative space between lines"
 
 	^self subclassResponsibility
+]
+
+{ #category : 'measuring' }
+AbstractFont >> linearWidthOf: aCharacter [
+	"This is the scaled, unrounded advance width."
+	^self widthOf: aCharacter
 ]
 
 { #category : 'notifications' }
@@ -215,6 +276,26 @@ AbstractFont >> underlineTop [
 { #category : 'development support' }
 AbstractFont >> validate [
 	"Concrete classes should override this to provide validation"
+]
+
+{ #category : 'measuring' }
+AbstractFont >> widthAndKernedWidthOfLeft: leftCharacter right: rightCharacterOrNil into: aTwoElementArray [
+	"Set the first element of aTwoElementArray to the width of leftCharacter and
+	the second element to the width of left character when kerned with
+	rightCharacterOrNil. Answer aTwoElementArray"
+	| w k |
+	w := self widthOf: leftCharacter.
+	rightCharacterOrNil
+		ifNil: [
+			aTwoElementArray
+				at: 1 put: w;
+				at: 2 put: w]
+		ifNotNil: [
+			k := self kerningLeft: leftCharacter right: rightCharacterOrNil.
+			aTwoElementArray
+				at: 1 put: w;
+				at: 2 put: w+k].
+	^ aTwoElementArray
 ]
 
 { #category : 'measuring' }

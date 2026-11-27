@@ -34,7 +34,7 @@ TAbleToRotate >> prepareForRotating [
 	then wrap it in one and return it.
 	Polygons, eg, may override to do nothing."
 
-	^ self addFlexShell
+	^ TransformationMorph flexing: self
 ]
 
 { #category : 't - rotating' }

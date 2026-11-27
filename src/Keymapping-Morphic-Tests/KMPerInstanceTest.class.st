@@ -1,0 +1,23 @@
+"
+SUnit tests for key mapping per instance
+"
+Class {
+	#name : 'KMPerInstanceTest',
+	#superclass : 'AbstractKeymappingTest',
+	#category : 'Keymapping-Morphic-Tests',
+	#package : 'Keymapping-Morphic-Tests'
+}
+
+{ #category : 'tests' }
+KMPerInstanceTest >> testAddMoreThanOneHandler [
+
+	| flag morph |
+	flag := 0.
+	morph := Morph new.
+	morph bindKeyCombination: $i toAction: [ flag := flag + 1 ].
+	morph bindKeyCombination: $j toAction: [ flag := flag + 6 ].
+	{
+		(self eventKey: $i).
+		(self eventKey: $j) } do: [ :e | morph dispatchKeystrokeForEvent: e ].
+	self assert: flag equals: 7
+]

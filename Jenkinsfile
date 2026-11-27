@@ -146,7 +146,7 @@ Build Url: ${env.BUILD_URL}
 def defineIsoTestStage(projectName, testPackages=""){
     stage("Tests-ISO-" + projectName) {
         def testGroup = "Tests"
-        timeout(2) {
+        timeout(5) {
             dir(env.STAGE_NAME){
                 def PHARO_MAJOR = shellOutput('git describe --tags --first-parent | cut -d\'-\' -f 1 | cut -c 2- | cut -d\'.\' -f 1-1')
                 def PHARO_MINOR = shellOutput('git describe --tags --first-parent | cut -d\'-\' -f 1 | cut -c 2- | cut -d\'.\' -f 2-2')
@@ -163,7 +163,8 @@ def defineIsoTestStage(projectName, testPackages=""){
                 In that case, take the packages specified by the user instead of the project packages.
                 */
                 def testPackageArguments = testPackages == "" ? "--project-name ${projectName}" : testPackages
-                shell "bash -c './pharo metacello.image test --junit-xml-output --stage-name ${env.STAGE_NAME} ${testPackageArguments}'"
+                // As runTests.sh does: tests know they run on the CI, and a deprecation they run is an error
+                shell "bash -c 'PHARO_CI_TESTING_ENVIRONMENT=1 ./pharo metacello.image test --junit-xml-output --deprecations-as-errors --stage-name ${env.STAGE_NAME} ${testPackageArguments}'"
                 junit allowEmptyResults: false, testResults: "${env.STAGE_NAME}*.xml"
             }
         }
@@ -268,6 +269,12 @@ def bootstrapImage(){
         isoTesters['Regex'] = { defineIsoTestStage("Regex") }
         isoTesters['Flashback'] = { defineIsoTestStage("Flashback") }
         isoTesters['Fuel'] = { defineIsoTestStage("Fuel") }
+        isoTesters['ClassParser'] = { defineIsoTestStage("ClassParser") }
+        isoTesters['Display'] = { defineIsoTestStage("Display") }
+        isoTesters['Fonts'] = { defineIsoTestStage("Fonts") }
+        isoTesters['Keymapping'] = { defineIsoTestStage("Keymapping") }
+        isoTesters['MorphicCore'] = { defineIsoTestStage("MorphicCore") }
+        isoTesters['MorphicWidgets'] = { defineIsoTestStage("MorphicWidgets") }
         parallel isoTesters
 
         stage ("Full Image") {

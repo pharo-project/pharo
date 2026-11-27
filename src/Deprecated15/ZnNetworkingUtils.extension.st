@@ -6,6 +6,7 @@ ZnNetworkingUtils class >> defaultSocketStreamTimeout [
 
 	self
 		deprecated: 'Use the #socketStreamTimeout ZnOption instead'
+		in: #Pharo15
 		transformWith: '`@rcv defaultSocketStreamTimeout' -> '(ZnCurrentOptions at: #socketStreamTimeout)'.
 	^ ZnCurrentOptions at: #socketStreamTimeout
 ]
@@ -14,6 +15,8 @@ ZnNetworkingUtils class >> defaultSocketStreamTimeout [
 ZnNetworkingUtils class >> defaultSocketStreamTimeout: seconds [
 	"Deprecated in Pharo 15: this is now the #socketStreamTimeout ZnOption."
 
-	self deprecated: 'Set the #socketStreamTimeout ZnOption instead'.
+	self
+		deprecated: 'Set the #socketStreamTimeout ZnOption instead'
+		in: #Pharo15.
 	ZnOptions globalDefault at: #socketStreamTimeout put: seconds
 ]

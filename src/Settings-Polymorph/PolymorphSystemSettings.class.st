@@ -237,15 +237,8 @@ PolymorphSystemSettings class >> desktopLogo: anImageMorph [
 
 { #category : 'desktop' }
 PolymorphSystemSettings class >> desktopLogoChanged [
-	self showDesktopLogo
-		ifFalse: [self setDesktopLogoWith: nil.
-			^ self].
-	self desktopLogoFileName
-		ifEmpty: [self setDesktopLogoWith: self pharoLogo]
-		ifNotEmpty: [[self
-				setDesktopLogoWith: (ImageMorph withForm: (Form fromFileNamed: self desktopLogoFileName))]
-				on: Error
-				do: [self setDesktopLogoWith: self pharoLogo]]
+
+	self setDesktopLogoWith: self newDesktopLogo
 ]
 
 { #category : 'desktop' }
@@ -466,6 +459,17 @@ PolymorphSystemSettings class >> morphicWindowsSettingsOn: aBuilder [
 					selector: #minimumWidth;
 					range: (100 to: 800);
 					description: 'Set the default text field width of the text entry dialog window' ]
+]
+
+{ #category : 'desktop' }
+PolymorphSystemSettings class >> newDesktopLogo [
+	"Answer a new desktop logo as the settings say, or nil when the logo is not shown"
+
+	self showDesktopLogo ifFalse: [ ^ nil ].
+	self desktopLogoFileName ifEmpty: [ ^ self pharoLogo ].
+	^ [ ImageMorph withForm: (Form fromFileNamed: self desktopLogoFileName) ]
+		on: Error
+		do: [ self pharoLogo ]
 ]
 
 { #category : 'desktop' }
@@ -1229,19 +1233,23 @@ PolymorphSystemSettings class >> pharoLogoFormSet [
 ]
 
 { #category : 'desktop' }
+PolymorphSystemSettings class >> placeDesktopLogo: aMorph in: aWorld [
+	"Put the desktop logo aMorph just below the menu bar of aWorld, behind its other morphs"
+
+	aMorph
+		beSticky;
+		lock.
+	aMorph position: 10 @ (aWorld menubar height + 10).
+	aWorld backgroundMorph
+		ifNil: [ aWorld addMorphBack: aMorph ]
+		ifNotNil: [ :background | aWorld addMorph: aMorph inFrontOf: background ]
+]
+
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> setDesktopLogoWith: aMorph [
 	self desktopLogo ifNotNil: [ self desktopLogo delete ].
 	self desktopLogo: aMorph.
-	self desktopLogo
-		ifNotNil: [ :logo |
-			logo
-				beSticky;
-				lock.
-			"The logo image should appear just below the menu bar"
-			logo position: 10 @ (self currentWorld menubar height + 10).
-			self currentWorld backgroundMorph
-				ifNil: [ self currentWorld addMorphBack: logo ]
-				ifNotNil: [ self currentWorld addMorph: logo inFrontOf: self currentWorld backgroundMorph ] ]
+	self desktopLogo ifNotNil: [ :logo | self placeDesktopLogo: logo in: self currentWorld ]
 ]
 
 { #category : 'desktop' }

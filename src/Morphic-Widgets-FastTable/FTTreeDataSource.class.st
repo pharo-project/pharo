@@ -88,9 +88,10 @@ FTTreeDataSource class >> defaultSearchStrategies [
 
 { #category : 'utilities - morph creation' }
 FTTreeDataSource class >> emptyMorph [
+
 	| icon |
 	icon := (Smalltalk ui icons iconNamed: #empty) asMorph.
-	icon form: (icon form scaledToSize: 16 @ 16 * self currentWorld displayScaleFactor).
+	icon form: (icon form scaledToSize: 16 @ 16 * WorldMorph displayScaleFactor).
 	^ icon
 ]
 

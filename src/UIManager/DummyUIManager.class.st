@@ -33,7 +33,10 @@ DummyUIManager >> chooseFrom: labelList values: valueList lines: linesArray titl
 { #category : 'ui requests' }
 DummyUIManager >> confirm: queryString [
 
-	self deprecated: 'Use ConfirmationRequest signal: instead.'.
+	self
+		deprecated: 'Use ConfirmationRequest signal: instead.'
+		on: '2026-01-19'
+		in: #Pharo14.
 	self error: 'No user response possible'
 ]
 
@@ -47,12 +50,6 @@ DummyUIManager >> confirm: queryString label: title trueChoice: trueChoice false
 DummyUIManager >> confirm: aString orCancel: cancelBlock [
 
 	self error: 'No user response possible'
-]
-
-{ #category : 'ui requests' }
-DummyUIManager >> edit: aText label: labelString accept: aBlockOrNil [
-
-	^ nil
 ]
 
 { #category : 'ui requests' }

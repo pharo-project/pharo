@@ -5,6 +5,7 @@ ByteArray >> asSocketAddress [
 
 	self
 		deprecated: 'Please use SocketAddress>>fromOldByteAddress: instead'
+		in: #Pharo14
 		transformWith: '`@receiver asSocketAddress' -> 'SocketAddress fromOldByteAddress: `@receiver'.
 	^ SocketAddress fromOldByteAddress: self
 ]
@@ -14,6 +15,7 @@ ByteArray >> readStringUTF8 [
 
 	self
 		deprecated: 'Please use #utf8StringFromCString instead'
+		in: #Pharo14
 		transformWith: '`@receiver readStringUTF8'
 						-> '`@receiver utf8StringFromCString'.
 

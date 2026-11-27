@@ -6,5 +6,5 @@ CompiledMethod >> reformat [
 
 	| origin |
 	origin := self origin.
-	origin compile: (self ast formattedCodeIn: origin) classified: self protocol
+	origin compile: (origin formatter format: self ast) classified: self protocol
 ]

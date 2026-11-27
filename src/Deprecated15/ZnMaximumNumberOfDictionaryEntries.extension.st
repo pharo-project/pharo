@@ -7,6 +7,7 @@ ZnMaximumNumberOfDictionaryEntries class >> value [
 
 	self
 		deprecated: 'Use the #maximumNumberOfDictionaryEntries ZnOption instead'
+		in: #Pharo15
 		transformWith: '`@rcv value' -> '(ZnCurrentOptions at: #maximumNumberOfDictionaryEntries)'.
 	^ ZnCurrentOptions at: #maximumNumberOfDictionaryEntries
 ]

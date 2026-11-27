@@ -1,0 +1,147 @@
+"
+I am the abstract superclass of the rules about class-side methods that should, or should not, answer an instance of their class. I decide this from the code alone; my subclasses decide what to report with it.
+
+## Responsibility:
+
+- Answer whether a class-side method returns an instance of its class (`returnsInstanceOfItsClass:`).
+- Give my subclasses what every such rule shares: they check methods (`checksMethod`), and they belong to the coding idiom group (`groupSelector`).
+- Stay out of the rule list (`isAbstract`): only my subclasses are run.
+
+## Collaborators:
+
+- `ReExampleShouldBeSampleInstanceRule` and `ReSampleInstanceShouldReturnInstanceRule`: my subclasses.
+- `OCMethodNode` and its nodes: the AST of the checked method.
+
+## Public API and Key Messages
+
+- `returnsInstanceOfItsClass: aMethod` answers true when one of the return statements of aMethod answers an instance of its class, for example:
+
+```
+MyClass class >> exampleDefault
+	| instance |
+	instance := self new.
+	^ instance
+```
+
+A subclass defines `basicCheck: aMethod`, which answers whether aMethod is reported, plus its class-side `ruleName` and `rationale`. My two subclasses combine `returnsInstanceOfItsClass:` with the selector and the pragmas of the method.
+
+`ReExampleShouldBeSampleInstanceRule` reports an `example` method returning an instance without `<sampleInstance>`:
+
+```
+basicCheck: aMethod
+
+	^ aMethod methodClass isClassSide and: [
+		(aMethod selector beginsWith: 'example') and: [
+			(aMethod hasPragmaNamed: #sampleInstance) not and: [ self returnsInstanceOfItsClass: aMethod ] ] ]
+```
+
+`ReSampleInstanceShouldReturnInstanceRule` reports the reverse, a `<sampleInstance>` method returning no instance:
+
+```
+basicCheck: aMethod
+
+	^ aMethod methodClass isClassSide and: [
+		(aMethod hasPragmaNamed: #sampleInstance) and: [ (self returnsInstanceOfItsClass: aMethod) not ] ]
+```
+
+A new subclass could, in the same way, report a `<script>` method that returns an instance and therefore deserves `<sampleInstance>`:
+
+```
+basicCheck: aMethod
+
+	^ aMethod methodClass isClassSide and: [
+		(aMethod hasPragmaNamed: #script) and: [ self returnsInstanceOfItsClass: aMethod ] ]
+```
+
+### Implementation Points
+
+- An instance is created by `#new`, `#new:`, `#basicNew`, `#basicNew:` or a class method of the protocol `instance creation`, sent to `self`, `super`, or a global bound to the class or to one of its subclasses (`creatingClassOf:in:`). A cascade on such an expression ending with `yourself`, an assignment of it, or a temporary assigned from it also answers the instance (`isInstance:in:visiting:`).
+- The decision is static: `^ self someFactory` is not recognized unless `someFactory` is in the protocol `instance creation`. The smoke test `SmokeSampleInstanceMethodsTest`, subclassed by each project, checks the `<sampleInstance>` methods by running them.
+- A temporary assigned from itself is examined once (`visiting:`), so the check always ends.
+"
+Class {
+	#name : 'ReAbstractSampleInstanceRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'General-Rules-Coding Idiom Violation',
+	#package : 'General-Rules',
+	#tag : 'Coding Idiom Violation'
+}
+
+{ #category : 'testing - interest' }
+ReAbstractSampleInstanceRule class >> checksMethod [
+
+	^ true
+]
+
+{ #category : 'accessing' }
+ReAbstractSampleInstanceRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
+]
+
+{ #category : 'testing' }
+ReAbstractSampleInstanceRule class >> isAbstract [
+
+	^ self == ReAbstractSampleInstanceRule
+]
+
+{ #category : 'testing' }
+ReAbstractSampleInstanceRule >> creatingClassOf: aNode in: aMethodNode [
+	"Answer the class that aNode denotes when it is the class of aMethodNode (self or super) or a global bound to it or to one of its subclasses, else nil."
+
+	| class value |
+	class := aMethodNode methodClass instanceSide.
+	(aNode isSelfVariable or: [ aNode isSuperVariable ]) ifTrue: [ ^ class ].
+	(aNode isVariable and: [ aNode variable isLiteralVariable ]) ifFalse: [ ^ nil ].
+	value := aNode variable value.
+	(value isClass and: [ value includesBehavior: class ]) ifFalse: [ ^ nil ].
+	^ value
+]
+
+{ #category : 'testing' }
+ReAbstractSampleInstanceRule >> isInstance: aNode in: aMethodNode visiting: someTemporaries [
+	"Answer whether aNode evaluates to an instance created by the class of aMethodNode. someTemporaries are the temporaries already being examined."
+
+	aNode isAssignment ifTrue: [ ^ self isInstance: aNode value in: aMethodNode visiting: someTemporaries ].
+	aNode isCascade ifTrue: [
+		^ aNode messages last selector = #yourself and: [ self isInstance: aNode receiver in: aMethodNode visiting: someTemporaries ] ].
+	aNode isMessage ifTrue: [ ^ self isInstanceCreation: aNode in: aMethodNode visiting: someTemporaries ].
+	(aNode isVariable and: [ aNode variable isTempVariable ]) ifTrue: [
+		^ self isTemporary: aNode variable holdingInstanceIn: aMethodNode visiting: someTemporaries ].
+	^ false
+]
+
+{ #category : 'testing' }
+ReAbstractSampleInstanceRule >> isInstanceCreation: aMessageNode in: aMethodNode visiting: someTemporaries [
+	"Answer whether aMessageNode creates an instance: #new, #new:, #basicNew, #basicNew: or a class method of the protocol 'instance creation' sent to the class (see creatingClassOf:in:), or #yourself sent to such an instance."
+
+	| receiver creatingClass |
+	receiver := aMessageNode receiver.
+	aMessageNode selector = #yourself ifTrue: [ ^ self isInstance: receiver in: aMethodNode visiting: someTemporaries ].
+	creatingClass := (self creatingClassOf: receiver in: aMethodNode) ifNil: [ ^ false ].
+	(#( #new #new: #basicNew #basicNew: ) includes: aMessageNode selector) ifTrue: [ ^ true ].
+	^ (creatingClass class lookupSelector: aMessageNode selector)
+		ifNil: [ false ]
+		ifNotNil: [ :method | method protocolName asString = 'instance creation' ]
+]
+
+{ #category : 'testing' }
+ReAbstractSampleInstanceRule >> isTemporary: aVariable holdingInstanceIn: aMethodNode visiting: someTemporaries [
+	"Answer whether aVariable is assigned an instance created by the class of aMethodNode."
+
+	(someTemporaries includes: aVariable) ifTrue: [ ^ false ].
+	someTemporaries add: aVariable.
+	^ aMethodNode allChildren anySatisfy: [ :node |
+		node isAssignment and: [
+			node variable variable == aVariable and: [ self isInstance: node value in: aMethodNode visiting: someTemporaries ] ] ]
+]
+
+{ #category : 'testing' }
+ReAbstractSampleInstanceRule >> returnsInstanceOfItsClass: aMethod [
+	"Answer whether one of the return statements of aMethod, a class-side method, answers an instance created by its class."
+
+	| ast |
+	ast := aMethod ast.
+	^ ast allChildren anySatisfy: [ :node |
+		node isReturn and: [ self isInstance: node value in: ast visiting: IdentitySet new ] ]
+]

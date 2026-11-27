@@ -1,0 +1,53 @@
+Extension { #name : 'WorldMorph' }
+
+{ #category : '*Morphic-Widgets' }
+WorldMorph >> acceptDroppingMorph: dropped event: evt [
+	"The supplied morph, known to be acceptable to the receiver, is now to be assimilated; the precipitating event is supplied"
+
+	| aMorph |
+	aMorph := self morphToDropFrom: dropped. "Add the given morph to this world and start stepping it if it wants to be."
+	self addMorphFront: aMorph.
+	(aMorph fullBounds intersects: self viewBox) ifFalse: [
+		InformativeNotification signal: 'Dropped morph not in bounds'.
+		aMorph position: self bounds center ].
+	aMorph submorphsDo: [ :m | m isHaloMorph ifTrue: [ m delete ] ].
+	self bringTopmostsToFront
+]
+
+{ #category : '*Morphic-Widgets' }
+WorldMorph >> install [
+
+	"This method should not be used. This is for backward compatibility and will be replaced
+	with a newer solution"
+
+	owner := nil.	"since we may have been inside another world previously"
+	ActiveWorld := self.
+	World := self.
+
+	self hands ifEmpty: [self addHand: HandMorph new].
+
+	self worldState worldRenderer: AbstractWorldRenderer mainWorldRenderer.
+	AbstractWorldRenderer mainWorldRenderer world: self.
+
+	submorphs do: [ :ss | ss owner ifNil: [ ss privateOwner: self ] ].
+
+	worldState handsDo: [ :h | h initForEvents ].
+	self borderWidth: 0.
+	SystemWindow noteTopWindowIn: self.
+	self displayWorldSafely.
+	self extent: self worldState worldRenderer actualScreenSize.
+	self viewBox: self worldState worldRenderer viewBox
+]
+
+{ #category : '*Morphic-Widgets' }
+WorldMorph >> mouseDown: evt [
+	super mouseDown: evt.
+	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]
+]
+
+{ #category : '*Morphic-Widgets' }
+WorldMorph >> notifyUser: aStringOrText [
+	"Tell the user aStringOrText, with a message dialog"
+
+	self theme messageIn: self text: aStringOrText title: 'Information' translated
+]

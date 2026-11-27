@@ -49,6 +49,17 @@ TaskbarItemMorph >> disabledFillStyle [
 	^ self theme taskbarItemDisabledFillStyleFor: self
 ]
 
+{ #category : 'menus' }
+TaskbarItemMorph >> getMenu: shiftPressed [
+	"The window gives its items, then the taskbar adds its own"
+
+	| menu |
+	menu := super getMenu: shiftPressed.
+	menu ifNil: [ ^ nil ].
+	(self ownerThatIsA: TaskbarMorph) ifNotNil: [ :taskbar | taskbar addTaskItemsFor: model to: menu ].
+	^ menu
+]
+
 { #category : 'initialization' }
 TaskbarItemMorph >> initialize [
 	super initialize.

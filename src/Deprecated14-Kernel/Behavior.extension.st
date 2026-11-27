@@ -4,7 +4,9 @@ Extension { #name : 'Behavior' }
 Behavior >> addSelector: selector withMethod: compiledMethod [
 
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	self deprecated: 'Use #methodInstaller instead'.
+	self
+		deprecated: 'Use #methodInstaller instead'
+		in: #Pharo14.
 
 	"This method installer does not announce"
 	self methodInstaller

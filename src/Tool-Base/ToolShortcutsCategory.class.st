@@ -30,7 +30,7 @@ ToolShortcutsCategory >> openSettings [
 	
 	^ KMKeymap 
 		shortcut: PharoShortcuts current openSettingsShortcut 
-		action: [ (StSettingsBrowser newApplication: StPharoApplication current) open ]
+		action: [ (self tools toolNamed: #settingsBrowser) open ]
 ]
 
 { #category : 'keymaps' }

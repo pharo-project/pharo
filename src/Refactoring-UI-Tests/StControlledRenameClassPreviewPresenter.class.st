@@ -1,17 +1,25 @@
 Class {
 	#name : 'StControlledRenameClassPreviewPresenter',
 	#superclass : 'StRenameClassPreviewPresenter',
-	#instVars : [ 'work', 'publications' ],
+	#instVars : [
+		'work',
+		'publications'
+	],
 	#category : 'Refactoring-UI-Tests-UI',
 	#package : 'Refactoring-UI-Tests',
 	#tag : 'UI'
 }
 
 { #category : 'testing' }
-StControlledRenameClassPreviewPresenter >> schedulePreview: aBlock [
+StControlledRenameClassPreviewPresenter >> computeNextPreview [
 
-	work ifNil: [ work := OrderedCollection new ].
-	work add: aBlock
+	work removeFirst value
+]
+
+{ #category : 'testing' }
+StControlledRenameClassPreviewPresenter >> currentRequest [
+
+	^ previewRequest
 ]
 
 { #category : 'testing' }
@@ -22,9 +30,9 @@ StControlledRenameClassPreviewPresenter >> dispatchPreview: aBlock [
 ]
 
 { #category : 'testing' }
-StControlledRenameClassPreviewPresenter >> computeNextPreview [
+StControlledRenameClassPreviewPresenter >> performChanges [
 
-	work removeFirst value
+	self error: 'Pending preview must never be applied'
 ]
 
 { #category : 'testing' }
@@ -34,19 +42,14 @@ StControlledRenameClassPreviewPresenter >> publishNextPreview [
 ]
 
 { #category : 'testing' }
-StControlledRenameClassPreviewPresenter >> currentRequest [
-
-	^ previewRequest
-]
-
-{ #category : 'testing' }
-StControlledRenameClassPreviewPresenter >> performChanges [
-
-	self error: 'Pending preview must never be applied'
-]
-
-{ #category : 'testing' }
 StControlledRenameClassPreviewPresenter >> queuedComputations [
 
 	^ work ifNil: [ 0 ] ifNotNil: [ work size ]
+]
+
+{ #category : 'testing' }
+StControlledRenameClassPreviewPresenter >> schedulePreview: aBlock [
+
+	work ifNil: [ work := OrderedCollection new ].
+	work add: aBlock
 ]

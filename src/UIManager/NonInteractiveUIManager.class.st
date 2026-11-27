@@ -37,9 +37,10 @@ NonInteractiveUIManager >> abort: aStringOrText title: aString [
 	self logTitle: aString andDescription: aStringOrText to: self stderr
 ]
 
-{ #category : 'private' }
-NonInteractiveUIManager >> activate [
-	super activate.
+{ #category : 'activation' }
+NonInteractiveUIManager >> activateWhenImageStarting: isImageStarting [
+
+	super activateWhenImageStarting: isImageStarting.
 	NonInteractiveTranscript stdout install
 ]
 
@@ -106,7 +107,10 @@ NonInteractiveUIManager >> chooseOrRequestFrom: labelList values: valueList line
 { #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString [
 
-	self deprecated: 'Use ConfirmationRequest signal: instead.'.
+	self
+		deprecated: 'Use ConfirmationRequest signal: instead.'
+		on: '2026-01-19'
+		in: #Pharo14.
 	^ self nonInteractiveWarning: 'Confirming: ' , queryString
 ]
 
@@ -143,15 +147,6 @@ NonInteractiveUIManager >> deny: aStringOrText [
 { #category : 'ui TEasilyThemed' }
 NonInteractiveUIManager >> deny: aStringOrText title: aString [
 	"Open a denial dialog."
-]
-
-{ #category : 'ui requests' }
-NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
-	"Open an editor on the given string/text"
-	^self nonInteractiveWarning: (String streamContents: [ :s |
-		s  nextPutAll: 'Editing Text: '.
-		labelString ifNotNil: [ s nextPutAll: '[ '; nextPutAll: labelString; nextPutAll: ' ] '].
-		s cr; nextPutAll: aText])
 ]
 
 { #category : 'ui requests' }

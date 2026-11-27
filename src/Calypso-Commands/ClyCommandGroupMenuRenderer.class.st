@@ -192,7 +192,7 @@ ClyCommandGroupMenuRenderer >> renderItem: aPresentedCommand on: aMenu [
 				aMenu add: alternative menuItemName target: alternative selector: #executeCommand ].
 			^ self ].
 	submenu := command menuSubmenuFor: activator.
-	(submenu notNil and: [ submenu hasItems not ]) ifTrue: [ ^ self ].
+	(submenu isNotNil and: [ submenu hasItems not ]) ifTrue: [ ^ self ].
 	item := aMenu add: activator menuItemName target: activator selector: #executeCommand.
 	activator setUpShortcutTipForMenuItem: item.
 	command setUpIconForMenuItem: item.

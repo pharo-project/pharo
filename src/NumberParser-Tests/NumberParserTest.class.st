@@ -366,21 +366,6 @@ NumberParserTest >> testIntegerReadWithRadix [
 ]
 
 { #category : 'tests - Float' }
-NumberParserTest >> testIntegerWithNegExponentIsAFloat [
-	"Make sure a float literal like 1e(some possible neg exponent)
-	isn't evaluated to the non-literal Fraction"
-
-	| rs aFloat |
-	rs := '1e-14' readStream.
-	aFloat := NumberParser parse: rs.
-	self assert: aFloat isFloat.
-
-	rs := '1e-14' readStream.
-	aFloat := (NumberParser on: rs ) nextNumberBase: 10.
-	self assert: aFloat isFloat
-]
-
-{ #category : 'tests - Float' }
 NumberParserTest >> testIntegerWithNegExponentGradualUnderflow [
 	"An integer mantissa with a negative exponent must read like the same number written with a decimal point,
 	including in the gradual underflow range. 5e-324 used to answer 0.0 while 5.0e-324 answered Float fminDenormalized."
@@ -393,6 +378,21 @@ NumberParserTest >> testIntegerWithNegExponentGradualUnderflow [
 	self assert: (NumberParser parse: '1e-310') equals: (NumberParser parse: '1.0e-310').
 	self assert: (NumberParser parse: '2e-324') equals: 0.0.
 	self assert: (NumberParser parse: '1e-400') equals: 0.0
+]
+
+{ #category : 'tests - Float' }
+NumberParserTest >> testIntegerWithNegExponentIsAFloat [
+	"Make sure a float literal like 1e(some possible neg exponent)
+	isn't evaluated to the non-literal Fraction"
+
+	| rs aFloat |
+	rs := '1e-14' readStream.
+	aFloat := NumberParser parse: rs.
+	self assert: aFloat isFloat.
+
+	rs := '1e-14' readStream.
+	aFloat := (NumberParser on: rs ) nextNumberBase: 10.
+	self assert: aFloat isFloat
 ]
 
 { #category : 'tests - Float' }

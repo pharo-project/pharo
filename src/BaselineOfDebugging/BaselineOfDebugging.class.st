@@ -15,9 +15,11 @@ BaselineOfDebugging class >> corePackageNames [
 BaselineOfDebugging >> baseline: spec [
 
 	<baseline>
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec
-			package: 'UIManager';
+			baseline: 'UIManager' with: [ spec repository: repository ];
 			package: 'Debugging-Utils';
 			package: 'Debugging-Core' with: [ spec requires: #( 'Debugging-Utils' ) ];
 			package: 'Debugger-Model' with: [ spec requires: #( 'Debugging-Core' ) ];

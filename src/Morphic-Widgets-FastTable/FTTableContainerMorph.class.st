@@ -30,6 +30,8 @@ The method #drawOn: is responsible of my rendering.
 Class {
 	#name : 'FTTableContainerMorph',
 	#superclass : 'Morph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'needsRefreshExposedRows',
 		'headerRow',

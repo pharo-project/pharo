@@ -76,6 +76,19 @@ RBNamespace class >> onEnvironment: aBrowserEnvironment [
 ]
 
 { #category : 'private - changes' }
+RBNamespace >> addChange: aCompositeChange containing: aBlock [
+	"Add aCompositeChange to the current changes. Every change made while evaluating aBlock is recorded inside aCompositeChange, not next to it.
+	Use me when the changes made by aBlock only make sense as part of aCompositeChange, as with ReRenameClassChange."
+
+	| oldChanges |
+	changes addChange: aCompositeChange.
+	oldChanges := changes.
+	changes := aCompositeChange.
+	aBlock ensure: [ changes := oldChanges ].
+	^ aCompositeChange
+]
+
+{ #category : 'private - changes' }
 RBNamespace >> addChangeToClass: aRBClass [
 	^ changedClasses
 		at: aRBClass name
@@ -346,24 +359,41 @@ RBNamespace >> defineClass: aBlock [
 	newClass ifNil: [
 		| newMetaclass |
 		self unmarkAsRemoved: newClassName.
-		newClass := RBClass named: newClassName.
-		newMetaclass := RBMetaclass named: newClassName.
+		change builder isTrait
+			ifTrue: [
+				newClass := self rbTraitClass named: newClassName.
+				newMetaclass := self rbTraitedMetaclassClass named: newClassName ]
+			ifFalse: [
+				newClass := self rbClassClass named: newClassName.
+				newMetaclass := self rbMetaclassClass named: newClassName ].
 		newClass model: self.
 		newMetaclass model: self.
 		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].
 	newClass superclass: (self classNamed: change superclassName).
-	newClass superclass
-		ifNil: [
-			self rootClasses add: newClass.
-			newClass classSide superclass: (self classFor: Object class superclass) ]
-		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
+	newClass isTrait
+		ifTrue: [ newClass classSide superclass: (self classFor: Trait) ]
+		ifFalse: [
+			newClass superclass
+				ifNil: [
+					self rootClasses add: newClass.
+					newClass classSide superclass: (self classFor: Object class superclass) ]
+				ifNotNil: [ newClass classSide superclass: newClass superclass classSide ] ].
 	newClass instanceVariableNames: (change instanceVariableNames ifNil: [ '' ]).
 	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
 	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
+	newClass traitComposition: change traitComposition.
 	change comment ifNotNil: [ :comment | newClass comment: comment ].
 	newClass packageName: change package.
 	newClass tagName: change tag.
 	^ change
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineTrait: aBlock [
+
+	^ self defineClass: [ :builder |
+		builder beTrait.
+		aBlock value: builder ]
 ]
 
 { #category : 'accessing' }
@@ -505,19 +535,6 @@ RBNamespace >> packageNamed: aSymbol [
 	^ (self createNewPackageFor: aSymbol) first
 ]
 
-{ #category : 'private - changes' }
-RBNamespace >> perform: aBlock onlyWithChange: aCompositeRefactoryChange [
-	"Add aCompositeRefactoryChange to the current changes, then record every change made while evaluating aBlock inside aCompositeRefactoryChange instead of next to it.
-	Use it when the changes made by aBlock only make sense as part of aCompositeRefactoryChange, as with ReRenameClassChange."
-
-	| oldChanges |
-	changes addChange: aCompositeRefactoryChange.
-	oldChanges := changes.
-	changes := aCompositeRefactoryChange.
-	aBlock ensure: [changes := oldChanges].
-	^aCompositeRefactoryChange
-]
-
 { #category : 'private' }
 RBNamespace >> privateImplementorsOf: aSelector [
 	| classes |
@@ -648,7 +665,7 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	| change value dict |
 	change := changeFactory renameClass: aRBClass to: aSymbol.
 	"The reference changes must be recorded inside the rename change. See the ReRenameClassChange class comment."
-	self perform: aBlock onlyWithChange: change.
+	self addChange: change containing: aBlock.
 	self flushCaches.
 
 	dict := (newClasses includesKey: aRBClass name)
@@ -674,10 +691,12 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 { #category : 'private - changes' }
 RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock [
 
-	^ self perform: aBlock onlyWithChange: (changeFactory
-			   renameInstanceVariable: oldName
-			   to: newName
-			   in: aRBClass)
+	^ self
+		  addChange: (changeFactory
+				   renameInstanceVariable: oldName
+				   to: newName
+				   in: aRBClass)
+		  containing: aBlock
 ]
 
 { #category : 'changes' }
@@ -685,7 +704,7 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 
 	| change value dict |
 	change := changeFactory renamePackage: aRBPackage to: aSymbol.
-	self perform: [  ] onlyWithChange: change.
+	changes addChange: change.
 	self flushCaches.
 	dict := changedPackages.
 	self markPackageAsRemoved: aRBPackage name.

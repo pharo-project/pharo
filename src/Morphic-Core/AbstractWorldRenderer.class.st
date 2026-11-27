@@ -172,13 +172,14 @@ AbstractWorldRenderer class >> stopProfilingRenderingTime [
 ]
 
 { #category : 'activation' }
-AbstractWorldRenderer >> activate [
+AbstractWorldRenderer >> activateWhenImageStarting: isImageStarting [
+	"Activate me once. isImageStarting tells whether the image is starting from a snapshot"
 
 	alreadyActivated ifTrue: [
 		"Maybe I need to change the title of the window after saving the image"
 		^ self updateWindowTitle ].
 
-	self doActivate.
+	self doActivateWhenImageStarting: isImageStarting.
 	alreadyActivated := true
 ]
 
@@ -253,7 +254,10 @@ AbstractWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld [
 ]
 
 { #category : 'activation' }
-AbstractWorldRenderer >> doActivate [
+AbstractWorldRenderer >> doActivateWhenImageStarting: isImageStarting [
+	"Open what renders my world.
+	isImageStarting tells whether the image is starting from a snapshot,
+	so that I can renew what did not survive the previous session"
 
 	self subclassResponsibility
 ]
@@ -324,9 +328,9 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 		extent: self actualScreenSize;
 		viewBox: self viewBox;
 		handsDo: [ :h |
-				h
-					visible: true;
-					showTemporaryCursor: nil ];
+			h
+				visible: true;
+				showTemporaryCursor: nil ];
 		resizeBackgroundMorph;
 		submorphsDo: [ :each | each displayExtentChanged ];
 		fullRepaintNeeded.
@@ -334,7 +338,7 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	world defer: [ Cursor normal show ].
 
 	world layoutChanged.
-	WorldMorph executeResizeBlock
+	self worldResized
 ]
 
 { #category : 'system startup' }
@@ -391,4 +395,11 @@ AbstractWorldRenderer >> world [
 { #category : 'accessing' }
 AbstractWorldRenderer >> world: anObject [
 	world := anObject
+]
+
+{ #category : 'operations' }
+AbstractWorldRenderer >> worldResized [
+	"Run the image's resize action, set for the main world"
+
+	WorldMorph executeResizeBlock
 ]

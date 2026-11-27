@@ -2,14 +2,18 @@ Extension { #name : 'BlockClosure' }
 
 { #category : '*Deprecated14-Kernel' }
 BlockClosure >> sender [	
-	self deprecated: 'Blocks do not have senders. As the outerContext or home context instead, but take care: clean blocks do not know the context!'.
+	self
+		deprecated: 'Blocks do not have senders. As the outerContext or home context instead, but take care: clean blocks do not know the context!'
+		in: #Pharo14.
 	^ self subclassResponsibility
 ]
 
 { #category : '*Deprecated14-Kernel' }
 BlockClosure >> valueSupplyingAnswer: anObject [
 	
-	self deprecated: 'Do not use this anymore! This is a bad idea.'.
+	self
+		deprecated: 'Do not use this anymore! This is a bad idea.'
+		in: #Pharo14.
 	^ (anObject isCollection and: [anObject isString not])
 		ifTrue: [self valueSupplyingAnswers: {anObject}]
 		ifFalse: [self valueSupplyingAnswers: {{'*'. anObject}}]
@@ -19,7 +23,9 @@ BlockClosure >> valueSupplyingAnswer: anObject [
 BlockClosure >> valueSupplyingAnswers: aListOfPairs [
 	"evaluate the block using a list of questions / answers that might be called upon to
 	automatically respond to Object>>confirm: or FillInTheBlank requests"
-	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	self
+		deprecated: 'This method is deprecated. It pushes bad architecture'
+		in: #Pharo14.
 	
 	^ self
 		on: ProvideAnswerNotification
@@ -47,14 +53,18 @@ BlockClosure >> valueSupplyingAnswers: aListOfPairs [
 { #category : '*Deprecated14-Kernel' }
 BlockClosure >> valueSuppressingAllMessages [
 	
-	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	self
+		deprecated: 'This method is deprecated. It pushes bad architecture'
+		in: #Pharo14.
 	^ self valueSuppressingMessages: #('*')
 ]
 
 { #category : '*Deprecated14-Kernel' }
 BlockClosure >> valueSuppressingMessages: aListOfStrings [
 	
-	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	self
+		deprecated: 'This method is deprecated. It pushes bad architecture'
+		in: #Pharo14.
 	^ self
 		valueSuppressingMessages: aListOfStrings
 		supplyingAnswers: #()
@@ -63,6 +73,8 @@ BlockClosure >> valueSuppressingMessages: aListOfStrings [
 { #category : '*Deprecated14-Kernel' }
 BlockClosure >> valueSuppressingMessages: aListOfStrings supplyingAnswers: aListOfPairs [
 	
-	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	self
+		deprecated: 'This method is deprecated. It pushes bad architecture'
+		in: #Pharo14.
 	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each . true}])
 ]

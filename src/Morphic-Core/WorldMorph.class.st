@@ -64,6 +64,13 @@ WorldMorph class >> cursorOwnerWorld: aWorld [
 	CursorOwnerWorld := aWorld
 ]
 
+{ #category : 'class initialization' }
+WorldMorph class >> declareWorldGlobals [
+	"Declare the World and ActiveWorld globals, empty until Morphic's initialization installs a world (installNewWorld). Code that names them then compiles before any world exists"
+
+	#( #World #ActiveWorld ) do: [ :global | self environment at: global ifAbsentPut: [ nil ] ]
+]
+
 { #category : 'setting' }
 WorldMorph class >> defaultWorldColor [
 
@@ -173,19 +180,15 @@ WorldMorph class >> initialize [
 	dropActionBlock := nil.
 	dragActionBlock := nil.
 	resizeActionBlock := nil.
-	
-	self initializeWorldAndActiveWorld
+	self declareWorldGlobals
 ]
 
-{ #category : 'class initialization' }
-WorldMorph class >> initializeWorldAndActiveWorld [
-	"This method is creating the World and ActiveWorld global variables.
-	Waybe some of the initialization code could go directly in WorldMorph and other classes normal initialization?"
+{ #category : 'instance creation' }
+WorldMorph class >> installNewWorld [
+	"Create a world of my kind with its hand, and install it as World and ActiveWorld.
+	Morphic's initialization does it once all of Pharo is loaded; loading Morphic never creates a world"
 
 	| world hand |
-	"Ensure Morph is initialized."
-	Morph initialize.
-	
 	world := self new.
 	hand := HandMorph new.
 	world addHand: hand.
@@ -200,13 +203,13 @@ WorldMorph class >> initializeWorldAndActiveWorld [
 	world borderWidth: 0.
 
 	world displayWorldSafely.
-	MorphicCoreUIManager new spawnNewProcess.
 
 	world cleanseOtherworldlySteppers.
 
 	world worldState invalidate.
 
-	hand targetOffset: 0 @ 0
+	hand targetOffset: 0 @ 0.
+	^ world
 ]
 
 { #category : 'settings' }
@@ -312,11 +315,11 @@ WorldMorph >> addHand: aHandMorph [
 	aHandMorph privateOwner: self
 ]
 
-{ #category : 'menus' }
-WorldMorph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
-	"Add standard halo items to the menu"
+{ #category : 'events - root handler' }
+WorldMorph >> addRootEventHandler: aMorphRootEventHandler [
+	"Offer events to aMorphRootEventHandler before dispatching them, after the handlers I already have"
 
-	self addWorldHaloMenuItemsTo: aMenu hand: aHandMorph
+	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWith: aMorphRootEventHandler)
 ]
 
 { #category : 'submorphs - accessing' }
@@ -355,54 +358,11 @@ WorldMorph >> becomeActiveDuring: aBlock [
 	ActiveWorld := priorWorld
 ]
 
-{ #category : 'meta actions' }
-WorldMorph >> buildMetaMenu: evt [
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	self addStandardHaloMenuItemsTo: menu hand: evt hand.
-	^ menu
-]
-
 { #category : 'stepping' }
 WorldMorph >> cleanseStepList [
 	"Remove morphs from the step list that are not in this World."
 
 	worldState cleanseStepListForWorld: self
-]
-
-{ #category : 'menu & halo' }
-WorldMorph >> contentsMenu: aMenu [
-	"Build the menu used from PopUpContentsMenu:"
-
-	| expanded collapsed |
-	expanded := self windowsSatisfying: [ :w | w isCollapsed not ].
-	collapsed := self windowsSatisfying: [ :w | w isCollapsed ].
-	(expanded asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
-		do: [ :w |
-			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #activateAndForceLabelToShow.
-			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName).
-			w model canDiscardEdits
-				ifFalse: [ aMenu lastItem color: Color red ] ].
-	aMenu addLine.
-	(collapsed asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
-		do: [ :w |
-			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #collapseOrExpand.
-			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName).
-			w model canDiscardEdits
-				ifFalse: [ aMenu lastItem color: Color red ] ].
-	aMenu addLine.
-	((self submorphs reject: [ :sm | (expanded includes: sm) or: [ collapsed includes: sm ] ])
-		asSortedCollection: [ :w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name ])
-		do: [ :w |
-			aMenu add: (self truncatedMenuLabelFor: w class name) target: w selector: #comeToFront.
-			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName) ].
-
-	^ aMenu
-]
-
-{ #category : 'menu & halo' }
-WorldMorph >> contentsMenuTitle [
-	^ 'World contents' translated
 ]
 
 { #category : 'screenshot' }
@@ -445,20 +405,9 @@ WorldMorph >> depth [
 	^ self worldState worldRenderer depth
 ]
 
-{ #category : 'world menu' }
-WorldMorph >> discoveredWorldMenu [
-	^ worldState discoveredWorldMenu
-]
-
 { #category : 'menu & halo' }
 WorldMorph >> dispatchKeystroke: anEvent [
 	"A keystroke was hit when no keyboard focus was set, so it is sent here to the world instead."
-
-	| aChar ascii |
-	aChar := anEvent keyCharacter.
-	(ascii := aChar asciiValue) = 27 ifTrue: [ "escape key" ^ self invokeWorldMenuFromEscapeKey ].
-
-	(self navigationKey: anEvent) ifTrue: [ ^ self ].
 
 	"It was unhandled. Remember the keystroke."
 	self lastKeystroke: anEvent keyString.
@@ -505,6 +454,14 @@ WorldMorph >> doOneCycleNow [
 	worldState doOneCycleFor: self
 ]
 
+{ #category : 'events - root handler' }
+WorldMorph >> embedsWorldUnder: anEvent [
+	"Answer whether anEvent is a mouse event over a world embedded in me"
+
+	anEvent isMouse ifFalse: [ ^ false ].
+	^ (self morphsAt: anEvent position) anySatisfy: [ :each | each isWorldMorph and: [ each ~~ self ] ]
+]
+
 { #category : 'geometry' }
 WorldMorph >> extent: aPoint [
 	super extent: aPoint.
@@ -522,23 +479,16 @@ WorldMorph >> fullContainsPoint: pt [
 	^bounds containsPoint: pt
 ]
 
-{ #category : 'Morphic-Base-Windows' }
+{ #category : 'drawing' }
 WorldMorph >> fullRepaintNeeded [
 
-	worldState doFullRepaint.
-	self windowsSatisfying: [:w | w makeMeVisible. false]
+	worldState doFullRepaint
 ]
 
 { #category : 'event handling' }
 WorldMorph >> fullscreenChanged: fullscreenAnnouncement [
 
 	self worldState worldRenderer fullscreenMode: fullscreenAnnouncement fullscreen
-]
-
-{ #category : 'world state' }
-WorldMorph >> haloMorphs [
-
-	^ self hands collect: [ :h | h halo ] thenSelect: [ :halo | halo isNotNil ]
 ]
 
 { #category : 'project state' }
@@ -627,6 +577,24 @@ WorldMorph >> privateMoveBy: delta [
 	super privateMoveBy: delta
 ]
 
+{ #category : 'events - processing' }
+WorldMorph >> processEvent: anEvent focus: focusHolder clear: aBlock [
+	"My hand gives me its events. Offer them to the root event handlers of the focus holder's world (me, or a world embedded in me), then send them to the focus holder, or dispatch them to my morphs"
+
+	focusHolder ifNil: [ ^ self processEvent: anEvent ].
+	((focusHolder world ifNil: [ self ]) rootEventHandlersTake: anEvent) ifTrue: [ ^ self ].
+	^ anEvent hand sendFocusEvent: anEvent to: focusHolder clear: aBlock
+]
+
+{ #category : 'events - processing' }
+WorldMorph >> processEvent: anEvent using: defaultDispatcher [
+	"Offer anEvent to my root event handlers before dispatching it to my morphs. A mouse event over a world embedded in me is that world's: dispatching takes it there, and it offers it to its own handlers"
+
+	(self rejectsEvent: anEvent) ifTrue: [ ^ #rejected ].
+	((self embedsWorldUnder: anEvent) not and: [ self rootEventHandlersTake: anEvent ]) ifTrue: [ ^ self ].
+	^ super processEvent: anEvent using: defaultDispatcher
+]
+
 { #category : 'event handling' }
 WorldMorph >> releaseCachedState [
 	super releaseCachedState.
@@ -651,6 +619,12 @@ WorldMorph >> removeHand: aHandMorph [
 	worldState removeHand: aHandMorph
 ]
 
+{ #category : 'events - root handler' }
+WorldMorph >> removeRootEventHandler: aMorphRootEventHandler [
+
+	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWithout: aMorphRootEventHandler)
+]
+
 { #category : 'event handling' }
 WorldMorph >> requestStopTextEditing [
 
@@ -667,6 +641,22 @@ WorldMorph >> requestTextEditingAt: aRectangle [
 WorldMorph >> restoreMorphicDisplay [
 
 	worldState worldRenderer restoreMorphicDisplay
+]
+
+{ #category : 'events - root handler' }
+WorldMorph >> rootEventHandlers [
+	"Answer the handlers I offer events to before dispatching them, in the order they are asked"
+
+	^ self valueOfProperty: #rootEventHandlers ifAbsent: [ #(  ) ]
+]
+
+{ #category : 'events - root handler' }
+WorldMorph >> rootEventHandlersTake: anEvent [
+	"Answer whether one of my handlers took anEvent"
+
+	(self rootEventHandlers anySatisfy: [ :handler | handler handleEvent: anEvent in: self ]) ifFalse: [ ^ false ].
+	anEvent wasHandled: true.
+	^ true
 ]
 
 { #category : 'stepping' }
@@ -734,9 +724,18 @@ WorldMorph >> taskbarTasks [
 		  thenSelect: [ :m | m isNotNil ]
 ]
 
-{ #category : 'menu & halo' }
-WorldMorph >> truncatedMenuLabelFor: aWindowLabel [
-	^ aWindowLabel truncateWithElipsisTo: 47
+{ #category : 'world state' }
+WorldMorph >> uiActivated [
+	"Morphic became the active UI, with me as its current world"
+
+	
+]
+
+{ #category : 'world state' }
+WorldMorph >> uiDeactivated [
+	"Morphic stopped being the active UI"
+
+	
 ]
 
 { #category : 'copying' }
@@ -764,12 +763,6 @@ WorldMorph >> viewBox: newViewBox [
 	self fullRepaintNeeded
 ]
 
-{ #category : 'halos and balloon help' }
-WorldMorph >> wantsDirectionHandles [
-
-	^ false
-]
-
 { #category : 'event handling' }
 WorldMorph >> wantsDropFiles: anEvent [
 	"We check if the WorldMorph is configured to be able to receive droped files. During the deployment of an application this option might be disabled."
@@ -792,11 +785,6 @@ WorldMorph >> wantsWindowEvent: anEvent [
 WorldMorph >> world [
 
 	^self
-]
-
-{ #category : 'world menu' }
-WorldMorph >> worldMenu [
-	^ worldState worldMenu
 ]
 
 { #category : 'accessing' }

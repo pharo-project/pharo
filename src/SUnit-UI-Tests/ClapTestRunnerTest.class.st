@@ -29,7 +29,7 @@ ClapTestRunnerTest >> testCanGetMixedPackagesAndRegex [
 	packages := command testPackages.
 	
 	self assert: (packages includes: 'Kernel').
-	self assert: packages size equals: 13 
+	self assert: packages size equals: 15 
 ]
 
 { #category : 'tests' }
@@ -72,7 +72,7 @@ ClapTestRunnerTest >> testCanGetPackagesFromRegex [
 	
 	self
 		assert: packages size
-		equals: 12.
+		equals: 14.
 	self assert: (packages allSatisfy: [ :pkgName | pkgName beginsWith: 'SUnit' ])
 ]
 
@@ -84,6 +84,40 @@ ClapTestRunnerTest >> testDefaultTestRunnerIsVTermTestRunner [
 	command := context command.
 	
 	self assert: command testRunner equals: VTermTestRunner
+]
+
+{ #category : 'tests' }
+ClapTestRunnerTest >> testDeprecationsAsErrorsDuringTheRun [
+
+	| command oldReaction oldRewriting strategies |
+	context := ClapTestRunner commandSpecification activationWith: #( 'test' '--deprecations-as-errors' 'Kernel' ).
+	command := context command.
+	oldReaction := Deprecation reaction.
+	oldRewriting := Deprecation rewriting.
+	strategies := command deprecationStrategiesDuring: [
+		              {
+			              Deprecation reaction.
+			              Deprecation rewriting } ].
+	self assert: strategies equals: {
+		ErrorAtEndOfCompatibilityPeriodDeprecationReaction.
+		NeverRewriteDeprecation }.
+	self assert: Deprecation reaction identicalTo: oldReaction.
+	self assert: Deprecation rewriting identicalTo: oldRewriting
+]
+
+{ #category : 'tests' }
+ClapTestRunnerTest >> testDeprecationsKeepTheirStrategiesByDefault [
+
+	| command strategies |
+	context := ClapTestRunner commandSpecification activationWith: #( 'test' 'Kernel' ).
+	command := context command.
+	strategies := command deprecationStrategiesDuring: [
+		              {
+			              Deprecation reaction.
+			              Deprecation rewriting } ].
+	self assert: strategies equals: {
+		Deprecation reaction.
+		Deprecation rewriting }
 ]
 
 { #category : 'tests' }

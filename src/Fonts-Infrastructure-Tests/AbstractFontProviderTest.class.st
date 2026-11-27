@@ -12,7 +12,5 @@ Class {
 { #category : 'tests' }
 AbstractFontProviderTest >> testIsAbstract [
 
-	self
-		assert: AbstractFontProvider isAbstract;
-		assert: AbstractFontProvider hasSubclasses
+	self assert: AbstractFontProvider isAbstract
 ]

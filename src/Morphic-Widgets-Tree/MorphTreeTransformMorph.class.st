@@ -4,6 +4,8 @@ A custom transform morph for a morphic based tree
 Class {
 	#name : 'MorphTreeTransformMorph',
 	#superclass : 'TransformMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'
 }

@@ -50,16 +50,6 @@ Deprecation class >> deprecationsWhile: aBlock [
 	^result
 ]
 
-{ #category : 'handling' }
-Deprecation >> defaultAction [
-    RecursionStopper during: [
-        self class addLog: self.
-        self showWarning ifTrue: [ self logTranscript ].
-        self raiseWarning ifTrue: [ super defaultAction ].
-        self shouldTransform ifTrue: [ self transform ]
-    ]
-]
-
 { #category : 'private' }
 Deprecation >> logTranscript [
 	DeprecationPerformedNotification signal: self messageText

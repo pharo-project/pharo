@@ -5,7 +5,6 @@ Class {
 	#name : 'RubTextEditorTest',
 	#superclass : 'RubAbstractTest',
 	#instVars : [
-		'indentSpaces',
 		'up',
 		'down',
 		'right',
@@ -293,19 +292,12 @@ RubTextEditorTest >> setUp [
 
 	super setUp.
 	editor := RubTextEditor forTextArea: RubEditingArea new.
-	indentSpaces := EFFormatter numberOfSpacesInIndent.
+	"Tabs three spaces wide"
+	editor textArea tabWidth: 3 * (editor textArea font widthOf: Character space).
 	up := #moveUp.
 	down := #moveDown.
 	left := #moveLeft.
-	right := #moveRight.
-	EFFormatter numberOfSpacesInIndent: 3
-]
-
-{ #category : 'running' }
-RubTextEditorTest >> tearDown [ 
- 
-	EFFormatter numberOfSpacesInIndent: indentSpaces.
-	super tearDown.
+	right := #moveRight
 ]
 
 { #category : 'tests' }

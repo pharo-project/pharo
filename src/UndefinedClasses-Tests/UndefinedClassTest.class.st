@@ -61,6 +61,21 @@ UndefinedClassTest >> testClassWithUndefinedSuperclassNameHasUndefinedSuperclass
 ]
 
 { #category : 'tests' }
+UndefinedClassTest >> testCreateNormalClassSuperClass [
+
+	[
+	| class |
+	class := ShiftClassBuilder new
+		         buildEnvironment: self class environment;
+		         useUndefinedClass;
+		         buildFromAST: (CDFluidClassDefinitionParser parse: 'Xcrd << #TestSubClass');
+		         build.
+
+	self assert: class superclass equals: (self class environment classNamed: #Xcrd) ] ensure: [
+		self class environment at: #Xcrd ifPresent: [ :aClass | aClass removeFromSystem ] ]
+]
+
+{ #category : 'tests' }
 UndefinedClassTest >> testCreateSubclassOfArbitraryExpressionReturningNilThrowsError [
 
 	self assertClassDoesNotExist: #ColoredFoo.
@@ -182,6 +197,23 @@ UndefinedClassTest >> testUnknowSuperclassShouldInheritFromUndefinedClass [
 	newUndefinedClass := (self class environment at: #ColoredFoo).
 	self assert: newUndefinedClass superclass equals: (self class environment at: #Foo).
 	self assert: (self class environment at: #Foo) isUndefined
+]
+
+{ #category : 'tests' }
+UndefinedClassTest >> testUseUndefinedClass [
+
+	| ast |
+	ast := CDFluidClassDefinitionParser parse: 'PoPouet << #TestClass'.
+	[
+	ShiftClassInstaller new make: [ :builder |
+		builder
+			useUndefinedClass;
+			buildEnvironment: self class environment;
+			buildFromAST: ast ].
+	self assert: [ (self class environment at: #PoPouet) isUndefined ] ] ensure: [
+		self class environment at: #PoPouet ifPresent: [ :class | "We first need to remove TestClass before removing PoPouet."
+			class subclassesDo: [ :subclass | subclass removeFromSystem ].
+			class removeFromSystem ] ]
 ]
 
 { #category : 'accessing' }

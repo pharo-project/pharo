@@ -692,12 +692,11 @@ RBAbstractClass >> renameInstanceVariable: oldName to: newName around: aBlock [
 		at: (self privateInstanceVariableNames indexOf: oldName asString)
 		put: newName asString.
 	^ self model
-		  perform: aBlock
-		  onlyWithChange:
-		  (changeFactory
-			   renameInstanceVariable: oldName
-			   to: newName
-			   in: self)
+		  addChange: (changeFactory
+				   renameInstanceVariable: oldName
+				   to: newName
+				   in: self)
+		  containing: aBlock
 ]
 
 { #category : 'method accessing' }

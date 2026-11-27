@@ -2241,7 +2241,7 @@ Context >> withSendersDo: aBlock [
 
 	| current |
 	current := self.
-	[ current notNil ] whileTrue: [
+	[ current isNotNil ] whileTrue: [
 			aBlock value: current.
 			current := current sender ]
 ]

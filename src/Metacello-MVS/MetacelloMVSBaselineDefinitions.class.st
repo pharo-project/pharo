@@ -77,7 +77,7 @@ MetacelloMVSBaselineDefinitions >> error: aKind text: aString [
 { #category : 'accessing' }
 MetacelloMVSBaselineDefinitions >> hasBaseline [
 
-	^ definitions notNil
+	^ definitions isNotNil
 ]
 
 { #category : 'initialization' }

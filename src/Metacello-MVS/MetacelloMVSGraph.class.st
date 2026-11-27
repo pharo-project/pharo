@@ -234,7 +234,7 @@ MetacelloMVSGraph >> versionsOf: aRepository ifFail: aBlock [
 	| published |
 	versions at: aRepository ifPresent: [ :names | ^ names ].
 	published := source versionsOf: aRepository ifFail: [ :text | ^ aBlock value: text ].
-	dates at: aRepository put: ((published select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
+	dates at: aRepository put: ((published select: [ :each | each date isNotNil ]) collect: [ :each | each name -> each date ]) asDictionary.
 	^ versions at: aRepository put: (published collect: [ :each | each name ]) asArray
 ]
 

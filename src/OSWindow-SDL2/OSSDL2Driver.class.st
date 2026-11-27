@@ -7,11 +7,12 @@ Class {
 	#instVars : [
 		'inputSemaphore',
 		'globalListeners',
-		'eventFilter'
+		'eventFilter',
+		'eventLoopRunner'
 	],
 	#classVars : [
-		'EventLoopProcess',
 		'JoystickMap',
+		'SharedEventLoopRunner',
 		'WindowMap',
 		'WindowMapMutex'
 	],
@@ -32,13 +33,20 @@ OSSDL2Driver class >> allWindows [
 { #category : 'testing' }
 OSSDL2Driver class >> eventLoopProcess [
 
-	^ EventLoopProcess
+	^ self sharedEventLoopRunner process
 ]
 
 { #category : 'testing' }
 OSSDL2Driver class >> isSuitable [
 
 	^ SDL2 isAvailable
+]
+
+{ #category : 'accessing' }
+OSSDL2Driver class >> sharedEventLoopRunner [
+	"The runner of the event loop shared by the windows of the image"
+
+	^ SharedEventLoopRunner ifNil: [ SharedEventLoopRunner := OSSDL2EventLoopRunner new ]
 ]
 
 { #category : 'events' }
@@ -146,9 +154,8 @@ OSSDL2Driver >> ensureEventLoop [
 
 	"Make sure an event loop is running.
 	If there is already an event loop, do nothing"
-	EventLoopProcess ifNotNil: [ ^ self ].
 
-	self setupEventLoop
+	self eventLoopRunner ensureRunning: [ self eventLoop ]
 ]
 
 { #category : 'events - processing' }
@@ -181,7 +188,20 @@ OSSDL2Driver >> eventLoop [
 { #category : 'accessing' }
 OSSDL2Driver >> eventLoopProcess [
 
-	^ self class eventLoopProcess
+	^ self eventLoopRunner process
+]
+
+{ #category : 'accessing' }
+OSSDL2Driver >> eventLoopRunner [
+	"The runner of my event loop: the image's one unless I was given another"
+
+	^ eventLoopRunner ifNil: [ self class sharedEventLoopRunner ]
+]
+
+{ #category : 'accessing' }
+OSSDL2Driver >> eventLoopRunner: anEventLoopRunner [
+
+	eventLoopRunner := anEventLoopRunner
 ]
 
 { #category : 'events - processing' }
@@ -191,8 +211,7 @@ OSSDL2Driver >> forceNewEventLoop [
 	If one was available, shut it down first.
 	Start a new event loop afterwards"
 
-	self shutdownEventLoop.
-	self setupEventLoop
+	self eventLoopRunner restartRunning: [ self eventLoop ]
 ]
 
 { #category : 'initialization' }
@@ -315,19 +334,6 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 	SDL2 glSetAttribute: SDL_GL_FRAMEBUFFER_SRGB_CAPABLE value: glAttributes srgbFramebuffer asBit
 ]
 
-{ #category : 'events - processing' }
-OSSDL2Driver >> setupEventLoop [
-
-	"Create a new event loop.
-	Precondition: there is no pre-existing event loop"
-	
-	EventLoopProcess ifNotNil: [ self error: 'Cannot launch new event loop. One event loop is in progress' ].
-
-	EventLoopProcess := [ self eventLoop ] forkAt:
-		                    Processor lowIOPriority.
-	EventLoopProcess name: 'SDL2 Event loop'
-]
-
 { #category : 'system startup' }
 OSSDL2Driver >> shutDown: quitting [
 	"Reset WindowMap and JoystickMap when shuting down (otherwise there will be handlers
@@ -345,9 +351,7 @@ OSSDL2Driver >> shutdownEventLoop [
 
 	"Kills the current event loop if any"
 
-	EventLoopProcess ifNil: [ ^ self ].
-	EventLoopProcess terminate.
-	EventLoopProcess := nil
+	self eventLoopRunner stop
 ]
 
 { #category : 'system startup' }

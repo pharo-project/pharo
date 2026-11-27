@@ -73,10 +73,8 @@ GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
 { #category : 'private' }
 GraphicFontSettings class >> pickFont [
 
-	FontChooser
-		openModalWithTitle: 'Font for all font'
-		initialFont: StandardFonts defaultFont
-		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ]
+	(UITheme current chooseFontIn: nil title: 'Font for all font' font: StandardFonts defaultFont)
+		ifNotNil: [ :aFont | self resetAllFontsTo: aFont ]
 ]
 
 { #category : 'fonts' }
@@ -95,14 +93,14 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 		arguments: {}
 		getEnabled: nil
 		getLabel: nil
-		help: 'Force all system fonts to be the default one' translated)
+		help: 'Force all system fonts to be the default one' )
 		label:
 			(self theme
 				newRowIn: self
 				for:
 					{(AlphaImageMorph new
 						image: (self iconNamed: #smallRedo)).
-					(self theme buttonLabelForText: 'Force all' translated)});
+					(self theme buttonLabelForText: 'Force all' )});
 		yourself
 ]
 

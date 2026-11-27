@@ -67,7 +67,7 @@ MetacelloMVSResolution >> buildList: aDictionary [
 MetacelloMVSResolution >> dependenciesOf: aProjectName [
 	"The projects of the build list that the selected version of aProjectName requires"
 
-	^ ((self requirementsOfSelected: aProjectName) collect: [ :each | each resolved ] thenSelect: [ :each | each notNil ])
+	^ ((self requirementsOfSelected: aProjectName) collect: [ :each | each resolved ] thenSelect: [ :each | each isNotNil ])
 		  collect: [ :each | each project ]
 		  as: Set
 ]

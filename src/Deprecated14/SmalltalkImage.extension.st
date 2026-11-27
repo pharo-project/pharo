@@ -4,21 +4,28 @@ Extension { #name : 'SmalltalkImage' }
 SmalltalkImage >> os [
 	"Answer the object to query about os."
 
-	self deprecated: 'Use `OSPlatform current` instead' transformWith: '`@rcv os' -> 'OSPlatform current'.
+	self
+		deprecated: 'Use `OSPlatform current` instead'
+		in: #Pharo14
+		transformWith: '`@rcv os' -> 'OSPlatform current'.
 	^ OSPlatform current
 ]
 
 { #category : '*Deprecated14' }
 SmalltalkImage >> platform [
 	"Answer the object to query about os."
-	self deprecated: 'Use `OSPlatform current` instead'.
+	self
+		deprecated: 'Use `OSPlatform current` instead'
+		in: #Pharo14.
 	^ OSPlatform current
 ]
 
 { #category : '*Deprecated14' }
 SmalltalkImage >> platformName [
 
-	self deprecated: 'Use `OSPlatform current platformName` instead'.
+	self
+		deprecated: 'Use `OSPlatform current platformName` instead'
+		in: #Pharo14.
 	^ OSPlatform current platformName
 ]
 
@@ -26,7 +33,9 @@ SmalltalkImage >> platformName [
 SmalltalkImage >> version [
 	"Answer the version of this release."
 
-	self deprecated: 'Use `SystemVersion current` instead'.
+	self
+		deprecated: 'Use `SystemVersion current` instead'
+		in: #Pharo14.
 
 	^ SystemVersion current
 		  ifNil: [ 'No version set yet' ]

@@ -4,6 +4,8 @@ A morph to display a map of join mappings
 Class {
 	#name : 'DiffMapMorph',
 	#superclass : 'BorderedMorph',
+	#traits : 'TMorphicWidget',
+	#classTraits : 'TMorphicWidget classTrait',
 	#instVars : [
 		'mappings',
 		'clickAction'

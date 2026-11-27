@@ -26,14 +26,6 @@ Class {
 	#tag : 'Support'
 }
 
-{ #category : 'menu' }
-TransformMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
-	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
-	smoothing = 1
-		ifTrue: [aCustomMenu add: 'turn on smoothing' selector: #smoothingOn]
-		ifFalse: [aCustomMenu add: 'turn off smoothing' selector: #smoothingOff]
-]
-
 { #category : 'accessing' }
 TransformMorph >> angle [
 	^ transform angle
@@ -91,12 +83,7 @@ TransformMorph >> drawSubmorphsOn: aCanvas [
 	aCanvas transformBy: transform
 		clippingTo: self innerBounds
 		during: [:myCanvas |
-			(self angle ~= 0.0 or: [self scale ~= 1.0])
-				ifTrue:[
-					FreeTypeSettings current forceNonSubPixelDuring:[
-						submorphs reverseDo:[:m | myCanvas fullDrawMorph: m] ] ]
-				ifFalse:[
-					submorphs reverseDo:[:m | myCanvas fullDrawMorph: m] ] ]
+			submorphs reverseDo:[:m | myCanvas fullDrawMorph: m] ]
 		smoothing: smoothing
 ]
 

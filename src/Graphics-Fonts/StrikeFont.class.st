@@ -130,6 +130,19 @@ StrikeFont class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]
 
+{ #category : 'instance creation' }
+StrikeFont class >> installDefaultBitmapFontFrom: directoryReference [
+	"Install Bitmap DejaVu Sans, read from directoryReference, as the default text styles, like Morphic's initialization does. Keep a default text style already installed"
+
+	| dejaVu |
+	TextStyle default ifNotNil: [ ^ self ].
+	dejaVu := self loadBitmapFontFamily: 'Bitmap DejaVu Sans' sizes: #( 7 9 12 14 18 24 ) from: directoryReference.
+	TextSharedInformation at: #DefaultTextStyle put: dejaVu.
+	TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu.
+	TextSharedInformation at: #DefaultMultiStyle put: dejaVu.
+	TextSharedInformation at: #DefaultFixedTextStyle put: dejaVu
+]
+
 { #category : 'removing' }
 StrikeFont class >> limitTo16Bits [
 	"Limit glyph depth to 16 bits (it is usually 16 or 32).
@@ -138,6 +151,34 @@ StrikeFont class >> limitTo16Bits [
 	"
 	self registry do: [ :f | f
 		setGlyphsDepthAtMost: 16 ]
+]
+
+{ #category : 'instance creation' }
+StrikeFont class >> loadBitmapFontFamily: familyName sizes: pointSizes from: directoryReference [
+	"Answer a text style with the bitmap fonts of familyName, read from the .ston and .png files in directoryReference"
+
+	| fonts fileName |
+	fonts := pointSizes collect: [ :pointSize |
+		         | regular bold italic boldItalic |
+		         fileName := familyName , ' ' , pointSize asString.
+		         regular := STON fromStream: (directoryReference / (fileName , ' Regular.ston')) readStream.
+		         regular setGlyphs: (PNGReadWriter formFromFileNamed: (directoryReference / (fileName , ' Regular.png')) fullName).
+		         bold := STON fromStream: (directoryReference / (fileName , ' Bold.ston')) readStream.
+		         bold setGlyphs: (PNGReadWriter formFromFileNamed: (directoryReference / (fileName , ' Bold.png')) fullName).
+		         italic := STON fromStream: (directoryReference / (fileName , ' Italic.ston')) readStream.
+		         italic setGlyphs: (PNGReadWriter formFromFileNamed: (directoryReference / (fileName , ' Italic.png')) fullName).
+		         boldItalic := STON fromStream: (directoryReference / (fileName , ' Bold Italic.ston')) readStream.
+		         boldItalic setGlyphs:
+			         (PNGReadWriter formFromFileNamed: (directoryReference / (fileName , ' Bold Italic.png')) fullName).
+		         regular instVarNamed: #derivativeFonts put: {
+			         bold.
+			         italic.
+			         boldItalic } , (Array new: 29).
+		         bold instVarNamed: #derivativeFonts put: (Array new: 32).
+		         italic instVarNamed: #derivativeFonts put: (Array new: 32).
+		         boldItalic instVarNamed: #derivativeFonts put: (Array new: 32).
+		         regular ].
+	^ TextStyle fontArray: fonts
 ]
 
 { #category : 'font creation' }

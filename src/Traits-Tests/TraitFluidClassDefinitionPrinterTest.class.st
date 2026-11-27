@@ -205,7 +205,7 @@ TraitFluidClassDefinitionPrinterTest >> testTrait [
 	traits: {TViewModel};
 	slots: { #hasUnacceptedEdits . #announcer . #text . #primarySelectionInterval . #interactionModel };
 	tag: ''Editing-Widgets'';
-	package: ''Rubric'''
+	package: ''Morphic-Widgets'''
 ]
 
 { #category : 'tests - traits' }

@@ -480,23 +480,6 @@ HandMorph >> grabMorph: aMorph from: formerOwner [
 	grabbed justGrabbedFrom: formerOwner
 ]
 
-{ #category : 'halos and balloon help' }
-HandMorph >> halo [
-	"Return the halo associated with this hand, if any"
-	^self valueOfProperty: #halo
-]
-
-{ #category : 'halo handling' }
-HandMorph >> halo: newHalo [
-	"Set halo associated with this hand"
-	| oldHalo |
-	oldHalo := self halo.
-	(oldHalo isNil or:[oldHalo == newHalo]) ifFalse:[oldHalo delete].
-	newHalo
-		ifNil:[self removeProperty: #halo]
-		ifNotNil:[self setProperty: #halo toValue: newHalo]
-]
-
 { #category : 'events - processing' }
 HandMorph >> handleEvent: anEvent [
 	| evt  |
@@ -792,17 +775,6 @@ HandMorph >> objectToPaste [
 	"PasteBuffer usableDuplicateIn: self world"
 ]
 
-{ #category : 'halo handling' }
-HandMorph >> obtainHalo: aHalo [
-	"Used for transfering halos between hands"
-
-	self halo == aHalo
-		ifTrue: [ ^ self ].
-	"Find former owner"
-	self world hands detect: [ :hand | hand halo == aHalo ] ifFound: [ :formerOwner | formerOwner releaseHalo: aHalo ].
-	self halo: aHalo
-]
-
 { #category : 'paste buffer' }
 HandMorph >> pasteBuffer [
 	"Return the paste buffer associated with this hand"
@@ -900,12 +872,6 @@ HandMorph >> releaseCachedState [
 	self releaseAllFocus
 ]
 
-{ #category : 'halo handling' }
-HandMorph >> releaseHalo: aHalo [
-	"Used for transfering halos between hands"
-	self removeProperty: #halo
-]
-
 { #category : 'focus handling' }
 HandMorph >> releaseKeyboardFocus [
 	"Release the current keyboard focus unconditionally"
@@ -934,36 +900,6 @@ HandMorph >> releaseMouseFocus: aMorph [
 HandMorph >> removeEventListener: anObject [
 	"Remove anObject from the current event listeners."
 	self eventListeners: (self removeListener: anObject from: self eventListeners)
-]
-
-{ #category : 'halo handling' }
-HandMorph >> removeHalo [
-	"remove the receiver's halo (if any)"
-	self halo ifNotNil: [ :h | self removeHaloAround: h target ]
-]
-
-{ #category : 'halo handling' }
-HandMorph >> removeHaloAround: aMorph [
-	"remove the receiver's halo associated to aMorph (if any)"
-	| halo |
-	halo := self halo.
-	halo
-		ifNil: [ ^ self ].
-	halo target == aMorph
-		ifFalse: [ ^ self ].
-	self removeProperty: #halo.
-	halo delete
-]
-
-{ #category : 'halo handling' }
-HandMorph >> removeHaloFromClick: anEvent on: aMorph [
-	| halo |
-	halo := self halo
-				ifNil: [^ self].
-	(halo target hasOwner: self)
-		ifTrue: [^ self].
-	(halo staysUpWhenMouseIsDownIn: aMorph)
-		ifFalse: [self removeHalo]
 ]
 
 { #category : 'listeners' }
@@ -1040,15 +976,6 @@ HandMorph >> savePatchFrom: aCanvas [
 	^damageRect
 ]
 
-{ #category : 'selected object' }
-HandMorph >> selectedObject [
-	"answer the selected object for the hand or nil is none"
-	| halo |
-	halo := self halo.
-	halo ifNil: [^ nil].
-	^ halo target renderedMorph
-]
-
 { #category : 'private - events' }
 HandMorph >> sendEvent: anEvent focus: focusHolder [
 	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
@@ -1057,11 +984,9 @@ HandMorph >> sendEvent: anEvent focus: focusHolder [
 
 { #category : 'private - events' }
 HandMorph >> sendEvent: anEvent focus: focusHolder clear: aBlock [
-	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
-	| result |
-	focusHolder ifNotNil:[^self sendFocusEvent: anEvent to: focusHolder clear: aBlock].
-	result := owner processEvent: anEvent.
-	^result
+	"Give the event to my world, which sends it to the morph holding the focus, or dispatches it if none"
+
+	^ owner processEvent: anEvent focus: focusHolder clear: aBlock
 ]
 
 { #category : 'private - events' }
@@ -1093,19 +1018,6 @@ HandMorph >> sendKeyboardEvent: anEvent [
 	(Alt=4, Cmd=8, Ctrl=2) that anyModifierKeyPressed expects."
 
 	self updateRecentModifiersFromEvent: anEvent.
-
-	"Intercept Alt+Tab (and Alt+Shift+Tab) navigation events before they
-	reach the keyboard focus holder. When a morph like a text editor has
-	focus, the event would otherwise be consumed without reaching world
-	navigation."
-
-	(anEvent isKeyDown and: [ TaskListMorph isNavigationEvent: anEvent ]) ifTrue: [
-		self owner ifNotNil: [ :world |
-			world navigationKey: anEvent.
-			anEvent supressNextKeyPress: true.
-			^ self
-		]
-	].
 
 	^ self sendEvent: anEvent
 		focus: self keyboardFocus
@@ -1304,4 +1216,29 @@ HandMorph >> waitForClicksOrDrag: aMorph event: evt [
 	which is typically done by aMorph in its click:, doubleClick:, or drag: methods."
 
 	^self waitForClicksOrDrag: aMorph event: evt selectors: #( #click: #doubleClick: #doubleClickTimeout: #startDrag:) threshold: 10
+]
+
+{ #category : 'double click support' }
+HandMorph >> waitForClicksOrDrag: aMorph event: evt selectors: clickAndDragSelectors threshold: threshold [
+
+	"Wait for mouse button and movement events, informing aMorph about events interesting to it via callbacks.
+	This message is typically sent to the Hand by aMorph when it first receives a mouse-down event.
+	The callback methods, named in clickAndDragSelectors and passed a copy of evt, are:
+		1 	(click) sent when the mouse button goes up within doubleClickTime.
+		2	(doubleClick) sent when the mouse goes up, down, and up again all within DoubleClickTime.
+		3	(doubleClickTimeout) sent when the mouse does not have a doubleClick within DoubleClickTime.
+		4	(startDrag) sent when the mouse moves more than threshold pixels from evt's position within DoubleClickTime.
+	Note that mouseMove: and mouseUp: events are not sent to aMorph until it becomes the mouse focus,
+	which is typically done by aMorph in its click:, doubleClick:, or drag: methods."
+
+	mouseClickState :=
+		MouseClickState new
+			client: aMorph
+			click: clickAndDragSelectors first
+			dblClick: clickAndDragSelectors second
+			dblClickTime: DoubleClickTime
+			dblClickTimeout: clickAndDragSelectors third
+			drag: clickAndDragSelectors fourth
+			threshold: threshold
+			event: evt
 ]

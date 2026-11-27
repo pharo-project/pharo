@@ -23,33 +23,107 @@ MorphicInitialization class >> cleanUp [
 ]
 
 { #category : 'initialization' }
+MorphicInitialization class >> createWorld [
+	"Loading Morphic never creates a world: this is where Pharo's desktop world is born"
+
+	DesktopWorldMorph installNewWorld
+]
+
+{ #category : 'initialization' }
 MorphicInitialization class >> initializeEnvironment [
-	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it."
+	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it.
+	The bars are sized with the fonts"
 
 	self
+		loadBitmapFonts;
+		createWorld;
+		resetKeymaps;
 		startUIProcess;
 		cleanUp;
-		initializeFontsAndDesktop;
-		openWorldBars
+		useDefaultTheme;
+		initializeFonts.
+	PolymorphSystemSettings desktopLogo: (self initializeWorld: self currentWorld).
+	self initializePreferences
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> initializeFontsAndDesktop [
+MorphicInitialization class >> initializeFonts [
 
+	SourceCodeFonts setSourceCodeFonts: 10.
+	FreeTypeSystemSettings loadFt2Library: true.
 	GraphicFontSettings setFontsToStyleNamed: #small.
-	PolymorphSystemSettings showDesktopLogo: false.
-	PolymorphSystemSettings showDesktopLogo: true.
-	PolymorphSystemSettings desktopColor: Color white.
 	"The balloon font is taken from the fonts just set"
-	BalloonMorph initialize
+	BalloonMorph balloonFont: StandardFonts defaultFont
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> openWorldBars [
-	"Open the menubar and the taskbar in the world, as their preferences say"
+MorphicInitialization class >> initializePreferences [
+	"Where windows and notifications open. The desktop color comes from the theme"
 
-	MenubarMorph reset.
-	TaskbarMorph showTaskbarPreferenceChanged
+	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
+	GrowlMorph position: #bottomLeft.
+	ShortcutReminder enabled: true
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> initializeWorld: aWorld [
+	"Open the bars of aWorld, then put the desktop logo below its menubar. Answer the logo, nil when it is not shown"
+
+	MenubarMorph openIn: aWorld.
+	aWorld showWorldTaskbar: TaskbarMorph showTaskbar.
+	^ PolymorphSystemSettings newDesktopLogo ifNotNil: [ :logo |
+		PolymorphSystemSettings placeDesktopLogo: logo in: aWorld.
+		logo ]
+]
+
+{ #category : 'fonts' }
+MorphicInitialization class >> loadBitmapDejaVuSans [
+
+	| dejaVu |
+
+	dejaVu := self loadBitmapFontFamily: 'Bitmap DejaVu Sans' sizes: #(7 9 12 14 18 24).
+
+	TextConstants TextSharedInformation at: #'DefaultTextStyle' put: dejaVu.
+	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu.
+	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejaVu.
+	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejaVu.
+]
+
+{ #category : 'fonts' }
+MorphicInitialization class >> loadBitmapFontFamily: familyName sizes: pointSizes [
+
+	| directoryReference |
+	directoryReference := (OSEnvironment current at: 'BOOTSTRAP_REPOSITORY' ifAbsent: [ FileSystem workingDirectory ])
+		                      asFileReference / 'resources' / 'fonts'.
+	^ StrikeFont loadBitmapFontFamily: familyName sizes: pointSizes from: directoryReference
+]
+
+{ #category : 'fonts' }
+MorphicInitialization class >> loadBitmapFonts [
+	"Load the bitmap fonts of the repository's resources and make DejaVu Sans the default text style"
+
+	self loadBitmapDejaVuSans.
+	self loadBitmapSourcePro
+]
+
+{ #category : 'fonts' }
+MorphicInitialization class >> loadBitmapSourcePro [
+
+	| sansPro codePro |
+
+	sansPro := self loadBitmapFontFamily: 'Bitmap Source Sans Pro' sizes: #(9 10 11 12 14 18 24).
+	TextConstants TextSharedInformation at: #'Bitmap Source Sans Pro' put: sansPro.
+
+	codePro := self loadBitmapFontFamily: 'Bitmap Source Code Pro' sizes: #(9 10 11 12 14 18 24).
+	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> resetKeymaps [
+	"Start the new world with a fresh keymap repository, and let morphs handle their shortcuts with it"
+
+	KMRepository reset.
+	Morph shortcutsHandler: KMShortcutHandler new
 ]
 
 { #category : 'initialization' }
@@ -61,4 +135,10 @@ MorphicInitialization class >> startUIProcess [
 	ErrorHandler default: ErrorHandler forCurrentSystemConfiguration.
 	"Back to the UI manager this session runs with (non interactive from the command line)"
 	UIManager default: UIManager forCurrentSystemConfiguration
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> useDefaultTheme [
+
+	PolymorphSystemSettings defaultTheme beCurrent
 ]

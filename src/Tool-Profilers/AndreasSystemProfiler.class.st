@@ -115,7 +115,15 @@ AndreasSystemProfiler class >> spyOnWorldFor: seconds [
 { #category : 'reporting' }
 AndreasSystemProfiler >> doReport [
 	"Report the results of this profiler run"
-	UIManager default edit: self report label: 'Spy Results'
+
+	| window |
+	window := SystemWindow labelled: 'Spy Results'.
+	window
+		addMorph: (RubScrolledTextMorph new
+			 setText: self report asString;
+			 yourself)
+		frame: (0 @ 0 corner: 1 @ 1).
+	^ window openInWorld
 ]
 
 { #category : 'profiling' }
