@@ -22,7 +22,8 @@ Class {
 		'informDialog',
 		'stoppedBeforeApplyingRefactoring',
 		'selectDialogForBreakingChanges',
-		'forTesting'
+		'forTesting',
+		'transformedRefactoring'
 	],
 	#classInstVars : [
 		'shouldPreviewChanges'
@@ -129,12 +130,14 @@ ReInteractionDriver >> applyChanges [
 
 { #category : 'execution' }
 ReInteractionDriver >> changes [
-	"Drivers should not call generateChanges of Refactoring because generateChanges is performing the preconditions and raising errors 
+	"Drivers should not call generateChanges of Refactoring because generateChanges is performing the preconditions and raising errors
 	The API method generateChanges is for refactoring scripting."
-	
-	refactoring privateTransform.
-	^ refactoring changes
 
+	transformedRefactoring == refactoring ifFalse: [
+		refactoring privateTransform.
+		transformedRefactoring := refactoring
+	].
+	^ refactoring changes
 ]
 
 { #category : 'configuration' }
