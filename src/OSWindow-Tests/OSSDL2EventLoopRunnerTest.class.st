@@ -16,13 +16,6 @@ Class {
 	#tag : 'Tests'
 }
 
-{ #category : 'helpers' }
-OSSDL2EventLoopRunnerTest >> idleLoop [
-	"A loop that runs until it is stopped, without polling SDL"
-
-	^ [ Semaphore new wait ]
-]
-
 { #category : 'running' }
 OSSDL2EventLoopRunnerTest >> setUp [
 
@@ -41,9 +34,9 @@ OSSDL2EventLoopRunnerTest >> tearDown [
 OSSDL2EventLoopRunnerTest >> testEnsureRunningKeepsTheRunningLoop [
 
 	| loop |
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	loop := runner process.
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	self assert: runner process identicalTo: loop
 ]
 
@@ -51,10 +44,10 @@ OSSDL2EventLoopRunnerTest >> testEnsureRunningKeepsTheRunningLoop [
 OSSDL2EventLoopRunnerTest >> testEnsureRunningReplacesAnEndedLoop [
 
 	| loop |
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	loop := runner process.
 	loop terminate.
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	self deny: runner process identicalTo: loop.
 	self assert: runner isRunning
 ]
@@ -62,7 +55,7 @@ OSSDL2EventLoopRunnerTest >> testEnsureRunningReplacesAnEndedLoop [
 { #category : 'tests' }
 OSSDL2EventLoopRunnerTest >> testEnsureRunningStartsALoop [
 
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	self assert: runner isRunning
 ]
 
@@ -75,7 +68,7 @@ OSSDL2EventLoopRunnerTest >> testIsNotRunningWhenNew [
 { #category : 'tests' }
 OSSDL2EventLoopRunnerTest >> testLoopIsNamed [
 
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	self assert: runner process name equals: 'SDL2 Event loop'
 ]
 
@@ -83,9 +76,9 @@ OSSDL2EventLoopRunnerTest >> testLoopIsNamed [
 OSSDL2EventLoopRunnerTest >> testRestartRunningReplacesTheRunningLoop [
 
 	| loop |
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	loop := runner process.
-	runner restartRunning: self idleLoop.
+	runner restartRunning: [ Semaphore new wait ].
 	self assert: loop isTerminated.
 	self assert: runner isRunning
 ]
@@ -94,7 +87,7 @@ OSSDL2EventLoopRunnerTest >> testRestartRunningReplacesTheRunningLoop [
 OSSDL2EventLoopRunnerTest >> testStopTerminatesTheLoop [
 
 	| loop |
-	runner ensureRunning: self idleLoop.
+	runner ensureRunning: [ Semaphore new wait ].
 	loop := runner process.
 	runner stop.
 	self assert: loop isTerminated.
