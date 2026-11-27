@@ -188,9 +188,10 @@ SpRubFindReplaceDialog >> newReplacement [
 
 { #category : 'operations' }
 SpRubFindReplaceDialog >> replace [
+	"The service replaces the selected match and selects the next one"
+
 	self newReplacement.
-	service replace.
-	service find
+	service replace
 ]
 
 { #category : 'operations' }

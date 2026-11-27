@@ -1006,13 +1006,9 @@ RubTextEditor >> find: aKeyboardEvent [
 { #category : 'menu messages' }
 RubTextEditor >> findAgain [
 
-	"Find the text-to-find again."
+	"Find the text-to-find again, with the same options as the find bar (case, whole word, regex), and select it. Answer its range or nil."
 
-	| where |
-
-	where := self findReplaceService findNext.
-	where ifNotNil: [ self selectInterval: where ].
-	^ where
+	^ self findReplaceService findNext
 ]
 
 { #category : 'typing/selecting keys' }
@@ -2052,6 +2048,29 @@ RubTextEditor >> replaceAll: aRegex with: aText startingAt: startIdx [
 					self selectInvisiblyFrom: r first to: r last.
 					self replaceSelectionWith: aText ].
 			self selectInterval: selec ]
+]
+
+{ #category : 'find-select' }
+RubTextEditor >> replaceRanges: aCollectionOfIntervals with: aText [
+	"Replace each of the sorted, disjoint intervals of aCollectionOfIntervals with aText, as a single undoable edit that recomposes the text once. Put the caret after the last replacement."
+
+	| source first last stream position newText |
+	aCollectionOfIntervals ifEmpty: [ ^ self ].
+	source := self text.
+	first := aCollectionOfIntervals first first.
+	last := aCollectionOfIntervals last last.
+	stream := TextStream on: (Text new: last - first + 1).
+	position := first.
+	aCollectionOfIntervals do: [ :range |
+		range first > position ifTrue: [ stream nextPutAll: (source copyFrom: position to: range first - 1) ].
+		stream nextPutAll: aText asText.
+		position := range last + 1 ].
+	newText := stream contents.
+	self closeTypeIn.
+	self
+		replace: (first to: last)
+		with: newText
+		and: [ self selectAt: first + newText size ]
 ]
 
 { #category : 'accessing' }

@@ -1,5 +1,7 @@
 "
-I am a FindReplace service that allows to use Spec based dialog as a replacement of a native Morphic find & replace dialog. 
+I am the find and replace service of the IDE code editors (see BaselineOfIDE).
+
+Cmd+F opens the inline find bar inherited from FindReplaceService (RubFindReplaceBar), attached to the focused editor. When a text area cannot hold the inline bar, such as a single line text field, I open the Spec dialog SpRubFindReplaceDialog instead.
 
 I can currently work only with the default Morphic Spec backend.
 "
@@ -50,20 +52,9 @@ SpRubFindReplaceService >> openDialog [
 	dialogWindow := dialog openDialog 
 ]
 
-{ #category : 'event handling' }
-SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
-
-	self textArea hasSelection
-		ifTrue: [ self findText: self textArea selection ].
+{ #category : 'find bar' }
+SpRubFindReplaceService >> openFallbackFindDialog [
+	"The text area cannot hold the inline find bar (a single line text field for example): open the Spec dialog."
 
 	self openDialog
-]
-
-{ #category : 'event handling' }
-SpRubFindReplaceService >> whenTextAreaGotFocus: anAnnounce [
-	self textArea: anAnnounce morph
-]
-
-{ #category : 'event handling' }
-SpRubFindReplaceService >> whenTextAreaLostFocus: anAnnounce [
 ]
