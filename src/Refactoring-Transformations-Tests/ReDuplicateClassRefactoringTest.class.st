@@ -40,3 +40,24 @@ ReDuplicateClassRefactoringTest >> testDuplicateTrait [
 		detect: [ :change | change isKindOf: ReAddClassChange ].
 	self assert: addition builder isTrait
 ]
+
+{ #category : 'tests' }
+ReDuplicateClassRefactoringTest >> testEveryChangeIsInScopeOfTheSourceClass [
+
+	| refactoring changes scopes |
+	refactoring := ReDuplicateClassRefactoring
+		copyClass: Point
+		withName: #ReDuplicateClassScopeProbe.
+	refactoring
+		instanceMethods: #(  );
+		classMethods: #(  ).
+	changes := refactoring generateChanges changesToDisplayIn: nil.
+	scopes := {
+		(RBClassEnvironment classes: { Point }).
+		(RBClassHierarchyEnvironment class: Point).
+		(RBPackageEnvironment packageName: Point package name) }.
+
+	self assert: changes notEmpty.
+	scopes do: [ :env |
+		self assert: (changes allSatisfy: [ :change | change isInScope: env ]) ]
+]

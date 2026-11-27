@@ -173,8 +173,15 @@ ReCompositeChange >> initialize [
 ]
 
 { #category : 'testing' }
-ReCompositeChange >> isInScope: aRBBrowserEnvironment [ 
-	^ aRBBrowserEnvironment includesClass: self changeClass.
+ReCompositeChange >> isInScope: anEnvironment [
+
+	^ self targetsNewClass or: [ anEnvironment includesClass: self changeClass ]
+]
+
+{ #category : 'testing' }
+ReCompositeChange >> targetsNewClass [
+
+	^ self changeClass isNil
 ]
 
 { #category : 'accessing' }

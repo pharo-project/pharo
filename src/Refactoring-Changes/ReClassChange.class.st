@@ -105,8 +105,17 @@ ReClassChange >> hash [
 ]
 
 { #category : 'testing' }
-ReClassChange >> isInScope: aRBBrowserEnvironment [ 
-	^ aRBBrowserEnvironment includesClass: self changeClass.
+ReClassChange >> isInScope: anEnvironment [
+
+	^ self targetsNewClass or: [ anEnvironment includesClass: self changeClass ]
+]
+
+{ #category : 'testing' }
+ReClassChange >> targetsNewClass [
+	"A class that is not in the image yet can never belong to a scope.
+	The change must stay visible, or the class is never created."
+
+	^ self changeClass isNil
 ]
 
 { #category : 'private' }
