@@ -19,5 +19,19 @@ ReClassChangeTest >> testIsInScopeKeepsChangesForClassesNotYetCreated [
 	env := RBClassEnvironment classes: { Object }.
 
 	self assert: change changeClass isNil.
+	self assert: change targetsNewClass.
 	self assert: (change isInScope: env)
+]
+
+{ #category : 'tests' }
+ReClassChangeTest >> testIsInScopeFollowsScopeForAnExistingClass [
+
+	| change inside outside |
+	change := ReAddMethodChange compile: 'reClassChangeScopeProbe ^ 1' in: Point.
+	inside := RBClassEnvironment classes: { Point }.
+	outside := RBClassEnvironment classes: { String }.
+
+	self deny: change targetsNewClass.
+	self assert: (change isInScope: inside).
+	self deny: (change isInScope: outside)
 ]

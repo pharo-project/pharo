@@ -138,8 +138,6 @@ StClassAndMethodsSelectionPresenter >> initializeClassTablePresenter [
 	^ self newTable
 		beMultipleSelection;
 		addColumn: ((SpCheckBoxTableColumn title: '' evaluated: [ : im | self selectedClassMethods includes: im ])
-			onActivation: [ : im | self selectedClassMethods add: im ];
-			onDeactivation: [ : im | self selectedClassMethods remove: im ifAbsent: [  ] ];
 			beNotExpandable;
 			yourself);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ]);
@@ -173,8 +171,6 @@ StClassAndMethodsSelectionPresenter >> initializeInstanceTablePresenter [
 	^ self newTable	
 		beMultipleSelection;
 		addColumn: ((SpCheckBoxTableColumn title: '' evaluated: [ : im | self selectedInstanceMethods includes: im ])
-			onActivation: [ : im | self selectedInstanceMethods add: im ];
-			onDeactivation: [ : im | self selectedInstanceMethods remove: im ifAbsent: [  ] ];
 			beNotExpandable;
 			yourself);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ]);

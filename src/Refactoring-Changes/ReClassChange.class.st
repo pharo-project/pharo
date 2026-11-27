@@ -105,15 +105,17 @@ ReClassChange >> hash [
 ]
 
 { #category : 'testing' }
-ReClassChange >> isInScope: aRBBrowserEnvironment [
-	"A change may target a class that does not exist yet (e.g. duplicate/create class).
-	Those changes must stay visible in the preview; asking the environment about nil
-	would raise 'receiver of isMeta is nil' and abort the refactoring."
+ReClassChange >> isInScope: anEnvironment [
 
-	| class |
-	class := self changeClass.
-	class ifNil: [ ^ true ].
-	^ aRBBrowserEnvironment includesClass: class
+	^ self targetsNewClass or: [ anEnvironment includesClass: self changeClass ]
+]
+
+{ #category : 'testing' }
+ReClassChange >> targetsNewClass [
+	"A class that is not in the image yet can never belong to a scope.
+	The change must stay visible, or the class is never created."
+
+	^ self changeClass isNil
 ]
 
 { #category : 'private' }
