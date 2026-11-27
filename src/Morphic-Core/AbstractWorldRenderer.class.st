@@ -174,11 +174,18 @@ AbstractWorldRenderer class >> stopProfilingRenderingTime [
 { #category : 'activation' }
 AbstractWorldRenderer >> activate [
 
+	self activateWhenImageStarting: false
+]
+
+{ #category : 'activation' }
+AbstractWorldRenderer >> activateWhenImageStarting: isImageStarting [
+	"Activate me once. isImageStarting tells whether the image is starting from a snapshot"
+
 	alreadyActivated ifTrue: [
 		"Maybe I need to change the title of the window after saving the image"
 		^ self updateWindowTitle ].
 
-	self doActivate.
+	self doActivateWhenImageStarting: isImageStarting.
 	alreadyActivated := true
 ]
 
@@ -256,6 +263,13 @@ AbstractWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld [
 AbstractWorldRenderer >> doActivate [
 
 	self subclassResponsibility
+]
+
+{ #category : 'activation' }
+AbstractWorldRenderer >> doActivateWhenImageStarting: isImageStarting [
+	"Hook for the renderers that renew session resources when the image starts"
+
+	self doActivate
 ]
 
 { #category : 'rendering' }

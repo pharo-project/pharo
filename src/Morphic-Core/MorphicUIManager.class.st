@@ -46,7 +46,15 @@ MorphicUIManager class >> uiProcess [
 { #category : 'activation' }
 MorphicUIManager >> activate [
 
-	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
+	self activateWhenImageStarting: false
+]
+
+{ #category : 'activation' }
+MorphicUIManager >> activateWhenImageStarting: isImageStarting [
+
+	self currentWorld worldState
+		worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld)
+		whenImageStarting: isImageStarting.
 	self currentWorld currentCursor: self currentWorld currentCursor.
 
 	self currentWorld ifNotNil: [ :world |

@@ -317,14 +317,15 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 
 { #category : 'events - processing' }
 OSSDL2Driver >> setupEventLoop [
-
 	"Create a new event loop.
-	Precondition: there is no pre-existing event loop"
-	
+	Precondition: there is no pre-existing event loop.
+	The loop is forked in the default execution environment: it belongs to the whole image,
+	so it must survive the test or the code that happened to start it"
+
 	EventLoopProcess ifNotNil: [ self error: 'Cannot launch new event loop. One event loop is in progress' ].
 
-	EventLoopProcess := [ self eventLoop ] forkAt:
-		                    Processor lowIOPriority.
+	DefaultExecutionEnvironment beActiveDuring: [
+		EventLoopProcess := [ self eventLoop ] forkAt: Processor lowIOPriority ].
 	EventLoopProcess name: 'SDL2 Event loop'
 ]
 
