@@ -24,6 +24,66 @@ Class {
 	#tag : 'Editing-FindReplaceService'
 }
 
+{ #category : 'drawing' }
+RubFindBarButton class >> fillRounded: aRectangle radius: aNumber color: aColor on: aCanvas [
+	"Fill aRectangle with rounded corners using only pixel aligned rectangles: crisp straight edges and symmetric corners, without the irregular edges of an aliased polygon"
+
+	| rect spans cornerRows |
+	rect := aRectangle rounded.
+	spans := self rowSpansOf: rect radius: aNumber.
+	cornerRows := (aNumber min: rect height // 2) rounded.
+	"the rows of the corners one by one, the straight middle at once"
+	1 to: spans size do: [ :i |
+		(i <= cornerRows or: [ i > (spans size - cornerRows) ]) ifTrue: [
+			aCanvas fillRectangle: ((spans at: i) first @ (rect top + i - 1) corner: (spans at: i) last + 1 @ (rect top + i)) color: aColor ] ].
+	spans size > (cornerRows * 2) ifTrue: [
+		aCanvas fillRectangle: (rect left @ (rect top + cornerRows) corner: rect right @ (rect bottom - cornerRows)) color: aColor ]
+]
+
+{ #category : 'drawing' }
+RubFindBarButton class >> frameRounded: aRectangle radius: aNumber color: aColor on: aCanvas [
+	"Draw a 1 pixel outline of aRectangle with rounded corners, pixel aligned: the outer shape minus the shape inset by one pixel, row by row"
+
+	| rect outer inner |
+	rect := aRectangle rounded.
+	outer := self rowSpansOf: rect radius: aNumber.
+	inner := self rowSpansOf: (rect insetBy: 1) radius: aNumber - 1.
+	1 to: outer size do: [ :i |
+		| span y |
+		span := outer at: i.
+		y := rect top + i - 1.
+		(i = 1 or: [ i = outer size or: [ inner isEmpty ] ])
+			ifTrue: [ aCanvas fillRectangle: (span first @ y corner: span last + 1 @ (y + 1)) color: aColor ]
+			ifFalse: [
+				| innerSpan |
+				innerSpan := inner at: i - 1.
+				aCanvas fillRectangle: (span first @ y corner: innerSpan first @ (y + 1)) color: aColor.
+				aCanvas fillRectangle: (innerSpan last + 1 @ y corner: span last + 1 @ (y + 1)) color: aColor ] ]
+]
+
+{ #category : 'drawing' }
+RubFindBarButton class >> rowSpansOf: aRectangle radius: aNumber [
+	"Answer, for each pixel row of aRectangle, the interval of the x coordinates covered by aRectangle with corners of radius aNumber"
+
+	| rect radius height |
+	rect := aRectangle rounded.
+	height := rect height.
+	height < 1 ifTrue: [ ^ #(  ) ].
+	radius := aNumber min: (rect width min: height) / 2.
+	^ (0 to: height - 1) collect: [ :row |
+		  | dy inset |
+		  dy := row < radius
+			        ifTrue: [ radius - row - 0.5 ]
+			        ifFalse: [
+				        row >= (height - radius)
+					        ifTrue: [ row - (height - radius) + 0.5 ]
+					        ifFalse: [ 0 ] ].
+		  inset := dy > 0
+			           ifTrue: [ (radius - (radius squared - dy squared max: 0) sqrt) rounded ]
+			           ifFalse: [ 0 ].
+		  rect left + inset to: rect right - 1 - inset ]
+]
+
 { #category : 'instance creation' }
 RubFindBarButton class >> glyph: aSymbol help: aString action: aBlock [
 
@@ -32,25 +92,6 @@ RubFindBarButton class >> glyph: aSymbol help: aString action: aBlock [
 		  setBalloonText: aString;
 		  action: aBlock;
 		  yourself
-]
-
-{ #category : 'drawing' }
-RubFindBarButton class >> roundedVertices: aRectangle radius: aNumber [
-	"Answer the vertices of aRectangle with rounded corners, to draw it with Canvas>>drawPolygon:color:borderWidth:borderColor: (the canvases have no rounded rectangle primitive)"
-
-	| radius corners |
-	radius := aNumber min: (aRectangle width min: aRectangle height) / 2.
-	corners := {
-		           (aRectangle topRight + (radius negated @ radius) -> 270).
-		           (aRectangle bottomRight - radius -> 0).
-		           (aRectangle bottomLeft + (radius @ radius negated) -> 90).
-		           (aRectangle topLeft + radius -> 180) }.
-	^ Array streamContents: [ :stream |
-		  corners do: [ :each |
-			  0 to: 90 by: 15 do: [ :degrees |
-				  | angle |
-				  angle := (each value + degrees) degreesToRadians.
-				  stream nextPut: each key + ((angle cos * radius) @ (angle sin * radius)) ] ] ]
 ]
 
 { #category : 'instance creation' }
@@ -79,7 +120,7 @@ RubFindBarButton >> beToggle [
 RubFindBarButton >> drawGlyphOn: aCanvas color: aColor [
 
 	| c lines |
-	c := self bounds center.
+	c := self bounds center rounded.
 	lines := glyph caseOf: {
 			         ([ #chevronRight ] -> [ { (-2 @ -5). (3 @ 0). (-2 @ 5) } ]).
 			         ([ #chevronDown ] -> [ { (-5 @ -2). (0 @ 3). (5 @ -2) } ]).
@@ -89,11 +130,7 @@ RubFindBarButton >> drawGlyphOn: aCanvas color: aColor [
 	lines ifNil: [
 		aCanvas line: c + (-4 @ -4) to: c + (4 @ 4) width: 1 color: aColor.
 		aCanvas line: c + (-4 @ 4) to: c + (4 @ -4) width: 1 color: aColor.
-		aCanvas line: c + (-4 @ -3) to: c + (3 @ 4) width: 1 color: (aColor alpha: aColor alpha * 0.4).
-		aCanvas line: c + (-4 @ 3) to: c + (3 @ -4) width: 1 color: (aColor alpha: aColor alpha * 0.4).
 		^ self ].
-	"A faint second pass one pixel lower thickens the strokes a little, like antialiasing"
-	1 to: lines size - 1 do: [ :i | aCanvas line: c + (lines at: i) + (0 @ 1) to: c + (lines at: i + 1) + (0 @ 1) width: 1 color: (aColor alpha: aColor alpha * 0.4) ].
 	1 to: lines size - 1 do: [ :i | aCanvas line: c + (lines at: i) to: c + (lines at: i + 1) width: 1 color: aColor ]
 ]
 
@@ -109,12 +146,8 @@ RubFindBarButton >> drawOn: aCanvas [
 		fill := accent alpha: 0.3.
 		border := accent ].
 	(isPill and: [ border isNil ]) ifTrue: [ border := self theme borderColor ].
-	(fill notNil or: [ border notNil ]) ifTrue: [
-		aCanvas
-			drawPolygon: (self class roundedVertices: bounds radius: 4)
-			color: (fill ifNil: [ Color transparent ])
-			borderWidth: (border ifNil: [ 0 ] ifNotNil: [ 1 ])
-			borderColor: (border ifNil: [ Color transparent ]) ].
+	fill ifNotNil: [ self class fillRounded: bounds radius: 4 color: fill on: aCanvas ].
+	border ifNotNil: [ self class frameRounded: bounds radius: 4 color: border on: aCanvas ].
 	textColor := enabled
 		             ifTrue: [ self theme textColor ]
 		             ifFalse: [ self theme textColor alpha: 0.35 ].

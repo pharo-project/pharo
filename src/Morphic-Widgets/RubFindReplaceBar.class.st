@@ -118,17 +118,15 @@ RubFindReplaceBar >> drawOn: aCanvas [
 	| card radius |
 	card := self cardBounds.
 	radius := 6.
-	1 to: self shadowMargin do: [ :i |
-		aCanvas
-			drawPolygon: (RubFindBarButton roundedVertices: ((card translateBy: 0 @ 1) expandBy: i) radius: radius + i)
+	"a soft shadow: two translucent layers below the card"
+	1 to: 2 do: [ :i |
+		RubFindBarButton
+			fillRounded: ((card translateBy: 0 @ i) expandBy: (i - 1))
+			radius: radius + i - 1
 			color: (self shadowColor alpha: self shadowColor alpha / (i + 2))
-			borderWidth: 0
-			borderColor: Color transparent ].
-	aCanvas
-		drawPolygon: (RubFindBarButton roundedVertices: card radius: radius)
-		color: self cardColor
-		borderWidth: 1
-		borderColor: self theme borderColor.
+			on: aCanvas ].
+	RubFindBarButton fillRounded: card radius: radius color: self cardColor on: aCanvas.
+	RubFindBarButton frameRounded: card radius: radius color: self theme borderColor on: aCanvas.
 	self drawBox: findBoxBounds focused: findField textArea hasKeyboardFocus on: aCanvas.
 	replaceVisible ifTrue: [ self drawBox: replaceBoxBounds focused: replaceField textArea hasKeyboardFocus on: aCanvas ].
 	"a thin separator between the count and the navigation buttons"
@@ -611,18 +609,15 @@ RubFindReplaceBar >> drawBox: aRectangle focused: aBoolean on: aCanvas [
 	aRectangle ifNil: [ ^ self ].
 	aBoolean ifTrue: [
 		"a soft outer glow makes the focus ring readable in light themes too"
-		aCanvas
-			drawPolygon: (RubFindBarButton roundedVertices: (aRectangle expandBy: 1) radius: 5)
-			color: Color transparent
-			borderWidth: 1
-			borderColor: (self accentColor alpha: 0.45) ].
-	aCanvas
-		drawPolygon: (RubFindBarButton roundedVertices: aRectangle radius: 4)
-		color: self boxColor
-		borderWidth: 1
-		borderColor: (aBoolean
+		RubFindBarButton frameRounded: (aRectangle expandBy: 1) radius: 5 color: (self accentColor alpha: 0.45) on: aCanvas ].
+	RubFindBarButton fillRounded: aRectangle radius: 4 color: self boxColor on: aCanvas.
+	RubFindBarButton
+		frameRounded: aRectangle
+		radius: 4
+		color: (aBoolean
 				 ifTrue: [ self accentColor ]
 				 ifFalse: [ self theme borderColor ])
+		on: aCanvas
 ]
 
 { #category : 'events' }

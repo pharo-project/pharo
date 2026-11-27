@@ -201,6 +201,22 @@ SpRubFindReplaceBarTest >> testCurrentMatchIsNeverHiddenUnderTheBar [
 ]
 
 { #category : 'tests' }
+SpRubFindReplaceBarTest >> testRoundedShapesArePixelAlignedAndSymmetric [
+	"The bar paints its rounded shapes row by row: straight edges, and the same corner on the four sides"
+
+	| spans |
+	spans := RubFindBarButton rowSpansOf: (10 @ 20 corner: 50 @ 32) radius: 4.
+	self assert: spans size equals: 12.
+	spans doWithIndex: [ :span :i |
+		| mirror |
+		mirror := spans at: spans size + 1 - i.
+		self assert: span equals: mirror.
+		self assert: span first - 10 equals: 49 - span last ].
+	(5 to: 8) do: [ :i | self assert: (spans at: i) equals: (10 to: 49) ].
+	self assert: spans first first > 10
+]
+
+{ #category : 'tests' }
 SpRubFindReplaceBarTest >> testEscapeInTheEditorClosesTheBar [
 
 	self openFind.
