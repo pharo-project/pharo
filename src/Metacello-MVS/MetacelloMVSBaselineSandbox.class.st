@@ -48,21 +48,37 @@ MetacelloMVSBaselineSandbox >> anonymousSubclassOf: aClass named: aSymbol with: 
 
 { #category : 'reading' }
 MetacelloMVSBaselineSandbox >> baselineClass [
-	"An anonymous subclass of BaselineOf with the variables and methods of my definitions, installed nowhere: a class of the same name in the image is neither used nor changed. The extensions the baseline package makes to other classes are left out: compiled here they would land in the wrong class, and in a package of the image"
+	"An anonymous subclass of BaselineOf with the variables and methods of my definitions, installed nowhere: a class of the same name in the image is neither used nor changed, and its methods are neither logged nor announced (see compileSilently:in:classified:). The extensions the baseline package makes to other classes are left out: compiled here they would land in the wrong class, and in a package of the image"
 
 	| classDefinition baselineClass |
 	classDefinition := definitions detect: [ :each | each isClassDefinition ].
 	baselineClass := self anonymousSubclassOf: self repositorySuperclass named: classDefinition className with: [ :builder |
-			                 builder
-				                 slots: (classDefinition instVarNames collect: [ :each | each asSymbol asSlot ]);
-				                 classSlots: (classDefinition classInstVarNames collect: [ :each | each asSymbol asSlot ]);
-				                 sharedVariablesFromString: (' ' join: classDefinition classVarNames) ].
+		                 builder
+			                 slots: (classDefinition instVarNames collect: [ :each | each asSymbol asSlot ]);
+			                 classSlots: (classDefinition classInstVarNames collect: [ :each | each asSymbol asSlot ]);
+			                 sharedVariablesFromString: (' ' join: classDefinition classVarNames) ].
 	definitions do: [ :each |
-			(each isMethodDefinition and: [ each className = classDefinition className ]) ifTrue: [
-					(each classIsMeta
-						 ifTrue: [ baselineClass class ]
-						 ifFalse: [ baselineClass ]) compile: each source classified: each category ] ].
+		(each isMethodDefinition and: [ each className = classDefinition className ]) ifTrue: [
+			self
+				compileSilently: each source
+				in: (each classIsMeta
+					 ifTrue: [ baselineClass class ]
+					 ifFalse: [ baselineClass ])
+				classified: each category ] ].
 	^ baselineClass
+]
+
+{ #category : 'private' }
+MetacelloMVSBaselineSandbox >> compileSilently: aString in: aBehavior classified: aProtocol [
+	"Compile aString in aBehavior, a class installed nowhere, without logging it in the changes file nor announcing it: Epicea and the tools would take it for a change of the class of that name in the image"
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		aBehavior
+			compile: aString
+			classified: aProtocol
+			withStamp: nil
+			notifying: nil
+			logSource: false ]
 ]
 
 { #category : 'reading' }
@@ -136,9 +152,9 @@ MetacelloMVSBaselineSandbox >> repositorySuperclass [
 	| superclass |
 	repositoryString ifNil: [ ^ BaselineOf ].
 	superclass := self anonymousSubclassOf: BaselineOf named: #MetacelloMVSSandboxBaseline with: [ :builder |  ].
-	superclass
-		compile: 'packageRepositoryURLForSpec: spec ^ ' , repositoryString printString classified: 'mvs';
-		compile: 'packageRepositoryURL ^ ' , repositoryString printString classified: 'mvs'.
+	self
+		compileSilently: 'packageRepositoryURLForSpec: spec ^ ' , repositoryString printString in: superclass classified: 'mvs';
+		compileSilently: 'packageRepositoryURL ^ ' , repositoryString printString in: superclass classified: 'mvs'.
 	^ superclass
 ]
 

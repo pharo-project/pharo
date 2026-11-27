@@ -19,6 +19,20 @@ MetacelloMVSBaselineSandboxTest >> descriptionOf: aProjectSpec [
 ]
 
 { #category : 'running' }
+MetacelloMVSBaselineSandboxTest >> fooSandbox [
+
+	^ self sandboxOnTonel: (self tonelOf: { (self baselineMethod: #( 'spec for: #common do: [ spec package: ''Foo'' ]' )) })
+]
+
+{ #category : 'running' }
+MetacelloMVSBaselineSandboxTest >> fooSandboxWithRepository [
+
+	^ self
+		  sandboxOnTonel: (self tonelOf: { (self baselineMethod: #( 'spec for: #common do: [ spec package: ''Foo'' ]' )) })
+		  repository: 'github://o/foo:v1.0.0/src'
+]
+
+{ #category : 'running' }
 MetacelloMVSBaselineSandboxTest >> projectOf: aProjectSpec [
 	"The project a spec read from a baseline names: its baseline's"
 
@@ -135,6 +149,35 @@ MetacelloMVSBaselineSandboxTest >> testAnAliasKeepsItsNameAndWhatItLoads [
 ]
 
 { #category : 'tests' }
+MetacelloMVSBaselineSandboxTest >> testAnnouncesNothing [
+	"Compiling the anonymous baseline class must not announce its methods to the system, so that Epicea and the tools do not record them as changes of a class of that name"
+
+	| sandbox announcements |
+	sandbox := self fooSandbox.
+	announcements := OrderedCollection new.
+	SystemAnnouncer uniqueInstance
+		when: MethodAdded , ProtocolAdded
+		do: [ :announcement | announcements add: announcement ]
+		for: self.
+	[ sandbox baselineClass ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
+	self assert: announcements isEmpty
+]
+
+{ #category : 'tests' }
+MetacelloMVSBaselineSandboxTest >> testAnnouncesNothingWhenItKnowsTheRepository [
+
+	| sandbox announcements |
+	sandbox := self fooSandboxWithRepository.
+	announcements := OrderedCollection new.
+	SystemAnnouncer uniqueInstance
+		when: MethodAdded , ProtocolAdded
+		do: [ :announcement | announcements add: announcement ]
+		for: self.
+	[ sandbox baselineClass ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
+	self assert: announcements isEmpty
+]
+
+{ #category : 'tests' }
 MetacelloMVSBaselineSandboxTest >> testFindsTheRemovedMetacelloAPI [
 
 	| sandbox |
@@ -201,6 +244,28 @@ MetacelloMVSBaselineSandboxTest >> testLeavesAClassOfTheSameNameUntouched [
 	self assert: BaselineOfTestToLock2 superclass identicalTo: superclassBefore.
 	self assert: (BaselineOfTestToLock2 >> #baseline:) sourceCode equals: sourceBefore.
 	self assert: sandboxClass version spec packageNames asArray equals: #( 'Other' )
+]
+
+{ #category : 'tests' }
+MetacelloMVSBaselineSandboxTest >> testLeavesTheChangesFileUntouched [
+	"The anonymous baseline class is installed nowhere: compiling its methods must not log them in the changes file"
+
+	| sandbox before |
+	sandbox := self fooSandbox.
+	before := SourceFiles changesFileStream size.
+	sandbox baselineClass.
+	self assert: SourceFiles changesFileStream size equals: before
+]
+
+{ #category : 'tests' }
+MetacelloMVSBaselineSandboxTest >> testLeavesTheChangesFileUntouchedWhenItKnowsTheRepository [
+	"The superclass answering where the baseline is read from is installed nowhere either"
+
+	| sandbox before |
+	sandbox := self fooSandboxWithRepository.
+	before := SourceFiles changesFileStream size.
+	sandbox baselineClass.
+	self assert: SourceFiles changesFileStream size equals: before
 ]
 
 { #category : 'tests' }
