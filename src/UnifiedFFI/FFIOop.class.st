@@ -57,3 +57,9 @@ FFIOop >> needsArityUnpacking [
 FFIOop >> stackValueParameterClass [
 	^ #integer
 ]
+
+{ #category : 'accessing' }
+FFIOop >> tfExternalType [
+
+	^ TFDerivedType objectPointer
+]

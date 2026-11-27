@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestUnifiedFFITests class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Zinc-Character-Encoding-Core' #'System-Benchmark')
+]
+
 { #category : 'code-critics' }
 ManifestUnifiedFFITests class >> ruleGRTemporaryNeitherReadNorWrittenRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#FFICalloutAPITest #testByteArrayToExternalAddress #false)) #'2019-07-05T11:54:43.174226+02:00') )

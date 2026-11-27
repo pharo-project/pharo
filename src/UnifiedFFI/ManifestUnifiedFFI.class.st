@@ -13,5 +13,5 @@ Class {
 ManifestUnifiedFFI class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'Zinc-Character-Encoding-Core')
+	^ #(#'Zinc-Character-Encoding-Core' #'Transcript-NonInteractive')
 ]

@@ -39,3 +39,9 @@ FFIBit >> offsetPointerReadFieldAt: offsetVariableName [
 		self emitSelector.
 		offsetVariableName }
 ]
+
+{ #category : 'accessing' }
+FFIBit >> tfExternalType [
+
+	^ FFIArchitecture forCurrentArchitecture tfBitType
+]

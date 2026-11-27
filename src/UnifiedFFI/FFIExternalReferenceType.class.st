@@ -166,3 +166,9 @@ FFIExternalReferenceType >> printOn: aStream [
 FFIExternalReferenceType >> stackValueParameterClass [
 	^ #integer
 ]
+
+{ #category : 'accessing' }
+FFIExternalReferenceType >> tfExternalType [
+
+	^ TFBasicType pointer
+]

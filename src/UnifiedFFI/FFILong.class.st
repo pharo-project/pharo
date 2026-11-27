@@ -39,3 +39,9 @@ FFILong >> offsetPointerReadFieldAt: offsetVariableName [
 		self emitSelector.
 		offsetVariableName }
 ]
+
+{ #category : 'accessing' }
+FFILong >> tfExternalType [
+
+	^ TFBasicType slong
+]

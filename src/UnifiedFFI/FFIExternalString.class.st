@@ -56,3 +56,9 @@ FFIExternalString >> extractFromCallbackOn: aFFICallbackArgumentReader [
 FFIExternalString >> stackValueParameterClass [
 	^ #integer
 ]
+
+{ #category : 'accessing' }
+FFIExternalString >> tfExternalType [
+
+	^ TFDerivedType string
+]

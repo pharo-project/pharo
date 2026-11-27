@@ -56,3 +56,15 @@ FFI_x86_64_Windows >> newCallbackArgumentReaderForCallback: aCallback inContext:
 		forCallback: aCallback
 		inContext: aCallbackContext
 ]
+
+{ #category : 'accessing' }
+FFI_x86_64_Windows >> tfBitType [
+
+	^ TFBasicType sint32
+]
+
+{ #category : 'accessing' }
+FFI_x86_64_Windows >> tfUBitType [
+
+	^ TFBasicType uint32
+]

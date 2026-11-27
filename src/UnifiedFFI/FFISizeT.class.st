@@ -90,6 +90,12 @@ FFISizeT >> readFieldAt: byteOffset [
 ]
 
 { #category : 'accessing' }
+FFISizeT >> tfExternalType [
+
+	^ FFIArchitecture forCurrentArchitecture tfexternalSizeTType
+]
+
+{ #category : 'accessing' }
 FFISizeT >> writeFieldAt: byteOffset with: valueName [
 
 	self isPointer ifTrue: [

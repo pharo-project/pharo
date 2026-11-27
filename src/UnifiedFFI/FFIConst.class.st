@@ -84,6 +84,12 @@ FFIConst >> stackValueParameterClass [
 ]
 
 { #category : 'accessing' }
+FFIConst >> tfExternalType [
+
+	^ self type tfExternalType
+]
+
+{ #category : 'accessing' }
 FFIConst >> type [
 	^ type
 ]

@@ -1,8 +1,9 @@
 Class {
 	#name : 'FFIValueHolderTest',
 	#superclass : 'TestCase',
-	#category : 'UnifiedFFI-Tests',
-	#package : 'UnifiedFFI-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'private - ffi' }

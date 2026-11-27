@@ -1,21 +1,6 @@
 Extension { #name : 'OSPlatform' }
 
 { #category : '*System-OSEnvironments' }
-OSPlatform >> environmentVariableNamed: aKey ifAbsent: aBlock [
-	"Gets the value of an environment variable called `aKey`. Execute aBlock if absent.
-	As there is nowhere to look up the key just evaluate the given block"
-
-	^ aBlock value
-]
-
-{ #category : '*System-OSEnvironments' }
-OSPlatform >> environmentVariableNamed: aKey put: aValue [
-	"Do nothing by default"
-
-	
-]
-
-{ #category : '*System-OSEnvironments' }
 OSPlatform >> environmentVariablesDo: aBlock [
 	"Nothing by default"
 

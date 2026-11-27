@@ -139,6 +139,12 @@ FFIExternalEnumerationType >> representationType: anObject [
 	representationType := anObject
 ]
 
+{ #category : 'accessing' }
+FFIExternalEnumerationType >> tfExternalType [
+
+	^ self representationType tfExternalType
+]
+
 { #category : 'emitting code' }
 FFIExternalEnumerationType >> writeFieldAt: byteOffset with: valueName [
 	^ String streamContents: [ :stream |

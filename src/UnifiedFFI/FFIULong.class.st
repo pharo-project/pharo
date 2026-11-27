@@ -95,6 +95,12 @@ FFIULong >> readFieldAt: byteOffset [
 		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
+{ #category : 'accessing' }
+FFIULong >> tfExternalType [
+
+	^ TFBasicType ulong
+]
+
 { #category : 'emitting code' }
 FFIULong >> writeFieldAt: byteOffset with: valueName [
 	self isPointer ifTrue: [

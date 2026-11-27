@@ -58,3 +58,9 @@ FFIFloat32 >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	aCallbackArgumentReader extractFloat
 ]
+
+{ #category : 'accessing' }
+FFIFloat32 >> tfExternalType [
+
+	^ TFBasicType float
+]

@@ -142,3 +142,24 @@ FFIExternalStructureType >> readReferenceAt: byteOffset [
 FFIExternalStructureType >> stackValueParameterClass [
 	^ #structure
 ]
+
+{ #category : 'accessing' }
+FFIExternalStructureType >> tfExternalType [
+
+	^ TFStructType
+		  forClass: self objectClass
+		  withMembers: (self objectClass fieldSpec fields values flatCollect: [ :aField | aField tfExternalTypeForStructureWithArity ])
+]
+
+{ #category : 'accessing' }
+FFIExternalStructureType >> tfExternalTypeWithArity [
+
+	self pointerArity = 1 ifTrue: [
+			^ TFPointerToStructType new
+				  targetClass: self objectClass;
+				  yourself ].
+
+	^ self pointerArity > 1
+		  ifTrue: [ TFBasicType pointer ]
+		  ifFalse: [ self tfExternalType ]
+]

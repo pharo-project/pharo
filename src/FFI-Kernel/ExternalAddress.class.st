@@ -266,15 +266,6 @@ ExternalAddress >> clone [
 ]
 
 { #category : 'copying' }
-ExternalAddress >> copyFrom: startIndex to: endIndex [
-	| result size |
-	size := endIndex - startIndex + 1.
-	result := ByteArray new: size.
-	LibC memCopy: (self + (startIndex - 1)) to: result size: size.
-	^ result
-]
-
-{ #category : 'copying' }
 ExternalAddress >> copyFromOffset: startZeroBasedOffset to: endZeroBasedOffset [
 	^ self copyFrom: startZeroBasedOffset + 1 to: endZeroBasedOffset + 1
 ]
@@ -483,21 +474,6 @@ ExternalAddress >> printOn: aStream [
 	"print this as a hex address ('@ 16rFFFFFFFF') to distinguish it from ByteArrays"
 
 	aStream nextPutAll: '@ '; nextPutAll: (self asInteger storeStringBase: 16 length: 11 padded: true)
-]
-
-{ #category : 'copying' }
-ExternalAddress >> replaceFrom: start to: stop with: replacement startingAt: repStart [
-	| dstAddress srcAddress repSize |
-
-	self flag: #pharoTodo. "Maybe replace it with a primitive (like the one at Alien)?"
-	repSize := stop - start + 1.
-	dstAddress := start = 1
-		ifTrue: [ self ]
-		ifFalse: [ self + (start - 1) ].
-	srcAddress := repStart = 1
-		ifTrue: [ replacement ]
-		ifFalse: [ replacement copyFrom: repStart to: repStart + repSize ].
-	LibC memCopy: srcAddress to: dstAddress size: repSize
 ]
 
 { #category : 'accessing' }

@@ -68,7 +68,7 @@ FFILibraryFinder >> knownPaths [
 { #category : 'accessing' }
 FFILibraryFinder >> ldLibraryPaths [
 
-	^ (OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'
+	^ (OSPlatform current environmentVariableNamed: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'
 ]
 
 { #category : 'accessing' }

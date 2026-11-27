@@ -45,3 +45,9 @@ FFIBool >> defaultReturnOnError [
 FFIBool >> stackValueParameterClass [
 	^ #integer
 ]
+
+{ #category : 'accessing' }
+FFIBool >> tfExternalType [
+
+	^ TFDerivedType boolean
+]

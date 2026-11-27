@@ -34,3 +34,8 @@ FFI_x86_64 >> externalULongType [
 FFI_x86_64 >> returnSingleFloatsAsDoubles [
 	^ false
 ]
+
+{ #category : 'accessing' }
+FFI_x86_64 >> tfexternalSizeTType [
+	^ TFBasicType uint64
+]
