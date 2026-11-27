@@ -5,7 +5,7 @@ Class {
 	#name : 'OCEvaluationTest',
 	#superclass : 'TestCase',
 	#category : 'AST-Core-Tests-Nodes',
-	#package : 'AST-Core-Tests',
+	#package : 'OpalCompiler-Tests',
 	#tag : 'Nodes'
 }
 
