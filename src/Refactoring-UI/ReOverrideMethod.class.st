@@ -13,8 +13,7 @@ ReOverrideMethod >> browse [
 		title: 'Impossible to refactor!';
 		acceptLabel: 'Sure!';
 		cancelLabel: 'No, forget it';
-		label: ' The newly named method could override existing methods.\n 
-		Do you want to browse superclasses method of ', refactoring newSelector;
+		message: ('The newly named method could override existing methods. Do you want to browse the implementors of {1}?' format: { refactoring newSelector });
 		onAccept: [ (Smalltalk tools toolNamed: #messageList) browseImplementorsOf: refactoring newSelector];
 		onCancel: [ ];
 		openDialog
