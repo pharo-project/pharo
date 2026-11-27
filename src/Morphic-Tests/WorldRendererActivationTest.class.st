@@ -3,7 +3,7 @@ I check that the activation of a world renderer tells it whether the image is st
 
 ## Design Rationale
 
-- Only `UIManager class>>startUp:` knows that the image is starting. The flag goes down through `WorldState>>worldRenderer:whenImageStarting:` and `AbstractWorldRenderer>>activateWhenImageStarting:` to `doActivateWhenImageStarting:`, where a renderer can renew what did not survive the previous session. The former selectors, `worldRenderer:` and `activate`, tell that the image is not starting.
+- Only `UIManager class>>startUp:` knows that the image is starting. The flag goes down through `WorldState>>worldRenderer:whenImageStarting:` and `AbstractWorldRenderer>>activateWhenImageStarting:` to `doActivateWhenImageStarting:`, where a renderer can renew what did not survive the previous session. `WorldState>>worldRenderer:`, sent for instance when a native window opens, tells that the image is not starting.
 - I use a `WorldRendererMock`, which only remembers the flag: no window opens, so I run in a headless image too.
 "
 Class {
@@ -22,13 +22,6 @@ WorldRendererActivationTest >> setUp [
 
 	super setUp.
 	renderer := WorldRendererMock new
-]
-
-{ #category : 'tests' }
-WorldRendererActivationTest >> testActivateTellsThatTheImageIsNotStarting [
-
-	renderer activate.
-	self deny: renderer imageStarting
 ]
 
 { #category : 'tests' }

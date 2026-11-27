@@ -230,12 +230,6 @@ OSWorldRenderer >> display [
 	^ display
 ]
 
-{ #category : 'private' }
-OSWorldRenderer >> doActivate [
-
-	self doActivateWhenImageStarting: false
-]
-
 { #category : 'activation' }
 OSWorldRenderer >> doActivateWhenImageStarting: isImageStarting [
 	"Open my OS window.
