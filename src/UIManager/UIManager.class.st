@@ -26,9 +26,18 @@ UIManager class >> default [
 { #category : 'initialization' }
 UIManager class >> default: aUIManager [
 
+	self default: aUIManager whenImageStarting: false
+]
+
+{ #category : 'initialization' }
+UIManager class >> default: aUIManager whenImageStarting: isImageStarting [
+	"Install aUIManager as the default one and activate it.
+	isImageStarting tells whether the image is starting from a snapshot,
+	so that the UI can renew what did not survive the previous session"
+
 	Default ifNotNil: [ :mgr | mgr deactivate ].
 	Default := aUIManager.
-	Default activate
+	Default activateWhenImageStarting: isImageStarting
 ]
 
 { #category : 'initialization' }
@@ -75,7 +84,7 @@ UIManager class >> startUp: isImageStarting [
 	"Install the right UIManager"
 
 	isImageStarting ifFalse: [ ^ false ].
-	self default: self forCurrentSystemConfiguration
+	self default: self forCurrentSystemConfiguration whenImageStarting: isImageStarting
 ]
 
 { #category : 'ui TEasilyThemed' }
@@ -92,8 +101,10 @@ UIManager >> abort: aStringOrText title: aString [
 	^self subclassResponsibility
 ]
 
-{ #category : 'private' }
-UIManager >> activate [
+{ #category : 'activation' }
+UIManager >> activateWhenImageStarting: isImageStarting [
+	"Activate me. isImageStarting tells whether the image is starting from a snapshot.
+	Managers that renew session resources when the image starts override me"
 ]
 
 { #category : 'ui TEasilyThemed' }

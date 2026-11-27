@@ -75,7 +75,7 @@ OSWorldRenderer class >> restart [
 	OSSDL2Driver shutDown: true.
 
 	self startUp: true.
-	UIManager default activate.
+	UIManager default activateWhenImageStarting: false.
 
 	oldWindows 
 	 select: [ :e | e sdl2Window isNotNil ]
@@ -230,8 +230,11 @@ OSWorldRenderer >> display [
 	^ display
 ]
 
-{ #category : 'private' }
-OSWorldRenderer >> doActivate [
+{ #category : 'activation' }
+OSWorldRenderer >> doActivateWhenImageStarting: isImageStarting [
+	"Open my OS window.
+	When the image starts, the driver replaces the event loop of the previous session.
+	Otherwise, as when a native window opens, it keeps the running loop shared by all windows"
 
 	| attributes initialExtent |
 	initialExtent := world worldState realWindowExtent ifNil: [
@@ -257,8 +260,7 @@ OSWorldRenderer >> doActivate [
 	driver
 		afterSetWindowTitle: self defaultWindowTitle
 		onWindow: osWindow.
-	"Keep the running event loop: it is shared by all windows"
-	driver startUp: false.
+	driver startUp: isImageStarting.
 
 	world worldState doFullRepaint.
 	world displayWorld.

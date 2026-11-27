@@ -751,6 +751,14 @@ WorldState >> worldRenderer [
 { #category : 'accessing' }
 WorldState >> worldRenderer: anObject [
 
-	worldRenderer := anObject.
-	worldRenderer activate
+	self worldRenderer: anObject whenImageStarting: false
+]
+
+{ #category : 'accessing' }
+WorldState >> worldRenderer: aWorldRenderer whenImageStarting: isImageStarting [
+	"Set and activate aWorldRenderer.
+	isImageStarting tells it whether the image is starting from a snapshot"
+
+	worldRenderer := aWorldRenderer.
+	worldRenderer activateWhenImageStarting: isImageStarting
 ]

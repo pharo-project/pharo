@@ -47,8 +47,8 @@ NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 NullWorldRenderer >> deactivate [
 ]
 
-{ #category : 'private' }
-NullWorldRenderer >> doActivate [
+{ #category : 'activation' }
+NullWorldRenderer >> doActivateWhenImageStarting: isImageStarting [
 ]
 
 { #category : 'operations' }
