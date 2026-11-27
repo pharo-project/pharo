@@ -191,9 +191,9 @@ JobProgressMorph >> progress [
 { #category : 'api' }
 JobProgressMorph >> progress: aNormalizedNumber [
 
-	bar progress = aNormalizedNumber ifFalse: [
-			bar progress: aNormalizedNumber.
-			self changed ]
+	bar progress = aNormalizedNumber ifTrue: [^ self].
+	bar progress: aNormalizedNumber.
+	self changed: #progressValue
 ]
 
 { #category : 'api' }
@@ -209,7 +209,7 @@ JobProgressMorph >> progress: aNormalizedNumber label: aString [
 
 	pendingLabel := aString.
 	self label = aString ifTrue: [
-			changed ifTrue: [ self changed ].
+			changed ifTrue: [ self changed: #progressValue ].
 			^ self ].
 
 	self updateLabelToPending
