@@ -33,6 +33,21 @@ RubNullFindReplaceService >> findNext [
 	^ nil
 ]
 
+{ #category : 'services' }
+RubNullFindReplaceService >> findPrevious [
+	^ nil
+]
+
+{ #category : 'matching' }
+RubNullFindReplaceService >> matchRanges [
+	^ #(  )
+]
+
+{ #category : 'find bar' }
+RubNullFindReplaceService >> openFindBar [
+	^ nil
+]
+
 { #category : 'accessing' }
 RubNullFindReplaceService >> findPolicyChanged [
 	^ self
@@ -51,7 +66,7 @@ RubNullFindReplaceService >> replace [
 
 { #category : 'services' }
 RubNullFindReplaceService >> replaceAll [
-	^ self
+	^ 0
 ]
 
 { #category : 'event handling' }

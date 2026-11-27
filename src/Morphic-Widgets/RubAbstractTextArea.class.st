@@ -895,10 +895,10 @@ RubAbstractTextArea >> emphasisHere: aListOfAttributes [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> escapePressed [
-	"do nothing. do not simulate a right click
-	because Esc is too useful as a shortcut for other purposes
-	to be used for popping a menu"
-	"^ self yellowButtonActivity: false"
+	"Close the inline find bar if it is open.
+	Do not simulate a right click because Esc is too useful as a shortcut for other purposes to be used for popping a menu"
+
+	findReplaceService ifNotNil: [ :service | service closeFindBar ]
 ]
 
 { #category : 'geometry' }
@@ -1827,6 +1827,12 @@ RubAbstractTextArea >> replaceAll: aRegex with: aText startingAt: startIdx [
 RubAbstractTextArea >> replaceFrom: start to: stop with: aText [
 	self
 		handleEdit: [ self editor replaceTextFrom: start to: stop with: aText ]
+]
+
+{ #category : 'find-replace' }
+RubAbstractTextArea >> replaceRanges: aCollectionOfIntervals with: aText [
+	self
+		handleEdit: [self editor replaceRanges: aCollectionOfIntervals with: aText]
 ]
 
 { #category : 'find-replace' }

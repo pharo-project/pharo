@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'findReplaceRanges',
 		'findReplaceShapes',
-		'secondarySelectionShapes'
+		'secondarySelectionShapes',
+		'currentMatchShape'
 	],
 	#category : 'Morphic-Widgets-Editing-Core',
 	#package : 'Morphic-Widgets',
@@ -18,28 +19,44 @@ RubExtraSelectionDecorator class >> key [
 
 { #category : 'computation' }
 RubExtraSelectionDecorator >> cleanUpText [
-	self text removeAttribute: RubTextSelectionColor findReplaceSelection.
 	self text removeAttribute: RubTextSelectionColor secondarySelection
 ]
 
 { #category : 'computation' }
 RubExtraSelectionDecorator >> computeFindReplaceShapesFrom: topLeft to: bottomRight [
-	| topLeftBlk |
+	"Compute the shapes of the visible find matches from the ranges cached by the find and replace service: nothing is searched while drawing, and nothing at all when no search is active.
+	The other matches get a soft fill. The current match (the selection, when it is a match) gets a stronger fill and a border, so that it stays visible while the keyboard focus is in the find bar."
+
+	| service startIndex stopIndex current matchColor |
 	findReplaceShapes := nil.
-	self findRegex ifNil: [ ^self ].
-	topLeftBlk := self characterBlockAtPoint: topLeft.
-	findReplaceRanges := ((self findRegex matchingRangesIn: (self visibleStringFrom: topLeft to: bottomRight))
-		collect: [ :r | r + topLeftBlk stringIndex - 1 ]).
-	findReplaceRanges do: [ :r | self text addAttribute: RubTextSelectionColor findReplaceSelection from: r first to: r last ].
-	findReplaceShapes := findReplaceRanges
-		collect: [ :r |
-			RubSurfaceSelectionShape
-				vertices: (self verticesFrom: r first to: r last + 1)
-				firstIndex: r first
-				lastIndex: r last + 1
-				color: (RubTextSelectionColor findReplaceSelection backgroundColor alpha: 0.1)
-				borderWidth: 2
-				borderColor: RubTextSelectionColor findReplaceSelection backgroundColor muchDarker].
+	currentMatchShape := nil.
+	findReplaceRanges := nil.
+	service := self findReplaceService ifNil: [ ^ self ].
+	service hasActiveSearch ifFalse: [ ^ self ].
+	startIndex := (self characterBlockAtPoint: topLeft) stringIndex.
+	stopIndex := (self characterBlockAtPoint: bottomRight) stringIndex.
+	findReplaceRanges := service matchRangesFrom: startIndex to: stopIndex.
+	findReplaceRanges ifEmpty: [ ^ self ].
+	current := self primarySelectionInterval.
+	(findReplaceRanges includes: current) ifFalse: [ current := nil ].
+	matchColor := self findMatchColor.
+	findReplaceShapes := OrderedCollection new.
+	findReplaceRanges do: [ :r |
+		| shape |
+		shape := RubSurfaceSelectionShape
+			         vertices: (self verticesFrom: r first to: r last + 1)
+			         firstIndex: r first
+			         lastIndex: r last + 1
+			         color: (r = current
+					          ifTrue: [ matchColor ]
+					          ifFalse: [ matchColor alpha: matchColor alpha * 0.45 ])
+			         borderWidth: (r = current ifTrue: [ 1 ] ifFalse: [ 0 ])
+			         borderColor: (r = current
+					          ifTrue: [ matchColor alpha: 1 ]
+					          ifFalse: [ Color transparent ]).
+		r = current
+			ifTrue: [ currentMatchShape := shape ]
+			ifFalse: [ findReplaceShapes add: shape ] ].
 	^ findReplaceShapes
 ]
 
@@ -86,13 +103,15 @@ RubExtraSelectionDecorator >> drawAllSelectionShapesOn: aCanvas [
 		secondarySelectionShapes do: [ :selblock |
 				self drawSelectionShape: selblock on: aCanvas
 		]
-	]
+	].
+	currentMatchShape ifNotNil: [ :shape | shape drawOn: aCanvas ]
 ]
 
 { #category : 'drawing' }
 RubExtraSelectionDecorator >> drawAllSelectionShapesOnAthensCanvas: anAthensCanvas [
 	findReplaceShapes ifNotNil: [ findReplaceShapes do: [ :selblock | self drawSelectionShape: selblock onAthensCanvas: anAthensCanvas ] ].
-	secondarySelectionShapes ifNotNil: [ secondarySelectionShapes do: [ :selblock | self drawSelectionShape:  selblock onAthensCanvas: anAthensCanvas] ]
+	secondarySelectionShapes ifNotNil: [ secondarySelectionShapes do: [ :selblock | self drawSelectionShape:  selblock onAthensCanvas: anAthensCanvas] ].
+	currentMatchShape ifNotNil: [ :shape | shape drawOnAthensCanvas: anAthensCanvas ]
 ]
 
 { #category : 'drawing' }
@@ -160,8 +179,20 @@ RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock onAthensCanvas: anAt
 ]
 
 { #category : 'accessing' }
+RubExtraSelectionDecorator >> findMatchColor [
+	"The theme color of the find matches (see ThemeSettings>>findReplaceSelectionColor)."
+
+	^ self theme currentSettings findReplaceSelectionColor
+]
+
+{ #category : 'accessing' }
 RubExtraSelectionDecorator >> findRegex [
 	^ self paragraph textArea ifNotNil: [ :textArea | textArea findRegex ]
+]
+
+{ #category : 'accessing' }
+RubExtraSelectionDecorator >> findReplaceService [
+	^ self paragraph textArea ifNotNil: [ :textArea | textArea findReplaceService ]
 ]
 
 { #category : 'testing' }
