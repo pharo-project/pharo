@@ -487,6 +487,60 @@ ReChangeTest >> testPerformRenameInstanceVariable [
 	self deny: (change changeClass instVarNames includes: change newName)
 ]
 
+{ #category : 'tests - perform' }
+ReChangeTest >> testPerformVariableRenamePreviewChangesOnce [
+
+	| factory testClass renameChange methodChanges displayed count subscriber className |
+
+	factory := ClassFactoryForTestCase environment: Smalltalk globals.
+
+	[
+		testClass := factory make: [ :builder |
+			builder
+				superclass: Object;
+				slots: #(x) ].
+
+		className := testClass name.
+		testClass compile: 'getX ^ x'.
+		testClass compile: 'setX: a x := a'.
+
+		renameChange := changes
+			renameInstanceVariable: 'x'
+			to: 'y'
+			in: testClass.
+
+		methodChanges := changeFactory
+			compositeRefactoryChangeNamed: 'Update methods'.
+
+		methodChanges
+			compile: 'getX ^ y' in: testClass;
+			compile: 'setX: a y := a' in: testClass.
+
+		renameChange addChange: methodChanges.
+
+		displayed := changes changesToDisplayIn: nil.
+
+		count := 0.
+		subscriber := Object new.
+
+		SystemAnnouncer uniqueInstance
+			when: MethodModified
+			do: [ :announcement |
+				(announcement methodAffected methodClass name = className
+					and: [ announcement methodAffected selector = #getX ])
+						ifTrue: [ count := count + 1 ] ]
+			for: subscriber.
+
+		[ displayed do: [ :change | change execute ] ]
+			ensure: [
+				SystemAnnouncer uniqueInstance unsubscribe: subscriber ].
+
+		self assert: count equals: 1.
+		self assert: displayed size equals: 1
+
+	] ensure: [ factory cleanUp ]
+]
+
 { #category : 'tests' }
 ReChangeTest >> testRemoveClass [
 

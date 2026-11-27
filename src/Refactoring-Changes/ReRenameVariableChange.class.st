@@ -83,8 +83,7 @@ ReRenameVariableChange >> changeString [
 { #category : 'accessing' }
 ReRenameVariableChange >> changesToDisplayIn: aChangeBrowser [
 
-	
-	^ { self } , (self changes flatCollect: [:e | e changes ])
+	^ { self }
 ]
 
 { #category : 'private' }
@@ -157,6 +156,14 @@ ReRenameVariableChange >> oldName: aString [
 	oldName := aString
 ]
 
+{ #category : 'accessing' }
+ReRenameVariableChange >> oldVersionTextToDisplay [
+
+	^ String streamContents: [ :s |
+		self changes do: [ :c |
+			s << c oldVersionTextToDisplay; cr ] ]
+]
+
 { #category : 'printing' }
 ReRenameVariableChange >> printOn: aStream [
 
@@ -172,5 +179,8 @@ ReRenameVariableChange >> removeOldVariable [
 { #category : 'accessing' }
 ReRenameVariableChange >> textToDisplay [
 
-	^ self printString
+	^ String streamContents: [ :s |
+		s << self printString; cr.
+		self changes do: [ :c |
+			s << c textToDisplay; cr ] ]
 ]
