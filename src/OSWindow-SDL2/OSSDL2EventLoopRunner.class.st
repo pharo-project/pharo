@@ -10,7 +10,6 @@ OSSDL2EventLoopRunner exampleRunningLoop
 ## Design Rationale
 
 - The loop belongs to the image, not to the driver nor to the code that started it. `OSSDL2Driver class>>sharedEventLoopRunner` keeps one of me for the image, and every driver uses it unless it was given another one with `OSSDL2Driver>>eventLoopRunner:`. A test can thus run a loop of its own without touching the image's.
-- I fork the loop in the default execution environment. The test environment terminates the processes a test forks: a loop started from a test would otherwise die with it and leave the image without input.
 - `ensureRunning:` keeps a running loop, and replaces one that ended. `restartRunning:` always replaces it: when the image starts, the loop of the saved session is from another session and must go, whether it already ended or not.
 
 ## Usage
@@ -73,12 +72,10 @@ OSSDL2EventLoopRunner >> process [
 
 { #category : 'running' }
 OSSDL2EventLoopRunner >> restartRunning: aLoopBlock [
-	"Stop the loop, then start aLoopBlock as the new one.
-	It is forked in the default execution environment: the loop belongs to the whole image,
-	so it must survive the test or the code that happened to start it"
+	"Stop the loop, then start aLoopBlock as the new one"
 
 	self stop.
-	DefaultExecutionEnvironment beActiveDuring: [ process := aLoopBlock forkAt: Processor lowIOPriority named: 'SDL2 Event loop' ]
+	process := aLoopBlock forkAt: Processor lowIOPriority named: 'SDL2 Event loop'
 ]
 
 { #category : 'running' }

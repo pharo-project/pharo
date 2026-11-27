@@ -4,7 +4,6 @@ I check how `OSSDL2EventLoopRunner` starts, keeps, replaces and stops a loop.
 ## Design Rationale
 
 - Each test has a runner of its own, running a loop that only waits: I touch neither the image's event loop nor SDL, so I run in a headless image too.
-- I check that the test environment does not own the loop, since it terminates the processes a test forks.
 "
 Class {
 	#name : 'OSSDL2EventLoopRunnerTest',
@@ -78,15 +77,6 @@ OSSDL2EventLoopRunnerTest >> testLoopIsNamed [
 
 	runner ensureRunning: self idleLoop.
 	self assert: runner process name equals: 'SDL2 Event loop'
-]
-
-{ #category : 'tests' }
-OSSDL2EventLoopRunnerTest >> testLoopIsNotOwnedByTheTestThatStartedIt [
-	"The test environment terminates the processes forked by a test.
-	The event loop belongs to the whole image and must survive the test"
-
-	runner ensureRunning: self idleLoop.
-	self deny: (CurrentExecutionEnvironment value forkedProcesses includes: runner process)
 ]
 
 { #category : 'tests' }
