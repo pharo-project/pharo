@@ -189,17 +189,18 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 { #category : 'windows' }
 PasteUpMorph >> closeAllUnchangedWindows [
 
+	| windows |
+	windows := self windowsSatisfying: [ :w | w model canDiscardEdits ].
+	windows ifEmpty: [ ^ self ].
+
 	(ConfirmationRequest signal: 'Do you really want to close all unchanged windows ?') ifFalse: [ ^ self ].
-	(self windowsSatisfying: [ :w | w model canDiscardEdits ]) do: [ :w | w delete ]
+	windows do: [ :w | w delete ]
 ]
 
 { #category : 'windows' }
 PasteUpMorph >> closeUnchangedWindows [
-	"Present a menu of window titles for all windows with changes,
-	and activate the one that gets chosen."
-
-	(ConfirmationRequest signal: 'Do you really want to close all windows
-except those with unaccepted edits?') ifFalse: [ ^ self ].
+	"Close all windows without unaccepted edits.
+	Does nothing if there are no such windows."
 
 	self closeAllUnchangedWindows
 ]
