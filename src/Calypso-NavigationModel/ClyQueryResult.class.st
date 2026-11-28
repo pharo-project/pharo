@@ -230,7 +230,9 @@ ClyQueryResult >> buildingQuery [
 
 { #category : 'accessing' }
 ClyQueryResult >> buildingQuery: anEnvironmentQuery [
-	buildingQuery := anEnvironmentQuery
+
+	buildingQuery := anEnvironmentQuery.
+	anEnvironmentQuery subscribeQueryResult: self
 ]
 
 { #category : 'building' }

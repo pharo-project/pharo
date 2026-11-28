@@ -416,6 +416,11 @@ ClyQuery >> semiAsync [
 		asyncResult: ClySemiAsyncQueryResult new
 ]
 
+{ #category : 'subscribing' }
+ClyQuery >> subscribeQueryResult: aQueryResult [
+	"A hook for subscribing a query result according to the query that produces it"
+]
+
 { #category : 'composition' }
 ClyQuery >> unionWith: typedQueries as: aQueryResult [
 	"Subclasses should return ClyUnionQuery with collection of given subqueries together with itself or own subqueries if exists.

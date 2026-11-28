@@ -34,3 +34,9 @@ ClyCritiqueQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	aQueryResult forceLazyRebuild.
 	^false "and we return false to prevent result observers to be notified"
 ]
+
+{ #category : 'subscribing' }
+ClyCritiqueQuery >> subscribeQueryResult: aQueryResult [
+
+	ReSystemAnnouncer uniqueInstance weak when: ReRuleSetChanged send: #forceRebuild to: aQueryResult
+]
