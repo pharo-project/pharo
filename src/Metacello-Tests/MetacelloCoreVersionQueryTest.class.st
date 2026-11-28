@@ -48,3 +48,23 @@ MetacelloCoreVersionQueryTest >> testBaselineProjects [
 	self assert: list size equals: expected size.
 	list do: [ :pkg | self assert: (expected includes: pkg name) ]
 ]
+
+{ #category : 'tests' }
+MetacelloCoreVersionQueryTest >> testGroupIncludedSpecs [
+
+	| project coreGroup |
+	project := self project.
+	coreGroup := project groups detect: [ :each | each name = 'Core' ].
+	self assert: (coreGroup includedSpecs collect: [ :each | each name ]) asArray equals: #( 'UTF8' )
+]
+
+{ #category : 'tests' }
+MetacelloCoreVersionQueryTest >> testProjectQueries [
+
+	| project |
+	project := self project.
+	self assert: project groups equals: project version groups.
+	self assert: project packages equals: project version packages.
+	self assert: project projects equals: project version projects.
+	self assert: project packageSpecsInLoadOrder equals: project version packageSpecsInLoadOrder
+]

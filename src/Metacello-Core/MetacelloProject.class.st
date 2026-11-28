@@ -80,6 +80,12 @@ MetacelloProject >> groupSpec [
 	^ MetacelloGroupSpec project: self
 ]
 
+{ #category : 'querying' }
+MetacelloProject >> groups [
+
+	^ self version groups
+]
+
 { #category : 'accessing' }
 MetacelloProject >> label [
 
@@ -104,6 +110,24 @@ MetacelloProject >> loadType: aSymbol [
 MetacelloProject >> packageSpec [
 
 	^ MetacelloPackageSpec project: self
+]
+
+{ #category : 'querying' }
+MetacelloProject >> packageSpecsInLoadOrder [
+
+	^ self version packageSpecsInLoadOrder
+]
+
+{ #category : 'querying' }
+MetacelloProject >> packages [
+
+	^ self version packages
+]
+
+{ #category : 'querying' }
+MetacelloProject >> projects [
+
+	^ self version projects
 ]
 
 { #category : 'private' }

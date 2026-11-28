@@ -29,6 +29,12 @@ MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
   ^ #()
 ]
 
+{ #category : 'querying' }
+MetacelloGroupSpec >> includedSpecs [
+
+	^ self project packageSpecsInLoadOrder select: [ :each | self includes includes: each name ]
+]
+
 { #category : 'testing' }
 MetacelloGroupSpec >> isGroupSpec [
 
@@ -57,7 +63,7 @@ MetacelloGroupSpec >> name: aString [
 { #category : 'loading' }
 MetacelloGroupSpec >> packageSpecsInLoadOrder [
 
-	^ (self project version packageSpecsInLoadOrder select: [ :each | self includes includes: each name ]) flatCollect: [ :e | e packageSpecsInLoadOrder ]
+	^ self includedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
 ]
 
 { #category : 'accessing' }
