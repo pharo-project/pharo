@@ -74,6 +74,14 @@ The method #allowRunningProcessesToFinish is to solve this issue. It performs ow
 In uninteractive mode I signal TestFailedByForkedProcess even if there was a domain error from the test. So two exceptions can be signaled for single test run.
 It allows to log all errors signaled during the test: one from the main process and others from all background processes using this signal (notice that I suspend all background failures and they do not log themselves as a default feedback).
 
+4. Synchronization:
+I am used by several processes at the same time: #handleNewProcess: runs in the forking process and #recordTestFailure: in the failing process, while #cleanUpAfterTest runs in the test process. These processes can have different priorities and preempt each other.
+So a mutex guards every access to forkedProcesses and testFailures. Processes are terminated, suspended and resumed outside of it.
+The accessors #forkedProcesses and #testFailures answer the live collections. Code outside of me that changes them should do it inside #lock:, for example:
+
+	aTestExecutionEnvironment processMonitor lock: [ :aService |
+		aService forkedProcesses remove: aProcess ifAbsent: [ ] ]
+
 Internal Representation and Key Implementation Points.
 
     Instance Variables
@@ -81,6 +89,7 @@ Internal Representation and Key Implementation Points.
 	testFailures:		<OrderedIdentityDictionary<Process, Exception>>
 	shouldFailTestLeavingProcesses:		<Boolean>
 	shouldSuspendBackgroundFailures:		<Boolean>
+	mutex:		<Mutex>
 "
 Class {
 	#name : 'ProcessMonitorTestService',
@@ -90,7 +99,8 @@ Class {
 		'testFailures',
 		'shouldSuspendBackgroundFailures',
 		'shouldFailTestLeavingProcesses',
-		'shouldTerminateProcesses'
+		'shouldTerminateProcesses',
+		'mutex'
 	],
 	#classInstVars : [
 		'shouldFailTestLeavingProcesses',
@@ -205,8 +215,9 @@ ProcessMonitorTestService >> cleanUpAfterTest [
 
 	shouldTerminateProcesses ifTrue: [
 		self terminateRunningProcesses].
-	forkedProcesses removeAll.
-	testFailures removeAll.
+	mutex critical: [
+		forkedProcesses removeAll.
+		testFailures removeAll ].
 	self enableBackgroudFailuresSuspension.
 	self useDefaultFailingStrategyForRunningProcesses.
 	self useDefaultTerminationStrategyForRunningProcesses
@@ -276,6 +287,8 @@ ProcessMonitorTestService >> failTestLeavingProcesses [
 
 { #category : 'accessing' }
 ProcessMonitorTestService >> forkedProcesses [
+	"Answer the live set of forked processes. It is changed from several processes, use #lock: to change it safely"
+
 	^ forkedProcesses
 ]
 
@@ -312,7 +325,7 @@ ProcessMonitorTestService >> handleException: anException [
 ProcessMonitorTestService >> handleNewProcess: aProcess [
 	super handleNewProcess: aProcess.
 
-	forkedProcesses add: aProcess.
+	mutex critical: [ forkedProcesses add: aProcess ].
 
 	aProcess on: UnhandledException do: [ :err |
 		self handleBackgroundException: err]
@@ -332,6 +345,7 @@ ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
 ProcessMonitorTestService >> initialize [
 	super initialize.
 
+	mutex := Mutex new.
 	self enableBackgroudFailuresSuspension.
 	self useDefaultFailingStrategyForRunningProcesses.
 	self useDefaultTerminationStrategyForRunningProcesses.
@@ -347,7 +361,17 @@ ProcessMonitorTestService >> isMainTestProcessFailed [
 { #category : 'testing' }
 ProcessMonitorTestService >> isTestProcessFailed: aProcess [
 
-	^testFailures at: aProcess ifPresent: [ true ] ifAbsent: [ false ]
+	^ mutex critical: [ testFailures at: aProcess ifPresent: [ true ] ifAbsent: [ false ] ]
+]
+
+{ #category : 'synchronization' }
+ProcessMonitorTestService >> lock: aBlock [
+	"Evaluate aBlock with me as its argument while holding my mutex, and answer its value.
+	Use it to read or change #forkedProcesses or #testFailures safely from outside.
+	The mutex is re-entrant for the same process, so my methods can be called inside aBlock.
+	aBlock must not terminate, suspend or wait for other processes: they may need the lock"
+
+	^ mutex critical: [ aBlock value: self ]
 ]
 
 { #category : 'controlling' }
@@ -355,7 +379,7 @@ ProcessMonitorTestService >> passBackgroundFailures [
 	self disableBackgroudFailuresSuspension.
 	self disableProcessesTermination.
 
-	testFailures keys
+	(mutex critical: [ testFailures keys ])
 		select: [:each | each isSuspended ]
 		thenDo: [:each | each resume ]
 ]
@@ -369,13 +393,14 @@ ProcessMonitorTestService >> recordTestFailure: anException [
 		"Do nothing for exceptions during process termination"
 		^self ].
 
-	testFailures at: activeProcess put: anException
+	mutex critical: [ testFailures at: activeProcess put: anException ]
 ]
 
 { #category : 'accessing' }
 ProcessMonitorTestService >> runningProcesses [
 	"Suspended processes are not scheduled and therefore they are not considered as running"
-	^ forkedProcesses reject: [ :each | each isTerminated or: [ each isSuspended ]]
+	^ (mutex critical: [ forkedProcesses copy ])
+		reject: [ :each | each isTerminated or: [ each isSuspended ]]
 ]
 
 { #category : 'accessing' }
@@ -428,7 +453,7 @@ ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 
 { #category : 'accessing' }
 ProcessMonitorTestService >> suspendedBackgroundFailures [
-	^ testFailures associationsSelect: [ :each | each key isSuspended ]
+	^ (mutex critical: [ testFailures copy ]) associationsSelect: [ :each | each key isSuspended ]
 ]
 
 { #category : 'accessing' }
@@ -439,18 +464,21 @@ ProcessMonitorTestService >> terminateProcessesAfterTest [
 
 { #category : 'controlling' }
 ProcessMonitorTestService >> terminateRunningProcesses [
-	forkedProcesses do: [:each | each terminate]
+	"Terminate outside of the mutex: a process can fork new processes while it is unwinding"
+	(mutex critical: [ forkedProcesses copy ]) do: [:each | each terminate]
 ]
 
 { #category : 'accessing' }
 ProcessMonitorTestService >> testBackgroundFailures [
-	^ testFailures copy
+	^ (mutex critical: [ testFailures copy ])
 		removeKey: executionEnvironment mainTestProcess ifAbsent: [ ];
 		yourself
 ]
 
 { #category : 'accessing' }
 ProcessMonitorTestService >> testFailures [
+	"Answer the live dictionary of failures. It is changed from several processes, use #lock: to change it safely"
+
 	^ testFailures
 ]
 
