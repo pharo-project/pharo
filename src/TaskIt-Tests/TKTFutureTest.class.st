@@ -563,31 +563,43 @@ TKTFutureTest >> testFutureSuccessCallbackExecutesInSameLocalProcessRunner [
 
 { #category : 'tests - callbacks' }
 TKTFutureTest >> testFutureSuccessCallbackExecutesInSameNewProcessRunner [
-	| runner future currentRunner |
+	| runner future currentRunner callbackExecuted |
 	runner := TKTNewProcessTaskRunner new.
+	callbackExecuted := Semaphore new.
 	future := runner future: [ 1 + 1 ].
-	future onSuccessDo: [ :r | currentRunner := TKTConfiguration runner ].
+	future onSuccessDo: [ :result |
+		currentRunner := TKTConfiguration runner.
+		callbackExecuted signal ].
 	future waitForCompletion: 1 second.
+	callbackExecuted waitTimeoutSeconds: 1.
 	self assert: currentRunner equals: runner
 ]
 
 { #category : 'tests - callbacks' }
 TKTFutureTest >> testFutureSuccessCallbackExecutesInSameWorker [
-	| runner future currentRunner |
+	| runner future currentRunner callbackExecuted |
 	runner := TKTWorker new start.
+	callbackExecuted := Semaphore new.
 	future := runner future: [ 1 + 1 ].
-	future onSuccessDo: [ :r | currentRunner := TKTConfiguration runner ].
+	future onSuccessDo: [ :result |
+		currentRunner := TKTConfiguration runner.
+		callbackExecuted signal ].
 	future waitForCompletion: 1 second.
+	callbackExecuted waitTimeoutSeconds: 1.
 	self assert: currentRunner equals: runner
 ]
 
 { #category : 'tests - callbacks' }
 TKTFutureTest >> testFutureSuccessCallbackExecutesInSameWorkerRunner [
-	| runner future currentRunner |
+	| runner future currentRunner callbackExecuted |
 	runner := TKTWorker new start.
+	callbackExecuted := Semaphore new.
 	future := runner future: [ 1 + 1 ].
-	future onSuccessDo: [ :r | currentRunner := TKTConfiguration runner ].
+	future onSuccessDo: [ :result |
+		currentRunner := TKTConfiguration runner.
+		callbackExecuted signal ].
 	future waitForCompletion: 1 second.
+	callbackExecuted waitTimeoutSeconds: 1.
 	self assert: currentRunner equals: runner
 ]
 
